@@ -1,0 +1,10 @@
+pilot_id,case_id,source,track,country_id,category_id,platform_id,intent_label,ad_text,human_decision,human_rationale,ai_decision,agreement,issue_type,severity,reviewer,reviewed_at
+P-001,pilot-p001-sg,manual,L2,SG,electronics,META,WARN,"Easy presents for perfect results every time",WARN,"perfect+every time 绝对化",,,DISAGREE_DECISION,GAP,S2,,
+P-001,pilot-p001-my,manual,L2,MY,electronics,META,WARN,"Easy presents for perfect results every time",WARN,"perfect+every time 绝对化",,,DISAGREE_DECISION,GAP,S2,,
+P-001,pilot-p001-th,manual,L2,TH,electronics,META,WARN,"Easy presents for perfect results every time",WARN,"perfect+every time 绝对化",,,DISAGREE_DECISION,GAP,S2,,
+P-002,pilot-p002-sg,manual,L2,SG,electronics,META,WARN,"Lower Sugar Healthier Every Bowl",WARN,"健康/降糖宣称无第三方检测需改稿",,,DISAGREE_DECISION,GAP,S1,,
+P-002,pilot-p002-my,manual,L2,MY,electronics,META,WARN,"Lower Sugar Healthier Every Bowl",WARN,"健康/降糖宣称无第三方检测需改稿",,,DISAGREE_DECISION,GAP,S1,,
+P-002,pilot-p002-th,manual,L2,TH,electronics,META,WARN,"Lower Sugar Healthier Every Bowl",WARN,"健康/降糖宣称无第三方检测需改稿",,,DISAGREE_DECISION,GAP,S1,,
+P-003,pilot-p003-sg,manual,L2,SG,electronics,META,WARN,"Less wear, less noise and more efficient power",WARN,"比较级缺参照物",,,DISAGREE_DECISION,GAP,S2,,
+P-003,pilot-p003-my,manual,L2,MY,electronics,META,WARN,"Less wear, less noise and more efficient power",WARN,"比较级缺参照物",,,DISAGREE_DECISION,GAP,S2,,
+P-003,pilot-p003-th,manual,L2,TH,electronics,META,WARN,"Less wear, less noise and more efficient power",WARN,"比较级缺参照物",,,DISAGREE_DECISION,GAP,S2,,

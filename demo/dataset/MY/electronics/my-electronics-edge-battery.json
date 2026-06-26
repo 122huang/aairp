@@ -1,0 +1,23 @@
+{
+  "case_id": "my-electronics-edge-battery",
+  "country_id": "MY",
+  "category_id": "electronics",
+  "platform_id": "META",
+  "intent": "EDGE",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for MY electronics. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "MY",
+    "platform_id": "META",
+    "category_id": "electronics",
+    "content": {
+      "text": "Power bank with built-in battery protection — charges safely overnight. Not certified for airline carry-on. #ad"
+    },
+    "tags": ["pilot:edge-battery"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

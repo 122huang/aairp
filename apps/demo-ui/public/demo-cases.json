@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0-rc1",
+  "description": "RC1-Demo — 5 fixed scenarios for 3-minute live demo",
+  "cases": [
+    {
+      "id": "demo-01-reject-cure",
+      "title": "禁词 cure → REJECT",
+      "subtitle": "Rule BLOCKER + 法规引用",
+      "expected_decision": "REJECT",
+      "highlight": "展示 Regulation → Rule 硬拦截，LLM 被跳过",
+      "upload": {
+        "external_ref": "rc1-demo-001",
+        "tenant_id": "demo",
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "health.supplement",
+        "content": {
+          "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+          "images": ["https://cdn.example.com/ad-banner.png"],
+          "landing_url": "https://example.com/promo"
+        },
+        "context": {
+          "campaign_type": "conversion",
+          "ad_format": "image",
+          "target_audience": "25-45"
+        },
+        "tags": ["rc1:reject", "demo:blocker"]
+      }
+    },
+    {
+      "id": "demo-02-pass-food",
+      "title": "合规食品 + #ad → PASS",
+      "subtitle": "全链路无命中",
+      "expected_decision": "PASS",
+      "highlight": "对比裸 LLM：确定性 PASS，无臆造风险",
+      "upload": {
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "food",
+        "content": {
+          "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad"
+        },
+        "tags": ["rc1:pass", "demo:food"]
+      }
+    },
+    {
+      "id": "demo-03-warn-disclosure",
+      "title": "缺少 #ad 披露 → WARN",
+      "subtitle": "Rule 低严重度",
+      "expected_decision": "WARN",
+      "highlight": "法规驱动披露规则，非 LLM 猜测",
+      "upload": {
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "health.supplement",
+        "content": {
+          "text": "Daily vitamins for general wellness. Supports your active lifestyle."
+        },
+        "tags": ["rc1:warn", "demo:disclosure"]
+      }
+    },
+    {
+      "id": "demo-04-warn-superlative",
+      "title": "夸大用语 → WARN",
+      "subtitle": "Rule + Playbook 双命中",
+      "expected_decision": "WARN",
+      "highlight": "Rule 与 Playbook 分层：法条 vs 运营指引",
+      "upload": {
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "health.supplement",
+        "content": {
+          "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad"
+        },
+        "tags": ["rc1:warn", "demo:superlative"]
+      }
+    },
+    {
+      "id": "demo-05-pass-wellness",
+      "title": "合规保健品 → PASS",
+      "subtitle": "含 #ad，无禁词",
+      "expected_decision": "PASS",
+      "highlight": "完整链路跑通，Case 自动入库",
+      "upload": {
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "health.supplement",
+        "content": {
+          "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad"
+        },
+        "tags": ["rc1:pass", "demo:wellness"]
+      }
+    }
+  ]
+}

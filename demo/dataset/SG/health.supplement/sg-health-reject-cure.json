@@ -1,0 +1,35 @@
+{
+  "case_id": "sg-health-reject-cure",
+  "country_id": "SG",
+  "category_id": "health.supplement",
+  "platform_id": "META",
+  "intent": "REJECT",
+  "verification": "auto",
+  "notes": "Canonical reject sample — migrated from demo/sample-ad-upload.json. Demo-only, not legal advice.",
+  "tags": ["demo", "verified", "blocker"],
+  "upload": {
+    "external_ref": "camp-2026-demo-001",
+    "tenant_id": "demo",
+    "country_id": "SG",
+    "platform_id": "META",
+    "category_id": "health.supplement",
+    "content": {
+      "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+      "images": ["https://cdn.example.com/ad-banner.png"],
+      "landing_url": "https://example.com/promo"
+    },
+    "context": {
+      "campaign_type": "conversion",
+      "ad_format": "image",
+      "target_audience": "25-45"
+    },
+    "tags": ["campaign:summer2026", "brand:demo"]
+  },
+  "ground_truth": {
+    "expected_decision": "REJECT",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-sg-health-forbidden-claim" }
+    ],
+    "open_risk_skipped": true
+  }
+}

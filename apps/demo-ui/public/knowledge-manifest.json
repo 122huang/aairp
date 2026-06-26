@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0-rc1",
+  "description": "Static knowledge trace labels for RC1 demo (matches demo/ assets)",
+  "regulations": [
+    {
+      "regulation_key": "sg-hpa-s7-demo",
+      "jurisdiction": "SG",
+      "law_name": "SG Health Products Act (Demo)",
+      "article": "Section 7 — Prohibited claims",
+      "linked_rules": ["demo-sg-health-forbidden-claim"]
+    },
+    {
+      "regulation_key": "sg-ascm-disclosure-demo",
+      "jurisdiction": "SG",
+      "law_name": "SG ASCM Advertising Standards (Demo)",
+      "article": "Sponsored content disclosure",
+      "linked_rules": ["demo-sg-sponsored-disclosure"]
+    }
+  ],
+  "rule_pack": {
+    "pack_version": "demo-rule-1.0.0",
+    "rules": [
+      {
+        "rule_id": "demo-sg-health-forbidden-claim",
+        "severity": "BLOCKER",
+        "summary": "Prohibited absolute health cure claims"
+      },
+      {
+        "rule_id": "demo-sg-health-superlative",
+        "severity": "MEDIUM",
+        "summary": "Unsubstantiated superlative claims"
+      },
+      {
+        "rule_id": "demo-sg-sponsored-disclosure",
+        "severity": "LOW",
+        "summary": "Ad disclosure required (#ad / sponsored)"
+      }
+    ]
+  },
+  "playbook_pack": {
+    "pack_version": "demo-playbook-1.0.0",
+    "playbook_id": "demo-health-supplement-playbook",
+    "patterns": ["urgency-cta", "unsubstantiated-testimonial", "before-after-imagery"]
+  },
+  "prompt_pack": {
+    "pack_version": "demo-open-risk-1.1.0",
+    "template_key": "open-risk-discovery",
+    "role": "Open-risk semantic gap analysis (skipped when BLOCKER)"
+  },
+  "pipeline_stages": [
+    { "id": "upload", "label": "Advertisement", "icon": "📄" },
+    { "id": "context", "label": "Context Builder", "icon": "🧩" },
+    { "id": "regulation", "label": "Regulation", "icon": "⚖️" },
+    { "id": "rule", "label": "Rule Engine", "icon": "📏" },
+    { "id": "playbook", "label": "Playbook", "icon": "📋" },
+    { "id": "llm", "label": "Prompt + LLM", "icon": "🤖" },
+    { "id": "decision", "label": "Decision Engine", "icon": "✅" },
+    { "id": "report", "label": "Review Report", "icon": "📊" },
+    { "id": "case", "label": "Case Library", "icon": "📚" }
+  ]
+}

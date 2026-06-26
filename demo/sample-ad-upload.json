@@ -1,0 +1,18 @@
+{
+  "external_ref": "camp-2026-demo-001",
+  "tenant_id": "demo",
+  "country_id": "SG",
+  "platform_id": "META",
+  "category_id": "health.supplement",
+  "content": {
+    "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+    "images": ["https://cdn.example.com/ad-banner.png"],
+    "landing_url": "https://example.com/promo"
+  },
+  "context": {
+    "campaign_type": "conversion",
+    "ad_format": "image",
+    "target_audience": "25-45"
+  },
+  "tags": ["campaign:summer2026", "brand:demo"]
+}

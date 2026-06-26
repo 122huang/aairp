@@ -1,0 +1,23 @@
+{
+  "case_id": "my-cosmetic-warn-claims",
+  "country_id": "MY",
+  "category_id": "cosmetic",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for MY cosmetic. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "MY",
+    "platform_id": "META",
+    "category_id": "cosmetic",
+    "content": {
+      "text": "The best anti-aging cream in Malaysia — guaranteed to erase all wrinkles in 14 days. Shop now. #ad"
+    },
+    "tags": ["pilot:cosmetic-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

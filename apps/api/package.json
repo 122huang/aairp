@@ -1,0 +1,30 @@
+{
+  "name": "@aairp/api",
+  "version": "0.1.0-sprint1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "predev": "pnpm --filter @aairp/domain build && pnpm --filter @aairp/shared-kernel build && pnpm --filter @aairp/application build && pnpm --filter @aairp/infrastructure build",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@aairp/application": "workspace:*",
+    "@aairp/domain": "workspace:*",
+    "@aairp/infrastructure": "workspace:*",
+    "@aairp/shared-kernel": "workspace:*",
+    "@fastify/static": "^8.2.0",
+    "fastify": "^5.4.0",
+    "ioredis": "^5.6.1",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "@types/pg": "^8.15.4",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

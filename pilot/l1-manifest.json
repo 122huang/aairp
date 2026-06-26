@@ -1,0 +1,15 @@
+{
+  "track": "L1",
+  "description": "SG health.supplement — hard metrics (benchmark regression subset)",
+  "success_criteria_ref": "docs/internal-pilot/success-criteria.md",
+  "metrics_source": "pnpm eval:benchmark -- --regression",
+  "live_api_case": "sg-health-reject-cure",
+  "cases": [
+    { "case_id": "sg-health-reject-cure", "expected_decision": "REJECT", "tags": ["blocker"] },
+    { "case_id": "sg-health-pass-disclosed", "expected_decision": "PASS", "tags": [] },
+    { "case_id": "sg-health-fp-secure-no-cure", "expected_decision": "PASS", "tags": ["false-positive-guard"] },
+    { "case_id": "sg-health-warn-disclosure", "expected_decision": "WARN", "tags": [] },
+    { "case_id": "sg-health-warn-superlative", "expected_decision": "WARN", "tags": [] },
+    { "case_id": "sg-health-playbook-urgency", "expected_decision": "WARN", "tags": ["playbook"] }
+  ]
+}

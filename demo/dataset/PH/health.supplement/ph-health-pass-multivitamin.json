@@ -1,0 +1,23 @@
+{
+  "case_id": "ph-health-pass-multivitamin",
+  "country_id": "PH",
+  "category_id": "health.supplement",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for PH health.supplement. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "PH",
+    "platform_id": "META",
+    "category_id": "health.supplement",
+    "content": {
+      "text": "Daily multivitamin to help maintain your active lifestyle. Food supplement — no therapeutic claims. #ad"
+    },
+    "tags": ["pilot:health-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

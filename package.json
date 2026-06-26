@@ -1,0 +1,25 @@
+{
+  "name": "aairp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "migrate": "pnpm --filter @aairp/infrastructure migrate",
+    "kos:import-demo": "pnpm --filter @aairp/infrastructure kos:import-demo",
+    "kos:import-cases": "pnpm --filter @aairp/infrastructure kos:import-cases",
+    "kos:index-case-embeddings": "pnpm --filter @aairp/infrastructure kos:index-case-embeddings",
+    "kos:import-pilot-log": "pnpm --filter @aairp/infrastructure kos:import-pilot-log",
+    "eval:benchmark": "pnpm --filter @aairp/application eval:benchmark",
+    "eval:dataset": "pnpm --filter @aairp/application eval:dataset",
+    "dev:api": "pnpm --filter @aairp/api dev",
+    "dev:demo": "pnpm dev:api",
+    "seed:rc1-cases": "node scripts/seed-rc1-case-library.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3"
+  }
+}

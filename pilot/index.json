@@ -1,0 +1,15 @@
+{
+  "description": "Internal Pilot L2 — 新马泰小家电 × 3 文案 × 3 国 = 9 cases (manual verification)",
+  "track": "L2",
+  "cases": [
+    { "case_id": "pilot-p001-sg", "path": "P-001-sg.json" },
+    { "case_id": "pilot-p001-my", "path": "P-001-my.json" },
+    { "case_id": "pilot-p001-th", "path": "P-001-th.json" },
+    { "case_id": "pilot-p002-sg", "path": "P-002-sg.json" },
+    { "case_id": "pilot-p002-my", "path": "P-002-my.json" },
+    { "case_id": "pilot-p002-th", "path": "P-002-th.json" },
+    { "case_id": "pilot-p003-sg", "path": "P-003-sg.json" },
+    { "case_id": "pilot-p003-my", "path": "P-003-my.json" },
+    { "case_id": "pilot-p003-th", "path": "P-003-th.json" }
+  ]
+}

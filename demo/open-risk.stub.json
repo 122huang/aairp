@@ -1,0 +1,24 @@
+{
+  "prompt_pack_version": "demo-open-risk-1.1.0",
+  "findings": [
+    {
+      "risk_type": "combined-misleading-claim",
+      "description": "Combining urgency language with disease-related efficacy wording may mislead consumers even when individual phrases were partially flagged elsewhere.",
+      "severity": "MEDIUM",
+      "suggested_action": "WARN",
+      "confidence": 0.72,
+      "evidence_spans": [
+        {
+          "field": "text",
+          "start": 0,
+          "end": 17,
+          "text": "Clinically proven"
+        }
+      ],
+      "related_modules_checked": [
+        "demo-sg-health-forbidden-claim",
+        "unsubstantiated-testimonial"
+      ]
+    }
+  ]
+}

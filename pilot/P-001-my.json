@@ -1,0 +1,30 @@
+{
+  "case_id": "pilot-p001-my",
+  "pilot_id": "P-001",
+  "country_id": "MY",
+  "category_id": "electronics",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "manual",
+  "track": "L2",
+  "issue_tags": ["absolute-claim"],
+  "notes": "小家电广告。人工：perfect + every time 绝对化/全称化，需弱化或加限定。",
+  "human_rationale": "“perfect”“every time”表述过于绝对，不符合审慎宣传要求。",
+  "upload": {
+    "country_id": "MY",
+    "platform_id": "META",
+    "category_id": "electronics",
+    "content": {
+      "text": "Easy presents for perfect results every time"
+    },
+    "tags": ["pilot:manual", "pilot_id:P-001", "human_intent:WARN", "issue:absolute-claim"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": [],
+    "human_decision": "WARN",
+    "expected_agreement": "DISAGREE_DECISION",
+    "issue_type": "GAP",
+    "severity": "S2"
+  }
+}

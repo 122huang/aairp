@@ -1,0 +1,23 @@
+{
+  "case_id": "jp-health-pass-supplement",
+  "country_id": "JP",
+  "category_id": "health.supplement",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for JP health.supplement. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "JP",
+    "platform_id": "META",
+    "category_id": "health.supplement",
+    "content": {
+      "text": "Daily supplement to support general wellness and vitality. Food supplement — not a pharmaceutical product. #ad"
+    },
+    "tags": ["pilot:health-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

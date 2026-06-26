@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AAIRP Demo v1 — RC1</title>
+    <link rel="stylesheet" href="/demo-ui/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AAIRP</span>
+        <span class="brand-sub">Advertising AI Review Platform</span>
+      </div>
+      <div class="topbar-meta">
+        <span class="badge">RC1-Demo v1</span>
+        <span id="api-status" class="status-pill status-unknown">API …</span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Demo 样例</h2>
+        <p class="sidebar-hint">5 条固定数据 · 点击即审</p>
+        <div id="demo-case-list" class="case-list"></div>
+
+        <section class="sidebar-block">
+          <h3>相比裸 LLM</h3>
+          <ul class="value-list">
+            <li>法规 → 规则：可审计、可复现</li>
+            <li>Playbook：运营指引分层</li>
+            <li>LLM 仅补开放风险</li>
+            <li>Decision 多源融合</li>
+            <li>Case Library 沉淀判例</li>
+          </ul>
+        </section>
+      </aside>
+
+      <main class="main">
+        <nav class="tabs" role="tablist">
+          <button class="tab active" data-tab="review" role="tab">审核流程</button>
+          <button class="tab" data-tab="report" role="tab">审核报告</button>
+          <button class="tab" data-tab="trace" role="tab">Knowledge Trace</button>
+          <button class="tab" data-tab="cases" role="tab">Case Library</button>
+        </nav>
+
+        <!-- Review tab -->
+        <section id="panel-review" class="panel active" role="tabpanel">
+          <div class="review-header">
+            <div>
+              <h1 id="selected-case-title">选择左侧样例开始演示</h1>
+              <p id="selected-case-sub" class="muted"></p>
+            </div>
+            <button id="btn-run-review" class="btn primary" disabled>开始 AI 审核</button>
+          </div>
+
+          <div id="ad-preview" class="ad-preview empty">
+            <span class="muted">广告内容将显示在这里</span>
+          </div>
+
+          <div id="pipeline-stepper" class="stepper"></div>
+
+          <div id="pipeline-log" class="pipeline-log"></div>
+        </section>
+
+        <!-- Report tab -->
+        <section id="panel-report" class="panel" role="tabpanel" hidden>
+          <div class="report-toolbar">
+            <h2>审核报告</h2>
+            <div id="report-decision-badge" class="decision-badge hidden"></div>
+          </div>
+          <div id="report-empty" class="empty-state">
+            <p>完成一次审核后，HTML 报告将显示在此。</p>
+          </div>
+          <iframe id="report-frame" title="Review Report" hidden></iframe>
+        </section>
+
+        <!-- Knowledge Trace tab -->
+        <section id="panel-trace" class="panel" role="tabpanel" hidden>
+          <h2>Knowledge Trace</h2>
+          <p class="muted trace-intro">
+            完整链路：Regulation → Rule → Playbook → Prompt/LLM → Decision → Case
+          </p>
+          <div id="trace-timeline" class="trace-timeline"></div>
+        </section>
+
+        <!-- Case Library tab -->
+        <section id="panel-cases" class="panel" role="tabpanel" hidden>
+          <div class="cases-toolbar">
+            <h2>Case Library</h2>
+            <button id="btn-refresh-cases" class="btn secondary">刷新</button>
+          </div>
+          <div id="case-library-grid" class="case-grid"></div>
+          <aside id="case-detail" class="case-detail hidden"></aside>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <span>RC1-Demo · 冻结业务能力 · 仅 UI 打磨</span>
+      <span id="footer-review-id" class="muted"></span>
+    </footer>
+
+    <script src="/demo-ui/app.js" type="module"></script>
+  </body>
+</html>

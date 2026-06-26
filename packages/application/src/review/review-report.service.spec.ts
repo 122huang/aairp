@@ -1,0 +1,146 @@
+import { describe, expect, it } from 'vitest';
+import type { ReviewContext } from '@aairp/shared-kernel';
+import { DEMO_KNOWLEDGE_VERSIONS } from './context-builder.service.js';
+import { ReviewReportService } from './review-report.service.js';
+
+const baseContext: ReviewContext = {
+  reviewId: 'rev_test',
+  advertisementId: 'ad_test',
+  contentHash: 'hash123',
+  contentVersion: 1,
+  dimensions: {
+    tenantId: 'demo',
+    countryId: 'SG',
+    platformId: 'META',
+    categoryId: 'health.supplement',
+  },
+  normalizedContent: {
+    text: 'Clinically proven to cure diabetes in 7 days. Buy now!',
+    imageUrls: [],
+  },
+  resolvedKnowledgeVersions: DEMO_KNOWLEDGE_VERSIONS,
+  advertisementContext: {},
+  tags: [],
+  builtAt: '2026-06-26T10:05:00.000Z',
+};
+
+const fixedDate = new Date('2026-06-26T10:10:00.000Z');
+
+describe('ReviewReportService', () => {
+  it('renders HTML with decision, advertisement summary, and findings', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+
+    const result = service.render({
+      context: baseContext,
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'REJECT',
+        confidence: 1,
+        rationale: 'Rule BLOCKER finding requires rejection.',
+        findingCounts: { rule: 1, playbook: 1, llm: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [
+        {
+          module: 'RULE',
+          findingId: 'rf_blocker',
+          severity: 'BLOCKER',
+          decision: 'FAIL',
+          refType: 'RULE',
+          refId: 'demo-sg-health-forbidden-claim',
+          refVersionId: 'demo-sg-health-forbidden-claim-v1',
+          summary: 'Forbidden health cure claim',
+          confidence: 1,
+        },
+      ],
+      playbookFindings: [
+        {
+          module: 'PLAYBOOK',
+          findingId: 'pf_warn',
+          severity: 'MEDIUM',
+          decision: 'WARN',
+          refType: 'PLAYBOOK_PATTERN',
+          refId: 'urgency-cta',
+          refVersionId: 'urgency-cta-v1',
+          summary: 'Urgency call-to-action detected',
+          confidence: 0.8,
+        },
+      ],
+      openRiskResult: {
+        skipped: true,
+        skipReason: 'HAS_BLOCKER',
+        findings: [],
+      },
+    });
+
+    expect(result.reviewId).toBe('rev_test');
+    expect(result.generatedAt).toBe('2026-06-26T10:10:00.000Z');
+    expect(result.summary.finalDecision).toBe('REJECT');
+    expect(result.summary.findings).toHaveLength(2);
+    expect(result.reportHtml).toContain('decision-reject');
+    expect(result.reportHtml).toContain('Rule Findings');
+    expect(result.reportHtml).toContain('Playbook Findings');
+    expect(result.reportHtml).toContain('demo-sg-health-forbidden-claim');
+    expect(result.reportHtml).toContain('urgency-cta');
+    expect(result.reportHtml).toContain('HAS_BLOCKER');
+    expect(result.reportHtml).toContain('Clinically proven to cure diabetes');
+    expect(result.reportHtml).toContain('(High)');
+  });
+
+  it('escapes HTML in advertisement text and finding summaries', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+
+    const result = service.render({
+      context: {
+        ...baseContext,
+        normalizedContent: {
+          text: '<script>alert("x")</script>',
+          imageUrls: [],
+        },
+      },
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'PASS',
+        confidence: 0.95,
+        rationale: 'No blocking or warning findings.',
+        findingCounts: { rule: 0, playbook: 0, llm: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [],
+      playbookFindings: [],
+      openRiskResult: {
+        skipped: false,
+        findings: [],
+      },
+    });
+
+    expect(result.reportHtml).not.toContain('<script>alert');
+    expect(result.reportHtml).toContain('&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;');
+  });
+
+  it('shows empty findings row when no findings exist', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+
+    const result = service.render({
+      context: baseContext,
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'PASS',
+        confidence: 0.95,
+        rationale: 'No blocking or warning findings.',
+        findingCounts: { rule: 0, playbook: 0, llm: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [],
+      playbookFindings: [],
+      openRiskResult: {
+        skipped: false,
+        findings: [],
+      },
+    });
+
+    expect(result.reportHtml).toContain('decision-pass');
+    expect(result.reportHtml).toContain('Rule Findings');
+    expect(result.summary.findings).toEqual([]);
+  });
+});

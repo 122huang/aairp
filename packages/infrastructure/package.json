@@ -1,0 +1,35 @@
+{
+  "name": "@aairp/infrastructure",
+  "version": "0.1.0-sprint1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "migrate": "pnpm build && node dist/migration/run-migrations.js",
+    "kos:import-demo": "pnpm build && node dist/knowledge/run-kos-import-demo.js",
+    "kos:import-cases": "pnpm build && node dist/case/run-kos-import-cases.js",
+    "kos:index-case-embeddings": "pnpm build && node dist/case/run-kos-index-case-embeddings.js",
+    "kos:import-pilot-log": "pnpm build && node dist/knowledge/run-kos-import-pilot-log.js"
+  },
+  "dependencies": {
+    "@aairp/application": "workspace:*",
+    "@aairp/domain": "workspace:*",
+    "@aairp/shared-kernel": "workspace:*",
+    "ioredis": "^5.6.1",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

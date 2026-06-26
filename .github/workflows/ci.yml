@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm eval:benchmark -- --regression
+
+  migrate-smoke:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: aairp
+          POSTGRES_PASSWORD: aairp
+          POSTGRES_DB: aairp
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U aairp -d aairp"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Apply KOS migrations (E0-S2)
+        run: pnpm migrate
+        env:
+          DATABASE_URL: postgresql://aairp:aairp@localhost:5432/aairp
+      - name: Verify KOS tables exist
+        run: |
+          PGPASSWORD=aairp psql -h localhost -U aairp -d aairp -c "\dt app.*"
+          PGPASSWORD=aairp psql -h localhost -U aairp -d aairp -c "SELECT tablename FROM pg_tables WHERE schemaname = 'app' AND tablename IN ('regulation','case_record','rule_pack');"
+          PGPASSWORD=aairp psql -h localhost -U aairp -d aairp -c "SELECT version, name FROM infra.migration_history WHERE success = TRUE ORDER BY applied_at;"
+      - name: KOS publish integration test (E0-S5)
+        run: pnpm --filter @aairp/infrastructure test -- src/knowledge/pg-kos-publish.repository.integration.spec.ts
+        env:
+          DATABASE_URL: postgresql://aairp:aairp@localhost:5432/aairp
+      - name: KOS demo import (E0-S6)
+        run: pnpm kos:import-demo
+        env:
+          DATABASE_URL: postgresql://aairp:aairp@localhost:5432/aairp
+      - name: KOS demo import idempotency (E0-S6)
+        run: pnpm --filter @aairp/infrastructure test -- src/knowledge/kos-demo-import.integration.spec.ts
+        env:
+          DATABASE_URL: postgresql://aairp:aairp@localhost:5432/aairp

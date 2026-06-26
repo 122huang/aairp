@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+
+# Generated case JSON files (auto-saved after each review)
+case-library/cases/**/*.json
+case-library/index/manifest.json
+case-library/index/by-dimension/**
+
+# Keep structure and examples
+!case-library/cases/.gitkeep
+!case-library/index/.gitkeep
+!case-library/examples/**

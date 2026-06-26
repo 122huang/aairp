@@ -1,0 +1,23 @@
+{
+  "case_id": "jp-cosmetic-warn-antiaging",
+  "country_id": "JP",
+  "category_id": "cosmetic",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for JP cosmetic. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "JP",
+    "platform_id": "META",
+    "category_id": "cosmetic",
+    "content": {
+      "text": "Completely reverses aging — guaranteed to make you look 10 years younger in one week. Japan's #1 anti-aging serum. #ad"
+    },
+    "tags": ["pilot:cosmetic-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

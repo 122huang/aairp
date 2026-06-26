@@ -1,0 +1,23 @@
+{
+  "case_id": "jp-electronics-edge-specs",
+  "country_id": "JP",
+  "category_id": "electronics",
+  "platform_id": "META",
+  "intent": "EDGE",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for JP electronics. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "JP",
+    "platform_id": "META",
+    "category_id": "electronics",
+    "content": {
+      "text": "Ultra-thin laptop — weighs only 980g as measured in our lab. Battery life up to 12 hours under typical use conditions. #ad"
+    },
+    "tags": ["pilot:edge-specs"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

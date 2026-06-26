@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0.0",
+  "case_version": 1,
+  "case_id": "case_example_sg_health_reject",
+  "review_id": "rev_17171717-1717-1717-1717-171717171717",
+  "advertisement_id": "ad_16161616-1616-1616-1616-161616161616",
+  "lifecycle_status": "GENERATED",
+  "dimensions": {
+    "tenant_id": "demo",
+    "country_id": "SG",
+    "platform_id": "META",
+    "category_id": "health.supplement"
+  },
+  "advertisement": {
+    "advertisement_id": "ad_16161616-1616-1616-1616-161616161616",
+    "content_hash": "sha256:example",
+    "content_version": 1,
+    "ad_type": "SOCIAL_POST",
+    "content": {
+      "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+      "language": "en",
+      "image_urls": []
+    },
+    "tags": []
+  },
+  "context_builder_output": {
+    "review_id": "rev_17171717-1717-1717-1717-171717171717",
+    "content_hash": "sha256:example",
+    "content_version": 1,
+    "normalized_content": {
+      "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+      "imageUrls": []
+    },
+    "resolved_knowledge_versions": {
+      "rulePackVersion": "demo-rule-1.0.0",
+      "policyPackVersion": "demo-policy-1.0.0",
+      "playbookPackVersion": "demo-playbook-1.0.0"
+    },
+    "advertisement_context": {},
+    "tags": [],
+    "built_at": "2026-06-26T10:05:00.000Z"
+  },
+  "matched_rules": [
+    {
+      "finding_id": "rf_example",
+      "ref_id": "demo-sg-health-forbidden-claim",
+      "ref_version_id": "demo-sg-health-forbidden-claim-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Prohibited absolute health cure claims are not allowed",
+      "confidence": 1,
+      "evaluation_detail": {
+        "matched_spans": [{ "field": "text", "start": 20, "end": 24, "text": "cure" }],
+        "citation": {
+          "lawName": "SG Health Products Act (Demo)",
+          "article": "Section 7 — Prohibited claims"
+        }
+      }
+    }
+  ],
+  "matched_playbooks": [],
+  "llm_analysis": {
+    "prompt_pack_version": "demo-open-risk-1.1.0",
+    "skipped": true,
+    "skip_reason": "HAS_BLOCKER",
+    "findings": [],
+    "evaluated_at": "2026-06-26T10:08:00.000Z"
+  },
+  "decision": {
+    "ai_decision": "REJECT",
+    "confidence": 0.95,
+    "rationale": "Rule BLOCKER: demo-sg-health-forbidden-claim (BLOCKER)",
+    "finding_counts": { "rule": 1, "playbook": 0, "llm": 0 },
+    "decided_at": "2026-06-26T10:09:00.000Z",
+    "final_decision": "REJECT"
+  },
+  "evidence": [
+    {
+      "evidence_id": "ev_example",
+      "source_module": "RULE",
+      "source_ref_id": "demo-sg-health-forbidden-claim",
+      "evidence_type": "TEXT_SPAN",
+      "field": "text",
+      "start": 20,
+      "end": 24,
+      "text": "cure",
+      "regulation_ref": "SG Health Products Act (Demo) Section 7 — Prohibited claims"
+    }
+  ],
+  "recommendation": {
+    "summary": "Rule BLOCKER: demo-sg-health-forbidden-claim (BLOCKER)",
+    "actions": [
+      {
+        "priority": 1,
+        "action": "REMOVE_OR_REWORD",
+        "target": "text",
+        "detail": "Prohibited absolute health cure claims are not allowed"
+      }
+    ],
+    "derived_from": ["matched_rules", "matched_playbooks", "llm_analysis", "decision.rationale"]
+  },
+  "human_feedback": null,
+  "reference_regulations": [
+    {
+      "law_name": "SG Health Products Act (Demo)",
+      "article": "Section 7 — Prohibited claims",
+      "jurisdiction": "SG",
+      "source_module": "RULE",
+      "source_ref_id": "demo-sg-health-forbidden-claim"
+    }
+  ],
+  "metadata": {
+    "source": "demo/review",
+    "pipeline_version": "0.1.0-sprint1.5",
+    "open_risk_skipped": true,
+    "storage_phase": "json",
+    "review_id": "rev_17171717-1717-1717-1717-171717171717",
+    "embedding_id": null,
+    "similar_case_ids": []
+  },
+  "created_at": "2026-06-26T10:11:00.000Z",
+  "updated_at": "2026-06-26T10:11:00.000Z"
+}

@@ -1,0 +1,23 @@
+{
+  "case_id": "ph-cosmetic-warn-brightening",
+  "country_id": "PH",
+  "category_id": "cosmetic",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for PH cosmetic. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "PH",
+    "platform_id": "META",
+    "category_id": "cosmetic",
+    "content": {
+      "text": "Instantly gives you the fairest, brightest skin — guaranteed results in 5 days or your money back. #ad"
+    },
+    "tags": ["pilot:cosmetic-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

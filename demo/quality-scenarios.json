@@ -1,0 +1,144 @@
+{
+  "version": "1.0.0",
+  "description": "DEPRECATED — use benchmark/ad-manifest.json (Epic 3). Kept for reference only.",
+  "cases": [
+    {
+      "case_id": "sg-health-reject-cure",
+      "description": "Sample ad with forbidden cure claim → REJECT",
+      "context": {
+        "reviewId": "rev_quality_reject",
+        "advertisementId": "ad_quality_reject",
+        "contentHash": "hash_reject",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "expected": {
+        "finalDecision": "REJECT",
+        "must_include_rule_refs": ["demo-sg-health-forbidden-claim"],
+        "must_include_playbook_refs": ["urgency-cta", "unsubstantiated-testimonial"],
+        "open_risk_skipped": true,
+        "report_must_contain": ["decision-reject", "Rule Findings", "demo-sg-health-forbidden-claim"]
+      }
+    },
+    {
+      "case_id": "sg-health-pass-disclosed",
+      "description": "Clean ad with disclosure → PASS",
+      "context": {
+        "reviewId": "rev_quality_pass",
+        "advertisementId": "ad_quality_pass",
+        "contentHash": "hash_pass",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Daily vitamins for general wellness. #ad",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "expected": {
+        "finalDecision": "PASS",
+        "must_not_include_rule_refs": [
+          "demo-sg-health-forbidden-claim",
+          "demo-sg-health-superlative",
+          "demo-sg-sponsored-disclosure"
+        ],
+        "open_risk_skipped": false,
+        "report_must_contain": ["decision-pass"]
+      }
+    },
+    {
+      "case_id": "sg-health-fp-secure-no-cure",
+      "description": "Secure checkout must not trigger cure rule",
+      "context": {
+        "reviewId": "rev_quality_fp",
+        "advertisementId": "ad_quality_fp",
+        "contentHash": "hash_fp",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Secure checkout for daily wellness supplements. #ad",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "expected": {
+        "finalDecision": "PASS",
+        "must_not_include_rule_refs": ["demo-sg-health-forbidden-claim"]
+      }
+    },
+    {
+      "case_id": "sg-health-warn-disclosure",
+      "description": "Missing ad disclosure → WARN",
+      "context": {
+        "reviewId": "rev_quality_warn",
+        "advertisementId": "ad_quality_warn",
+        "contentHash": "hash_warn",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Daily vitamins for general wellness.",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "expected": {
+        "finalDecision": "WARN",
+        "must_include_rule_refs": ["demo-sg-sponsored-disclosure"],
+        "report_must_contain": ["decision-warn", "Playbook Findings"]
+      }
+    }
+  ]
+}

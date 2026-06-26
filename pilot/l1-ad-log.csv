@@ -1,0 +1,7 @@
+case_id,track,country_id,category_id,expected_decision,tags,source,ai_decision,agreement,reviewer,reviewed_at
+sg-health-reject-cure,L1,SG,health.supplement,REJECT,blocker,benchmark,,,,
+sg-health-pass-disclosed,L1,SG,health.supplement,PASS,,benchmark,,,,
+sg-health-fp-secure-no-cure,L1,SG,health.supplement,PASS,false-positive-guard,benchmark,,,,
+sg-health-warn-disclosure,L1,SG,health.supplement,WARN,,benchmark,,,,
+sg-health-warn-superlative,L1,SG,health.supplement,WARN,,benchmark,,,,
+sg-health-playbook-urgency,L1,SG,health.supplement,WARN,playbook,benchmark,,,,

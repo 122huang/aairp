@@ -1,0 +1,23 @@
+{
+  "case_id": "kr-cosmetic-warn-spf",
+  "country_id": "KR",
+  "category_id": "cosmetic",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for KR cosmetic. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "KR",
+    "platform_id": "META",
+    "category_id": "cosmetic",
+    "content": {
+      "text": "Total sun protection — 100% blocks all UV rays forever. The absolute best SPF cream on the market. #ad"
+    },
+    "tags": ["pilot:cosmetic-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

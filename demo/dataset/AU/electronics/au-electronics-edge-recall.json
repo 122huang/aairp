@@ -1,0 +1,23 @@
+{
+  "case_id": "au-electronics-edge-recall",
+  "country_id": "AU",
+  "category_id": "electronics",
+  "platform_id": "META",
+  "intent": "EDGE",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for AU electronics. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "AU",
+    "platform_id": "META",
+    "category_id": "electronics",
+    "content": {
+      "text": "Updated model — previous batch recalled for battery issue, now fully compliant with ACCC safety standards. #ad"
+    },
+    "tags": ["pilot:edge-recall"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

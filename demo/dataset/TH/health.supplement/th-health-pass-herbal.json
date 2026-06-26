@@ -1,0 +1,23 @@
+{
+  "case_id": "th-health-pass-herbal",
+  "country_id": "TH",
+  "category_id": "health.supplement",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for TH health.supplement. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "TH",
+    "platform_id": "META",
+    "category_id": "health.supplement",
+    "content": {
+      "text": "Traditional Thai herbal blend to complement your wellness lifestyle. General wellbeing support only — not a medicine. #ad"
+    },
+    "tags": ["pilot:health-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

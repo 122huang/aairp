@@ -1,0 +1,237 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark_id": "aairp-demo-benchmark",
+  "description": "Sprint 1.5 demo benchmark — ground truth for Rule/Playbook/Open Risk pipeline",
+  "dataset_index": "demo/dataset/index.json",
+  "dataset_note": "Full 32-case upload dataset; this manifest focuses on SG health pipeline regression",
+  "regression_subset": [
+    "sg-health-reject-cure",
+    "sg-health-pass-disclosed",
+    "sg-health-fp-secure-no-cure",
+    "sg-health-warn-disclosure",
+    "sg-health-warn-superlative",
+    "sg-health-playbook-urgency"
+  ],
+  "cases": [
+    {
+      "case_id": "sg-health-reject-cure",
+      "description": "Forbidden cure claim → REJECT with blocker rule",
+      "tags": ["SG", "health.supplement", "REJECT", "blocker"],
+      "context": {
+        "reviewId": "rev_bench_reject",
+        "advertisementId": "ad_bench_reject",
+        "contentHash": "hash_reject",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "ground_truth": {
+        "expected_decision": "REJECT",
+        "expected_findings": [
+          { "module": "RULE", "ref_id": "demo-sg-health-forbidden-claim" },
+          { "module": "PLAYBOOK", "ref_id": "urgency-cta" },
+          { "module": "PLAYBOOK", "ref_id": "unsubstantiated-testimonial" }
+        ],
+        "open_risk_skipped": true
+      }
+    },
+    {
+      "case_id": "sg-health-pass-disclosed",
+      "description": "Clean ad with disclosure → PASS",
+      "tags": ["SG", "health.supplement", "PASS"],
+      "context": {
+        "reviewId": "rev_bench_pass",
+        "advertisementId": "ad_bench_pass",
+        "contentHash": "hash_pass",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Daily vitamins for general wellness. #ad",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "ground_truth": {
+        "expected_decision": "PASS",
+        "expected_findings": [],
+        "must_not_include_refs": [
+          "demo-sg-health-forbidden-claim",
+          "demo-sg-health-superlative",
+          "demo-sg-sponsored-disclosure"
+        ],
+        "open_risk_skipped": false
+      }
+    },
+    {
+      "case_id": "sg-health-fp-secure-no-cure",
+      "description": "Secure must not false-trigger cure rule",
+      "tags": ["SG", "health.supplement", "PASS", "false-positive-guard"],
+      "context": {
+        "reviewId": "rev_bench_fp",
+        "advertisementId": "ad_bench_fp",
+        "contentHash": "hash_fp",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Secure checkout for daily wellness supplements. #ad",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "ground_truth": {
+        "expected_decision": "PASS",
+        "expected_findings": [],
+        "must_not_include_refs": ["demo-sg-health-forbidden-claim"]
+      }
+    },
+    {
+      "case_id": "sg-health-warn-disclosure",
+      "description": "Missing ad disclosure → WARN",
+      "tags": ["SG", "health.supplement", "WARN"],
+      "context": {
+        "reviewId": "rev_bench_warn_disc",
+        "advertisementId": "ad_bench_warn_disc",
+        "contentHash": "hash_warn_disc",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Daily vitamins for general wellness.",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "ground_truth": {
+        "expected_decision": "WARN",
+        "expected_findings": [
+          { "module": "RULE", "ref_id": "demo-sg-sponsored-disclosure" }
+        ]
+      }
+    },
+    {
+      "case_id": "sg-health-warn-superlative",
+      "description": "Superlative claim without blocker → WARN",
+      "tags": ["SG", "health.supplement", "WARN"],
+      "context": {
+        "reviewId": "rev_bench_warn_sup",
+        "advertisementId": "ad_bench_warn_sup",
+        "contentHash": "hash_warn_sup",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Clinically proven vitamins for daily wellness. #ad",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "ground_truth": {
+        "expected_decision": "WARN",
+        "expected_findings": [
+          { "module": "RULE", "ref_id": "demo-sg-health-superlative" },
+          { "module": "PLAYBOOK", "ref_id": "unsubstantiated-testimonial" }
+        ],
+        "must_not_include_refs": ["demo-sg-health-forbidden-claim"],
+        "open_risk_skipped": false
+      }
+    },
+    {
+      "case_id": "sg-health-playbook-urgency",
+      "description": "Urgency CTA playbook → WARN",
+      "tags": ["SG", "health.supplement", "WARN", "playbook"],
+      "context": {
+        "reviewId": "rev_bench_urgency",
+        "advertisementId": "ad_bench_urgency",
+        "contentHash": "hash_urgency",
+        "contentVersion": 1,
+        "dimensions": {
+          "tenantId": "demo",
+          "countryId": "SG",
+          "platformId": "META",
+          "categoryId": "health.supplement"
+        },
+        "normalizedContent": {
+          "text": "Limited time offer on wellness packs. #ad",
+          "imageUrls": []
+        },
+        "resolvedKnowledgeVersions": {
+          "rulePackVersion": "demo-rule-1.0.0",
+          "playbookPackVersion": "demo-playbook-1.0.0",
+          "promptPackVersion": "demo-open-risk-1.1.0"
+        },
+        "advertisementContext": {},
+        "tags": [],
+        "builtAt": "2026-06-26T10:05:00.000Z"
+      },
+      "ground_truth": {
+        "expected_decision": "WARN",
+        "expected_findings": [
+          { "module": "PLAYBOOK", "ref_id": "urgency-cta" }
+        ],
+        "must_not_include_refs": ["demo-sg-health-forbidden-claim"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "case_id": "ph-electronics-edge-delivery",
+  "country_id": "PH",
+  "category_id": "electronics",
+  "platform_id": "META",
+  "intent": "EDGE",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for PH electronics. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "PH",
+    "platform_id": "META",
+    "category_id": "electronics",
+    "content": {
+      "text": "Smartphone with same-day delivery in Metro Manila — free shipping on orders over PHP 5,000. Delivery times may vary by location. #ad"
+    },
+    "tags": ["pilot:edge-delivery"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

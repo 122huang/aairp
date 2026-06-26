@@ -1,0 +1,23 @@
+{
+  "case_id": "sg-cosmetic-warn-claims",
+  "country_id": "SG",
+  "category_id": "cosmetic",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "manual",
+  "notes": "Absolute beauty efficacy claim — intent WARN for pilot; current demo engine has no SG cosmetic rules.",
+  "tags": ["demo", "draft", "cosmetic"],
+  "upload": {
+    "country_id": "SG",
+    "platform_id": "META",
+    "category_id": "cosmetic",
+    "content": {
+      "text": "Guaranteed flawless skin in 7 days. Shop our serum today. #ad"
+    },
+    "tags": ["pilot:cosmetic-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "case_id": "my-health-pass-wellness",
+  "country_id": "MY",
+  "category_id": "health.supplement",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for MY health.supplement. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "MY",
+    "platform_id": "META",
+    "category_id": "health.supplement",
+    "content": {
+      "text": "Support your daily wellness routine with our plant-based supplement blend. No medical claims — just quality ingredients for everyday balance. #ad"
+    },
+    "tags": ["pilot:health-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

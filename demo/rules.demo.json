@@ -1,0 +1,45 @@
+{
+  "pack_version": "demo-rule-1.0.0",
+  "rules": [
+    {
+      "rule_id": "demo-sg-health-forbidden-claim",
+      "rule_version_id": "demo-sg-health-forbidden-claim-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Prohibited absolute health cure claims are not allowed",
+      "forbidden_terms": ["100% cure", "100% effective", "cure", "miracle"],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": ["health.supplement"]
+      },
+      "citation": {
+        "law_name": "SG Health Products Act (Demo)",
+        "article": "Section 7 — Prohibited claims"
+      }
+    },
+    {
+      "rule_id": "demo-sg-health-superlative",
+      "rule_version_id": "demo-sg-health-superlative-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Unsubstantiated superlative or efficacy claims require substantiation",
+      "trigger_terms": ["clinically proven", "guaranteed", "100%", "instant results"],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": ["health.supplement"]
+      }
+    },
+    {
+      "rule_id": "demo-sg-sponsored-disclosure",
+      "rule_version_id": "demo-sg-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "WARN",
+      "summary": "Sponsored or promotional content should include an ad disclosure",
+      "required_any_terms": ["#ad", "sponsored", "advertisement", "广告"],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": ["health.supplement"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "case_id": "th-electronics-edge-warranty",
+  "country_id": "TH",
+  "category_id": "electronics",
+  "platform_id": "META",
+  "intent": "EDGE",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for TH electronics. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "TH",
+    "platform_id": "META",
+    "category_id": "electronics",
+    "content": {
+      "text": "Smart TV with 1-year limited warranty — covers manufacturing defects only. Extended warranty available separately. #ad"
+    },
+    "tags": ["pilot:edge-warranty"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}

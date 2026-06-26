@@ -1,0 +1,23 @@
+{
+  "case_id": "au-health-pass-wellness",
+  "country_id": "AU",
+  "category_id": "health.supplement",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "manual",
+  "notes": "Demo-only pilot sample for AU health.supplement. Not legal advice.",
+  "tags": ["demo", "draft"],
+  "upload": {
+    "country_id": "AU",
+    "platform_id": "META",
+    "category_id": "health.supplement",
+    "content": {
+      "text": "Australian-made wellness supplement to support your daily routine. Listed on the ARTG. General wellbeing only — not a medicine. #ad"
+    },
+    "tags": ["pilot:health-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": []
+  }
+}
