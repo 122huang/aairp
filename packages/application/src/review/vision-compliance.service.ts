@@ -117,6 +117,16 @@ function createVisionFinding(
   };
 }
 
+export function resolveVisionAdTextReference(context: ReviewContext): string {
+  const adText = context.normalizedContent.text.trim();
+  if (adText) {
+    return adText;
+  }
+
+  const countryId = context.dimensions.countryId;
+  return `Target market is ${countryId}. The primary language should be the local language or English. Flag any non-English, non-local-language text visible on product panels or UI elements.`;
+}
+
 export function renderVisionPrompt(
   template: string,
   context: ReviewContext,
@@ -131,7 +141,7 @@ export function renderVisionPrompt(
     .replaceAll('{slice_type}', slice.sliceType)
     .replaceAll('{slice_y_start}', String(slice.yStart))
     .replaceAll('{slice_y_end}', String(slice.yEnd))
-    .replaceAll('{ad_text}', context.normalizedContent.text)
+    .replaceAll('{ad_text}', resolveVisionAdTextReference(context))
     .replaceAll('{ocr_text}', context.normalizedContent.ocrText ?? '')
     .replaceAll(
       '{image_url}',

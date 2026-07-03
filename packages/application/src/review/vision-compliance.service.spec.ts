@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import type { ReviewContext } from '@aairp/shared-kernel';
+import type { ImageSlice, ReviewContext } from '@aairp/shared-kernel';
 import { DEMO_KNOWLEDGE_VERSIONS } from './context-builder.service.js';
-import { VisionComplianceService } from './vision-compliance.service.js';
+import {
+  renderVisionPrompt,
+  resolveVisionAdTextReference,
+  VisionComplianceService,
+} from './vision-compliance.service.js';
 
 const baseContext: ReviewContext = {
   reviewId: 'rev_vision_test',
@@ -25,7 +29,67 @@ const baseContext: ReviewContext = {
   builtAt: '2026-06-29T00:00:00.000Z',
 };
 
+const sampleSlice: ImageSlice = {
+  sliceId: 'slice_0',
+  sourceImageIndex: 0,
+  sliceIndex: 0,
+  sliceType: 'full',
+  yStart: 0,
+  yEnd: 1,
+};
+
 describe('VisionComplianceService', () => {
+  it('injects market language guidance when ad text is empty', () => {
+    const context: ReviewContext = {
+      ...baseContext,
+      normalizedContent: {
+        text: '',
+        imageUrls: ['https://example.com/pdp.jpg'],
+        imageDimensions: [{ width: 800, height: 3200 }],
+      },
+    };
+
+    expect(resolveVisionAdTextReference(context)).toContain('Target market is SG');
+    expect(resolveVisionAdTextReference(context)).toContain(
+      'non-English, non-local-language text visible on product panels',
+    );
+
+    const prompt = renderVisionPrompt('Ad text: {ad_text}', context, sampleSlice);
+    expect(prompt).toContain('Target market is SG');
+    expect(prompt).not.toMatch(/Ad text:\s*$/);
+  });
+
+  it('returns panel_language findings for image-only stub scenario', async () => {
+    const previous = process.env.AAIRP_VISION_MODE;
+    process.env.AAIRP_VISION_MODE = 'stub';
+
+    try {
+      const service = new VisionComplianceService();
+      const result = await service.discover({
+        ...baseContext,
+        normalizedContent: {
+          text: '',
+          imageUrls: ['https://cdn.example.com/cn-panel-unreplaced-pos.jpg'],
+          imageDimensions: [{ width: 800, height: 1200 }],
+        },
+      });
+
+      expect(result.skipped).toBe(false);
+      expect(result.findings.length).toBeGreaterThan(0);
+      expect(
+        result.findings.some(
+          (finding) => finding.evaluationDetail?.scanDimension === 'panel_language',
+        ),
+      ).toBe(true);
+    } finally {
+      if (previous === undefined) {
+        delete process.env.AAIRP_VISION_MODE;
+      } else {
+        process.env.AAIRP_VISION_MODE = previous;
+      }
+    }
+  });
+
   it('skips when vision mode is off', async () => {
     const previous = process.env.AAIRP_VISION_MODE;
     process.env.AAIRP_VISION_MODE = 'off';

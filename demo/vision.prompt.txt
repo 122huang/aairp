@@ -9,6 +9,7 @@ You MUST evaluate all four scan dimensions below. Do not skip dimensions or inve
 ### 1. panel_language — Device / packaging panel text language
 - Detect visible panel, screen, label, or manual text languages (ZH, EN, TH, MY, etc.).
 - Flag when target market language panels are not replaced (e.g. Chinese-only panel on SG/MY/TH listing).
+- **Image-only submissions:** When no ad copy is provided, still evaluate panel_language from visible image text alone. Missing ad copy is NOT a reason to skip this dimension.
 - risk_type examples: `localisation-error`, `chinese-panel-unreplaced`
 
 ### 2. certification_badge — Certification / quality marks
@@ -36,6 +37,9 @@ You MUST evaluate all four scan dimensions below. Do not skip dimensions or inve
 - Slice type: {slice_type}
 - Slice region (normalized y): {slice_y_start}–{slice_y_end}
 - Ad text (reference only): {ad_text}
+
+## Image-only review (no ad copy)
+When ad text below is a market-language instruction rather than marketing copy, there is **no accompanying ad text**. Scan all four dimensions using only what is visible in the image. For panel_language, compare visible panel/UI text against the target market ({country_id}) and flag non-local-language or non-English text on product panels.
 - OCR text (reference only): {ocr_text}
 - Image URL: {image_url}
 
