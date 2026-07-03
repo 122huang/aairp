@@ -44,23 +44,29 @@ export function resolveVisionGatewayConfig(): { timeoutMs: number; maxRetries: n
   };
 }
 
-export function resolveVisionLlmProvider(): VisionLlmProvider | null {
-  const preferred = process.env.VISION_LLM_PROVIDER?.trim().toLowerCase();
-  if (preferred === 'deepseek') {
-    return process.env.DEEPSEEK_API_KEY?.trim() ? 'deepseek' : null;
-  }
-  if (process.env.DEEPSEEK_API_KEY?.trim()) {
-    return 'deepseek';
-  }
-  return null;
+export function resolveVisionLiveConfig(): {
+  baseUrl: string;
+  model: string;
+  apiKey: string | null;
+} {
+  const apiKey =
+    process.env.VISION_LLM_API_KEY?.trim() || process.env.DEEPSEEK_API_KEY?.trim() || null;
+  const baseUrl = (
+    process.env.VISION_LLM_BASE_URL?.trim() || 'https://api.siliconflow.cn/v1'
+  ).replace(/\/$/, '');
+  const model = process.env.VISION_LLM_MODEL?.trim() || 'Qwen/Qwen3.6-35B-A3B';
+  return { baseUrl, model, apiKey };
 }
 
-function resolveVisionModel(): string {
-  const configured = process.env.VISION_LLM_MODEL?.trim();
-  if (configured) {
-    return configured;
+export function resolveVisionLlmProvider(): VisionLlmProvider | null {
+  if (!resolveVisionLiveConfig().apiKey) {
+    return null;
   }
-  return 'deepseek-vl2';
+  return 'deepseek';
+}
+
+function resolveVisionChatCompletionsUrl(baseUrl: string): string {
+  return baseUrl.endsWith('/v1') ? `${baseUrl}/chat/completions` : `${baseUrl}/v1/chat/completions`;
 }
 
 export function resolveVisionImageUrl(options?: LlmGatewayCompleteOptions): string | undefined {
@@ -89,52 +95,65 @@ async function readOpenAiText(data: JsonMessage): Promise<string> {
   const choice = (data.choices as JsonMessage[] | undefined)?.[0];
   const message = choice?.message as JsonMessage | undefined;
   const content = message?.content;
-  if (typeof content !== 'string' || !content.trim()) {
-    throw new Error('Vision LLM response missing message content');
+  if (typeof content === 'string' && content.trim()) {
+    return content;
   }
-  return content;
+  const reasoning = message?.reasoning_content;
+  if (typeof reasoning === 'string' && reasoning.trim()) {
+    throw new Error(
+      'Vision LLM returned reasoning_content only; disable thinking (enable_thinking=false) or increase max_tokens',
+    );
+  }
+  throw new Error('Vision LLM response missing message content');
 }
 
-async function completeDeepSeekVision(
+function buildVisionRequestBody(
+  model: string,
+  maxTokens: number,
+  content: MultimodalContentPart[],
+): JsonMessage {
+  const body: JsonMessage = {
+    model,
+    max_tokens: maxTokens,
+    messages: [{ role: 'user', content }],
+  };
+  if (/qwen/i.test(model)) {
+    body.enable_thinking = false;
+  }
+  return body;
+}
+
+async function completeVisionLive(
   prompt: string,
   options: LlmGatewayCompleteOptions | undefined,
   maxTokens: number,
 ): Promise<string> {
-  const apiKey = process.env.DEEPSEEK_API_KEY?.trim();
+  const { baseUrl, model, apiKey } = resolveVisionLiveConfig();
   if (!apiKey) {
-    throw new Error('DEEPSEEK_API_KEY is not configured for VISION live mode');
+    throw new Error(
+      'VISION_LLM_API_KEY or DEEPSEEK_API_KEY is not configured for VISION live mode',
+    );
   }
 
-  const baseUrl = (process.env.DEEPSEEK_BASE_URL?.trim() || 'https://api.deepseek.com').replace(
-    /\/$/,
-    '',
-  );
-  const model = resolveVisionModel();
   const content: MultimodalContentPart[] = [];
-
   const imageUrl = resolveVisionImageUrl(options);
   if (imageUrl) {
     content.push({ type: 'image_url', image_url: { url: imageUrl } });
   }
   content.push({ type: 'text', text: prompt });
 
-  const response = await fetch(`${baseUrl}/v1/chat/completions`, {
+  const response = await fetch(resolveVisionChatCompletionsUrl(baseUrl), {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
       'content-type': 'application/json',
     },
-    body: JSON.stringify({
-      model,
-      max_tokens: maxTokens,
-      response_format: { type: 'json_object' },
-      messages: [{ role: 'user', content }],
-    }),
+    body: JSON.stringify(buildVisionRequestBody(model, maxTokens, content)),
   });
 
   if (!response.ok) {
     const errText = await response.text();
-    throw new Error(`Vision DeepSeek API ${response.status}: ${errText.slice(0, 300)}`);
+    throw new Error(`Vision LLM API ${response.status}: ${errText.slice(0, 500)}`);
   }
 
   return readOpenAiText((await response.json()) as JsonMessage);
@@ -159,12 +178,12 @@ export class VisionLlmGateway implements ILlmGateway {
     const provider = this.config.provider ?? resolveVisionLlmProvider();
     if (!provider) {
       throw new Error(
-        'VISION live mode requires VISION_LLM_PROVIDER=deepseek and DEEPSEEK_API_KEY',
+        'VISION live mode requires VISION_LLM_API_KEY (or DEEPSEEK_API_KEY) and AAIRP_VISION_MODE=live',
       );
     }
 
     const maxTokens = this.config.maxTokens ?? Number(process.env.VISION_MAX_TOKENS ?? 2048);
-    const content = await completeDeepSeekVision(prompt, options, maxTokens);
+    const content = await completeVisionLive(prompt, options, maxTokens);
     return { content };
   }
 }
