@@ -134,9 +134,9 @@ export function renderHighlightedText(sourceText: string, spans: HighlightSpan[]
   return parts;
 }
 
-const MAX_REVIEW_IMAGE_LONG_EDGE = 1200;
-const JPEG_QUALITY = 0.8;
-const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(1.5 * 1024 * 1024);
+const MAX_REVIEW_IMAGE_LONG_EDGE = 2000;
+const JPEG_QUALITY = 0.85;
+const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(3 * 1024 * 1024);
 
 function loadImageFromFile(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -177,30 +177,8 @@ function drawImageToCanvas(image: HTMLImageElement, longEdge: number): HTMLCanva
 
 export async function compressImageForReview(file: File): Promise<string> {
   const image = await loadImageFromFile(file);
-  let longEdge = MAX_REVIEW_IMAGE_LONG_EDGE;
-  let quality = JPEG_QUALITY;
-  let dataUrl = '';
-
-  while (longEdge >= 320) {
-    const canvas = drawImageToCanvas(image, longEdge);
-    quality = JPEG_QUALITY;
-
-    while (quality >= 0.5) {
-      dataUrl = encodeCanvasToJpegDataUrl(canvas, quality);
-      if (dataUrl.length <= MAX_REVIEW_IMAGE_DATA_URL_LENGTH) {
-        return dataUrl;
-      }
-      quality = Math.round((quality - 0.05) * 100) / 100;
-    }
-
-    longEdge = Math.round(longEdge * 0.85);
-  }
-
-  if (!dataUrl) {
-    throw new Error(`Unable to compress image below 1.5MB: ${file.name}`);
-  }
-
-  return dataUrl;
+  const canvas = drawImageToCanvas(image, MAX_REVIEW_IMAGE_LONG_EDGE);
+  return encodeCanvasToJpegDataUrl(canvas, JPEG_QUALITY);
 }
 
 export async function filesToBase64(
