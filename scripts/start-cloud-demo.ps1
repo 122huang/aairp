@@ -30,22 +30,27 @@ if (-not [string]::IsNullOrWhiteSpace($env:DEEPSEEK_API_KEY)) {
 }
 Write-Host ""
 
-Write-Host "[1/4] Fix Neon migration PK (if needed)..."
+Write-Host "[1/5] Fix Neon migration PK (if needed)..."
 node "$PSScriptRoot\fix-neon-db.mjs"
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host ""
-Write-Host "[2/4] Database migrate..."
+Write-Host "[2/5] Database migrate..."
 pnpm migrate
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host ""
-Write-Host "[3/4] Seed RC1 demo cases..."
+Write-Host "[3/5] Seed RC1 demo cases..."
 pnpm seed:rc1-cases
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host ""
-Write-Host "[4/4] Free port 3000 (if occupied)..."
+Write-Host "[4/5] Build review UI (review-app/dist)..."
+pnpm build:review-app
+if ($LASTEXITCODE -ne 0) { exit 1 }
+
+Write-Host ""
+Write-Host "[5/5] Free port 3000 (if occupied)..."
 function Stop-PortListener([int]$Port) {
   $stopped = @()
   try {
