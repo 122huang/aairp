@@ -84,24 +84,40 @@ export type ReviewApiError = {
 };
 
 export async function submitReview(payload: ReviewUploadPayload): Promise<DemoReviewResponse> {
-  const response = await fetch('/demo/review', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 90_000);
 
-  const body: unknown = await response.json().catch(() => null);
+  try {
+    const response = await fetch('/demo/review', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
 
-  if (!response.ok) {
-    const message =
-      body && typeof body === 'object' && 'detail' in body && typeof (body as { detail: unknown }).detail === 'string'
-        ? (body as { detail: string }).detail
-        : `Review request failed (${response.status})`;
-    throw { message, status: response.status, details: body } satisfies ReviewApiError;
+    const body: unknown = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      const message =
+        body && typeof body === 'object' && 'detail' in body && typeof (body as { detail: unknown }).detail === 'string'
+          ? (body as { detail: string }).detail
+          : `Review request failed (${response.status})`;
+      throw { message, status: response.status, details: body } satisfies ReviewApiError;
+    }
+
+    return body as DemoReviewResponse;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw {
+        message: '审核请求超时（90秒），请稍后重试或缩小图片后提交',
+        status: 408,
+      } satisfies ReviewApiError;
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  return body as DemoReviewResponse;
 }

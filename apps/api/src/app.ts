@@ -92,6 +92,7 @@ export async function buildApp(config: ApiConfig) {
   const app = Fastify({
     logger: true,
     bodyLimit: 10 * 1024 * 1024,
+    requestTimeout: 120_000,
   });
 
   registerTraceMiddleware(app);
@@ -287,5 +288,6 @@ export async function buildApp(config: ApiConfig) {
 export async function startServer(config: ApiConfig) {
   const app = await buildApp(config);
   await app.listen({ host: config.host, port: config.port });
+  app.server.requestTimeout = 120_000;
   return app;
 }
