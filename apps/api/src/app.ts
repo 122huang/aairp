@@ -91,7 +91,7 @@ export function loadApiConfig(): ApiConfig {
 export async function buildApp(config: ApiConfig) {
   const app = Fastify({
     logger: true,
-    bodyLimit: 256 * 1024,
+    bodyLimit: 10 * 1024 * 1024,
   });
 
   registerTraceMiddleware(app);
