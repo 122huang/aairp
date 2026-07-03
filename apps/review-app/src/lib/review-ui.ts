@@ -134,26 +134,80 @@ export function renderHighlightedText(sourceText: string, spans: HighlightSpan[]
   return parts;
 }
 
-function readFileAsDataUrl(file: File): Promise<string> {
+const MAX_REVIEW_IMAGE_LONG_EDGE = 1200;
+const JPEG_QUALITY = 0.8;
+const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(1.5 * 1024 * 1024);
+
+function loadImageFromFile(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        resolve(reader.result);
-      } else {
-        reject(new Error('Failed to read file as data URL'));
-      }
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(image);
     };
-    reader.onerror = () => reject(reader.error ?? new Error('FileReader failed'));
-    reader.readAsDataURL(file);
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error(`Failed to load image: ${file.name}`));
+    };
+    image.src = url;
   });
+}
+
+function encodeCanvasToJpegDataUrl(canvas: HTMLCanvasElement, quality: number): string {
+  return canvas.toDataURL('image/jpeg', quality);
+}
+
+function drawImageToCanvas(image: HTMLImageElement, longEdge: number): HTMLCanvasElement {
+  const scale = longEdge / Math.max(image.naturalWidth, image.naturalHeight);
+  const width = Math.max(1, Math.round(image.naturalWidth * scale));
+  const height = Math.max(1, Math.round(image.naturalHeight * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    throw new Error('Canvas is not supported in this browser');
+  }
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(image, 0, 0, width, height);
+  return canvas;
+}
+
+export async function compressImageForReview(file: File): Promise<string> {
+  const image = await loadImageFromFile(file);
+  let longEdge = MAX_REVIEW_IMAGE_LONG_EDGE;
+  let quality = JPEG_QUALITY;
+  let dataUrl = '';
+
+  while (longEdge >= 320) {
+    const canvas = drawImageToCanvas(image, longEdge);
+    quality = JPEG_QUALITY;
+
+    while (quality >= 0.5) {
+      dataUrl = encodeCanvasToJpegDataUrl(canvas, quality);
+      if (dataUrl.length <= MAX_REVIEW_IMAGE_DATA_URL_LENGTH) {
+        return dataUrl;
+      }
+      quality = Math.round((quality - 0.05) * 100) / 100;
+    }
+
+    longEdge = Math.round(longEdge * 0.85);
+  }
+
+  if (!dataUrl) {
+    throw new Error(`Unable to compress image below 1.5MB: ${file.name}`);
+  }
+
+  return dataUrl;
 }
 
 export async function filesToBase64(
   files: File[],
 ): Promise<{ previews: string[]; imageDataUrls: string[] }> {
   const previews = files.map((file) => URL.createObjectURL(file));
-  const imageDataUrls = await Promise.all(files.map(readFileAsDataUrl));
+  const imageDataUrls = await Promise.all(files.map((file) => compressImageForReview(file)));
   return { previews, imageDataUrls };
 }
 
