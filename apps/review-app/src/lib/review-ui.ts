@@ -136,7 +136,7 @@ export function renderHighlightedText(sourceText: string, spans: HighlightSpan[]
 
 const MAX_REVIEW_IMAGE_LONG_EDGE = 2000;
 const JPEG_QUALITY = 0.85;
-const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(3 * 1024 * 1024);
+export const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(3 * 1024 * 1024);
 
 function loadImageFromFile(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
