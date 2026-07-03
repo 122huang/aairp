@@ -135,8 +135,9 @@ export function renderHighlightedText(sourceText: string, spans: HighlightSpan[]
 }
 
 const MAX_REVIEW_IMAGE_LONG_EDGE = 2000;
+const MIN_REVIEW_IMAGE_SHORT_EDGE = 400;
 const JPEG_QUALITY = 0.85;
-export const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(3 * 1024 * 1024);
+const MAX_REVIEW_IMAGE_DATA_URL_LENGTH = Math.floor(3 * 1024 * 1024);
 
 function loadImageFromFile(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -158,10 +159,34 @@ function encodeCanvasToJpegDataUrl(canvas: HTMLCanvasElement, quality: number): 
   return canvas.toDataURL('image/jpeg', quality);
 }
 
-function drawImageToCanvas(image: HTMLImageElement, longEdge: number): HTMLCanvasElement {
-  const scale = longEdge / Math.max(image.naturalWidth, image.naturalHeight);
-  const width = Math.max(1, Math.round(image.naturalWidth * scale));
-  const height = Math.max(1, Math.round(image.naturalHeight * scale));
+function computeReviewImageDimensions(
+  naturalWidth: number,
+  naturalHeight: number,
+): { width: number; height: number } {
+  const longEdge = Math.max(naturalWidth, naturalHeight);
+  const shortEdge = Math.min(naturalWidth, naturalHeight);
+
+  if (longEdge <= MAX_REVIEW_IMAGE_LONG_EDGE) {
+    return { width: naturalWidth, height: naturalHeight };
+  }
+
+  const scaleByLong = MAX_REVIEW_IMAGE_LONG_EDGE / longEdge;
+  if (shortEdge * scaleByLong >= MIN_REVIEW_IMAGE_SHORT_EDGE) {
+    return {
+      width: Math.max(1, Math.round(naturalWidth * scaleByLong)),
+      height: Math.max(1, Math.round(naturalHeight * scaleByLong)),
+    };
+  }
+
+  const scaleByShort = MIN_REVIEW_IMAGE_SHORT_EDGE / shortEdge;
+  return {
+    width: Math.max(1, Math.round(naturalWidth * scaleByShort)),
+    height: Math.max(1, Math.round(naturalHeight * scaleByShort)),
+  };
+}
+
+function drawImageToCanvas(image: HTMLImageElement): HTMLCanvasElement {
+  const { width, height } = computeReviewImageDimensions(image.naturalWidth, image.naturalHeight);
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
@@ -177,8 +202,16 @@ function drawImageToCanvas(image: HTMLImageElement, longEdge: number): HTMLCanva
 
 export async function compressImageForReview(file: File): Promise<string> {
   const image = await loadImageFromFile(file);
-  const canvas = drawImageToCanvas(image, MAX_REVIEW_IMAGE_LONG_EDGE);
-  return encodeCanvasToJpegDataUrl(canvas, JPEG_QUALITY);
+  const canvas = drawImageToCanvas(image);
+  const dataUrl = encodeCanvasToJpegDataUrl(canvas, JPEG_QUALITY);
+
+  if (dataUrl.length > MAX_REVIEW_IMAGE_DATA_URL_LENGTH) {
+    throw new Error(
+      `Compressed image exceeds 3MB data URL limit (${file.name}): ${(dataUrl.length / 1024 / 1024).toFixed(2)} MB`,
+    );
+  }
+
+  return dataUrl;
 }
 
 export async function filesToBase64(
