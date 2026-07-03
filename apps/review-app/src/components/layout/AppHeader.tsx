@@ -19,7 +19,7 @@ export function AppHeader({ viewMode, onViewModeChange }: AppHeaderProps) {
           </div>
           <div className="min-w-0">
             <h1 className="text-base font-semibold leading-tight text-ink">Ad Compliance Hub</h1>
-            <p className="text-[9.6px] leading-tight text-muted-foreground">广告合规宝</p>
+            <p className="text-[9.6px] leading-tight text-muted-foreground">广告合规中心</p>
           </div>
         </div>
         <ViewModeToggle value={viewMode} onChange={onViewModeChange} />
