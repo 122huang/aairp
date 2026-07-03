@@ -28,12 +28,12 @@ describe('vision-llm.gateway', () => {
     expect(resolveVisionLlmProvider()).toBe('deepseek');
   });
 
-  it('defaults SiliconFlow base URL and Qwen3.6 vision model', () => {
+  it('defaults SiliconFlow base URL and Qwen3-VL vision model', () => {
     delete process.env.VISION_LLM_BASE_URL;
     delete process.env.VISION_LLM_MODEL;
     expect(resolveVisionLiveConfig()).toMatchObject({
       baseUrl: 'https://api.siliconflow.cn/v1',
-      model: 'Qwen/Qwen3.6-35B-A3B',
+      model: 'Qwen/Qwen3-VL-8B-Instruct',
     });
   });
 
@@ -52,7 +52,7 @@ describe('vision-llm.gateway', () => {
     process.env.AAIRP_VISION_MODE = 'live';
     process.env.VISION_LLM_API_KEY = 'test-key';
     process.env.VISION_LLM_BASE_URL = 'https://api.siliconflow.cn/v1';
-    process.env.VISION_LLM_MODEL = 'Qwen/Qwen3.6-35B-A3B';
+    process.env.VISION_LLM_MODEL = 'Qwen/Qwen3-VL-8B-Instruct';
 
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
@@ -72,8 +72,8 @@ describe('vision-llm.gateway', () => {
       'https://api.siliconflow.cn/v1/chat/completions',
     );
     const requestBody = JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body));
-    expect(requestBody.model).toBe('Qwen/Qwen3.6-35B-A3B');
-    expect(requestBody.enable_thinking).toBe(false);
+    expect(requestBody.model).toBe('Qwen/Qwen3-VL-8B-Instruct');
+    expect(requestBody.enable_thinking).toBeUndefined();
     expect(requestBody.messages[0].content).toEqual(
       expect.arrayContaining([
         { type: 'image_url', image_url: { url: imageUrl } },

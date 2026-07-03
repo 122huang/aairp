@@ -54,7 +54,7 @@ export function resolveVisionLiveConfig(): {
   const baseUrl = (
     process.env.VISION_LLM_BASE_URL?.trim() || 'https://api.siliconflow.cn/v1'
   ).replace(/\/$/, '');
-  const model = process.env.VISION_LLM_MODEL?.trim() || 'Qwen/Qwen3.6-35B-A3B';
+  const model = process.env.VISION_LLM_MODEL?.trim() || 'Qwen/Qwen3-VL-8B-Instruct';
   return { baseUrl, model, apiKey };
 }
 
@@ -117,7 +117,7 @@ function buildVisionRequestBody(
     max_tokens: maxTokens,
     messages: [{ role: 'user', content }],
   };
-  if (/qwen/i.test(model)) {
+  if (/qwen3\.6/i.test(model)) {
     body.enable_thinking = false;
   }
   return body;

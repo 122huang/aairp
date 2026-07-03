@@ -63,7 +63,7 @@ if (!apiKey) {
 const baseUrl = (
   process.env.VISION_LLM_BASE_URL?.trim() || 'https://api.siliconflow.cn/v1'
 ).replace(/\/$/, '');
-const model = process.env.VISION_LLM_MODEL?.trim() || 'Qwen/Qwen3.6-35B-A3B';
+const model = process.env.VISION_LLM_MODEL?.trim() || 'Qwen/Qwen3-VL-8B-Instruct';
 const chatUrl = baseUrl.endsWith('/v1') ? `${baseUrl}/chat/completions` : `${baseUrl}/v1/chat/completions`;
 
 const promptTemplate = readFileSync(join(root, 'demo/vision.prompt.txt'), 'utf8');
@@ -95,7 +95,6 @@ const response = await fetch(chatUrl, {
   body: JSON.stringify({
     model,
     max_tokens: 4096,
-    enable_thinking: false,
     messages: [
       {
         role: 'user',
