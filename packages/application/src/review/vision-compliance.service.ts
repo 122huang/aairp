@@ -129,11 +129,28 @@ export function resolveVisionAdTextReference(context: ReviewContext): string {
   return `Target market is ${countryId}. The primary language should be the local language or English. Flag any non-English, non-local-language text visible on product panels or UI elements.`;
 }
 
+export function describeVisionImageReference(imageUrl: string): string {
+  if (imageUrl.startsWith('data:image/')) {
+    return 'attached-inline-slice';
+  }
+  return imageUrl;
+}
+
+export function estimateVisionInputTokens(prompt: string, imageUrl?: string): number {
+  let estimate = Math.ceil(prompt.length / 4);
+  if (imageUrl?.startsWith('data:image/')) {
+    const base64Payload = imageUrl.split(',')[1] ?? '';
+    estimate += Math.ceil(base64Payload.length / 3);
+  }
+  return estimate;
+}
+
 export function renderVisionPrompt(
   template: string,
   context: ReviewContext,
   slice: ImageSlice,
 ): string {
+  const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
   return template
     .replaceAll('{country_id}', context.dimensions.countryId)
     .replaceAll('{platform_id}', context.dimensions.platformId)
@@ -145,10 +162,7 @@ export function renderVisionPrompt(
     .replaceAll('{slice_y_end}', String(slice.yEnd))
     .replaceAll('{ad_text}', resolveVisionAdTextReference(context))
     .replaceAll('{ocr_text}', context.normalizedContent.ocrText ?? '')
-    .replaceAll(
-      '{image_url}',
-      context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '',
-    );
+    .replaceAll('{image_url}', describeVisionImageReference(sourceImageUrl));
 }
 
 export class VisionComplianceService {
@@ -254,17 +268,25 @@ export class VisionComplianceService {
     const cropImageForSlice = this.config.cropImageForSlice ?? cropImageDataUrlForSlice;
 
     for (const manifest of manifests) {
-      const sliceResults = await Promise.all(
-        manifest.slices.map(async (slice) => {
-          const prompt = renderVisionPrompt(promptTemplate, context, slice);
-          const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
-          const imageUrl = await cropImageForSlice(sourceImageUrl, slice);
-          const response = await gateway.complete(prompt, { imageUrl });
-          return { slice, parsed: parseVisionResponseContent(response.content) };
-        }),
-      );
+      for (const slice of manifest.slices) {
+        const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
+        const croppedImageUrl = await cropImageForSlice(sourceImageUrl, slice);
+        const prompt = renderVisionPrompt(promptTemplate, context, slice);
+        const tokensEstimate = estimateVisionInputTokens(prompt, croppedImageUrl);
 
-      for (const { slice, parsed } of sliceResults) {
+        console.info(
+          `vision slice call: sliceIndex=${slice.sliceIndex}, tokensEstimate=${tokensEstimate}, croppedBytes=${croppedImageUrl.startsWith('data:image/') ? (croppedImageUrl.split(',')[1]?.length ?? 0) : 0}`,
+        );
+
+        const response = await gateway.complete(prompt, { imageUrl: croppedImageUrl });
+        const tokensActual = response.usage?.total_tokens;
+        if (tokensActual !== undefined) {
+          console.info(
+            `vision slice call: sliceIndex=${slice.sliceIndex}, tokensActual=${tokensActual}`,
+          );
+        }
+
+        const parsed = parseVisionResponseContent(response.content);
         if (parsed.prompt_pack_version) {
           promptPackVersion = parsed.prompt_pack_version;
         }

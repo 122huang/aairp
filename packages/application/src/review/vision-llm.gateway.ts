@@ -127,7 +127,7 @@ async function completeVisionLive(
   prompt: string,
   options: LlmGatewayCompleteOptions | undefined,
   maxTokens: number,
-): Promise<string> {
+): Promise<LlmGatewayCompleteResult> {
   const { baseUrl, model, apiKey } = resolveVisionLiveConfig();
   if (!apiKey) {
     throw new Error(
@@ -156,7 +156,23 @@ async function completeVisionLive(
     throw new Error(`Vision LLM API ${response.status}: ${errText.slice(0, 500)}`);
   }
 
-  return readOpenAiText((await response.json()) as JsonMessage);
+  const data = (await response.json()) as JsonMessage;
+  const usage = data.usage as JsonMessage | undefined;
+  return {
+    content: await readOpenAiText(data),
+    ...(usage
+      ? {
+          usage: {
+            prompt_tokens:
+              typeof usage.prompt_tokens === 'number' ? usage.prompt_tokens : undefined,
+            completion_tokens:
+              typeof usage.completion_tokens === 'number' ? usage.completion_tokens : undefined,
+            total_tokens:
+              typeof usage.total_tokens === 'number' ? usage.total_tokens : undefined,
+          },
+        }
+      : {}),
+  };
 }
 
 export class VisionLlmGateway implements ILlmGateway {
@@ -183,8 +199,7 @@ export class VisionLlmGateway implements ILlmGateway {
     }
 
     const maxTokens = this.config.maxTokens ?? Number(process.env.VISION_MAX_TOKENS ?? 2048);
-    const content = await completeVisionLive(prompt, options, maxTokens);
-    return { content };
+    return completeVisionLive(prompt, options, maxTokens);
   }
 }
 
