@@ -9,6 +9,7 @@ const reviewAppDist = join(apiRoot, 'review-app/dist');
 const reviewUiRoot = join(apiRoot, 'review-ui/public');
 const adminUiRoot = join(apiRoot, 'admin-ui/public');
 const knowledgeUiRoot = join(apiRoot, 'knowledge-ui/public');
+const pilotLogRoot = join(apiRoot, 'pilot-log/public');
 const legacyDemoUiRoot = join(apiRoot, 'demo-ui/public');
 
 /** User review UI (6U React app when built) + admin UI + legacy demo-ui redirect. */
@@ -34,6 +35,12 @@ export async function registerDemoUi(app: FastifyInstance): Promise<void> {
   });
 
   await app.register(fastifyStatic, {
+    root: pilotLogRoot,
+    prefix: '/pilot-log/',
+    decorateReply: false,
+  });
+
+  await app.register(fastifyStatic, {
     root: legacyDemoUiRoot,
     prefix: '/demo-ui/',
     decorateReply: false,
@@ -49,6 +56,10 @@ export async function registerDemoUi(app: FastifyInstance): Promise<void> {
 
   app.get('/knowledge', async (_request, reply) => {
     return reply.redirect('/knowledge/index.html');
+  });
+
+  app.get('/pilot-log', async (_request, reply) => {
+    return reply.redirect('/pilot-log/index.html');
   });
 
   app.get('/demo-ui', async (_request, reply) => {

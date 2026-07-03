@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ad Compliance Hub · 试用记录</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/pilot-log/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden>ACH</div>
+        <div>
+          <h1>Ad Compliance Hub</h1>
+          <p class="brand-sub">试用记录 · 内部查看</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="api-status" class="status-pill">API …</span>
+        <button type="button" id="btn-refresh" class="btn secondary">刷新</button>
+        <a class="btn secondary" href="/kos/v1/cases/export" download="pilot-cases-export.json">导出 JSON</a>
+      </div>
+    </header>
+
+    <p class="notice" role="note">
+      同事在 <a href="/review/">/review/</a> 提交的审查会自动出现在下方。此页面仅供内部校准标准，请勿转发给测试同事。
+    </p>
+
+    <section class="toolbar">
+      <label>
+        国家
+        <select id="filter-country">
+          <option value="">全部</option>
+          <option value="SG">SG</option>
+          <option value="MY">MY</option>
+          <option value="TH">TH</option>
+        </select>
+      </label>
+      <label>
+        结论
+        <select id="filter-decision">
+          <option value="">全部</option>
+          <option value="PASS">PASS</option>
+          <option value="WARN">WARN</option>
+          <option value="REJECT">REJECT</option>
+        </select>
+      </label>
+      <label class="search-field">
+        搜索文案
+        <input id="filter-text" type="search" placeholder="关键词…" autocomplete="off" />
+      </label>
+      <span id="record-count" class="muted"></span>
+    </section>
+
+    <div class="table-wrap">
+      <table class="records-table">
+        <thead>
+          <tr>
+            <th>提交时间</th>
+            <th>国家</th>
+            <th>品类</th>
+            <th>测试文案</th>
+            <th>结论</th>
+            <th>风险项</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="records-body">
+          <tr>
+            <td colspan="7" class="empty">加载中…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <dialog id="detail-dialog" class="detail-dialog">
+      <form method="dialog" class="detail-inner">
+        <header class="detail-header">
+          <h2 id="detail-title">案例详情</h2>
+          <button type="submit" class="btn icon" aria-label="关闭">×</button>
+        </header>
+        <div id="detail-body" class="detail-body"></div>
+      </form>
+    </dialog>
+
+    <script src="/pilot-log/app.js" type="module"></script>
+  </body>
+</html>
