@@ -268,25 +268,30 @@ export class VisionComplianceService {
     const cropImageForSlice = this.config.cropImageForSlice ?? cropImageDataUrlForSlice;
 
     for (const manifest of manifests) {
-      for (const slice of manifest.slices) {
-        const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
-        const croppedImageUrl = await cropImageForSlice(sourceImageUrl, slice);
-        const prompt = renderVisionPrompt(promptTemplate, context, slice);
-        const tokensEstimate = estimateVisionInputTokens(prompt, croppedImageUrl);
+      const sliceResults = await Promise.all(
+        manifest.slices.map(async (slice) => {
+          const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
+          const croppedImageUrl = await cropImageForSlice(sourceImageUrl, slice);
+          const prompt = renderVisionPrompt(promptTemplate, context, slice);
+          const tokensEstimate = estimateVisionInputTokens(prompt, croppedImageUrl);
 
-        console.info(
-          `vision slice call: sliceIndex=${slice.sliceIndex}, tokensEstimate=${tokensEstimate}, croppedBytes=${croppedImageUrl.startsWith('data:image/') ? (croppedImageUrl.split(',')[1]?.length ?? 0) : 0}`,
-        );
-
-        const response = await gateway.complete(prompt, { imageUrl: croppedImageUrl });
-        const tokensActual = response.usage?.total_tokens;
-        if (tokensActual !== undefined) {
           console.info(
-            `vision slice call: sliceIndex=${slice.sliceIndex}, tokensActual=${tokensActual}`,
+            `vision slice call: sliceIndex=${slice.sliceIndex}, tokensEstimate=${tokensEstimate}, croppedBytes=${croppedImageUrl.startsWith('data:image/') ? (croppedImageUrl.split(',')[1]?.length ?? 0) : 0}`,
           );
-        }
 
-        const parsed = parseVisionResponseContent(response.content);
+          const response = await gateway.complete(prompt, { imageUrl: croppedImageUrl });
+          const tokensActual = response.usage?.total_tokens;
+          if (tokensActual !== undefined) {
+            console.info(
+              `vision slice call: sliceIndex=${slice.sliceIndex}, tokensActual=${tokensActual}`,
+            );
+          }
+
+          return { slice, parsed: parseVisionResponseContent(response.content) };
+        }),
+      );
+
+      for (const { slice, parsed } of sliceResults) {
         if (parsed.prompt_pack_version) {
           promptPackVersion = parsed.prompt_pack_version;
         }

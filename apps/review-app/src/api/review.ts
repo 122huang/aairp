@@ -85,7 +85,7 @@ export type ReviewApiError = {
 
 export async function submitReview(payload: ReviewUploadPayload): Promise<DemoReviewResponse> {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 90_000);
+  const timeoutId = setTimeout(() => controller.abort(), 180_000);
 
   try {
     const response = await fetch('/demo/review', {
@@ -112,7 +112,7 @@ export async function submitReview(payload: ReviewUploadPayload): Promise<DemoRe
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
       throw {
-        message: '审核请求超时（90秒），请稍后重试或缩小图片后提交',
+        message: '审核请求超时（180秒），请稍后重试或缩小图片后提交',
         status: 408,
       } satisfies ReviewApiError;
     }
