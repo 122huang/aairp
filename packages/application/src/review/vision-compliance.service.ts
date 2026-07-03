@@ -19,6 +19,7 @@ import {
   type VisionFindingPayload,
 } from './vision-response.parser.js';
 import { ImageSlicePlannerService } from './image-slice-planner.service.js';
+import { cropImageDataUrlForSlice, probeImageDimensions } from './image-slice-crop.js';
 
 export type VisionComplianceConfig = {
   promptPath?: string;
@@ -27,6 +28,7 @@ export type VisionComplianceConfig = {
   stubResponsePath?: string;
   llmGateway?: ILlmGateway | null;
   slicePlanner?: ImageSlicePlannerService;
+  cropImageForSlice?: (imageUrl: string, slice: ImageSlice) => Promise<string>;
   now?: () => Date;
   createFindingId?: () => string;
   readTextFile?: (path: string) => string;
@@ -156,7 +158,7 @@ export class VisionComplianceService {
     this.slicePlanner = config.slicePlanner ?? new ImageSlicePlannerService();
   }
 
-  discover(context: ReviewContext): Promise<VisionDiscoveryResult> {
+  async discover(context: ReviewContext): Promise<VisionDiscoveryResult> {
     const evaluatedAt = (this.config.now ?? (() => new Date()))().toISOString();
     const mode = resolveVisionLlmMode();
 
@@ -211,14 +213,31 @@ export class VisionComplianceService {
       });
     }
 
+    const imageDimensions = await this.resolveImageDimensions(context, imageUrls);
+
     const manifests = this.slicePlanner.planFromNormalizedContent({
       imageUrls,
-      imageDimensions: context.normalizedContent.imageDimensions,
+      imageDimensions,
       imageContentBlockHints: context.normalizedContent.imageContentBlockHints,
       sliceManifestOverrides: context.normalizedContent.sliceManifestOverrides,
     });
 
     return this.evaluateManifests(context, manifests, promptTemplate, gateway, evaluatedAt);
+  }
+
+  private async resolveImageDimensions(
+    context: ReviewContext,
+    imageUrls: string[],
+  ): Promise<Array<{ width: number; height: number } | undefined>> {
+    return Promise.all(
+      imageUrls.map(async (url, index) => {
+        const known = context.normalizedContent.imageDimensions?.[index];
+        if (known) {
+          return known;
+        }
+        return probeImageDimensions(url);
+      }),
+    );
   }
 
   private async evaluateManifests(
@@ -232,13 +251,20 @@ export class VisionComplianceService {
     const extractedText: string[] = [];
     const seenFindingKeys = new Set<string>();
     let promptPackVersion = this.config.promptPackVersion ?? 'demo-vision-1.0.0';
+    const cropImageForSlice = this.config.cropImageForSlice ?? cropImageDataUrlForSlice;
 
     for (const manifest of manifests) {
-      for (const slice of manifest.slices) {
-        const prompt = renderVisionPrompt(promptTemplate, context, slice);
-        const imageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
-        const response = await gateway.complete(prompt, { imageUrl });
-        const parsed = parseVisionResponseContent(response.content);
+      const sliceResults = await Promise.all(
+        manifest.slices.map(async (slice) => {
+          const prompt = renderVisionPrompt(promptTemplate, context, slice);
+          const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
+          const imageUrl = await cropImageForSlice(sourceImageUrl, slice);
+          const response = await gateway.complete(prompt, { imageUrl });
+          return { slice, parsed: parseVisionResponseContent(response.content) };
+        }),
+      );
+
+      for (const { slice, parsed } of sliceResults) {
         if (parsed.prompt_pack_version) {
           promptPackVersion = parsed.prompt_pack_version;
         }
@@ -246,7 +272,7 @@ export class VisionComplianceService {
           extractedText.push(...parsed.extracted_text);
         }
         for (const payload of parsed.findings) {
-          const dedupeKey = `${slice.sourceImageIndex}:${payload.risk_type}`;
+          const dedupeKey = `${slice.sourceImageIndex}:${slice.sliceIndex}:${payload.risk_type}`;
           if (seenFindingKeys.has(dedupeKey)) {
             continue;
           }

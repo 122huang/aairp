@@ -130,6 +130,9 @@ importers:
       '@aairp/shared-kernel':
         specifier: workspace:*
         version: link:../shared-kernel
+      sharp:
+        specifier: ^0.35.2
+        version: 0.35.2
     devDependencies:
       typescript:
         specifier: ^5.8.3

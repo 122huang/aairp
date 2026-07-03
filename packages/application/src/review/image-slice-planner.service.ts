@@ -16,11 +16,15 @@ const CONTENT_BLOCK_ORDER: Exclude<ImageSliceType, 'unknown'>[] = [
 const DEFAULT_FIXED_HEIGHT_RATIO = 0.25;
 const MAX_FIXED_HEIGHT_SLICES = 8;
 const LONG_IMAGE_ASPECT_RATIO = 2;
+const DEFAULT_SLICE_HEIGHT_PX = 2000;
+const MIN_HEIGHT_FOR_PIXEL_SLICING_PX = 2000;
 
 export type ImageSlicePlannerConfig = {
   fixedHeightRatio?: number;
   maxFixedHeightSlices?: number;
   longImageAspectRatio?: number;
+  sliceHeightPx?: number;
+  minHeightForPixelSlicingPx?: number;
   createSliceId?: () => string;
 };
 
@@ -94,6 +98,34 @@ function buildFixedHeightFallbackSlices(
   return slices;
 }
 
+function buildFixedPixelHeightSlices(
+  sourceImageIndex: number,
+  heightPx: number,
+  sliceHeightPx: number,
+): ImageSlice[] {
+  const slices: ImageSlice[] = [];
+  let yStartPx = 0;
+  let sliceIndex = 0;
+
+  while (yStartPx < heightPx) {
+    const yEndPx = Math.min(heightPx, yStartPx + sliceHeightPx);
+    slices.push(
+      toSlice(
+        sourceImageIndex,
+        sliceIndex,
+        'unknown',
+        yStartPx / heightPx,
+        yEndPx / heightPx,
+        'fixed_pixel_height_band',
+      ),
+    );
+    yStartPx = yEndPx;
+    sliceIndex += 1;
+  }
+
+  return slices;
+}
+
 function isLongImage(
   dimensions: { width: number; height: number } | undefined,
   longImageAspectRatio: number,
@@ -111,6 +143,9 @@ export class ImageSlicePlannerService {
     const fixedHeightRatio = this.config.fixedHeightRatio ?? DEFAULT_FIXED_HEIGHT_RATIO;
     const maxFixedHeightSlices = this.config.maxFixedHeightSlices ?? MAX_FIXED_HEIGHT_SLICES;
     const longImageAspectRatio = this.config.longImageAspectRatio ?? LONG_IMAGE_ASPECT_RATIO;
+    const sliceHeightPx = this.config.sliceHeightPx ?? DEFAULT_SLICE_HEIGHT_PX;
+    const minHeightForPixelSlicingPx =
+      this.config.minHeightForPixelSlicingPx ?? MIN_HEIGHT_FOR_PIXEL_SLICING_PX;
 
     return request.imageUrls.map((imageUrl, sourceImageIndex) => {
       const dimensions = request.dimensionsByImage?.[sourceImageIndex];
@@ -140,6 +175,20 @@ export class ImageSlicePlannerService {
             sourceImageIndex,
             contentHints,
             'provided_content_blocks',
+          ),
+        };
+      }
+
+      if (dimensions && dimensions.height > minHeightForPixelSlicingPx) {
+        return {
+          sourceImageIndex,
+          imageUrl,
+          plannerMode: 'fixed_height_fallback' as const,
+          fallbackReason: 'pixel_height_band_for_long_image',
+          slices: buildFixedPixelHeightSlices(
+            sourceImageIndex,
+            dimensions.height,
+            sliceHeightPx,
           ),
         };
       }
@@ -195,4 +244,9 @@ export class ImageSlicePlannerService {
   }
 }
 
-export { CONTENT_BLOCK_ORDER, DEFAULT_FIXED_HEIGHT_RATIO, MAX_FIXED_HEIGHT_SLICES };
+export {
+  CONTENT_BLOCK_ORDER,
+  DEFAULT_FIXED_HEIGHT_RATIO,
+  DEFAULT_SLICE_HEIGHT_PX,
+  MAX_FIXED_HEIGHT_SLICES,
+};
