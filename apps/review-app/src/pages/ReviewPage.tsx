@@ -23,6 +23,11 @@ import { collectHighlightSpans, filesToBase64, severityRank } from '@/lib/review
 import { cn } from '@/lib/utils';
 import { Loader2, Upload, X } from 'lucide-react';
 
+const REVIEW_APP_VISIBLE_COUNTRY_IDS = ['SG', 'MY', 'TH'] as const satisfies readonly DemoReviewCountryId[];
+const REVIEW_APP_VISIBLE_COUNTRIES = DEMO_REVIEW_COUNTRIES.filter((country) =>
+  (REVIEW_APP_VISIBLE_COUNTRY_IDS as readonly string[]).includes(country.id),
+);
+
 export function ReviewPage() {
   const [viewMode, setViewMode] = useViewMode();
   const [text, setText] = useState('');
@@ -158,7 +163,7 @@ export function ReviewPage() {
                       <SelectValue placeholder="请选择" />
                     </SelectTrigger>
                     <SelectContent>
-                      {DEMO_REVIEW_COUNTRIES.map((country) => (
+                      {REVIEW_APP_VISIBLE_COUNTRIES.map((country) => (
                         <SelectItem key={country.id} value={country.id}>
                           {country.id} · {country.label}
                         </SelectItem>
