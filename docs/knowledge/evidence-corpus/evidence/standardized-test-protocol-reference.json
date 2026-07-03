@@ -1,0 +1,68 @@
+{
+  "knowledge_id": "evidence:standardized-test-protocol-reference",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "standardized-test-protocol-reference",
+  "evidence_type_key": "test_method",
+  "requirement_scope": "standardized-test-protocol",
+  "evidence_purpose": "Reference recognized standardized test protocols supporting performance qualification rewrites.",
+  "summary": "Performance qualification may cite recognized industry test protocols when full lab report is supplementary.",
+  "review_guidance": "TRIGGER: Qualified performance claim referencing test standard. ACTION: Confirm protocol version and applicability. CHECK: Standard body, revision date. ESCALATE IF: Protocol obsolete or inapplicable.",
+  "evidence_purpose_tags": [
+    "standardized-test-protocol"
+  ],
+  "resolves_expected_evidence_types": [
+    "test_method"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH",
+      "AU"
+    ],
+    "claim_types": [
+      "performance-claim"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "recommended",
+  "linkage": {
+    "regulations": [
+      "regulation:jp-jftc-performance-representations"
+    ],
+    "rules": [
+      "demo-apac-sa-capacity-claim"
+    ],
+    "skills": [
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-performance"
+    ]
+  },
+  "validation_criteria": {
+    "checks": [
+      "Identify cited test standard and version",
+      "Confirm standard applies to product category",
+      "Cross-check with on-pack specification"
+    ],
+    "reject_if": [
+      "Standard revoked or superseded"
+    ]
+  },
+  "tags": [
+    "confidence:medium",
+    "evidence:recommended",
+    "performance"
+  ]
+}

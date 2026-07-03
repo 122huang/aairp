@@ -1,5 +1,6 @@
 import type { CasePrecedent } from '../case/case-retrieval.js';
 import type { FinalDecision } from '../decision/review-decision.js';
+import type { RewriteSuggestion } from '../findings/rewrite-suggestion.js';
 
 export type ReviewReportAdvertisementSummary = {
   textPreview: string;
@@ -9,11 +10,19 @@ export type ReviewReportAdvertisementSummary = {
 };
 
 export type ReviewReportFindingSummary = {
+  findingId: string;
   module: string;
   refId: string;
   severity: string;
   decision: string;
   summary: string;
+  evidenceSpans?: Array<{
+    field: string;
+    start?: number;
+    end?: number;
+    text: string;
+  }>;
+  rewriteSuggestions?: RewriteSuggestion[];
 };
 
 export type ReviewReportSummary = {

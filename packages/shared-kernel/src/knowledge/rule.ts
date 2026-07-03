@@ -34,6 +34,9 @@ export type RuleVersion = {
   scope: RuleScope;
   payload: Record<string, unknown>;
   owner?: string;
+  ownerType?: string;
+  lastReviewedAt?: string;
+  freshnessStatus?: string;
   tags: string[];
   effectiveFrom?: string;
   publishedAt?: string;
@@ -61,6 +64,9 @@ export type CreateRuleVersionInput = {
   scope: RuleScope;
   payload: Record<string, unknown>;
   owner?: string;
+  ownerType?: string;
+  lastReviewedAt?: string;
+  freshnessStatus?: string;
   tags?: string[];
 };
 

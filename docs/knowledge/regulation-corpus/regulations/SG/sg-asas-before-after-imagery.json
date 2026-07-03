@@ -1,0 +1,32 @@
+{
+  "knowledge_id": "regulation:sg-asas-before-after-imagery",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-asas-before-after-imagery",
+  "country": "SG",
+  "authority": "ASAS",
+  "regulation_name": "Singapore Code of Advertising Practice",
+  "citation": "Singapore Code of Advertising Practice — Rule 4.2 (Before/after imagery)",
+  "effective_date": "2019-06-01",
+  "category": "Image Usage",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Before/after and transformation images must reflect typical results and must not be misleading through staging or editing.",
+  "review_guidance": "TRIGGER: Before/after photos, split-screen transformations, or retouched results. ACTION: WARN — require typicality disclaimer or substantiation. CHECK: Lighting, makeup, time interval, and digital editing. ESCALATE IF: Dramatic atypical result shown without qualification.",
+  "related_rule_ids": [
+    "demo-apac-sa-ai-image-disclaimer"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:recommended",
+    "imagery"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic",
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

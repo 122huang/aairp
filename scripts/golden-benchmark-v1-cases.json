@@ -1,0 +1,891 @@
+[
+  {
+    "id": "AF-001",
+    "text": "Chinese product image",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Air fryer hero banner",
+        "images": [
+          "https://demo/golden/AF-001.png"
+        ],
+        "ocr_text": "美的智能空气炸锅 额定电压220V 中国制造"
+      }
+    }
+  },
+  {
+    "id": "AF-002",
+    "text": "Easy presents for perfect results every time",
+    "expected": "REJECT",
+    "risk": "High",
+    "issue": "Absolute Claim",
+    "modality": "text"
+  },
+  {
+    "id": "AF-003",
+    "text": "Goes beyond standard air fryer (200℃)",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "AF-004",
+    "text": "Non-stick",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "AF-005",
+    "text": "Midea product image",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Brand / IP",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Comparison banner",
+        "images": [
+          "https://demo/golden/AF-005.png"
+        ],
+        "ocr_text": "Side by side with Midea air fryer model"
+      }
+    }
+  },
+  {
+    "id": "AF-006",
+    "text": "Comparison with higher-end Joyoung model",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Advertising",
+    "modality": "text"
+  },
+  {
+    "id": "AF-007",
+    "text": "AI rendered image without disclaimer",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Disclaimer",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Premium air fryer hero shot",
+        "images": [
+          "https://demo/golden/AF-007.png"
+        ],
+        "ocr_text": "Dual heat zones for crisp results"
+      },
+      "context": {
+        "ai_rendered_image": true
+      }
+    }
+  },
+  {
+    "id": "AF-008",
+    "text": "Chicken wing image distortion",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "AI Image Quality",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Crispy chicken wings",
+        "images": [
+          "https://demo/golden/AF-008.png"
+        ],
+        "ocr_text": "Golden crispy chicken wings"
+      },
+      "context": {
+        "ai_image_quality_issue": true
+      }
+    }
+  },
+  {
+    "id": "AF-009",
+    "text": "Authoritative certification meets national standard grade",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Certification",
+    "modality": "text"
+  },
+  {
+    "id": "AF-010",
+    "text": "Certification image unreadable",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Evidence",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Certification badge inset",
+        "images": [
+          "https://demo/golden/AF-010.png"
+        ],
+        "ocr_text": "ISO quality mark (blurred)"
+      },
+      "context": {
+        "certification_image_unreadable": true
+      }
+    }
+  },
+  {
+    "id": "PC-001",
+    "text": "Chinese product image",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Rice cooker product shot",
+        "images": [
+          "https://demo/golden/PC-001.png"
+        ],
+        "ocr_text": "九阳电饭煲 智能预约 中国制造"
+      }
+    }
+  },
+  {
+    "id": "PC-002",
+    "text": "Large Capacity",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "PC-003",
+    "text": "Cook Faster",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "PC-004",
+    "text": "Tender beef stew in 30 minutes",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "PC-005",
+    "text": "70kPa",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Technical Specification",
+    "modality": "text"
+  },
+  {
+    "id": "PC-006",
+    "text": "Stew up to 2kg beef",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Capacity Claim",
+    "modality": "text"
+  },
+  {
+    "id": "PC-007",
+    "text": "Non-stick",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "PC-008",
+    "text": "Lower Sugar Healthier Every Bowl",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "PC-009",
+    "text": "Copper Pot vs Stainless Steel inconsistency",
+    "expected": "REJECT",
+    "risk": "High",
+    "issue": "Content Consistency",
+    "modality": "text"
+  },
+  {
+    "id": "PC-010",
+    "text": "Internal design note visible",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Internal Note",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Layout draft banner",
+        "images": [
+          "https://demo/golden/PC-010.png"
+        ],
+        "ocr_text": "DRAFT — internal design note visible on layer"
+      }
+    }
+  },
+  {
+    "id": "PC-011",
+    "text": "22:00pm",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Grammar",
+    "modality": "text"
+  },
+  {
+    "id": "PC-012",
+    "text": "Comparison with higher-end Joyoung model",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Advertising",
+    "modality": "text"
+  },
+  {
+    "id": "PC-013",
+    "text": "Chinese manual",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Manual inset photo",
+        "images": [
+          "https://demo/golden/PC-013.png"
+        ],
+        "ocr_text": "产品使用说明书 安装步骤 注意事项 中文版"
+      }
+    }
+  },
+  {
+    "id": "PC-014",
+    "text": "Missing AI disclaimer",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Disclaimer",
+    "modality": "text"
+  },
+  {
+    "id": "PC-015",
+    "text": "Comparison may make competitor look better",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Strategy",
+    "modality": "text"
+  },
+  {
+    "id": "PC-016",
+    "text": "Stainless Steel / Copper / Ceramic inconsistency",
+    "expected": "REJECT",
+    "risk": "High",
+    "issue": "Content Consistency",
+    "modality": "text"
+  },
+  {
+    "id": "BL-001",
+    "text": "Chinese product image",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Blender packaging",
+        "images": [
+          "https://demo/golden/BL-001.png"
+        ],
+        "ocr_text": "苏泊尔破壁机 中文包装"
+      }
+    }
+  },
+  {
+    "id": "BL-002",
+    "text": "Enhanced noise reduction",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-003",
+    "text": "Multiple presents",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Grammar",
+    "modality": "text"
+  },
+  {
+    "id": "BL-004",
+    "text": "Less wear, less noise",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-005",
+    "text": "Quieter by design",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-006",
+    "text": "No chunks",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Absolute Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-007",
+    "text": "Easy to digest",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-008",
+    "text": "Better nutrient absorption",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-009",
+    "text": "Sterilize",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Medical / Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-010",
+    "text": "Internal note visible",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Internal Note",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Promo tile",
+        "images": [
+          "https://demo/golden/BL-010.png"
+        ],
+        "ocr_text": "INTERNAL USE ONLY — not for publication"
+      }
+    }
+  },
+  {
+    "id": "BL-011",
+    "text": "Certification image with internal note",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Internal Note",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Certification panel",
+        "images": [
+          "https://demo/golden/BL-011.png"
+        ],
+        "ocr_text": "ISO 9001 badge INTERNAL REVIEW COPY"
+      }
+    }
+  },
+  {
+    "id": "BL-012",
+    "text": "Chinese warranty card",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Warranty card photo",
+        "images": [
+          "https://demo/golden/BL-012.png"
+        ],
+        "ocr_text": "保修卡 全国联保 中文填写"
+      }
+    }
+  },
+  {
+    "id": "BL-013",
+    "text": "Missing AI disclaimer",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Disclaimer",
+    "modality": "text"
+  },
+  {
+    "id": "BL-014",
+    "text": "Finer blending smoother nutrition",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-015",
+    "text": "Ordinary Blender comparison",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "BL-016",
+    "text": "AI generated family image abnormal",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "AI Image Quality",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Family lifestyle scene",
+        "images": [
+          "https://demo/golden/BL-016.png"
+        ],
+        "ocr_text": "Enjoy healthy smoothies together"
+      },
+      "context": {
+        "ai_rendered_image": true,
+        "ai_image_quality_issue": true
+      }
+    }
+  },
+  {
+    "id": "RC18-001",
+    "text": "Non-stick",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-002",
+    "text": "Chinese product image",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Cooker packaging",
+        "images": [
+          "https://demo/golden/RC18-002.png"
+        ],
+        "ocr_text": "美的电压力锅 中文标签"
+      }
+    }
+  },
+  {
+    "id": "RC18-003",
+    "text": "Safer and more durable",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-004",
+    "text": "China Patent",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Patent",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-005",
+    "text": "Missing AI disclaimer",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Disclaimer",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-006",
+    "text": "A cleaner way to cook",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-007",
+    "text": "Less peeling",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-008",
+    "text": "Low-sugar rice",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC18-009",
+    "text": "304/316 stainless steel claimed as Non-stick",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Misleading Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-001",
+    "text": "Medical-grade 316L stainless steel",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Medical Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-002",
+    "text": "Patent image with internal notes",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Internal Note",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Patent diagram",
+        "images": [
+          "https://demo/golden/RC40-002.png"
+        ],
+        "ocr_text": "Patent illustration INTERNAL NOTES watermark"
+      }
+    }
+  },
+  {
+    "id": "RC40-003",
+    "text": "Superior Non-stick Performance",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-004",
+    "text": "1350W",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Technical Specification",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-005",
+    "text": "Every time",
+    "expected": "REJECT",
+    "risk": "High",
+    "issue": "Absolute Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-006",
+    "text": "Up to 16 bowls",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Capacity Claim",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-007",
+    "text": "User manual contains internal notes",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Internal Note",
+    "modality": "doc",
+    "fixture": {
+      "content": {
+        "text": "User manual excerpt",
+        "ocr_text": "Safety instructions — INTERNAL design note for factory only"
+      }
+    }
+  },
+  {
+    "id": "RC40-008",
+    "text": "Missing AI disclaimer",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Disclaimer",
+    "modality": "text"
+  },
+  {
+    "id": "RC40-009",
+    "text": "Wrong SKU content (actually 50H100)",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Content Consistency",
+    "modality": "text",
+    "fixture": {
+      "content": {
+        "text": "Rice cooker hero banner",
+        "ocr_text": "Model 50H100 stainless steel inner pot"
+      },
+      "context": {
+        "product_sku": "RC40"
+      }
+    }
+  },
+  {
+    "id": "LZ9-001",
+    "text": "Smarter. Cleaner. More efficient",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "LZ9-002",
+    "text": "+15% juice yield",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "LZ9-003",
+    "text": "+12% purer juice",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "LZ9-004",
+    "text": "Chinese product image",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Juicer packaging",
+        "images": [
+          "https://demo/golden/LZ9-004.png"
+        ],
+        "ocr_text": "九阳榨汁机 中文说明"
+      }
+    }
+  },
+  {
+    "id": "LZ9-005",
+    "text": "Video uses old product",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Brand Consistency",
+    "modality": "video"
+  },
+  {
+    "id": "LZ9-006",
+    "text": "Chinese subtitles",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "video"
+  },
+  {
+    "id": "LZ9-007",
+    "text": "IF Award model verification",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Award Claim",
+    "modality": "text"
+  },
+  {
+    "id": "LZ585-001",
+    "text": "Zero waste",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Absolute Claim",
+    "modality": "text"
+  },
+  {
+    "id": "LZ585-002",
+    "text": "What's include",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Grammar",
+    "modality": "text"
+  },
+  {
+    "id": "LZ585-003",
+    "text": "Patented",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Patent Verification",
+    "modality": "text"
+  },
+  {
+    "id": "P655-001",
+    "text": "99.9999% bacteria removal",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "P655-002",
+    "text": "National standard grade",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Certification",
+    "modality": "text"
+  },
+  {
+    "id": "P655-003",
+    "text": "Certification image unreadable",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Evidence",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Lab report inset",
+        "images": [
+          "https://demo/golden/P655-003.png"
+        ],
+        "ocr_text": "Third-party test report seal"
+      },
+      "context": {
+        "certification_image_unreadable": true
+      }
+    }
+  },
+  {
+    "id": "P655-004",
+    "text": "Chinese manual",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Localization",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Manual page",
+        "images": [
+          "https://demo/golden/P655-004.png"
+        ],
+        "ocr_text": "产品使用说明 中文手册"
+      }
+    }
+  },
+  {
+    "id": "V9-001",
+    "text": "Fat-reducing",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "V9-002",
+    "text": "Less fat",
+    "expected": "REJECT",
+    "risk": "Critical",
+    "issue": "Health Claim",
+    "modality": "text"
+  },
+  {
+    "id": "V9-003",
+    "text": "Up to 68% less oil",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  },
+  {
+    "id": "GEN-001",
+    "text": "Third-party laboratory report",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Evidence Verification",
+    "modality": "text"
+  },
+  {
+    "id": "GEN-002",
+    "text": "Unreadable certification report",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Evidence Quality",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Certification report scan",
+        "images": [
+          "https://demo/golden/GEN-002.png"
+        ],
+        "ocr_text": "Test laboratory certificate scan"
+      },
+      "context": {
+        "certification_image_unreadable": true
+      }
+    }
+  },
+  {
+    "id": "GEN-003",
+    "text": "Internal laboratory data",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Evidence Source",
+    "modality": "text"
+  },
+  {
+    "id": "GEN-004",
+    "text": "Traditional / Ordinary comparison",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "Comparative Claim",
+    "modality": "text"
+  },
+  {
+    "id": "GEN-005",
+    "text": "AI generated human image",
+    "expected": "REVIEW",
+    "risk": "Medium",
+    "issue": "AI Disclosure",
+    "modality": "image",
+    "fixture": {
+      "content": {
+        "text": "Family cooking together",
+        "images": [
+          "https://demo/golden/GEN-005.png"
+        ],
+        "ocr_text": "Enjoy healthy meals every day"
+      },
+      "context": {
+        "ai_rendered_image": true
+      }
+    }
+  },
+  {
+    "id": "GEN-006",
+    "text": "Missing AI generated disclaimer",
+    "expected": "REVIEW",
+    "risk": "Low",
+    "issue": "Disclaimer",
+    "modality": "text"
+  },
+  {
+    "id": "GEN-007",
+    "text": "16-Hour Freshness Mode",
+    "expected": "REVIEW",
+    "risk": "High",
+    "issue": "Performance Claim",
+    "modality": "text"
+  }
+]

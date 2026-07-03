@@ -1,0 +1,78 @@
+{
+  "knowledge_id": "evidence:general-advertising-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "general-advertising-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "general-substantiation",
+  "evidence_purpose": "Cross-cutting substantiation requirement for advertising claims under general fair advertising substantiation rules.",
+  "summary": "Advertisers must hold substantiation for material claims before publication under general substantiation obligations.",
+  "review_guidance": "TRIGGER: Material claim likely to influence purchase decision. ACTION: Confirm substantiation on file before approval. CHECK: Claim materiality, file completeness. ESCALATE IF: No substantiation for material claim.",
+  "evidence_purpose_tags": [
+    "general-substantiation",
+    "performance-substantiation",
+    "health-substantiation",
+    "comparative-substantiation",
+    "efficacy-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH",
+      "AU",
+      "JP",
+      "KR"
+    ],
+    "claim_types": [
+      "performance-claim",
+      "health-claim",
+      "comparative-claim",
+      "superlative-claim"
+    ],
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asasa-substantiation"
+    ],
+    "rules": [
+      "demo-apac-sa-absolute-claim-soft"
+    ],
+    "skills": [
+      "skill:superlative-claim-review"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-002"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Assess claim materiality",
+      "Confirm substantiation file exists before publication",
+      "Document substantiation review outcome"
+    ],
+    "reject_if": [
+      "Material claim with no substantiation on file"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "advertising"
+  ]
+}

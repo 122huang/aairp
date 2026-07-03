@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "platform_version": "1.0.0",
+  "corpus_type": "rewrite",
+  "generated_at": "2026-07-01T02:53:54.226Z",
+  "corpus_root": "C:\\Users\\ShujieHuang\\aairp\\docs\\knowledge\\rewrite-corpus",
+  "fingerprint": "debe4e045600afed",
+  "entry_count": 9,
+  "knowledge_quality_score": 95.8,
+  "freshness": {
+    "green": 9,
+    "yellow": 0,
+    "red": 0,
+    "green_pct": 100,
+    "yellow_pct": 0,
+    "red_pct": 0
+  },
+  "knowledge_ids": [
+    "rewrite:cite-evidence",
+    "rewrite:disclose-ai",
+    "rewrite:disclose-localization",
+    "rewrite:disclose-transformation",
+    "rewrite:disclose-urgency",
+    "rewrite:qualify-comparative",
+    "rewrite:qualify-efficacy",
+    "rewrite:qualify-performance",
+    "rewrite:remove-health-claim"
+  ],
+  "dimensions": {
+    "by_strategy": {
+      "qualify": 3,
+      "remove": 1,
+      "disclose": 4,
+      "cite_evidence": 1
+    },
+    "by_status": {
+      "production": 9
+    }
+  },
+  "manifest_filename": "rewrite-corpus.manifest.json",
+  "metadata": {
+    "strategy_types": [
+      "qualify",
+      "remove",
+      "disclose",
+      "cite_evidence"
+    ]
+  }
+}

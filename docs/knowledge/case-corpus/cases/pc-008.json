@@ -1,0 +1,87 @@
+{
+  "knowledge_id": "case:pc-008",
+  "corpus_type": "case",
+  "case_id": "pc-008",
+  "case_purpose": "Validation knowledge for benchmark case PC-008 — Health Claim.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Health Claim scenario; expected REJECT with REJECT action.",
+  "review_guidance": "TRIGGER: Benchmark case PC-008. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "health-claim",
+    "claim_types": [
+      "health-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "HIGH",
+    "signal_summary": "Health Claim",
+    "benchmark_ref": "PC-008"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REJECT",
+    "expected_severity": "HIGH",
+    "expected_action": "REJECT",
+    "expected_pattern": "sa-health-implication",
+    "expected_rule": "demo-apac-sa-health-claim-blocker",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:remove-health-claim",
+      "strategy_type": "remove",
+      "must_remove_terms": [
+        "healthier",
+        "lower sugar",
+        "health benefits"
+      ],
+      "must_include_concepts": []
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:health-claim-substantiation",
+      "expected_outcome": "reject_insufficient_substantiation"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REJECT",
+    "risk_level": "HIGH",
+    "matched_skill": "skill:health-claim-review",
+    "applied_rewrite": "rewrite:remove-health-claim",
+    "evidence_result": "reject_insufficient_substantiation"
+  },
+  "benchmark_ref": "PC-008",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-supplement-health-claims",
+      "regulation:sg-hpa-s7-prohibited-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-health-claim-blocker"
+    ],
+    "skills": [
+      "skill:health-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:remove-health-claim"
+    ],
+    "evidence": [
+      "evidence:health-claim-substantiation"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 PC-008 for health-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "health-claim"
+  ]
+}

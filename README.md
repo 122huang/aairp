@@ -1,4 +1,4 @@
-# AAIRP — Sprint 1 Happy Path Demo
+# Ad Compliance Hub — Sprint 1 Happy Path Demo
 
 Advertising AI Review Platform 的 **Sprint 1 Happy Path** 实现：一条同步请求完成广告上传、规则/Playbook/LLM 审核、决策融合与 HTML 报告生成。
 
@@ -9,6 +9,10 @@ Advertising AI Review Platform 的 **Sprint 1 Happy Path** 实现：一条同步
 ## RC1-Demo v1（用户演示）
 
 **入口：** http://localhost:3000/demo-ui/ · 文档：[docs/rc1-demo/README.md](docs/rc1-demo/README.md)
+
+**Legal Pilot（英文法务）：** [docs/legal-pilot/README.md](docs/legal-pilot/README.md) · 范围：[PILOT-SCOPE.md](docs/legal-pilot/PILOT-SCOPE.md)
+
+**法务内测版（中文 UI）：** [docs/legal-pilot/内测说明.md](docs/legal-pilot/内测说明.md) · 用户端 `/review/` · 管理端 `/admin-ui/` · 启动：`.\scripts\start-legal-pilot.ps1`
 
 ```powershell
 pnpm seed:rc1-cases    # 可选：预置 5 条 Case

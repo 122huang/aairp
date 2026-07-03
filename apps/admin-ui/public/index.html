@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ad Compliance Hub · 管理端</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/admin-ui/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">Ad Compliance Hub</span>
+        <span class="brand-sub">管理端 · 知识链路 / 案例库 / 演示批跑</span>
+      </div>
+      <div class="topbar-meta">
+        <a class="link-muted" href="/review/index.html">用户端</a>
+        <span class="badge">Admin</span>
+        <span id="api-status" class="status-pill status-unknown">API …</span>
+      </div>
+    </header>
+
+    <div class="pilot-banner" role="note">
+      管理端 · 演示案例批跑 · Knowledge Trace · 案例库 JSON · 法务请使用用户端 /review/
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>测试案例</h2>
+        <p class="sidebar-hint">SG 演示 5 条 + Pilot 真实 9 条 · 可筛选或粘贴自有文案</p>
+
+        <div class="case-filter" role="tablist">
+          <button type="button" class="filter-btn active" data-filter="all">全部</button>
+          <button type="button" class="filter-btn" data-filter="demo">SG 演示</button>
+          <button type="button" class="filter-btn" data-filter="pilot">Pilot 真实</button>
+        </div>
+
+        <div id="demo-case-list" class="case-list"></div>
+
+        <section class="sidebar-block custom-case">
+          <h3>自定义文案</h3>
+          <p class="sidebar-hint">粘贴真实广告英文/中文文案进行试跑</p>
+          <label class="field-label" for="custom-text">广告文案</label>
+          <textarea
+            id="custom-text"
+            class="custom-text"
+            rows="4"
+            placeholder="粘贴广告正文…"
+          ></textarea>
+          <div class="custom-row">
+            <label class="field-label" for="custom-country">国家</label>
+            <select id="custom-country" class="custom-select">
+              <option value="SG">SG</option>
+              <option value="MY">MY</option>
+              <option value="TH">TH</option>
+              <option value="ID">ID</option>
+              <option value="PH">PH</option>
+              <option value="JP">JP</option>
+              <option value="KR">KR</option>
+              <option value="AU">AU</option>
+            </select>
+          </div>
+          <div class="custom-row">
+            <label class="field-label" for="custom-category">品类</label>
+            <select id="custom-category" class="custom-select">
+              <option value="health.supplement">health.supplement</option>
+              <option value="cosmetic">cosmetic</option>
+              <option value="food">food</option>
+              <option value="electronics">electronics</option>
+            </select>
+          </div>
+          <button type="button" id="btn-use-custom" class="btn secondary block">使用此文案</button>
+          <button type="button" id="btn-run-custom" class="btn primary block">使用并运行审核</button>
+        </section>
+
+        <section class="sidebar-block">
+          <h3>为何不用纯 LLM？</h3>
+          <ul class="value-list">
+            <li>法规 → 规则：可审计、可复现</li>
+            <li>Playbook：业务操作指引层</li>
+            <li>LLM 仅补 open-risk 空白</li>
+            <li>Decision：多源融合决策</li>
+            <li>案例库：沉淀可检索先例</li>
+          </ul>
+        </section>
+      </aside>
+
+      <main class="main">
+        <nav class="tabs" role="tablist">
+          <button class="tab active" data-tab="review" role="tab">审核流程</button>
+          <button class="tab" data-tab="report" role="tab">审核报告</button>
+          <button class="tab" data-tab="trace" role="tab">知识链路</button>
+          <button class="tab" data-tab="cases" role="tab">案例库</button>
+        </nav>
+
+        <section id="panel-review" class="panel active" role="tabpanel">
+          <div class="review-header">
+            <div>
+              <h1 id="selected-case-title">请从左侧选择一个演示场景</h1>
+              <p id="selected-case-sub" class="muted"></p>
+            </div>
+            <button id="btn-run-review" class="btn primary" disabled>运行 AI 审核</button>
+          </div>
+
+          <div id="ad-preview" class="ad-preview empty">
+            <span class="muted">广告文案将显示在此处（英文示例文案）</span>
+          </div>
+
+          <div id="pipeline-stepper" class="stepper"></div>
+
+          <div id="pipeline-log" class="pipeline-log"></div>
+        </section>
+
+        <section id="panel-report" class="panel" role="tabpanel" hidden>
+          <div class="report-toolbar">
+            <h2>审核报告</h2>
+            <div id="report-decision-badge" class="decision-badge hidden"></div>
+          </div>
+          <div id="report-empty" class="empty-state">
+            <p>审核完成后，HTML 报告将显示在此处。</p>
+          </div>
+          <iframe id="report-frame" title="Review Report" hidden></iframe>
+        </section>
+
+        <section id="panel-trace" class="panel" role="tabpanel" hidden>
+          <h2>知识链路（Knowledge Trace）</h2>
+          <p class="muted trace-intro">
+            完整链路：法规 → 规则 → Playbook → Prompt/LLM → 决策 → 案例
+          </p>
+          <div id="trace-timeline" class="trace-timeline"></div>
+        </section>
+
+        <section id="panel-cases" class="panel" role="tabpanel" hidden>
+          <div class="cases-toolbar">
+            <h2>案例库</h2>
+            <button id="btn-refresh-cases" class="btn secondary">刷新</button>
+          </div>
+          <div id="case-library-grid" class="case-grid"></div>
+          <aside id="case-detail" class="case-detail hidden"></aside>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <span>法务内测版 · Stub LLM · SG 演示规则 · 详见 docs/legal-pilot/内测说明.md</span>
+      <span id="footer-review-id" class="muted"></span>
+    </footer>
+
+    <script src="/admin-ui/app.js" type="module"></script>
+  </body>
+</html>

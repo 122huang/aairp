@@ -1,0 +1,76 @@
+{
+  "knowledge_id": "skill:performance-claim-review",
+  "corpus_type": "skill",
+  "skill_id": "performance-claim-review",
+  "skill_purpose": "Review quantitative efficacy, capacity, and performance claims for substantiation, test conditions, and on-pack specification alignment.",
+  "skill_status": "production",
+  "skill_version": "1.0.0",
+  "summary": "Detects quantitative and efficacy performance claims; guides reviewers to verify test methods, typical results framing, and alignment with on-pack specifications.",
+  "review_guidance": "TRIGGER: Quantitative performance, capacity, speed, or efficacy metrics in ad copy. ACTION: Identify whether test method and conditions are stated or available on file. CHECK: Numbers, percentages, duration claims, and fill-level specifications. ESCALATE IF: Performance metric lacks substantiation or conflicts with on-pack label — route to Rule Corpus for binding decision.",
+  "input_definition": {
+    "modalities": ["text", "image"],
+    "countries": ["SG", "MY", "TH"],
+    "categories": ["sa.*", "electronics", "health.supplement"],
+    "claim_types": ["performance-claim"],
+    "required_context": ["ad_copy", "test_method_ref"]
+  },
+  "detection_patterns": [
+    {
+      "pattern_id": "performance-claim",
+      "description": "Quantitative or efficacy performance claims requiring verification.",
+      "signal_terms": ["% faster", "lasts", "up to", "removes"],
+      "signal_concepts": ["quantitative efficacy", "performance metric"],
+      "playbook_pattern_id": "sa-performance-claim",
+      "rewrite_template_id": "cite-evidence"
+    },
+    {
+      "pattern_id": "capacity-claim",
+      "description": "Capacity or volume claims requiring test-method confirmation.",
+      "signal_terms": ["ml", "litre", "capacity", "volume"],
+      "signal_concepts": ["fill level", "capacity specification"],
+      "playbook_pattern_id": "sa-capacity-claim",
+      "rewrite_template_id": "qualify-performance"
+    }
+  ],
+  "skill_behavior": {
+    "rewrite_strategy": "qualify",
+    "checkpoint_actions": [
+      "Verify substantiation and test method for quantitative claims",
+      "Compare ad metrics against on-pack specifications",
+      "Qualify results with typical-use conditions where needed"
+    ],
+    "escalation_hints": [
+      "Escalate when performance number cannot be traced to test report",
+      "Escalate when capacity claim conflicts with packaging label"
+    ]
+  },
+  "output_schema": {
+    "fields": ["matched_patterns", "matched_rules", "rationale", "rewrite_guidance_ref"],
+    "rewrite_linkage": ["rewrite:cite-evidence", "rewrite:qualify-performance"]
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-efficacy-performance",
+      "regulation:th-tisi-performance-claims",
+      "regulation:kr-kftc-performance-claims"
+    ],
+    "rules": ["demo-apac-sa-performance-claim", "demo-apac-sa-capacity-claim"],
+    "evidence": [
+      "evidence:performance-lab-report",
+      "evidence:quantitative-claim-lab-report",
+      "evidence:capacity-test-method-evidence",
+      "evidence:performance-claim-substantiation"
+    ],
+    "rewrites": ["rewrite:cite-evidence", "rewrite:qualify-performance"],
+    "benchmarks": ["AF-004", "AF-005", "PC-007"]
+  },
+  "legacy_skill_module": "Claim Review",
+  "legacy_pattern_ids": ["sa-performance-claim", "sa-capacity-claim"],
+  "confidence_level": "high",
+  "evidence_requirement": "required",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "advertising", "performance"]
+}

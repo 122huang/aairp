@@ -15,6 +15,7 @@ export function logReviewPipelineTimings(
         rule: timings.ruleMs,
         playbook: timings.playbookMs,
         open_risk: timings.openRiskMs,
+        vision: timings.visionMs,
         decision: timings.decisionMs,
         report: timings.reportMs,
       },

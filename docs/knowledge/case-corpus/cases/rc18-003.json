@@ -1,0 +1,89 @@
+{
+  "knowledge_id": "case:rc18-003",
+  "corpus_type": "case",
+  "case_id": "rc18-003",
+  "case_purpose": "Validation knowledge for benchmark case RC18-003 — Comparative Claim.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Comparative Claim scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case RC18-003. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "comparative-claim",
+    "claim_types": [
+      "comparative-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "MEDIUM",
+    "signal_summary": "Comparative Claim",
+    "benchmark_ref": "RC18-003"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "MEDIUM",
+    "expected_action": "ESCALATE",
+    "expected_pattern": "sa-comparative-claim",
+    "expected_rule": "demo-apac-sa-comparative-claim",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:qualify-comparative",
+      "strategy_type": "qualify",
+      "must_remove_terms": [
+        "number one",
+        "goes beyond"
+      ],
+      "must_include_concepts": [
+        "compared",
+        "test"
+      ]
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:comparative-claim-substantiation",
+      "expected_outcome": "require_substantiation_on_file"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "MEDIUM",
+    "matched_skill": "skill:comparative-claim-review",
+    "applied_rewrite": "rewrite:qualify-comparative",
+    "evidence_result": "require_substantiation_on_file"
+  },
+  "benchmark_ref": "RC18-003",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asas-comparative-claims",
+      "regulation:my-masa-comparative-advertising"
+    ],
+    "rules": [
+      "demo-apac-sa-comparative-claim"
+    ],
+    "skills": [
+      "skill:comparative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-comparative"
+    ],
+    "evidence": [
+      "evidence:comparative-claim-substantiation"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 RC18-003 for comparative-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "comparative-claim"
+  ]
+}

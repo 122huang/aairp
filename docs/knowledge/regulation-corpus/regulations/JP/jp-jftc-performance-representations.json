@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:jp-jftc-performance-representations",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-jftc-performance-representations",
+  "country": "JP",
+  "authority": "JFTC",
+  "regulation_name": "Act against Unjustifiable Premiums and Misleading Representations",
+  "citation": "Act against Unjustifiable Premiums — Section 5 (Performance)",
+  "effective_date": "1962-09-15",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Performance and efficacy representations must be based on fact and must not exaggerate beyond substantiation.",
+  "review_guidance": "TRIGGER: Performance stats, energy savings, or guaranteed results. ACTION: WARN — require test evidence or qualify wording. CHECK: Test standard (JIS), conditions, and typical results. ESCALATE IF: Exaggerated or absolute performance without basis.",
+  "related_rule_ids": [
+    "demo-apac-sa-performance-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:standardized-test-protocol-reference"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "consumer.goods"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

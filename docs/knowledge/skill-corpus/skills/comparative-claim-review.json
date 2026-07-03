@@ -1,0 +1,75 @@
+{
+  "knowledge_id": "skill:comparative-claim-review",
+  "corpus_type": "skill",
+  "skill_id": "comparative-claim-review",
+  "skill_purpose": "Review comparative advertising claims for baseline product, test method, and measurable difference disclosure.",
+  "skill_status": "production",
+  "skill_version": "1.0.0",
+  "summary": "Detects comparative and superiority claims missing benchmark product, test conditions, or measurable difference; guides reviewers to require fair-comparison substantiation.",
+  "review_guidance": "TRIGGER: Comparative, versus, or ranking language against competitors or industry standards. ACTION: Identify whether baseline product and test method are stated. CHECK: Headlines, charts, and side-by-side imagery for missing comparison context. ESCALATE IF: Superiority claim lacks identifiable benchmark — route to Rule Corpus for binding decision.",
+  "input_definition": {
+    "modalities": ["text", "image"],
+    "countries": ["SG", "MY", "TH"],
+    "categories": ["sa.*", "electronics", "health.supplement"],
+    "claim_types": ["comparative-claim"],
+    "required_context": ["ad_copy", "comparison_baseline"]
+  },
+  "detection_patterns": [
+    {
+      "pattern_id": "comparative-claim",
+      "description": "Comparative claims missing baseline product or test conditions.",
+      "signal_terms": ["compared to", "versus", "vs", "better than"],
+      "signal_concepts": ["competitive comparison", "ranking claim"],
+      "playbook_pattern_id": "sa-comparative-claim",
+      "rewrite_template_id": "qualify-comparative"
+    },
+    {
+      "pattern_id": "comparative-superiority",
+      "description": "Superiority or beyond-standard comparative claims.",
+      "signal_terms": ["number one", "goes beyond", "industry leading"],
+      "signal_concepts": ["superiority without baseline"],
+      "playbook_pattern_id": "sa-comparative-superiority",
+      "rewrite_template_id": "qualify-comparative"
+    }
+  ],
+  "skill_behavior": {
+    "rewrite_strategy": "qualify",
+    "checkpoint_actions": [
+      "Confirm comparison baseline product is named",
+      "Verify test method and conditions are disclosed",
+      "Check that measurable difference is stated clearly"
+    ],
+    "escalation_hints": [
+      "Escalate when competitor is identifiable but test conditions are absent",
+      "Escalate when chart or graph implies superiority without axis labels"
+    ]
+  },
+  "output_schema": {
+    "fields": ["matched_patterns", "matched_rules", "rationale", "rewrite_guidance_ref"],
+    "rewrite_linkage": ["rewrite:qualify-comparative"]
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asas-comparative-claims",
+      "regulation:my-masa-comparative-advertising",
+      "regulation:au-accc-comparative-advertising"
+    ],
+    "rules": ["demo-apac-sa-comparative-claim"],
+    "evidence": [
+      "evidence:comparative-claim-substantiation",
+      "evidence:comparative-test-evidence",
+      "evidence:comparative-superiority-substantiation"
+    ],
+    "rewrites": ["rewrite:qualify-comparative"],
+    "benchmarks": ["AF-003", "AF-006", "PC-012"]
+  },
+  "legacy_skill_module": "Claim Review",
+  "legacy_pattern_ids": ["sa-comparative-claim", "sa-comparative-superiority"],
+  "confidence_level": "high",
+  "evidence_requirement": "required",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "advertising", "comparative"]
+}

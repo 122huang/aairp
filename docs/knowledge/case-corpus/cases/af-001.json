@@ -1,0 +1,80 @@
+{
+  "knowledge_id": "case:af-001",
+  "corpus_type": "case",
+  "case_id": "af-001",
+  "case_purpose": "Validation knowledge for benchmark case AF-001 — Localization.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Localization scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case AF-001. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "image"
+    ],
+    "risk_class": "MEDIUM",
+    "signal_summary": "Localization",
+    "benchmark_ref": "AF-001"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "MEDIUM",
+    "expected_action": "ESCALATE",
+    "expected_pattern": "sa-localization",
+    "expected_rule": "demo-apac-sa-localization",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:disclose-localization",
+      "strategy_type": "disclose",
+      "must_remove_terms": [
+        "chinese product image",
+        "chinese manual"
+      ],
+      "must_include_concepts": [
+        "local",
+        "english"
+      ]
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "MEDIUM",
+    "matched_skill": null,
+    "applied_rewrite": "rewrite:disclose-localization",
+    "evidence_result": "not_applicable"
+  },
+  "benchmark_ref": "AF-001",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-scap-disclosure"
+    ],
+    "rules": [
+      "demo-apac-sa-localization"
+    ],
+    "skills": [],
+    "rewrites": [
+      "rewrite:disclose-localization"
+    ],
+    "evidence": []
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 AF-001 for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

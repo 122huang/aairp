@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:th-fda-supplement-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "th-fda-supplement-claims",
+  "country": "TH",
+  "authority": "FDA",
+  "regulation_name": "Notification of Food Supplements (Advertising)",
+  "citation": "Notification of Food Supplements — Announcement Clause 4",
+  "effective_date": "2019-01-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Food supplement ads must use permitted health claims and must not imply medicinal or disease-treatment effects.",
+  "review_guidance": "TRIGGER: Vitamin, herbal, or functional food health benefit claims. ACTION: WARN — check against permitted claim list. CHECK: FDA notification number and Thai label claims. ESCALATE IF: Disease prevention or treatment language used.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [
+    "evidence:supplement-health-evidence"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

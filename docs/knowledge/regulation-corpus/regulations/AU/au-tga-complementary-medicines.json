@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:au-tga-complementary-medicines",
+  "corpus_type": "regulation",
+  "regulation_id": "au-tga-complementary-medicines",
+  "country": "AU",
+  "authority": "TGA",
+  "regulation_name": "Therapeutic Goods Advertising Code (Complementary medicines)",
+  "citation": "Therapeutic Goods Advertising Code — Section 4",
+  "effective_date": "2021-01-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Complementary medicine ads must use permitted indications and mandatory warnings; disease claims require TGA approval.",
+  "review_guidance": "TRIGGER: Vitamin, herbal, or complementary health benefit claims. ACTION: WARN — verify permitted indication and warnings. CHECK: AUST L number, indication list, and mandatory statements. ESCALATE IF: Unapproved health claim or missing mandatory warning.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [
+    "evidence:health-implication-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

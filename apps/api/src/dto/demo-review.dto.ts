@@ -12,6 +12,7 @@ export type DemoReviewResponseDto = {
     playbook: number;
     llm: number;
     case?: number;
+    vision?: number;
   };
   report_html: string;
   summary: ReturnType<typeof toReviewReportResponseDto>['summary'];
@@ -33,6 +34,9 @@ export function toDemoReviewResponseDto(result: ReviewHappyPathResult): DemoRevi
       llm: result.decision.findingCounts.llm,
       ...(result.decision.findingCounts.case > 0
         ? { case: result.decision.findingCounts.case }
+        : {}),
+      ...(result.decision.findingCounts.vision > 0
+        ? { vision: result.decision.findingCounts.vision }
         : {}),
     },
     report_html: reportDto.report_html,

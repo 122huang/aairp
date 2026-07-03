@@ -40,6 +40,9 @@ export type DemoRegulationSeed = {
   article?: string;
   bodyText?: string;
   tags?: string[];
+  effectiveDate?: string;
+  mandatory?: boolean;
+  riskLevel?: string;
 };
 
 export const DEMO_REGULATION_SEEDS: DemoRegulationSeed[] = [
@@ -50,6 +53,9 @@ export const DEMO_REGULATION_SEEDS: DemoRegulationSeed[] = [
     article: 'Section 7 — Prohibited claims',
     bodyText: 'Prohibited health claims including cure, miracle, and absolute efficacy statements.',
     tags: ['demo', 'health', 'sg'],
+    effectiveDate: '2020-01-01',
+    mandatory: true,
+    riskLevel: 'HIGH',
   },
   {
     regulationKey: 'sg-asasa-substantiation',
@@ -58,6 +64,9 @@ export const DEMO_REGULATION_SEEDS: DemoRegulationSeed[] = [
     article: 'General Principle — Substantiation',
     bodyText: 'Advertisers must hold substantiation for comparative and superlative claims.',
     tags: ['demo', 'advertising', 'sg'],
+    effectiveDate: '2019-06-01',
+    mandatory: true,
+    riskLevel: 'MEDIUM',
   },
   {
     regulationKey: 'sg-scap-disclosure',
@@ -66,5 +75,8 @@ export const DEMO_REGULATION_SEEDS: DemoRegulationSeed[] = [
     article: 'Rule 2 — Identification of Advertisements',
     bodyText: 'Sponsored content must be clearly identified as advertising.',
     tags: ['demo', 'disclosure', 'sg'],
+    effectiveDate: '2021-03-15',
+    mandatory: true,
+    riskLevel: 'LOW',
   },
 ];

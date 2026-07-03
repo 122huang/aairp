@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:my-npra-supplement-health",
+  "corpus_type": "regulation",
+  "regulation_id": "my-npra-supplement-health",
+  "country": "MY",
+  "authority": "NPRA",
+  "regulation_name": "Guidelines on Advertisement of Health Supplements",
+  "citation": "Guidelines on Advertisement of Health Supplements — Clause 5",
+  "effective_date": "2018-03-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Health supplement ads are restricted to general health maintenance claims and must not imply medicinal effects.",
+  "review_guidance": "TRIGGER: Vitamin, herbal, or nutritional health benefit claims. ACTION: WARN — verify against permitted claim list. CHECK: Product notification status and ingredient claims. ESCALATE IF: Disease treatment or pharmacological effect implied.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [
+    "evidence:health-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

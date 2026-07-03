@@ -31,6 +31,13 @@ type RegulationVersionRow = {
   body_text: string | null;
   tags_json: unknown;
   search_text: string | null;
+  effective_date: Date | string | null;
+  mandatory: boolean | null;
+  risk_level: string | null;
+  owner: string | null;
+  owner_type: string | null;
+  last_reviewed_at: Date | null;
+  freshness_status: string | null;
   published_at: Date | null;
   created_at: Date;
   updated_at: Date;
@@ -58,6 +65,17 @@ function mapVersion(row: RegulationVersionRow): RegulationVersion {
     bodyText: row.body_text ?? undefined,
     tags: parseJson<string[]>(row.tags_json, []),
     searchText: row.search_text ?? undefined,
+    effectiveDate: row.effective_date
+      ? typeof row.effective_date === 'string'
+        ? row.effective_date
+        : row.effective_date.toISOString().slice(0, 10)
+      : undefined,
+    mandatory: row.mandatory ?? undefined,
+    riskLevel: row.risk_level ?? undefined,
+    owner: row.owner ?? undefined,
+    ownerType: row.owner_type ?? undefined,
+    lastReviewedAt: row.last_reviewed_at ? toIso(row.last_reviewed_at) : undefined,
+    freshnessStatus: row.freshness_status ?? undefined,
     publishedAt: row.published_at ? toIso(row.published_at) : undefined,
     createdAt: toIso(row.created_at),
     updatedAt: toIso(row.updated_at),
@@ -176,8 +194,9 @@ export class PgRegulationRepository implements IRegulationRepository {
 
     const rows = await this.db.query<RegulationVersionRow>(
       `INSERT INTO app.regulation_version
-         (regulation_id, version_number, law_name, article, source_url, body_text, tags_json, search_text)
-       VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8)
+         (regulation_id, version_number, law_name, article, source_url, body_text, tags_json, search_text,
+          effective_date, mandatory, risk_level, owner, owner_type, last_reviewed_at, freshness_status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11, $12, $13, $14, $15)
        RETURNING *`,
       [
         input.regulationId,
@@ -188,6 +207,13 @@ export class PgRegulationRepository implements IRegulationRepository {
         input.bodyText ?? null,
         JSON.stringify(input.tags ?? []),
         searchText,
+        input.effectiveDate ?? null,
+        input.mandatory ?? null,
+        input.riskLevel ?? null,
+        input.owner ?? null,
+        input.ownerType ?? null,
+        input.lastReviewedAt ?? null,
+        input.freshnessStatus ?? null,
       ],
     );
     return mapVersion(rows.rows[0]!);
@@ -213,6 +239,10 @@ export class PgRegulationRepository implements IRegulationRepository {
     const searchText =
       input.searchText ??
       [lawName, article, bodyText].filter(Boolean).join(' ');
+    const effectiveDate =
+      input.effectiveDate !== undefined ? input.effectiveDate : current.effectiveDate;
+    const mandatory = input.mandatory !== undefined ? input.mandatory : current.mandatory;
+    const riskLevel = input.riskLevel !== undefined ? input.riskLevel : current.riskLevel;
 
     const rows = await this.db.query<RegulationVersionRow>(
       `UPDATE app.regulation_version
@@ -222,6 +252,9 @@ export class PgRegulationRepository implements IRegulationRepository {
            body_text = $5,
            tags_json = $6::jsonb,
            search_text = $7,
+           effective_date = $8,
+           mandatory = $9,
+           risk_level = $10,
            updated_at = NOW()
        WHERE regulation_version_id = $1
        RETURNING *`,
@@ -233,6 +266,9 @@ export class PgRegulationRepository implements IRegulationRepository {
         bodyText ?? null,
         JSON.stringify(tags),
         searchText,
+        effectiveDate ?? null,
+        mandatory ?? null,
+        riskLevel ?? null,
       ],
     );
     return mapVersion(rows.rows[0]!);

@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:jp-pmda-pharma-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-pmda-pharma-advertising",
+  "country": "JP",
+  "authority": "PMDA",
+  "regulation_name": "Pharmaceutical Affairs Act (Advertising)",
+  "citation": "Pharmaceutical Affairs Act — Article 68",
+  "effective_date": "1960-08-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Prescription drug advertising to the general public is prohibited; OTC drug ads must comply with approved labeling.",
+  "review_guidance": "TRIGGER: Rx drug promotion, cure claims, or unapproved drug indications. ACTION: REJECT — remove prohibited pharmaceutical advertising. CHECK: YJ code, OTC classification, and approved labeling text. ESCALATE IF: Rx ad to public or unapproved efficacy claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

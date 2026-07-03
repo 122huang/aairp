@@ -1,8 +1,26 @@
 node_modules/
 dist/
-.env
+build/
+*.tsbuildinfo
+
+# Environment & secrets (keep example only)
+.env*
+!.env.example
+
+# Local Python venv (PaddleOCR)
+.venv-paddle/
+.playwright-browsers/
+
+# Logs & OS
 *.log
 .DS_Store
+
+# Credentials / keys
+*credentials*
+*.pem
+*.p12
+*.key
+service-account*.json
 
 # Generated case JSON files (auto-saved after each review)
 case-library/cases/**/*.json

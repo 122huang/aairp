@@ -1,0 +1,147 @@
+{
+  "description": "Sample POST /demo/review responses (stub Open Risk, demo knowledge packs)",
+  "generated_at": "2026-07-02T03:24:23.838Z",
+  "samples": {
+    "PASS": {
+      "review_id": "rev_21212121-2121-2121-2121-212121212121",
+      "advertisement_id": "ad_20202020-2020-2020-2020-202020202020",
+      "final_decision": "PASS",
+      "confidence": 0.95,
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, or Open Risk modules.",
+      "finding_counts": {
+        "rule": 0,
+        "playbook": 0,
+        "llm": 0
+      },
+      "report_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\" />\n  <title>Review Report rev_21212121-2121-2121-2121-212121212121</title>\n  <style>\n    body { font-family: Arial, sans-serif; margin: 24px; color: #222; line-height: 1.5; }\n    h1 { font-size: 22px; margin-bottom: 8px; }\n    h2 { font-size: 16px; margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }\n    table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 14px; }\n    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; vertical-align: top; }\n    th { background: #f5f5f5; }\n    .decision { font-size: 22px; font-weight: bold; padding: 8px 12px; border-radius: 6px; display: inline-block; }\n    .decision-pass { background: #e8f5e9; color: #1b5e20; }\n    .decision-warn { background: #fff3e0; color: #e65100; }\n    .decision-reject { background: #ffebee; color: #b71c1c; }\n    .meta { color: #555; font-size: 14px; }\n    .note { background: #f9f9f9; border-left: 4px solid #999; padding: 8px 12px; }\n    .counts { margin-top: 8px; }\n  </style>\n</head>\n<body>\n  <h1>Advertising Review Report</h1>\n  <p class=\"meta\">Review ID: rev_21212121-2121-2121-2121-212121212121</p>\n  <p class=\"meta\">Advertisement ID: ad_20202020-2020-2020-2020-202020202020</p>\n  <p class=\"meta\">Generated at: 2026-06-26T10:10:00.000Z</p>\n\n  <h2>Decision</h2>\n  <p class=\"decision decision-pass\">PASS</p>\n  <p><strong>Confidence:</strong> 0.95 (High)</p>\n  <p><strong>Rationale:</strong> No blocking or warning findings across Rule, Playbook, Case, or Open Risk modules.</p>\n  <p class=\"counts\"><strong>Finding counts:</strong> Rule 0, Case 0, Playbook 0, LLM 0</p>\n  \n\n  <h2>Advertisement</h2>\n  <p><strong>Country:</strong> SG</p>\n  <p><strong>Platform:</strong> META</p>\n  <p><strong>Category:</strong> health.supplement</p>\n  <p><strong>Text:</strong> Daily vitamins for general wellness. #ad</p>\n\n  <h2>Rule Findings</h2><p class=\"meta\">No findings</p>\n  <h2>Case Findings</h2><p class=\"meta\">No findings</p>\n  <h2>Playbook Findings</h2><p class=\"meta\">No findings</p>\n  <h2>Open Risk (LLM) Findings</h2><p class=\"meta\">No findings</p>\n  \n</body>\n</html>",
+      "summary": {
+        "final_decision": "PASS",
+        "confidence": 0.95,
+        "rationale": "No blocking or warning findings across Rule, Playbook, Case, or Open Risk modules.",
+        "finding_counts": {
+          "rule": 0,
+          "playbook": 0,
+          "llm": 0
+        },
+        "advertisement": {
+          "text_preview": "Daily vitamins for general wellness. #ad",
+          "country_id": "SG",
+          "platform_id": "META",
+          "category_id": "health.supplement"
+        },
+        "findings": [],
+        "open_risk_skipped": false
+      },
+      "generated_at": "2026-06-26T10:10:00.000Z"
+    },
+    "WARN": {
+      "review_id": "rev_23232323-2323-2323-2323-232323232323",
+      "advertisement_id": "ad_22222222-2222-2222-2222-222222222222",
+      "final_decision": "WARN",
+      "confidence": 0.9,
+      "rationale": "Warning issued based on: RULE/demo-sg-sponsored-disclosure (LOW). Manual follow-up recommended before publishing.",
+      "finding_counts": {
+        "rule": 1,
+        "playbook": 0,
+        "llm": 0
+      },
+      "report_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\" />\n  <title>Review Report rev_23232323-2323-2323-2323-232323232323</title>\n  <style>\n    body { font-family: Arial, sans-serif; margin: 24px; color: #222; line-height: 1.5; }\n    h1 { font-size: 22px; margin-bottom: 8px; }\n    h2 { font-size: 16px; margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }\n    table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 14px; }\n    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; vertical-align: top; }\n    th { background: #f5f5f5; }\n    .decision { font-size: 22px; font-weight: bold; padding: 8px 12px; border-radius: 6px; display: inline-block; }\n    .decision-pass { background: #e8f5e9; color: #1b5e20; }\n    .decision-warn { background: #fff3e0; color: #e65100; }\n    .decision-reject { background: #ffebee; color: #b71c1c; }\n    .meta { color: #555; font-size: 14px; }\n    .note { background: #f9f9f9; border-left: 4px solid #999; padding: 8px 12px; }\n    .counts { margin-top: 8px; }\n  </style>\n</head>\n<body>\n  <h1>Advertising Review Report</h1>\n  <p class=\"meta\">Review ID: rev_23232323-2323-2323-2323-232323232323</p>\n  <p class=\"meta\">Advertisement ID: ad_22222222-2222-2222-2222-222222222222</p>\n  <p class=\"meta\">Generated at: 2026-06-26T10:10:00.000Z</p>\n\n  <h2>Decision</h2>\n  <p class=\"decision decision-warn\">WARN</p>\n  <p><strong>Confidence:</strong> 0.9 (High)</p>\n  <p><strong>Rationale:</strong> Warning issued based on: RULE/demo-sg-sponsored-disclosure (LOW). Manual follow-up recommended before publishing.</p>\n  <p class=\"counts\"><strong>Finding counts:</strong> Rule 1, Case 0, Playbook 0, LLM 0</p>\n  \n\n  <h2>Advertisement</h2>\n  <p><strong>Country:</strong> SG</p>\n  <p><strong>Platform:</strong> META</p>\n  <p><strong>Category:</strong> health.supplement</p>\n  <p><strong>Text:</strong> Daily vitamins for general wellness.</p>\n\n  <h2>Rule Findings</h2>\n  <table>\n    <thead>\n      <tr>\n        <th>Ref ID</th>\n        <th>Severity</th>\n        <th>Decision</th>\n        <th>Summary</th>\n      </tr>\n    </thead>\n    <tbody><tr>\n          <td>demo-sg-sponsored-disclosure</td>\n          <td>LOW</td>\n          <td>WARN</td>\n          <td>Sponsored or promotional content should include an ad disclosure</td>\n        </tr></tbody>\n  </table>\n  <h2>Case Findings</h2><p class=\"meta\">No findings</p>\n  <h2>Playbook Findings</h2><p class=\"meta\">No findings</p>\n  <h2>Open Risk (LLM) Findings</h2><p class=\"meta\">No findings</p>\n  \n</body>\n</html>",
+      "summary": {
+        "final_decision": "WARN",
+        "confidence": 0.9,
+        "rationale": "Warning issued based on: RULE/demo-sg-sponsored-disclosure (LOW). Manual follow-up recommended before publishing.",
+        "finding_counts": {
+          "rule": 1,
+          "playbook": 0,
+          "llm": 0
+        },
+        "advertisement": {
+          "text_preview": "Daily vitamins for general wellness.",
+          "country_id": "SG",
+          "platform_id": "META",
+          "category_id": "health.supplement"
+        },
+        "findings": [
+          {
+            "module": "RULE",
+            "ref_id": "demo-sg-sponsored-disclosure",
+            "severity": "LOW",
+            "decision": "WARN",
+            "summary": "Sponsored or promotional content should include an ad disclosure"
+          }
+        ],
+        "open_risk_skipped": false
+      },
+      "generated_at": "2026-06-26T10:10:00.000Z"
+    },
+    "REJECT": {
+      "review_id": "rev_19191919-1919-1919-1919-191919191919",
+      "advertisement_id": "ad_18181818-1818-1818-1818-181818181818",
+      "final_decision": "REJECT",
+      "confidence": 1,
+      "rationale": "Rejected due to blocking rule finding: RULE/demo-sg-health-forbidden-claim (BLOCKER).",
+      "finding_counts": {
+        "rule": 3,
+        "playbook": 2,
+        "llm": 0
+      },
+      "report_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\" />\n  <title>Review Report rev_19191919-1919-1919-1919-191919191919</title>\n  <style>\n    body { font-family: Arial, sans-serif; margin: 24px; color: #222; line-height: 1.5; }\n    h1 { font-size: 22px; margin-bottom: 8px; }\n    h2 { font-size: 16px; margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }\n    table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 14px; }\n    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; vertical-align: top; }\n    th { background: #f5f5f5; }\n    .decision { font-size: 22px; font-weight: bold; padding: 8px 12px; border-radius: 6px; display: inline-block; }\n    .decision-pass { background: #e8f5e9; color: #1b5e20; }\n    .decision-warn { background: #fff3e0; color: #e65100; }\n    .decision-reject { background: #ffebee; color: #b71c1c; }\n    .meta { color: #555; font-size: 14px; }\n    .note { background: #f9f9f9; border-left: 4px solid #999; padding: 8px 12px; }\n    .counts { margin-top: 8px; }\n  </style>\n</head>\n<body>\n  <h1>Advertising Review Report</h1>\n  <p class=\"meta\">Review ID: rev_19191919-1919-1919-1919-191919191919</p>\n  <p class=\"meta\">Advertisement ID: ad_18181818-1818-1818-1818-181818181818</p>\n  <p class=\"meta\">Generated at: 2026-06-26T10:10:00.000Z</p>\n\n  <h2>Decision</h2>\n  <p class=\"decision decision-reject\">REJECT</p>\n  <p><strong>Confidence:</strong> 1 (High)</p>\n  <p><strong>Rationale:</strong> Rejected due to blocking rule finding: RULE/demo-sg-health-forbidden-claim (BLOCKER).</p>\n  <p class=\"counts\"><strong>Finding counts:</strong> Rule 3, Case 0, Playbook 2, LLM 0</p>\n  <p class=\"note\"><strong>Open Risk:</strong> skipped (HAS_BLOCKER) — deterministic blocker or policy path already decisive.</p>\n\n  <h2>Advertisement</h2>\n  <p><strong>Country:</strong> SG</p>\n  <p><strong>Platform:</strong> META</p>\n  <p><strong>Category:</strong> health.supplement</p>\n  <p><strong>Text:</strong> Clinically proven to cure diabetes in 7 days. Buy now!</p>\n\n  <h2>Rule Findings</h2>\n  <table>\n    <thead>\n      <tr>\n        <th>Ref ID</th>\n        <th>Severity</th>\n        <th>Decision</th>\n        <th>Summary</th>\n      </tr>\n    </thead>\n    <tbody><tr>\n          <td>demo-sg-health-forbidden-claim</td>\n          <td>BLOCKER</td>\n          <td>FAIL</td>\n          <td>Prohibited absolute health cure claims are not allowed</td>\n        </tr>\n<tr>\n          <td>demo-sg-health-superlative</td>\n          <td>MEDIUM</td>\n          <td>WARN</td>\n          <td>Unsubstantiated superlative or efficacy claims require substantiation</td>\n        </tr>\n<tr>\n          <td>demo-sg-sponsored-disclosure</td>\n          <td>LOW</td>\n          <td>WARN</td>\n          <td>Sponsored or promotional content should include an ad disclosure</td>\n        </tr></tbody>\n  </table>\n  <h2>Case Findings</h2><p class=\"meta\">No findings</p>\n  <h2>Playbook Findings</h2>\n  <table>\n    <thead>\n      <tr>\n        <th>Ref ID</th>\n        <th>Severity</th>\n        <th>Decision</th>\n        <th>Summary</th>\n      </tr>\n    </thead>\n    <tbody><tr>\n          <td>urgency-cta</td>\n          <td>MEDIUM</td>\n          <td>WARN</td>\n          <td>Urgency call-to-action detected. Add offer validity dates or remove pressure language that may mislead consumers.</td>\n        </tr>\n<tr>\n          <td>unsubstantiated-testimonial</td>\n          <td>HIGH</td>\n          <td>REVIEW</td>\n          <td>Efficacy or testimonial claim detected. Require substantiation, qualification, or remove absolute wording before publishing.</td>\n        </tr></tbody>\n  </table>\n  <h2>Open Risk (LLM) Findings</h2><p class=\"meta\">No findings</p>\n  \n</body>\n</html>",
+      "summary": {
+        "final_decision": "REJECT",
+        "confidence": 1,
+        "rationale": "Rejected due to blocking rule finding: RULE/demo-sg-health-forbidden-claim (BLOCKER).",
+        "finding_counts": {
+          "rule": 3,
+          "playbook": 2,
+          "llm": 0
+        },
+        "advertisement": {
+          "text_preview": "Clinically proven to cure diabetes in 7 days. Buy now!",
+          "country_id": "SG",
+          "platform_id": "META",
+          "category_id": "health.supplement"
+        },
+        "findings": [
+          {
+            "module": "RULE",
+            "ref_id": "demo-sg-health-forbidden-claim",
+            "severity": "BLOCKER",
+            "decision": "FAIL",
+            "summary": "Prohibited absolute health cure claims are not allowed"
+          },
+          {
+            "module": "RULE",
+            "ref_id": "demo-sg-health-superlative",
+            "severity": "MEDIUM",
+            "decision": "WARN",
+            "summary": "Unsubstantiated superlative or efficacy claims require substantiation"
+          },
+          {
+            "module": "RULE",
+            "ref_id": "demo-sg-sponsored-disclosure",
+            "severity": "LOW",
+            "decision": "WARN",
+            "summary": "Sponsored or promotional content should include an ad disclosure"
+          },
+          {
+            "module": "PLAYBOOK",
+            "ref_id": "urgency-cta",
+            "severity": "MEDIUM",
+            "decision": "WARN",
+            "summary": "Urgency call-to-action detected. Add offer validity dates or remove pressure language that may mislead consumers."
+          },
+          {
+            "module": "PLAYBOOK",
+            "ref_id": "unsubstantiated-testimonial",
+            "severity": "HIGH",
+            "decision": "REVIEW",
+            "summary": "Efficacy or testimonial claim detected. Require substantiation, qualification, or remove absolute wording before publishing."
+          }
+        ],
+        "open_risk_skipped": true,
+        "open_risk_skip_reason": "HAS_BLOCKER"
+      },
+      "generated_at": "2026-06-26T10:10:00.000Z"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "knowledge_id": "regulation:vn-moh-tpcn-permitted-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "vn-moh-tpcn-permitted-claims",
+  "country": "VN",
+  "authority": "MOH",
+  "regulation_name": "Decree on Functional Foods (TPCN)",
+  "citation": "Decree No. 15/2018/ND-CP — Articles 19–21 (Advertising and permitted health claims for functional foods)",
+  "effective_date": "2018-05-10",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Functional food (TPCN) advertising may only use MOH-permitted claims and must not imply disease treatment, cure, or prevention.",
+  "review_guidance": "TRIGGER: Vitamin, herbal, nutraceutical, or TPCN health benefit claims. ACTION: WARN — verify against MOH permitted claim list and product registration. CHECK: TPCN declaration number, approved label claims, and dosage. ESCALATE IF: Disease treatment, cure, or medicinal effect implied.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [
+    "evidence:supplement-health-evidence",
+    "evidence:health-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement",
+    "tpcn"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

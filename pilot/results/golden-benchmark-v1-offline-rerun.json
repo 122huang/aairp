@@ -1,0 +1,1363 @@
+{
+  "summary": {
+    "benchmark": "AAIRP Golden Benchmark Dataset v1.0",
+    "mode": "offline-pipeline",
+    "total": 84,
+    "text_runnable": 61,
+    "skipped_multimodal": 23,
+    "pass": 61,
+    "miss": 0,
+    "over": 0,
+    "under": 0,
+    "text_pass_rate": "100.0%",
+    "critical_text": [
+      {
+        "id": "PC-008",
+        "text": "Lower Sugar Healthier Every Bowl",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker",
+          "demo-apac-sa-health-implication",
+          "sa-health-implication"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "BL-007",
+        "text": "Easy to digest",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "BL-008",
+        "text": "Better nutrient absorption",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "BL-009",
+        "text": "Sterilize",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Medical / Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "RC18-008",
+        "text": "Low-sugar rice",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "RC40-001",
+        "text": "Medical-grade 316L stainless steel",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Medical Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "P655-001",
+        "text": "99.9999% bacteria removal",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Performance Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "V9-001",
+        "text": "Fat-reducing",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "V9-002",
+        "text": "Less fat",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker"
+        ],
+        "status": "PASS",
+        "note": ""
+      }
+    ],
+    "matched_pilot_overlap": [
+      {
+        "id": "AF-002",
+        "text": "Easy presents for perfect results every time",
+        "expected": "REJECT",
+        "risk": "High",
+        "issue": "Absolute Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-absolute-claim",
+          "sa-absolute-performance"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "PC-008",
+        "text": "Lower Sugar Healthier Every Bowl",
+        "expected": "REJECT",
+        "risk": "Critical",
+        "issue": "Health Claim",
+        "modality": "text",
+        "actual": "REJECT",
+        "findings": [
+          "demo-apac-sa-health-claim-blocker",
+          "demo-apac-sa-health-implication",
+          "sa-health-implication"
+        ],
+        "status": "PASS",
+        "note": ""
+      },
+      {
+        "id": "BL-004",
+        "text": "Less wear, less noise",
+        "expected": "REVIEW",
+        "risk": "Medium",
+        "issue": "Comparative Claim",
+        "modality": "text",
+        "actual": "WARN",
+        "findings": [
+          "demo-apac-sa-comparative-claim",
+          "sa-comparative-claim"
+        ],
+        "status": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "AF-001",
+      "text": "Chinese product image",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "AF-002",
+      "text": "Easy presents for perfect results every time",
+      "expected": "REJECT",
+      "risk": "High",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-absolute-claim",
+        "sa-absolute-performance"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "AF-003",
+      "text": "Goes beyond standard air fryer (200℃)",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim",
+        "sa-comparative-superiority"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "AF-004",
+      "text": "Non-stick",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "AF-005",
+      "text": "Midea product image",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Brand / IP",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "AF-006",
+      "text": "Comparison with higher-end Joyoung model",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Advertising",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "AF-007",
+      "text": "AI rendered image without disclaimer",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "AF-008",
+      "text": "Chicken wing image distortion",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "AI Image Quality",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "AF-009",
+      "text": "Authoritative certification meets national standard grade",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Certification",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-certification-evidence",
+        "sa-certification-evidence"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "AF-010",
+      "text": "Certification image unreadable",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Evidence",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "PC-001",
+      "text": "Chinese product image",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "PC-002",
+      "text": "Large Capacity",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-003",
+      "text": "Cook Faster",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-004",
+      "text": "Tender beef stew in 30 minutes",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-005",
+      "text": "70kPa",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Technical Specification",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-006",
+      "text": "Stew up to 2kg beef",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Capacity Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-capacity-claim",
+        "sa-capacity-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-007",
+      "text": "Non-stick",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-008",
+      "text": "Lower Sugar Healthier Every Bowl",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-health-implication",
+        "sa-health-implication"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-009",
+      "text": "Copper Pot vs Stainless Steel inconsistency",
+      "expected": "REJECT",
+      "risk": "High",
+      "issue": "Content Consistency",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-content-consistency-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-010",
+      "text": "Internal design note visible",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "PC-011",
+      "text": "22:00pm",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Grammar",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-grammar-quality",
+        "sa-grammar-quality"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-012",
+      "text": "Comparison with higher-end Joyoung model",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Advertising",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-013",
+      "text": "Chinese manual",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "PC-014",
+      "text": "Missing AI disclaimer",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-disclaimer-required",
+        "sa-disclaimer-required"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-015",
+      "text": "Comparison may make competitor look better",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Strategy",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "PC-016",
+      "text": "Stainless Steel / Copper / Ceramic inconsistency",
+      "expected": "REJECT",
+      "risk": "High",
+      "issue": "Content Consistency",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-content-consistency-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-001",
+      "text": "Chinese product image",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "BL-002",
+      "text": "Enhanced noise reduction",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-003",
+      "text": "Multiple presents",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Grammar",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-grammar-quality",
+        "sa-grammar-quality"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-004",
+      "text": "Less wear, less noise",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-005",
+      "text": "Quieter by design",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-006",
+      "text": "No chunks",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-007",
+      "text": "Easy to digest",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-008",
+      "text": "Better nutrient absorption",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-009",
+      "text": "Sterilize",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Medical / Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-010",
+      "text": "Internal note visible",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "BL-011",
+      "text": "Certification image with internal note",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "BL-012",
+      "text": "Chinese warranty card",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "BL-013",
+      "text": "Missing AI disclaimer",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-disclaimer-required",
+        "sa-disclaimer-required"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-014",
+      "text": "Finer blending smoother nutrition",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-015",
+      "text": "Ordinary Blender comparison",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "BL-016",
+      "text": "AI generated family image abnormal",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "AI Image Quality",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "RC18-001",
+      "text": "Non-stick",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-002",
+      "text": "Chinese product image",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "RC18-003",
+      "text": "Safer and more durable",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-004",
+      "text": "China Patent",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Patent",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-patent-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-005",
+      "text": "Missing AI disclaimer",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-disclaimer-required",
+        "sa-disclaimer-required"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-006",
+      "text": "A cleaner way to cook",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-007",
+      "text": "Less peeling",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-008",
+      "text": "Low-sugar rice",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC18-009",
+      "text": "304/316 stainless steel claimed as Non-stick",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Misleading Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-001",
+      "text": "Medical-grade 316L stainless steel",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Medical Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-002",
+      "text": "Patent image with internal notes",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "RC40-003",
+      "text": "Superior Non-stick Performance",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-004",
+      "text": "1350W",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Technical Specification",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-005",
+      "text": "Every time",
+      "expected": "REJECT",
+      "risk": "High",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-absolute-claim",
+        "sa-absolute-performance"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-006",
+      "text": "Up to 16 bowls",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Capacity Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-capacity-claim",
+        "sa-capacity-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-007",
+      "text": "User manual contains internal notes",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "doc",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需doc能力"
+    },
+    {
+      "id": "RC40-008",
+      "text": "Missing AI disclaimer",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-disclaimer-required",
+        "sa-disclaimer-required"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "RC40-009",
+      "text": "Wrong SKU content (actually 50H100)",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Content Consistency",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-wrong-sku"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ9-001",
+      "text": "Smarter. Cleaner. More efficient",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim",
+        "sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ9-002",
+      "text": "+15% juice yield",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ9-003",
+      "text": "+12% purer juice",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ9-004",
+      "text": "Chinese product image",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "LZ9-005",
+      "text": "Video uses old product",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Brand Consistency",
+      "modality": "video",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需video能力"
+    },
+    {
+      "id": "LZ9-006",
+      "text": "Chinese subtitles",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "video",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需video能力"
+    },
+    {
+      "id": "LZ9-007",
+      "text": "IF Award model verification",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Award Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-certification-evidence",
+        "sa-certification-evidence"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ585-001",
+      "text": "Zero waste",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ585-002",
+      "text": "What's include",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Grammar",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-grammar-quality",
+        "sa-grammar-quality"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "LZ585-003",
+      "text": "Patented",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Patent Verification",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-certification-evidence",
+        "sa-certification-evidence"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "P655-001",
+      "text": "99.9999% bacteria removal",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "P655-002",
+      "text": "National standard grade",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Certification",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-certification-evidence",
+        "sa-certification-evidence"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "P655-003",
+      "text": "Certification image unreadable",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Evidence",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "P655-004",
+      "text": "Chinese manual",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "V9-001",
+      "text": "Fat-reducing",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "V9-002",
+      "text": "Less fat",
+      "expected": "REJECT",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "actual": "REJECT",
+      "findings": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "V9-003",
+      "text": "Up to 68% less oil",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "GEN-001",
+      "text": "Third-party laboratory report",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Evidence Verification",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-certification-evidence",
+        "sa-certification-evidence"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "GEN-002",
+      "text": "Unreadable certification report",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Evidence Quality",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "GEN-003",
+      "text": "Internal laboratory data",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Evidence Source",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-certification-evidence",
+        "sa-certification-evidence"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "GEN-004",
+      "text": "Traditional / Ordinary comparison",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "GEN-005",
+      "text": "AI generated human image",
+      "expected": "REVIEW",
+      "risk": "Medium",
+      "issue": "AI Disclosure",
+      "modality": "image",
+      "actual": null,
+      "findings": [],
+      "status": "SKIP_MODALITY",
+      "note": "需image能力"
+    },
+    {
+      "id": "GEN-006",
+      "text": "Missing AI generated disclaimer",
+      "expected": "REVIEW",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-disclaimer-required",
+        "sa-disclaimer-required"
+      ],
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "GEN-007",
+      "text": "16-Hour Freshness Mode",
+      "expected": "REVIEW",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "actual": "WARN",
+      "findings": [
+        "demo-apac-sa-performance-claim",
+        "sa-performance-claim"
+      ],
+      "status": "PASS",
+      "note": ""
+    }
+  ]
+}

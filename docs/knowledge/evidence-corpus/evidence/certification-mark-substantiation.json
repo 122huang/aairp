@@ -1,0 +1,59 @@
+{
+  "knowledge_id": "evidence:certification-mark-substantiation",
+  "corpus_type": "evidence",
+  "evidence_id": "certification-mark-substantiation",
+  "evidence_purpose": "Define substantiation requirements when advertising references third-party certification marks or registration badges.",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "evidence_type_key": "certification",
+  "requirement_scope": "certification-mark",
+  "summary": "Certification marks in ads require verifiable certificate records covering product scope and applicable market.",
+  "review_guidance": "TRIGGER: Certification mark or registration badge in ad creative. ACTION: Request certificate record reference. CHECK: Issuer recognition, scope, expiry, legibility. ESCALATE IF: Mark implies approval beyond certificate class.",
+  "validation_criteria": {
+    "checks": [
+      "Confirm issuer is recognized certification body for target market",
+      "Verify certificate scope covers advertised product SKU or category",
+      "Confirm certificate is legible at published ad resolution"
+    ],
+    "reject_if": [
+      "Certificate expired at time of review",
+      "Scope does not cover advertised product"
+    ]
+  },
+  "applicability": {
+    "countries": ["SG", "MY", "TH", "AU", "JP", "KR"],
+    "claim_types": ["certification-claim"],
+    "modalities": ["text", "image"]
+  },
+  "requirement_level": "required",
+  "document_ref_spec": {
+    "ref_kind": "certification_record",
+    "id_format": "{issuer}-{cert_number}",
+    "storage_system": "KOS",
+    "example": "HSA-CP-2024-00123",
+    "notes": "Document stored outside git."
+  },
+  "validity_window": {
+    "typical_validity_months": 12,
+    "renewal_review_trigger": "annual"
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-certification-marks",
+      "regulation:my-sirim-certification-marks"
+    ],
+    "rules": ["demo-apac-sa-certification-evidence"],
+    "skills": ["skill:certification-claim-review"],
+    "rewrites": ["rewrite:cite-evidence"]
+  },
+  "resolves_expected_evidence_types": ["certification"],
+  "evidence_purpose_tags": ["certification-mark"],
+  "benchmark_refs": ["AF-009", "AF-010"],
+  "case_refs": [],
+  "confidence_level": "high",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "certification"]
+}

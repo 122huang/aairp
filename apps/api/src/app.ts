@@ -55,6 +55,8 @@ import { registerCaseAdminController } from './controllers/case-admin.controller
 import { registerKosRoutes } from './kos/register-kos-routes.js';
 import { registerErrorHandler, registerTraceMiddleware } from './middleware/http.js';
 import { registerDemoUi } from './register-demo-ui.js';
+import { registerKnowledgePreviewController } from './controllers/knowledge-preview.controller.js';
+import { registerKnowledgePreviewFeedbackController } from './controllers/knowledge-preview-feedback.controller.js';
 
 export type ApiConfig = {
   serviceName: string;
@@ -115,6 +117,10 @@ export async function buildApp(config: ApiConfig) {
 
   await registerHealthController(app, { healthService });
   await registerDemoUi(app);
+  // /demo/ocr/* omitted from production build (src/ocr/** excluded in tsconfig).
+  // Local OCR: remove tsconfig exclude and register registerOcrController when PADDLE_OCR_ENABLED=1.
+  await registerKnowledgePreviewController(app);
+  await registerKnowledgePreviewFeedbackController(app);
 
   const advertisementRepository = new InMemoryAdvertisementRepository();
   const advertisementUploadService = new AdvertisementUploadService(

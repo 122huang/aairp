@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:au-tga-cosmetic-therapeutic-border",
+  "corpus_type": "regulation",
+  "regulation_id": "au-tga-cosmetic-therapeutic-border",
+  "country": "AU",
+  "authority": "TGA",
+  "regulation_name": "Therapeutic Goods Act 1989 (Cosmetic vs therapeutic)",
+  "citation": "Therapeutic Goods Act 1989 — Section 3 (Definition)",
+  "effective_date": "1989-09-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Products making therapeutic skin claims may be regulated as therapeutic goods; cosmetic ads must not cross into therapeutic claims.",
+  "review_guidance": "TRIGGER: Skin disease treatment or medicinal effect on skincare ads. ACTION: REJECT or ESCALATE — determine TGA vs cosmetic classification. CHECK: Primary purpose, ingredients, and claim wording. ESCALATE IF: Therapeutic claim on product not on ARTG.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "cosmetic"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

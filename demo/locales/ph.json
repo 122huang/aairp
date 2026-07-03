@@ -1,0 +1,48 @@
+{
+  "locale_pack_version": "1.0.0",
+  "country_id": "PH",
+  "terms": [
+    {
+      "risk_type": "health-implication",
+      "lang": "tl",
+      "terms": ["malusog", "para sa kalusugan", "nakakatulong sa katawan"],
+      "source_regulation_id": "ph-fda-health-implication-claims",
+      "note": "ph-high-severity — fusion applies PH confidence -0.1"
+    },
+    {
+      "risk_type": "localisation-error",
+      "lang": "tl",
+      "terms": ["walang babala"],
+      "source_regulation_id": "ph-fda-tagalog-consumer-labeling",
+      "note": "Missing Tagalog consumer warnings"
+    },
+    {
+      "risk_type": "sponsored-disclosure",
+      "lang": "en",
+      "terms": ["#ad", "sponsored"],
+      "source_regulation_id": "ph-asc-sponsored-disclosure",
+      "note": "English disclosure markers common in PH social ads"
+    },
+    {
+      "risk_type": "sponsored-disclosure",
+      "lang": "tl",
+      "terms": ["bayad na nilalaman"],
+      "source_regulation_id": "ph-asc-sponsored-disclosure",
+      "note": "Tagalog paid-content disclosure"
+    },
+    {
+      "risk_type": "market-ranking-claim",
+      "lang": "tl",
+      "terms": ["pinakamahusay", "#1 sa pilipinas"],
+      "source_regulation_id": "ph-dti-consumer-act-misleading",
+      "note": "Tagalog superiority and ranking claims"
+    },
+    {
+      "risk_type": "market-ranking-claim",
+      "lang": "en",
+      "terms": ["number one"],
+      "source_regulation_id": "ph-dti-consumer-act-misleading",
+      "note": "English ranking superlative in PH market copy"
+    }
+  ]
+}

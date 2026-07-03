@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:kr-kftc-comparative-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-kftc-comparative-ads",
+  "country": "KR",
+  "authority": "KFTC",
+  "regulation_name": "Monopoly Regulation and Fair Trade Act",
+  "citation": "Monopoly Regulation and Fair Trade Act — Article 23",
+  "effective_date": "1980-12-31",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative advertising must be objective, substantiated, and must not unfairly disparage competitors.",
+  "review_guidance": "TRIGGER: Versus competitor, market leader, or superiority claims. ACTION: WARN — require substantiation on file. CHECK: Identifiable competitor, evidence date, and methodology. ESCALATE IF: False or unfair comparative claim.",
+  "related_rule_ids": [
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:comparative-test-evidence"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

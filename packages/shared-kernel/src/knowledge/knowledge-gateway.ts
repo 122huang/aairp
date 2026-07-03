@@ -6,6 +6,26 @@ export type RuntimeRuleScope = {
   categories: string[];
 };
 
+export type RuleWhenCondition = {
+  has_images?: boolean;
+  ai_rendered_image?: boolean;
+  /** OCR or ad text contains CJK characters (localization signal) */
+  ocr_contains_cjk?: boolean;
+  /** Pipeline flag: certification badge in image is unreadable */
+  certification_image_unreadable?: boolean;
+  /** Pipeline flag: AI-rendered image has visible quality defects */
+  ai_image_quality_issue?: boolean;
+};
+
+export type RuntimeRuleCountryDecisionOverride = {
+  decision?: string;
+  severity?: string;
+};
+
+/** Rule-level override (VN) or term-keyed overrides (TH). */
+export type RuntimeRuleCountryOverride = RuntimeRuleCountryDecisionOverride &
+  Record<string, RuntimeRuleCountryDecisionOverride | string | undefined>;
+
 export type RuntimeRuleDefinition = {
   rule_id: string;
   rule_version_id: string;
@@ -16,7 +36,10 @@ export type RuntimeRuleDefinition = {
   forbidden_terms?: string[];
   trigger_terms?: string[];
   required_any_terms?: string[];
+  when?: RuleWhenCondition;
+  sku_mismatch_check?: boolean;
   citation?: FindingCitation;
+  country_decision_overrides?: Record<string, RuntimeRuleCountryOverride>;
 };
 
 export type RuntimeRulePack = {

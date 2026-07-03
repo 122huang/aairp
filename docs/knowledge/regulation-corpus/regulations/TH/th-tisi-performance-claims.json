@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:th-tisi-performance-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "th-tisi-performance-claims",
+  "country": "TH",
+  "authority": "OCPB",
+  "regulation_name": "Consumer Protection Act B.E. 2522 (Product performance)",
+  "citation": "Consumer Protection Act B.E. 2522 — Section 40",
+  "effective_date": "1979-01-01",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Product performance claims must not deceive consumers about quality, durability, or efficacy.",
+  "review_guidance": "TRIGGER: Durability, efficiency, or results statistics for consumer products. ACTION: WARN — require supporting test data. CHECK: TIS standard references and test conditions. ESCALATE IF: Exaggerated or unverifiable performance claim.",
+  "related_rule_ids": [
+    "demo-apac-sa-performance-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:capacity-test-method-evidence"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "consumer.goods"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

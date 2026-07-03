@@ -1,0 +1,35 @@
+{
+  "knowledge_id": "regulation:ph-fda-health-implication-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "ph-fda-health-implication-claims",
+  "country": "PH",
+  "authority": "FDA Philippines",
+  "regulation_name": "FDA Act of 2009 (RA 9711)",
+  "citation": "Republic Act No. 9711 — Section 10 (Prohibited acts in advertising health products)",
+  "effective_date": "2009-08-18",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Advertising must not imply therapeutic, medicinal, or disease-related effects for non-drug products, including implied health outcomes from general consumer goods.",
+  "review_guidance": "TRIGGER: Implied wellness, healing, immunity, or disease-risk reduction from non-supplement consumer products (Tagalog or English). ACTION: WARN with HIGH severity — treat health implication strictly; apply PH enforcement-density confidence adjustment at fusion layer. CHECK: Product category, registered claims, and implied vs express wording. ESCALATE IF: Drug-like cure, treatment, or prevention implied.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-implication"
+  ],
+  "related_evidence_ids": [
+    "evidence:health-implication-substantiation"
+  ],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "health-implication",
+    "ph-high-severity"
+  ],
+  "jurisdiction_scope": [
+    "sa.*",
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

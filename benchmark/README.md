@@ -7,8 +7,21 @@ Sprint 1.5 Epic 3 evaluation manifest for the AAIRP demo pipeline.
 | File | Purpose |
 |------|---------|
 | `ad-manifest.json` | Ground-truth benchmark cases (schema v1.0.0) |
+| `benchmark-v2.json` | **Generated** Skill-linked benchmark (schema v2.0.0) |
+| `benchmark-v2.overrides.json` | Per-case exceptions for v2 generation |
 
 Legacy Epic 2 subset: `demo/quality-scenarios.json` (superseded by this manifest).
+
+## Benchmark V2 (Sprint 3)
+
+Golden dataset (`scripts/golden-benchmark-v1-cases.json`) is the source of truth.
+Regenerate v2 after golden or taxonomy changes:
+
+```powershell
+pnpm knowledge:build-benchmark-v2
+```
+
+Do **not** hand-edit `benchmark-v2.json`.
 
 ## Schema
 

@@ -5,6 +5,7 @@ export type ReviewFindingCounts = {
   playbook: number;
   llm: number;
   case: number;
+  vision: number;
 };
 
 export type ReviewDecisionResult = {
@@ -27,4 +28,6 @@ export type DecisionFusionInput = {
   hasPlaybookReviewSignal: boolean;
   hasLlmManualReviewSignal: boolean;
   hasCaseConfirmedSignal: boolean;
+  visionFindingCount: number;
+  hasVisionManualReviewSignal: boolean;
 };

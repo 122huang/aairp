@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/knowledge-corpus-envelope.json",
+  "title": "KnowledgeCorpusEnvelope",
+  "description": "Shared envelope for all Knowledge Corpus entry types.",
+  "type": "object",
+  "required": [
+    "knowledge_id",
+    "corpus_type",
+    "owner",
+    "owner_type",
+    "last_reviewed",
+    "review_status"
+  ],
+  "properties": {
+    "knowledge_id": {
+      "type": "string",
+      "pattern": "^(regulation|skill|evidence|case|rewrite):[a-z0-9][a-z0-9.-]*$",
+      "description": "Canonical identifier: {corpus_type}:{stable-key}"
+    },
+    "corpus_type": {
+      "type": "string",
+      "enum": ["regulation", "skill", "evidence", "case", "rewrite"]
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_type": {
+      "type": "string",
+      "enum": ["legal", "compliance", "knowledge_eng", "product"]
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "legal_reviewed", "deprecated"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

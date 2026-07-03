@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/case-corpus-entry.schema.json",
+  "title": "Case Corpus Entry",
+  "type": "object",
+  "required": [
+    "knowledge_id",
+    "corpus_type",
+    "case_id",
+    "case_purpose",
+    "case_status",
+    "case_version",
+    "verification_status",
+    "summary",
+    "review_guidance",
+    "scenario_spec",
+    "ground_truth_spec",
+    "case_result",
+    "benchmark_ref",
+    "linkage",
+    "owner",
+    "owner_type",
+    "last_reviewed",
+    "review_status"
+  ],
+  "properties": {
+    "knowledge_id": {
+      "type": "string",
+      "pattern": "^case:[a-z0-9][a-z0-9.-]*$"
+    },
+    "corpus_type": { "const": "case" },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9.-]*$"
+    },
+    "case_purpose": { "type": "string", "minLength": 20 },
+    "case_status": {
+      "type": "string",
+      "enum": ["draft", "candidate", "verified", "regression", "deprecated"]
+    },
+    "case_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["unverified", "human_verified", "legal_verified", "rejected"]
+    },
+    "summary": { "type": "string", "minLength": 20 },
+    "review_guidance": { "type": "string", "minLength": 20 },
+    "scenario_spec": {
+      "type": "object",
+      "properties": {
+        "claim_cluster": { "type": "string" },
+        "claim_types": { "type": "array", "items": { "type": "string" } },
+        "countries": { "type": "array", "items": { "type": "string" } },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "modalities": { "type": "array", "items": { "type": "string" } },
+        "risk_class": { "type": "string" },
+        "signal_summary": { "type": "string" },
+        "benchmark_ref": { "type": "string" }
+      }
+    },
+    "ground_truth_spec": {
+      "type": "object",
+      "required": ["expected_decision"],
+      "properties": {
+        "expected_decision": { "type": "string" },
+        "expected_severity": { "type": "string" },
+        "expected_action": { "type": "string" },
+        "expected_pattern": { "type": "string" },
+        "expected_rule": { "type": "string" },
+        "expected_rewrite": {
+          "type": "object",
+          "properties": {
+            "rewrite_id": { "type": "string" },
+            "strategy_type": { "type": "string" },
+            "must_remove_terms": { "type": "array", "items": { "type": "string" } },
+            "must_include_concepts": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "evidence_validation": {
+          "type": "object",
+          "properties": {
+            "evidence_id": { "type": "string" },
+            "expected_outcome": { "type": "string" }
+          }
+        }
+      }
+    },
+    "case_result": {
+      "type": "object",
+      "required": ["decision_outcome"],
+      "properties": {
+        "decision_outcome": { "type": "string" },
+        "risk_level": { "type": "string" },
+        "matched_skill": { "type": "string" },
+        "applied_rewrite": { "type": "string" },
+        "evidence_result": { "type": "string" }
+      }
+    },
+    "benchmark_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "benchmark-v3 case_id — fixture text is not duplicated in corpus."
+    },
+    "linkage": {
+      "type": "object",
+      "properties": {
+        "regulations": { "type": "array", "items": { "type": "string" } },
+        "rules": { "type": "array", "items": { "type": "string" } },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "rewrites": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "source_case_id": {
+      "type": "string",
+      "description": "case-library or KOS locator — metadata only; full bridge deferred to 5D.1."
+    },
+    "source_metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "promotion_rationale": { "type": "string" },
+    "promoted_from": { "type": "string" },
+    "promoted_at": { "type": "string", "format": "date-time" },
+    "promoted_by": { "type": "string" },
+    "regression_notes": { "type": "string" },
+    "owner": { "type": "string" },
+    "owner_type": { "type": "string" },
+    "last_reviewed": { "type": "string", "format": "date-time" },
+    "review_status": { "type": "string" },
+    "confidence_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

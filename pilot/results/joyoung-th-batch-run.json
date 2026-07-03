@@ -1,0 +1,252 @@
+{
+  "summary": {
+    "batch_id": "joyoung_th_kitchen_appliances_v1",
+    "market": "TH",
+    "mode": "offline-pipeline",
+    "reviewed_at": "2026-07-03T02:22:18.720Z",
+    "total": 10,
+    "engine_pass": 6,
+    "engine_warn": 4,
+    "engine_reject": 0,
+    "aligned": 7,
+    "engine_stricter": 2,
+    "engine_missed": 1,
+    "engine_too_lenient": 0
+  },
+  "results": [
+    {
+      "id": "V01",
+      "product": "Soy Milk Maker",
+      "angle": "Health/Family",
+      "category_id": "sa.soy_milk",
+      "headline": "Fresh Soy Milk, Made at Home Every Morning",
+      "text_preview": "Fresh Soy Milk, Made at Home Every Morning Skip the preservatives. Blend, heat, and enjoy soy milk made from real beans …",
+      "manual_status": "green",
+      "manual_notes": "No blocking issues.",
+      "engine_decision": "PASS",
+      "confidence": 0.95,
+      "alignment": "ALIGNED",
+      "finding_refs": [],
+      "findings": [],
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V02",
+      "product": "Soy Milk Maker",
+      "angle": "Convenience",
+      "category_id": "sa.soy_milk",
+      "headline": "One Button. Fresh Milk. Zero Mess.",
+      "text_preview": "One Button. Fresh Milk. Zero Mess. Add beans, add water, press start. Joyoung does the rest while you get ready for the …",
+      "manual_status": "green",
+      "manual_notes": "\"Zero Mess\" is an absolute claim; soften to \"Minimal Mess\" if no supporting evidence.",
+      "engine_decision": "WARN",
+      "confidence": 0.9,
+      "alignment": "ENGINE_STRICTER",
+      "finding_refs": [
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "findings": [
+        {
+          "module": "RULE",
+          "ref_id": "demo-apac-sa-absolute-claim-soft",
+          "summary": "Absolute or omnibus claims (e.g. zero waste, zero-fault, never look back, every serving, 每一次) require qualification and substantiation",
+          "severity": "MEDIUM"
+        }
+      ],
+      "rationale": "Warning issued based on: RULE/demo-apac-sa-absolute-claim-soft (MEDIUM). Manual follow-up recommended before publishing.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V03",
+      "product": "Blender",
+      "angle": "Modern Lifestyle",
+      "category_id": "sa.blender_processor",
+      "headline": "Smoothies That Keep Up With Your Morning",
+      "text_preview": "Smoothies That Keep Up With Your Morning Powerful blending in seconds — fruits, ice, and greens turn silky smooth for a …",
+      "manual_status": "yellow",
+      "manual_notes": "\"healthy\" triggers TH health-claim scrutiny (Food Act B.E. 2522 Sec. 40, FDA Thailand pre-approval for food benefit/quality claims). Recommend replacing with \"fast, energizing start\" or obtaining FDA Thailand ad approval before production use.",
+      "engine_decision": "WARN",
+      "confidence": 0.9,
+      "alignment": "ALIGNED",
+      "finding_refs": [
+        "demo-apac-sa-health-implication",
+        "sa-health-implication"
+      ],
+      "findings": [
+        {
+          "module": "RULE",
+          "ref_id": "demo-apac-sa-health-implication",
+          "summary": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — qualify context or attach data (WARN)",
+          "severity": "MEDIUM"
+        },
+        {
+          "module": "PLAYBOOK",
+          "ref_id": "sa-health-implication",
+          "summary": "分界：健康暗示（Health Implication）说的是感受与体验；医疗宣称说的是疾病与器官功能。本条为健康暗示 — 须语境限定或软化，必要时附数据；少油/营养保留类须持有对比或测试数据。",
+          "severity": "MEDIUM"
+        }
+      ],
+      "rationale": "Warning issued based on: RULE/demo-apac-sa-health-implication (MEDIUM); PLAYBOOK/sa-health-implication (MEDIUM). Manual follow-up recommended before publishing.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V04",
+      "product": "Blender",
+      "angle": "Value",
+      "category_id": "sa.blender_processor",
+      "headline": "More Power, Less Counter Space",
+      "text_preview": "More Power, Less Counter Space A compact blender built for small kitchens without cutting corners on performance. See De…",
+      "manual_status": "yellow",
+      "manual_notes": "Revised after engine cross-check (2026-07-03): \"More Power\" is a comparative claim with no stated baseline (same pattern as Safer/Stronger/Faster/More efficient). Needs a comparator (e.g. \"vs. our previous model\") or supporting spec data, otherwise soften to non-comparative wording (e.g. \"Powerful Enough for Small Kitchens\"). Originally rated green in R01 — corrected on review.",
+      "engine_decision": "PASS",
+      "confidence": 0.95,
+      "alignment": "ENGINE_MISSED",
+      "finding_refs": [],
+      "findings": [],
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V05",
+      "product": "Multicooker",
+      "angle": "Family Meals",
+      "category_id": "sa.other",
+      "headline": "One Pot, Endless Family Dinners",
+      "text_preview": "One Pot, Endless Family Dinners Rice, soups, stews — set it and let it cook while you spend time with the people who mat…",
+      "manual_status": "green",
+      "manual_notes": "No blocking issues.",
+      "engine_decision": "PASS",
+      "confidence": 0.95,
+      "alignment": "ALIGNED",
+      "finding_refs": [],
+      "findings": [],
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V06",
+      "product": "Multicooker",
+      "angle": "Convenience",
+      "category_id": "sa.other",
+      "headline": "Dinner, Simplified",
+      "text_preview": "Dinner, Simplified Fewer pots, less cleanup, more free time. Cook a full meal with one appliance. Shop the Multicooker",
+      "manual_status": "green",
+      "manual_notes": "No blocking issues.",
+      "engine_decision": "PASS",
+      "confidence": 0.95,
+      "alignment": "ALIGNED",
+      "finding_refs": [],
+      "findings": [],
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V07",
+      "product": "Rice Cooker",
+      "angle": "Everyday Essential",
+      "category_id": "sa.rice_cooker",
+      "headline": "Perfect Rice, Every Single Time",
+      "text_preview": "Perfect Rice, Every Single Time Consistent texture and flavor without watching the pot — just the way Thai kitchens like…",
+      "manual_status": "green",
+      "manual_notes": "\"Perfect\" + \"Every...Time\" are absolute performance claims; optional to soften to \"Consistently Great Rice\" to reduce risk.",
+      "engine_decision": "WARN",
+      "confidence": 0.9,
+      "alignment": "ENGINE_STRICTER",
+      "finding_refs": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft",
+        "sa-absolute-performance"
+      ],
+      "findings": [
+        {
+          "module": "RULE",
+          "ref_id": "demo-apac-sa-absolute-claim",
+          "summary": "Absolute claim: unconditional guarantees (best, first, never, zero-fault) without verifiable basis — may pass with audited substantiation (WARN/BLOCKER by term)",
+          "severity": "MEDIUM"
+        },
+        {
+          "module": "RULE",
+          "ref_id": "demo-apac-sa-absolute-claim-soft",
+          "summary": "Absolute or omnibus claims (e.g. zero waste, zero-fault, never look back, every serving, 每一次) require qualification and substantiation",
+          "severity": "MEDIUM"
+        },
+        {
+          "module": "PLAYBOOK",
+          "ref_id": "sa-absolute-performance",
+          "summary": "Absolute or omnibus performance wording detected. Qualify the claim (conditions, typical results) or provide substantiation before publishing.",
+          "severity": "MEDIUM"
+        }
+      ],
+      "rationale": "Warning issued based on: RULE/demo-apac-sa-absolute-claim (MEDIUM); RULE/demo-apac-sa-absolute-claim-soft (MEDIUM); PLAYBOOK/sa-absolute-performance (MEDIUM). Manual follow-up recommended before publishing.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V08",
+      "product": "Rice Cooker",
+      "angle": "Trust/Quality",
+      "category_id": "sa.rice_cooker",
+      "headline": "Built for Daily Use, Designed to Last",
+      "text_preview": "Built for Daily Use, Designed to Last Durable components and simple controls made for kitchens that cook every day. Lear…",
+      "manual_status": "green",
+      "manual_notes": "\"Designed to Last\" borders on absolute durability claim; soften if no durability test data exists.",
+      "engine_decision": "PASS",
+      "confidence": 0.95,
+      "alignment": "ALIGNED",
+      "finding_refs": [],
+      "findings": [],
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V09",
+      "product": "General/Bundle",
+      "angle": "Seasonal",
+      "category_id": "electronics",
+      "headline": "Upgrade Your Kitchen This Season",
+      "text_preview": "Upgrade Your Kitchen This Season New arrivals from Joyoung — practical appliances for everyday Thai households. View Col…",
+      "manual_status": "green",
+      "manual_notes": "No blocking issues.",
+      "engine_decision": "PASS",
+      "confidence": 0.95,
+      "alignment": "ALIGNED",
+      "finding_refs": [],
+      "findings": [],
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.",
+      "open_risk_skipped": false
+    },
+    {
+      "id": "V10",
+      "product": "General/Bundle",
+      "angle": "Social Proof",
+      "category_id": "electronics",
+      "headline": "Loved by Home Cooks Across Thailand",
+      "text_preview": "Loved by Home Cooks Across Thailand Thousands of households trust Joyoung for reliable, everyday kitchen appliances. Sho…",
+      "manual_status": "yellow",
+      "manual_notes": "Unsupported quantified/nationwide social-proof claim (both headline and body). Needs real sales/customer data or testimonials before production use, or rephrase to non-quantified language (e.g. \"Trusted by home cooks in Thailand\").",
+      "engine_decision": "WARN",
+      "confidence": 0.9,
+      "alignment": "ALIGNED",
+      "finding_refs": [
+        "demo-apac-sa-social-proof-claim",
+        "sa-social-proof-claim"
+      ],
+      "findings": [
+        {
+          "module": "RULE",
+          "ref_id": "demo-apac-sa-social-proof-claim",
+          "summary": "Unsupported quantified or nationwide social-proof claims (household/user counts, loved-by-millions wording) require substantiation or non-quantified rephrase",
+          "severity": "MEDIUM"
+        },
+        {
+          "module": "PLAYBOOK",
+          "ref_id": "sa-social-proof-claim",
+          "summary": "Social proof or popularity claim detected (household counts, user totals, broad trust wording). Provide verifiable substantiation or qualify the claim before publishing.",
+          "severity": "MEDIUM"
+        }
+      ],
+      "rationale": "Warning issued based on: RULE/demo-apac-sa-social-proof-claim (MEDIUM); PLAYBOOK/sa-social-proof-claim (MEDIUM). Manual follow-up recommended before publishing.",
+      "open_risk_skipped": false
+    }
+  ]
+}

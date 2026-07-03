@@ -1,0 +1,172 @@
+{
+  "sample": "PASS",
+  "request": {
+    "country_id": "SG",
+    "platform_id": "META",
+    "category_id": "sa.air_fryer",
+    "content": {
+      "text": "Dual heat zones for even crisp results. Model KL600-V7. #ad"
+    }
+  },
+  "response": {
+    "review_id": "rev_deff94e5-ad25-4005-a335-e37ccae38b1a",
+    "advertisement_id": "ad_867dcbd5-e89b-4ee9-ad22-89a3cb4716d5",
+    "final_decision": "PASS",
+    "confidence": 0.95,
+    "rationale": "No blocking or warning findings across Rule, Playbook, Case, or Open Risk modules.",
+    "finding_counts": {
+      "rule": 0,
+      "playbook": 0,
+      "llm": 0,
+      "case": 0
+    },
+    "summary": {
+      "finalDecision": "PASS",
+      "confidence": 0.95,
+      "rationale": "No blocking or warning findings across Rule, Playbook, Case, or Open Risk modules.",
+      "findingCounts": {
+        "rule": 0,
+        "playbook": 0,
+        "llm": 0,
+        "case": 0
+      },
+      "advertisement": {
+        "textPreview": "Dual heat zones for even crisp results. Model KL600-V7. #ad",
+        "countryId": "SG",
+        "platformId": "META",
+        "categoryId": "sa.air_fryer"
+      },
+      "findings": [],
+      "openRiskSkipped": false
+    },
+    "generated_at": "2026-07-02T03:03:59.806Z",
+    "open_risk_skipped": false,
+    "open_risk_skip_reason": null
+  }
+}
+---
+{
+  "sample": "WARN",
+  "request": {
+    "country_id": "SG",
+    "platform_id": "META",
+    "category_id": "sa.rice_cooker",
+    "content": {
+      "text": "[Rice Cooker] Cooked slow. Eaten well"
+    }
+  },
+  "response": {
+    "review_id": "rev_86efa2ae-0421-491b-b825-d674fed64c26",
+    "advertisement_id": "ad_6a9e26dd-ed89-499e-be77-0f4f54b272e2",
+    "final_decision": "WARN",
+    "confidence": 0.9,
+    "rationale": "Warning issued based on: RULE/demo-apac-sa-health-implication (MEDIUM); PLAYBOOK/sa-health-implication (MEDIUM). Manual follow-up recommended before publishing.",
+    "finding_counts": {
+      "rule": 1,
+      "playbook": 1,
+      "llm": 0,
+      "case": 0
+    },
+    "summary": {
+      "finalDecision": "WARN",
+      "confidence": 0.9,
+      "rationale": "Warning issued based on: RULE/demo-apac-sa-health-implication (MEDIUM); PLAYBOOK/sa-health-implication (MEDIUM). Manual follow-up recommended before publishing.",
+      "findingCounts": {
+        "rule": 1,
+        "playbook": 1,
+        "llm": 0,
+        "case": 0
+      },
+      "advertisement": {
+        "textPreview": "[Rice Cooker] Cooked slow. Eaten well",
+        "countryId": "SG",
+        "platformId": "META",
+        "categoryId": "sa.rice_cooker"
+      },
+      "findings": [
+        {
+          "module": "RULE",
+          "refId": "demo-apac-sa-health-implication",
+          "severity": "MEDIUM",
+          "decision": "WARN",
+          "summary": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — qualify context or attach data (WARN)"
+        },
+        {
+          "module": "PLAYBOOK",
+          "refId": "sa-health-implication",
+          "severity": "MEDIUM",
+          "decision": "WARN",
+          "summary": "分界：健康暗示（Health Implication）说的是感受与体验；医疗宣称说的是疾病与器官功能。本条为健康暗示 — 须语境限定或软化，必要时附数据；少油/营养保留类须持有对比或测试数据。"
+        }
+      ],
+      "openRiskSkipped": false
+    },
+    "generated_at": "2026-07-02T03:03:59.807Z",
+    "open_risk_skipped": false,
+    "open_risk_skip_reason": null
+  }
+}
+---
+{
+  "sample": "REJECT",
+  "request": {
+    "country_id": "SG",
+    "platform_id": "META",
+    "category_id": "sa.air_fryer",
+    "content": {
+      "text": "[Air Fryer] Your cardiologist would probably approve"
+    }
+  },
+  "response": {
+    "review_id": "rev_286ca36c-af13-49f6-bf07-415bc6a993f6",
+    "advertisement_id": "ad_651bed66-2b8e-4caf-9a96-aa5a43d2c154",
+    "final_decision": "REJECT",
+    "confidence": 1,
+    "rationale": "Rejected due to blocking rule finding: RULE/demo-apac-sa-health-claim-blocker (BLOCKER).",
+    "finding_counts": {
+      "rule": 1,
+      "playbook": 1,
+      "llm": 0,
+      "case": 0
+    },
+    "summary": {
+      "finalDecision": "REJECT",
+      "confidence": 1,
+      "rationale": "Rejected due to blocking rule finding: RULE/demo-apac-sa-health-claim-blocker (BLOCKER).",
+      "findingCounts": {
+        "rule": 1,
+        "playbook": 1,
+        "llm": 0,
+        "case": 0
+      },
+      "advertisement": {
+        "textPreview": "[Air Fryer] Your cardiologist would probably approve",
+        "countryId": "SG",
+        "platformId": "META",
+        "categoryId": "sa.air_fryer"
+      },
+      "findings": [
+        {
+          "module": "RULE",
+          "refId": "demo-apac-sa-health-claim-blocker",
+          "severity": "BLOCKER",
+          "decision": "FAIL",
+          "summary": "Medical claim: disease, organ function, clinical metric, or medical endorsement — small appliances cannot make these claims; substantiation cannot cure overreach (REJECT)"
+        },
+        {
+          "module": "PLAYBOOK",
+          "refId": "sa-medical-claim",
+          "severity": "HIGH",
+          "decision": "FAIL",
+          "summary": "医疗宣称（Medical Claim）：指向疾病、器官功能、临床指标或医疗背书；小家电无权作医疗声明，补证据不能解决越权，须删除越线表述。"
+        }
+      ],
+      "openRiskSkipped": true,
+      "openRiskSkipReason": "HAS_BLOCKER"
+    },
+    "generated_at": "2026-07-02T03:03:59.808Z",
+    "open_risk_skipped": true,
+    "open_risk_skip_reason": "HAS_BLOCKER"
+  }
+}
+---

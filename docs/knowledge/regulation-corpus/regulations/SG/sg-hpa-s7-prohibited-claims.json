@@ -1,0 +1,35 @@
+{
+  "knowledge_id": "regulation:sg-hpa-s7-prohibited-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hpa-s7-prohibited-claims",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Health Products Act (Singapore)",
+  "citation": "Section 7 — Prohibited claims",
+  "effective_date": "2020-01-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Prohibited health claims including cure, miracle, and absolute efficacy statements for health products.",
+  "review_guidance": "TRIGGER: Cure, miracle, or absolute efficacy language for health products. ACTION: REJECT — remove prohibited claims. CHECK: Headlines, body copy, and testimonials. ESCALATE IF: Scheduled medicine or serious disease referenced.",
+  "related_rule_ids": [
+    "demo-sg-health-forbidden-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:health-implication-substantiation"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-15T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "health",
+    "blocker",
+    "demo-seed"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "knowledge_id": "rewrite:disclose-transformation",
+  "corpus_type": "rewrite",
+  "rewrite_id": "disclose-transformation",
+  "legacy_template_id": "disclose-transformation",
+  "rewrite_purpose": "Guide reviewers to add disclaimers for before/after or transformation imagery that may mislead about typical outcomes.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "disclose",
+  "summary": "Add disclaimer that before/after or transformation imagery does not represent typical outcomes for all users.",
+  "rewrite_guidance": "TRIGGER: Before/after, transformation, or results imagery for supplements or cosmetics. ACTION: Add visible disclaimer about non-typical outcomes and individual variation. CHECK: Image sequencing, timeframe claims, and supporting substantiation. ESCALATE IF: Implied guaranteed transformation without disclaimer.",
+  "review_guidance": "ESCALATE IF: Before/after imagery implies medical or therapeutic outcomes.",
+  "measurable_criteria": {
+    "must_remove_terms": [],
+    "must_include_concepts": ["disclaimer", "outcomes"],
+    "scoring_notes": "must_include_concepts checked on playbook rewrite guidance text."
+  },
+  "benchmark_refs": ["supplement-before-after-imagery"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["image", "video"],
+    "claim_types": ["disclosure-transformation"]
+  },
+  "linkage": {
+    "regulations": ["regulation:sg-asas-before-after-imagery"],
+    "rules": ["demo-apac-sa-ai-image-disclaimer"]
+  },
+  "rewrite_linkage_scope": "independent",
+  "rewrite_independence_rationale": "Standalone before/after disclosure rewrite guidance; independent of claim-class skill modules.",
+  "expected_evidence_type": "none",
+  "evidence_requirement": "none",
+  "confidence_level": "high",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:none", "disclosure", "transformation"]
+}

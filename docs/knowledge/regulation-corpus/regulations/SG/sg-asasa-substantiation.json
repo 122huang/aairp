@@ -1,0 +1,34 @@
+{
+  "knowledge_id": "regulation:sg-asasa-substantiation",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-asasa-substantiation",
+  "country": "SG",
+  "authority": "ASAS",
+  "regulation_name": "Singapore Code of Advertising Practice",
+  "citation": "General Principle — Substantiation",
+  "effective_date": "2019-06-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Advertisers must hold substantiation for comparative, superlative, and efficacy claims before publication.",
+  "review_guidance": "TRIGGER: Comparative, superlative, or unsubstantiated efficacy claims. ACTION: WARN — require substantiation or qualify wording. CHECK: Headlines and comparative statements. ESCALATE IF: No substantiation on file for high-risk claims.",
+  "related_rule_ids": [
+    "demo-sg-health-superlative"
+  ],
+  "related_evidence_ids": [
+    "evidence:absolute-performance-substantiation",
+    "evidence:efficacy-superlative-substantiation",
+    "evidence:general-advertising-substantiation"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-15T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "advertising",
+    "substantiation",
+    "demo-seed"
+  ]
+}

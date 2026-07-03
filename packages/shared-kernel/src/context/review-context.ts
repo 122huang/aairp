@@ -20,6 +20,10 @@ export type ReviewContext = {
     campaignType?: string;
     adFormat?: string;
     targetAudience?: string;
+    productSku?: string;
+    aiRenderedImage?: boolean;
+    certificationImageUnreadable?: boolean;
+    aiImageQualityIssue?: boolean;
   };
   tags: string[];
   builtAt: string;

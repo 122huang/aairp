@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:vn-advertising-law-foreign-brand-approval",
+  "corpus_type": "regulation",
+  "regulation_id": "vn-advertising-law-foreign-brand-approval",
+  "country": "VN",
+  "authority": "MOIT",
+  "regulation_name": "Law on Advertising 2012",
+  "citation": "Law on Advertising No. 16/2012/QH13 — Article 33 (Foreign advertising service and cross-border advertising)",
+  "effective_date": "2013-01-01",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Cross-border or foreign-origin brand advertising directed at Vietnamese consumers may require prior approval or local agent arrangements; enforcement practice is uneven.",
+  "review_guidance": "TRIGGER: Foreign brand campaigns, cross-border influencer ads, or offshore entity as advertiser targeting Vietnam. ACTION: REVIEW — flag for legal confirmation of approval pathway; do not auto-BLOCK. CHECK: Advertiser entity, local agent, platform, and product import status. ESCALATE IF: Regulated product category (TPCN, cosmetics, medical devices) without local registration.",
+  "related_rule_ids": [
+    "demo-vn-foreign-brand-ad-approval"
+  ],
+  "pending_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:low",
+    "evidence:none",
+    "cross-border",
+    "vn-review-tier"
+  ],
+  "jurisdiction_scope": [
+    "sa.*"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

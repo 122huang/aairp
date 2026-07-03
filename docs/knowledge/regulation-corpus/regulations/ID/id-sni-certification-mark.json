@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:id-sni-certification-mark",
+  "corpus_type": "regulation",
+  "regulation_id": "id-sni-certification-mark",
+  "country": "ID",
+  "authority": "BPOM",
+  "regulation_name": "SNI Mark Usage Requirements",
+  "citation": "SNI Mark Usage Requirements — Section 6",
+  "effective_date": "2016-01-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "SNI and halal certification marks may only be used where valid certification covers the advertised product.",
+  "review_guidance": "TRIGGER: SNI logo, halal mark, or quality certification in ads. ACTION: WARN — verify certificate applies to SKU. CHECK: Certificate number, scope, and validity date. ESCALATE IF: Expired or scope-mismatched certification mark.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [
+    "evidence:certification-expiry-validation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

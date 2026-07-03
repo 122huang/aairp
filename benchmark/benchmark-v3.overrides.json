@@ -1,0 +1,40 @@
+{
+  "description": "Per-case overrides for benchmark-v3 generation. Exceptions only — golden + v2 remain source of truth.",
+  "regression_case_ids": [
+    "AF-002",
+    "sg-health-reject-cure",
+    "sg-health-pass-disclosed",
+    "sg-health-fp-secure-no-cure",
+    "sg-health-warn-disclosure",
+    "sg-health-warn-superlative",
+    "sg-health-playbook-urgency",
+    "supplement-ad-manifest-urgency",
+    "supplement-before-after-imagery",
+    "user-line-01-vitamin-38pct",
+    "user-line-02-my-million-homes",
+    "user-line-03-pm25-tuv",
+    "user-line-04-pediatrician",
+    "user-line-05-better-you",
+    "user-line-06-kids-vegetables",
+    "user-line-07-oil-76pct",
+    "user-line-08-analogy-kiwi",
+    "user-line-09-guilt-free",
+    "user-line-10-wellness-ritual",
+    "user-line-11-pm25-breathe",
+    "user-line-12-allergy-symptoms",
+    "user-line-13-deep-breathe",
+    "user-line-14-vegetable-nutrition"
+  ],
+  "overrides": {
+    "AF-002": {
+      "verified_by_legal": true,
+      "evaluation_weight": 1.0,
+      "tier": "regression"
+    },
+    "sg-health-reject-cure": {
+      "tier": "regression",
+      "evaluation_weight": 1.0,
+      "verified_by_legal": true
+    }
+  }
+}

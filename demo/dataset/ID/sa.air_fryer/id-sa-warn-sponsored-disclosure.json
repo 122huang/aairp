@@ -1,0 +1,26 @@
+{
+  "case_id": "id-sa-warn-sponsored-disclosure",
+  "country_id": "ID",
+  "category_id": "sa.air_fryer",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "auto",
+  "notes": "6B-2f ID sponsored disclosure — missing #iklan. Not legal advice.",
+  "tags": ["6b-2f", "locale-expansion", "demo"],
+  "upload": {
+    "country_id": "ID",
+    "platform_id": "META",
+    "category_id": "sa.air_fryer",
+    "content": {
+      "text": "Beli air fryer sekarang — promosi terbatas untuk keluarga Indonesia."
+    },
+    "tags": ["pilot:id-sa-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "WARN",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-id-sponsored-disclosure" }
+    ],
+    "open_risk_skipped": false
+  }
+}

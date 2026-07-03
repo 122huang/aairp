@@ -1,6 +1,7 @@
 import type {
   CaseFinding,
   CasePrecedent,
+  ContextualRewriteBatchResult,
   LlmFinding,
   OpenRiskDiscoveryResult,
   PlaybookFinding,
@@ -8,7 +9,9 @@ import type {
   ReviewDecisionResult,
   ReviewReportFindingSummary,
   ReviewReportResult,
+  RewriteSuggestion,
   RuleFinding,
+  VisionFinding,
 } from '@aairp/shared-kernel';
 import { confidenceBand } from './decision-engine.service.js';
 
@@ -23,8 +26,10 @@ export type ReviewReportSources = {
   ruleFindings: RuleFinding[];
   playbookFindings: PlaybookFinding[];
   openRiskResult: Pick<OpenRiskDiscoveryResult, 'findings' | 'skipped' | 'skipReason'>;
+  visionFindings?: VisionFinding[];
   casePrecedents?: CasePrecedent[];
   caseFindings?: CaseFinding[];
+  contextualRewrites?: ContextualRewriteBatchResult;
 };
 
 function escapeHtml(text: string): string {
@@ -43,42 +48,85 @@ function buildTextPreview(text: string | undefined, maxLength: number): string {
   return `${normalized.slice(0, maxLength)}...`;
 }
 
+function mapFindingEvidenceSpans(
+  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding,
+): ReviewReportFindingSummary['evidenceSpans'] {
+  if (finding.module === 'LLM') {
+    return finding.evaluationDetail?.evidenceSpans;
+  }
+  if (finding.module === 'VISION') {
+    return finding.evaluationDetail?.evidenceSpans
+      ?.filter((span) => span.text?.trim())
+      .map((span) => ({
+        field: span.field,
+        start: span.start,
+        end: span.end,
+        text: span.text!,
+      }));
+  }
+  return finding.evaluationDetail?.matchedSpans;
+}
+
+function toFindingSummary(
+  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding,
+): ReviewReportFindingSummary {
+  const evidenceSpans = mapFindingEvidenceSpans(finding);
+  return {
+    findingId: finding.findingId,
+    module: finding.module,
+    refId: finding.refId,
+    severity: finding.severity,
+    decision: finding.decision,
+    summary: finding.summary,
+    ...(evidenceSpans?.length ? { evidenceSpans } : {}),
+  };
+}
+
 function toFindingSummaries(
   ruleFindings: RuleFinding[],
   playbookFindings: PlaybookFinding[],
   llmFindings: LlmFinding[],
   caseFindings: CaseFinding[] = [],
+  visionFindings: VisionFinding[] = [],
 ): ReviewReportFindingSummary[] {
   return [
-    ...ruleFindings.map((finding) => ({
-      module: finding.module,
-      refId: finding.refId,
-      severity: finding.severity,
-      decision: finding.decision,
-      summary: finding.summary,
-    })),
-    ...caseFindings.map((finding) => ({
-      module: finding.module,
-      refId: finding.refId,
-      severity: finding.severity,
-      decision: finding.decision,
-      summary: finding.summary,
-    })),
-    ...playbookFindings.map((finding) => ({
-      module: finding.module,
-      refId: finding.refId,
-      severity: finding.severity,
-      decision: finding.decision,
-      summary: finding.summary,
-    })),
-    ...llmFindings.map((finding) => ({
-      module: finding.module,
-      refId: finding.refId,
-      severity: finding.severity,
-      decision: finding.decision,
-      summary: finding.summary,
-    })),
+    ...ruleFindings.map(toFindingSummary),
+    ...caseFindings.map(toFindingSummary),
+    ...playbookFindings.map(toFindingSummary),
+    ...llmFindings.map(toFindingSummary),
+    ...visionFindings.map(toFindingSummary),
   ];
+}
+
+function attachRewriteSuggestions(
+  findings: ReviewReportFindingSummary[],
+  contextualRewrites?: ContextualRewriteBatchResult,
+): ReviewReportFindingSummary[] {
+  if (!contextualRewrites) {
+    return findings;
+  }
+
+  const suggestionsByFindingId = new Map<string, RewriteSuggestion>();
+  for (const result of contextualRewrites.results) {
+    if (!result.skipped && result.suggestion) {
+      suggestionsByFindingId.set(result.findingId, result.suggestion);
+    }
+  }
+
+  if (suggestionsByFindingId.size === 0) {
+    return findings;
+  }
+
+  return findings.map((finding) => {
+    const suggestion = suggestionsByFindingId.get(finding.findingId);
+    if (!suggestion) {
+      return finding;
+    }
+    return {
+      ...finding,
+      rewriteSuggestions: [suggestion],
+    };
+  });
 }
 
 function decisionCssClass(finalDecision: ReviewDecisionResult['finalDecision']): string {
@@ -92,6 +140,44 @@ function decisionCssClass(finalDecision: ReviewDecisionResult['finalDecision']):
   }
 }
 
+function isWarnLikeDecision(decision: string): boolean {
+  return decision === 'WARN' || decision === 'REVIEW' || decision === 'CONDITIONAL';
+}
+
+function renderRewriteSuggestionsBlock(suggestion: RewriteSuggestion): string {
+  const variants = suggestion.suggestedText
+    .map(
+      (text, index) =>
+        `<li><span class="rewrite-variant-label">方案 ${index + 1}</span> ${escapeHtml(text)}</li>`,
+    )
+    .join('\n');
+
+  return `<div class="rewrite-suggestions">
+    <h4>修改建议</h4>
+    <p class="meta"><strong>模板:</strong> ${escapeHtml(suggestion.rewriteTemplateId)} · <strong>风险类型:</strong> ${escapeHtml(suggestion.riskType)} · <strong>置信度:</strong> ${suggestion.confidence}</p>
+    <p><strong>触发原文:</strong> ${escapeHtml(suggestion.originalSpan.text)}</p>
+    <p>${escapeHtml(suggestion.rationale)}</p>
+    <ol class="rewrite-variants">${variants}</ol>
+  </div>`;
+}
+
+function renderFindingDetail(finding: ReviewReportFindingSummary): string {
+  const rewriteBlock =
+    isWarnLikeDecision(finding.decision) && finding.rewriteSuggestions?.length
+      ? finding.rewriteSuggestions.map(renderRewriteSuggestionsBlock).join('\n')
+      : '';
+
+  return `<article class="finding-detail">
+    <header class="finding-header">
+      <span class="finding-ref">${escapeHtml(finding.refId)}</span>
+      <span class="finding-severity">${escapeHtml(finding.severity)}</span>
+      <span class="finding-decision">${escapeHtml(finding.decision)}</span>
+    </header>
+    <p class="finding-summary">${escapeHtml(finding.summary)}</p>
+    ${rewriteBlock}
+  </article>`;
+}
+
 function renderFindingSection(
   title: string,
   findings: ReviewReportFindingSummary[],
@@ -100,30 +186,9 @@ function renderFindingSection(
     return `<h2>${escapeHtml(title)}</h2><p class="meta">No findings</p>`;
   }
 
-  const rows = findings
-    .map(
-      (finding) =>
-        `<tr>
-          <td>${escapeHtml(finding.refId)}</td>
-          <td>${escapeHtml(finding.severity)}</td>
-          <td>${escapeHtml(finding.decision)}</td>
-          <td>${escapeHtml(finding.summary)}</td>
-        </tr>`,
-    )
-    .join('\n');
-
+  const items = findings.map(renderFindingDetail).join('\n');
   return `<h2>${escapeHtml(title)}</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Ref ID</th>
-        <th>Severity</th>
-        <th>Decision</th>
-        <th>Summary</th>
-      </tr>
-    </thead>
-    <tbody>${rows}</tbody>
-  </table>`;
+  <div class="finding-list">${items}</div>`;
 }
 
 function renderPrecedentSection(precedents: CasePrecedent[]): string {
@@ -184,6 +249,7 @@ function renderReportHtml(
   const caseSummaries = findings.filter((finding) => finding.module === 'CASE');
   const playbookSummaries = findings.filter((finding) => finding.module === 'PLAYBOOK');
   const llmSummaries = findings.filter((finding) => finding.module === 'LLM');
+  const visionSummaries = findings.filter((finding) => finding.module === 'VISION');
   const band = confidenceBand(decision.confidence);
 
   return `<!DOCTYPE html>
@@ -195,6 +261,7 @@ function renderReportHtml(
     body { font-family: Arial, sans-serif; margin: 24px; color: #222; line-height: 1.5; }
     h1 { font-size: 22px; margin-bottom: 8px; }
     h2 { font-size: 16px; margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    h4 { font-size: 14px; margin: 12px 0 6px; color: #1565c0; }
     table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 14px; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; vertical-align: top; }
     th { background: #f5f5f5; }
@@ -205,6 +272,15 @@ function renderReportHtml(
     .meta { color: #555; font-size: 14px; }
     .note { background: #f9f9f9; border-left: 4px solid #999; padding: 8px 12px; }
     .counts { margin-top: 8px; }
+    .finding-list { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .finding-detail { border: 1px solid #ddd; border-radius: 6px; padding: 12px; background: #fafafa; }
+    .finding-header { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+    .finding-ref { font-weight: bold; }
+    .finding-severity, .finding-decision { background: #eee; border-radius: 4px; padding: 2px 8px; }
+    .finding-summary { margin: 0 0 4px; }
+    .rewrite-suggestions { margin-top: 10px; padding: 10px 12px; background: #e3f2fd; border-left: 4px solid #1976d2; border-radius: 4px; }
+    .rewrite-variants { margin: 8px 0 0 18px; padding: 0; }
+    .rewrite-variant-label { font-weight: bold; margin-right: 6px; }
   </style>
 </head>
 <body>
@@ -217,7 +293,7 @@ function renderReportHtml(
   <p class="decision ${decisionCssClass(decision.finalDecision)}">${escapeHtml(decision.finalDecision)}</p>
   <p><strong>Confidence:</strong> ${decision.confidence} (${escapeHtml(band)})</p>
   <p><strong>Rationale:</strong> ${escapeHtml(decision.rationale)}</p>
-  <p class="counts"><strong>Finding counts:</strong> Rule ${ruleFindings.length}, Case ${caseSummaries.length}, Playbook ${playbookFindings.length}, LLM ${openRiskResult.findings.length}</p>
+  <p class="counts"><strong>Finding counts:</strong> Rule ${ruleFindings.length}, Case ${caseSummaries.length}, Playbook ${playbookFindings.length}, LLM ${openRiskResult.findings.length}, Vision ${visionSummaries.length}</p>
   ${openRiskNote}
 
   <h2>Advertisement</h2>
@@ -230,6 +306,7 @@ function renderReportHtml(
   ${renderFindingSection('Case Findings', caseSummaries)}
   ${renderFindingSection('Playbook Findings', playbookSummaries)}
   ${renderFindingSection('Open Risk (LLM) Findings', llmSummaries)}
+  ${renderFindingSection('Vision Findings', visionSummaries)}
   ${renderPrecedentSection(casePrecedents)}
 </body>
 </html>`;
@@ -247,14 +324,20 @@ export class ReviewReportService {
       ruleFindings,
       playbookFindings,
       openRiskResult,
+      visionFindings = [],
       casePrecedents = [],
       caseFindings = [],
+      contextualRewrites,
     } = sources;
-    const findings = toFindingSummaries(
-      ruleFindings,
-      playbookFindings,
-      openRiskResult.findings,
-      caseFindings,
+    const findings = attachRewriteSuggestions(
+      toFindingSummaries(
+        ruleFindings,
+        playbookFindings,
+        openRiskResult.findings,
+        caseFindings,
+        visionFindings,
+      ),
+      contextualRewrites,
     );
 
     const textPreview = buildTextPreview(context.normalizedContent.text, textPreviewLength);

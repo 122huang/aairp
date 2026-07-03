@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6U-1 Preview — WARN (merged)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #F7F7F5; color: #0E2841; font-size: 14px; line-height: 1.6; }
+    header { border-bottom: 1px solid #E5E7EB; background: #fff; padding: 16px 24px; }
+    header h1 { margin: 0; font-size: 16px; font-weight: 600; }
+    header p { margin: 2px 0 0; font-size: 12px; color: #6B7280; }
+    .layout { max-width: 1152px; margin: 0 auto; display: grid; grid-template-columns: 2fr 3fr; gap: 32px; padding: 32px 24px; }
+    .card { background: #fff; border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; }
+    .card h3 { margin: 0 0 16px; font-size: 14px; font-weight: 600; }
+    textarea { width: 100%; min-height: 120px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 10px 12px; font-size: 14px; resize: vertical; font-family: inherit; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    select { width: 100%; border: 1px solid #E5E7EB; border-radius: 6px; padding: 8px 10px; background: #fff; }
+    .btn { display: block; width: 100%; margin-top: 16px; padding: 10px; background: #E07828; color: #fff; border: none; border-radius: 6px; font-weight: 500; }
+    .banner { border: 1px solid #E5E7EB; border-left: 4px solid #D97706; border-radius: 8px; background: #FFFBEB; padding: 16px 20px; margin-bottom: 20px; }
+    .banner h2 { margin: 0; font-size: 20px; font-weight: 600; color: #D97706; display: inline; }
+    .conf { display: inline-block; margin-left: 12px; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #FEF3C7; color: #D97706; font-weight: 500; }
+    .banner p { margin: 8px 0 0; font-size: 14px; color: rgba(14,40,65,.8); }
+    .detail-link { margin-top: 8px; font-size: 12px; color: #6B7280; }
+    .section-title { font-size: 14px; font-weight: 600; margin: 0 0 12px; }
+    .finding { background: #fff; border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+    .finding-row1 { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+    .badge-gray { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #F3F4F6; }
+    .badge-module { font-size: 12px; padding: 2px 8px; border-radius: 6px; border: 1px solid #E5E7EB; background: #fff; font-weight: 500; }
+    .badge-sev { font-size: 12px; padding: 2px 8px; border-radius: 6px; font-weight: 500; background: #FEF3C7; color: #D97706; }
+    .summary { flex: 1; min-width: 200px; }
+    .trigger { margin-top: 12px; font-family: ui-monospace, monospace; font-size: 12px; }
+    .trigger span { background: #FEF3C7; padding: 2px 6px; border-radius: 4px; }
+    .rewrite-toggle { margin-top: 12px; font-size: 12px; color: #6B7280; }
+    .rewrite { margin-top: 8px; display: flex; gap: 12px; justify-content: space-between; background: #F0FDF4; border-left: 2px solid #16A34A; border-radius: 6px; padding: 10px 12px; }
+    .rewrite p { margin: 0; }
+    .rewrite .rat { margin-top: 4px; font-size: 12px; color: #9CA3AF; }
+    .copy { background: transparent; border: none; font-size: 12px; color: rgba(14,40,65,.7); padding: 4px 8px; }
+    .source-card { margin-top: 20px; background: #fff; border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; }
+    mark { background: #FEF3C7; padding: 0 2px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AAIRP 广告合规审查</h1>
+    <p>单条文案与图片合规检测</p>
+  </header>
+  <div class="layout">
+    <div class="card">
+      <h3>输入物料</h3>
+      <textarea readonly>少油烹饪，让您吃得更轻盈无负担。</textarea>
+      <div class="row">
+        <div><label>国家</label><select disabled><option>SG · Singapore</option></select></div>
+        <div><label>品类</label><select disabled><option>Air Fryer</option></select></div>
+      </div>
+      <button class="btn" type="button">提交审查</button>
+    </div>
+    <div>
+      <div class="banner">
+        <h2>WARN</h2><span class="conf">Confidence 90%</span>
+        <p>Warning issued based on: RULE/demo-apac-sa-health-implication (MEDIUM); PLAYBOOK/sa-health-implication (MEDIUM); PLAYBOOK/sa-diet-oil-wellness (MEDIUM).</p>
+        <div class="detail-link">▸ 查看详情</div>
+      </div>
+
+      <p class="section-title">Findings (1)</p>
+      <div class="finding">
+        <div class="finding-row1">
+          <span class="badge-gray">health-implication</span>
+          <span class="badge-module">RULE</span>
+          <span class="badge-module">PLAYBOOK</span>
+          <span class="badge-sev">MEDIUM</span>
+          <span class="summary">Health implication: feel/experience cues without disease/organ claims — qualify context or attach data (WARN)</span>
+        </div>
+        <div class="trigger"><span>吃得更轻盈</span></div>
+        <div class="rewrite-toggle">▾ 改写建议 (2)</div>
+        <div class="rewrite">
+          <div>
+            <p>空气炸锅煎炸模式，让日常备餐更省事。</p>
+            <p class="rat">删除对身体状态有益的隐性联想，保留使用体验描述。</p>
+          </div>
+          <button class="copy" type="button">复制</button>
+        </div>
+        <div class="rewrite">
+          <div>
+            <p>热风循环技术，无需预热，即放即炸。</p>
+            <p class="rat">删除对身体状态有益的隐性联想，保留使用体验描述。</p>
+          </div>
+          <button class="copy" type="button">复制</button>
+        </div>
+      </div>
+
+      <div class="source-card">
+        <p class="section-title">原始文案</p>
+        <div>少油烹饪，让您<mark>吃得更轻盈</mark>无负担。</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

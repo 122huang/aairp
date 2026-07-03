@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:id-bpom-medical-device-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "id-bpom-medical-device-ads",
+  "country": "ID",
+  "authority": "BPOM",
+  "regulation_name": "Regulation of Medical Device Advertising (BPOM)",
+  "citation": "BPOM Regulation on Medical Device Advertising — Article 8",
+  "effective_date": "2019-01-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device ads must stay within BPOM-registered intended use and approved promotional materials.",
+  "review_guidance": "TRIGGER: Clinical outcome or expanded indication claims for devices. ACTION: REWRITE — align with registered intended use. CHECK: Device registration number and risk class. ESCALATE IF: Off-label or unregistered device promotion.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

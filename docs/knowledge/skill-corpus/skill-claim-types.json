@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Advertising review skill claim types — taxonomy for Skill Corpus entries.",
+  "claim_types": [
+    {
+      "claim_type_id": "health-claim",
+      "name": "Health Claim",
+      "description": "Nutritional, wellness, or general health benefit claims including implied health outcomes."
+    },
+    {
+      "claim_type_id": "superlative-claim",
+      "name": "Superlative Claim",
+      "description": "Absolute, omnibus, or unsubstantiated efficacy and superiority wording."
+    },
+    {
+      "claim_type_id": "comparative-claim",
+      "name": "Comparative Claim",
+      "description": "Comparative or superiority claims against competitors or benchmarks."
+    },
+    {
+      "claim_type_id": "certification-claim",
+      "name": "Certification Claim",
+      "description": "Certification, patent, award, or laboratory evidence references in advertising."
+    },
+    {
+      "claim_type_id": "performance-claim",
+      "name": "Performance Claim",
+      "description": "Quantitative efficacy, capacity, or performance claims requiring substantiation."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "knowledge_id": "regulation:ph-fda-dietary-supplement-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "ph-fda-dietary-supplement-claims",
+  "country": "PH",
+  "authority": "FDA Philippines",
+  "regulation_name": "FDA Rules on Food Supplements and Health Claims",
+  "citation": "FDA Circular 2013-015 — Guidelines on the Classification of Food Products and Food Supplements",
+  "effective_date": "2013-08-12",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Dietary supplement advertising must not claim to diagnose, treat, cure, or prevent disease and must align with FDA-registered product claims.",
+  "review_guidance": "TRIGGER: Supplement, vitamin, or herbal health benefit claims targeting PH consumers. ACTION: WARN — verify against CPR/notification and approved label claims. CHECK: FDA registration, approved claims list, and dosage. ESCALATE IF: Disease treatment or drug-like therapeutic claims.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [
+    "evidence:supplement-health-evidence",
+    "evidence:health-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

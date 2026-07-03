@@ -25,6 +25,10 @@ export type AdvertisementUploadPayload = {
     campaign_type?: string;
     ad_format?: string;
     target_audience?: string;
+    product_sku?: string;
+    ai_rendered_image?: boolean;
+    certification_image_unreadable?: boolean;
+    ai_image_quality_issue?: boolean;
   };
   tags?: string[];
 };
@@ -37,7 +41,12 @@ export const UPLOAD_LIMITS = {
   MAX_TEXT_LENGTH: 65536,
   MAX_IMAGES: 10,
   MAX_URL_LENGTH: 2048,
+  MAX_IMAGE_DATA_URL_LENGTH: 15 * 1024 * 1024,
 } as const;
+
+function isImageDataUrl(value: string): boolean {
+  return /^data:image\/[a-z0-9+.-]+;base64,/i.test(value);
+}
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
@@ -81,6 +90,16 @@ function normalizeContent(raw: AdvertisementUploadPayload['content']): {
   }
 
   for (const [index, imageUrl] of images.entries()) {
+    if (isImageDataUrl(imageUrl)) {
+      if (imageUrl.length > UPLOAD_LIMITS.MAX_IMAGE_DATA_URL_LENGTH) {
+        issues.push({
+          field: `content.images[${index}]`,
+          message: `base64 image must not exceed ${UPLOAD_LIMITS.MAX_IMAGE_DATA_URL_LENGTH} characters`,
+        });
+      }
+      continue;
+    }
+
     if (imageUrl.length > UPLOAD_LIMITS.MAX_URL_LENGTH) {
       issues.push({
         field: `content.images[${index}]`,
@@ -135,6 +154,12 @@ function normalizeContext(
     ...(isNonEmptyString(raw.target_audience)
       ? { targetAudience: raw.target_audience.trim() }
       : {}),
+    ...(isNonEmptyString(raw.product_sku) ? { productSku: raw.product_sku.trim() } : {}),
+    ...(raw.ai_rendered_image === true ? { aiRenderedImage: true } : {}),
+    ...(raw.certification_image_unreadable === true
+      ? { certificationImageUnreadable: true }
+      : {}),
+    ...(raw.ai_image_quality_issue === true ? { aiImageQualityIssue: true } : {}),
   };
 }
 

@@ -1,0 +1,5 @@
+{
+  "queue_version": "1.0.0",
+  "description": "Staging queue: Production Case → Human Verified → Benchmark Candidate → Regression Benchmark",
+  "candidates": []
+}

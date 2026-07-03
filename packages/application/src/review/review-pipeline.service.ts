@@ -3,6 +3,7 @@ import type {
   CasePrecedent,
   CaseRetrievalResult,
   CaseReviewContext,
+  ContextualRewriteBatchResult,
   ReviewContext,
 } from '@aairp/shared-kernel';
 import {
@@ -18,11 +19,17 @@ import {
 import { CaseContextAssembler } from '../case/case-context-assembler.service.js';
 import { CaseFindingGeneratorService } from '../case/case-finding-generator.service.js';
 import { CaseRetrievalService } from '../case/case-retrieval.service.js';
-import { DecisionEngineService } from './decision-engine.service.js';
+import {
+  ContextualRewriteService,
+  type WarnFinding,
+} from './contextual-rewrite.service.js';
+import { mapWithConcurrency } from './async-concurrency.js';
+import { DecisionEngineService, computeCombinedHasBlocker } from './decision-engine.service.js';
 import { OpenRiskDiscoveryService } from './open-risk-discovery.service.js';
 import { PlaybookEngineService } from './playbook-engine.service.js';
 import { ReviewReportService } from './review-report.service.js';
 import { RuleEngineService } from './rule-engine.service.js';
+import { VisionComplianceService } from './vision-compliance.service.js';
 
 export type ReviewPipelineServiceDeps = {
   ruleEngineService: RuleEngineService;
@@ -30,6 +37,8 @@ export type ReviewPipelineServiceDeps = {
   openRiskDiscoveryService: OpenRiskDiscoveryService;
   decisionEngineService: DecisionEngineService;
   reviewReportService: ReviewReportService;
+  visionComplianceService?: VisionComplianceService;
+  contextualRewriteService?: ContextualRewriteService;
   caseRetrievalService?: CaseRetrievalService;
   caseContextAssembler?: CaseContextAssembler;
   caseFindingGeneratorService?: CaseFindingGeneratorService;
@@ -45,10 +54,13 @@ type EvaluationStageResult = {
   ruleResult: ReviewPipelineEvaluationResult['ruleResult'];
   playbookResult: ReviewPipelineEvaluationResult['playbookResult'];
   openRiskResult: ReviewPipelineEvaluationResult['openRiskResult'];
+  visionResult?: ReviewPipelineEvaluationResult['visionResult'];
   caseRetrieval?: CaseRetrievalResult;
   caseFindings: CaseFinding[];
-  timings: Pick<ReviewPipelineTimings, 'ruleMs' | 'playbookMs' | 'openRiskMs' | 'totalMs'>;
+  timings: Pick<ReviewPipelineTimings, 'ruleMs' | 'playbookMs' | 'openRiskMs' | 'visionMs' | 'totalMs'>;
 };
+
+const REWRITE_SUGGEST_CONCURRENCY = 3;
 
 function measureStage<T>(operation: () => T | Promise<T>): Promise<{ result: T; durationMs: number }> {
   const started = performance.now();
@@ -89,22 +101,108 @@ export class ReviewPipelineService {
   private fuseDecision(
     openRiskStage: Pick<
       EvaluationStageResult,
-      'ruleResult' | 'playbookResult' | 'openRiskResult' | 'caseFindings'
+      'ruleResult' | 'playbookResult' | 'openRiskResult' | 'visionResult' | 'caseFindings'
     >,
     reviewId: string,
+    countryId: string,
   ) {
     const decisionCaseFindings = isCaseFindingsInDecisionEnabled()
       ? openRiskStage.caseFindings
       : [];
+    const visionFindings = openRiskStage.visionResult?.findings ?? [];
 
     return this.deps.decisionEngineService.fuseFromFindings({
       reviewId,
-      hasBlocker: openRiskStage.ruleResult.hasBlocker,
+      countryId,
+      hasBlocker: computeCombinedHasBlocker({
+        ruleHasBlocker: openRiskStage.ruleResult.hasBlocker,
+        visionFindings,
+      }),
       ruleFindings: openRiskStage.ruleResult.findings,
       playbookFindings: openRiskStage.playbookResult.findings,
       llmFindings: openRiskStage.openRiskResult.findings,
+      visionFindings,
       caseFindings: decisionCaseFindings,
     });
+  }
+
+  private async resolveVisionStage(context: ReviewContext) {
+    if (!this.deps.visionComplianceService) {
+      return undefined;
+    }
+    return this.deps.visionComplianceService.discover(context);
+  }
+
+  private collectWarnFindingsForRewrite(stage: EvaluationStageResult): WarnFinding[] {
+    const findings: WarnFinding[] = [];
+
+    for (const finding of stage.ruleResult.findings) {
+      if (finding.decision === 'WARN') {
+        findings.push(finding);
+      }
+    }
+    for (const finding of stage.playbookResult.findings) {
+      if (finding.decision === 'WARN' || finding.decision === 'REVIEW') {
+        findings.push(finding);
+      }
+    }
+    for (const finding of stage.openRiskResult.findings) {
+      if (finding.decision === 'WARN' || finding.decision === 'REVIEW') {
+        findings.push(finding);
+      }
+    }
+    for (const finding of stage.visionResult?.findings ?? []) {
+      if (finding.decision === 'WARN' || finding.decision === 'REVIEW') {
+        findings.push(finding);
+      }
+    }
+    for (const finding of stage.caseFindings) {
+      if (finding.decision === 'WARN') {
+        findings.push(finding);
+      }
+    }
+
+    return findings;
+  }
+
+  private async resolveContextualRewrites(
+    context: ReviewContext,
+    decision: ReviewPipelineEvaluationResult['decision'],
+    stage: EvaluationStageResult,
+  ): Promise<ContextualRewriteBatchResult | undefined> {
+    const service = this.deps.contextualRewriteService;
+    if (!service || decision.finalDecision !== 'WARN') {
+      return undefined;
+    }
+
+    const started = performance.now();
+    const mode = service.resolveMode();
+    if (mode === 'off') {
+      return {
+        mode,
+        results: [],
+        rewriteMs: Math.round(performance.now() - started),
+      };
+    }
+
+    const warnFindings = this.collectWarnFindingsForRewrite(stage);
+    const results = await mapWithConcurrency(
+      warnFindings,
+      REWRITE_SUGGEST_CONCURRENCY,
+      (finding) =>
+        service.suggest({
+          reviewId: context.reviewId,
+          finding,
+          adText: context.normalizedContent.text,
+          context,
+        }),
+    );
+
+    return {
+      mode,
+      results,
+      rewriteMs: Math.round(performance.now() - started),
+    };
   }
 
   async runThroughOpenRisk(context: ReviewContext): Promise<EvaluationStageResult> {
@@ -133,17 +231,22 @@ export class ReviewPipelineService {
     const { result: openRiskResult, durationMs: openRiskMs } = await measureStage(() =>
       this.deps.openRiskDiscoveryService.discover(context, prior),
     );
+    const { result: visionResult, durationMs: visionMs } = await measureStage(() =>
+      this.resolveVisionStage(context),
+    );
 
     return {
       ruleResult,
       playbookResult,
       openRiskResult,
+      ...(visionResult ? { visionResult } : {}),
       caseRetrieval,
       caseFindings,
       timings: {
         ruleMs,
         playbookMs,
         openRiskMs,
+        visionMs,
         totalMs: Math.round(performance.now() - started),
       },
     };
@@ -153,13 +256,14 @@ export class ReviewPipelineService {
     const started = performance.now();
     const openRiskStage = await this.runThroughOpenRisk(context);
     const { result: decision, durationMs: decisionMs } = await measureStage(() =>
-      this.fuseDecision(openRiskStage, context.reviewId),
+      this.fuseDecision(openRiskStage, context.reviewId, context.dimensions.countryId),
     );
 
     return {
       ruleResult: openRiskStage.ruleResult,
       playbookResult: openRiskStage.playbookResult,
       openRiskResult: openRiskStage.openRiskResult,
+      ...(openRiskStage.visionResult ? { visionResult: openRiskStage.visionResult } : {}),
       decision,
       timings: {
         ...openRiskStage.timings,
@@ -174,9 +278,12 @@ export class ReviewPipelineService {
     const started = performance.now();
     const openRiskStage = await this.runThroughOpenRisk(context);
     const { result: decision, durationMs: decisionMs } = await measureStage(() =>
-      this.fuseDecision(openRiskStage, context.reviewId),
+      this.fuseDecision(openRiskStage, context.reviewId, context.dimensions.countryId),
     );
     const casePrecedents: CasePrecedent[] = openRiskStage.caseRetrieval?.precedents ?? [];
+    const { result: contextualRewrites, durationMs: rewriteMs } = await measureStage(() =>
+      this.resolveContextualRewrites(context, decision, openRiskStage),
+    );
     const { result: report, durationMs: reportMs } = await measureStage(() =>
       this.deps.reviewReportService.render({
         context,
@@ -184,8 +291,10 @@ export class ReviewPipelineService {
         ruleFindings: openRiskStage.ruleResult.findings,
         playbookFindings: openRiskStage.playbookResult.findings,
         openRiskResult: openRiskStage.openRiskResult,
+        visionFindings: openRiskStage.visionResult?.findings ?? [],
         caseFindings: openRiskStage.caseFindings,
         casePrecedents,
+        contextualRewrites,
       }),
     );
 
@@ -193,12 +302,15 @@ export class ReviewPipelineService {
       ruleResult: openRiskStage.ruleResult,
       playbookResult: openRiskStage.playbookResult,
       openRiskResult: openRiskStage.openRiskResult,
+      ...(openRiskStage.visionResult ? { visionResult: openRiskStage.visionResult } : {}),
       decision,
       report,
+      ...(contextualRewrites ? { contextualRewrites } : {}),
       timings: {
         ...openRiskStage.timings,
         decisionMs,
         reportMs,
+        rewriteMs,
         totalMs: Math.round(performance.now() - started),
       },
     };

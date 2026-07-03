@@ -1,0 +1,32 @@
+{
+  "knowledge_id": "regulation:ph-fda-tagalog-consumer-labeling",
+  "corpus_type": "regulation",
+  "regulation_id": "ph-fda-tagalog-consumer-labeling",
+  "country": "PH",
+  "authority": "FDA Philippines",
+  "regulation_name": "FDA Rules on Labeling and Fair Information Practices",
+  "citation": "FDA Administrative Order No. 2014-0030 — Rules on Labeling of Prepackaged Food and related consumer information requirements",
+  "effective_date": "2014-11-14",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Mandatory consumer warnings and material product information for PH market must be understandable to Filipino consumers, including Tagalog or Filipino where required.",
+  "review_guidance": "TRIGGER: English-only mandatory warnings, usage instructions, or safety information in PH-targeted ads. ACTION: WARN — require Tagalog/Filipino localisation for mandatory consumer elements. CHECK: Allergen warnings, usage limits, and safety cautions. ESCALATE IF: Health or safety warnings missing in local language.",
+  "related_rule_ids": [
+    "demo-apac-sa-localization"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:none",
+    "localisation",
+    "tagalog"
+  ],
+  "jurisdiction_scope": [
+    "sa.*"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

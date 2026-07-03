@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:au-accc-misleading-conduct",
+  "corpus_type": "regulation",
+  "regulation_id": "au-accc-misleading-conduct",
+  "country": "AU",
+  "authority": "ACCC",
+  "regulation_name": "Australian Consumer Law",
+  "citation": "Australian Consumer Law — Schedule 2, s 18",
+  "effective_date": "2010-01-01",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Misleading or deceptive conduct in trade or commerce is prohibited under the Australian Consumer Law.",
+  "review_guidance": "TRIGGER: False product claims, bait advertising, or deceptive offers. ACTION: REJECT — correct misleading conduct. CHECK: Material terms, pricing, and product attributes. ESCALATE IF: Systemic ACL breach or ACCC investigation risk.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "consumer-protection"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

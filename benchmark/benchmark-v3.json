@@ -1,0 +1,4566 @@
+{
+  "schema_version": "3.0.0",
+  "benchmark_id": "aairp-benchmark-v3",
+  "modules_version": "skill-modules-1.3.0",
+  "description": "Quality specification benchmark — generated from v2 + skill-modules + rewrite templates",
+  "generated_at": "2026-07-02T08:08:57.770Z",
+  "evaluation_profile": {
+    "dimensions": [
+      "decision",
+      "pattern_hit",
+      "severity",
+      "action",
+      "rewrite"
+    ],
+    "default_weights": {
+      "decision": 0.35,
+      "pattern_hit": 0.2,
+      "severity": 0.1,
+      "action": 0.15,
+      "rewrite": 0.2
+    }
+  },
+  "source": {
+    "v2_path": "benchmark/benchmark-v2.json",
+    "modules_path": "docs/knowledge/skill-modules.json",
+    "templates_path": "docs/knowledge/rewrite-templates.json",
+    "overrides_path": "benchmark/benchmark-v3.overrides.json",
+    "promotion_path": "benchmark/benchmark-promotion-queue.json",
+    "user_lines_path": "benchmark/user-lines-14.json",
+    "locale_expansion_path": "benchmark/locale-expansion.json"
+  },
+  "case_count": 125,
+  "cases": [
+    {
+      "case_id": "AF-001",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese product image",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-002",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-absolute-performance",
+      "expected_rule": "demo-apac-sa-absolute-claim",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Easy presents for perfect results every time",
+      "risk": "High",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-003",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Goes beyond standard air fryer (200℃)",
+      "risk": "High",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-004",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Non-stick",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-005",
+      "expected_skill": "Brand/IP Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-wrong-sku",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Midea product image",
+      "risk": "Critical",
+      "issue": "Brand / IP",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "No dedicated playbook pattern; image-brand cases use rule engine."
+    },
+    {
+      "case_id": "AF-006",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-superiority",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Comparison with higher-end Joyoung model",
+      "risk": "Medium",
+      "issue": "Comparative Advertising",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-007",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "AI rendered image without disclaimer",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "fixture": {
+        "content": {
+          "text": "Premium air fryer hero shot",
+          "images": [
+            "https://demo/golden/AF-007.png"
+          ],
+          "ocr_text": "Dual heat zones for crisp results"
+        },
+        "context": {
+          "ai_rendered_image": true
+        }
+      },
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-008",
+      "expected_skill": "AI Content Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Chicken wing image distortion",
+      "risk": "Low",
+      "issue": "AI Image Quality",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-008",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Visual quality review; no dedicated playbook pattern."
+    },
+    {
+      "case_id": "AF-009",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Authoritative certification meets national standard grade",
+      "risk": "High",
+      "issue": "Certification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-009",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "AF-010",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Certification image unreadable",
+      "risk": "High",
+      "issue": "Evidence",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "AF-010",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-001",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese product image",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-002",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Large Capacity",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-003",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Cook Faster",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-004",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Tender beef stew in 30 minutes",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-005",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "70kPa",
+      "risk": "High",
+      "issue": "Technical Specification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-006",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-capacity-claim",
+      "expected_rule": "demo-apac-sa-capacity-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Stew up to 2kg beef",
+      "risk": "Medium",
+      "issue": "Capacity Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-007",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Non-stick",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-008",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Lower Sugar Healthier Every Bowl",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-008",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-009",
+      "expected_skill": "Consistency Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-content-consistency-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Copper Pot vs Stainless Steel inconsistency",
+      "risk": "High",
+      "issue": "Content Consistency",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-009",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
+    },
+    {
+      "case_id": "PC-010",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Internal design note visible",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-010",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
+    },
+    {
+      "case_id": "PC-011",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": "sa-grammar-quality",
+      "expected_rule": "demo-apac-sa-grammar-quality",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "22:00pm",
+      "risk": "Low",
+      "issue": "Grammar",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-011",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-012",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-superiority",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Comparison with higher-end Joyoung model",
+      "risk": "Medium",
+      "issue": "Comparative Advertising",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-012",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-013",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese manual",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-013",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-014",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Missing AI disclaimer",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-014",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-015",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Comparison may make competitor look better",
+      "risk": "Medium",
+      "issue": "Comparative Strategy",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-015",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "PC-016",
+      "expected_skill": "Consistency Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-content-consistency-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Stainless Steel / Copper / Ceramic inconsistency",
+      "risk": "High",
+      "issue": "Content Consistency",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "PC-016",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
+    },
+    {
+      "case_id": "BL-001",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese product image",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-002",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Enhanced noise reduction",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-003",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": "sa-grammar-quality",
+      "expected_rule": "demo-apac-sa-grammar-quality",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Multiple presents",
+      "risk": "Low",
+      "issue": "Grammar",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-004",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Less wear, less noise",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-005",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Quieter by design",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-006",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-absolute-performance",
+      "expected_rule": "demo-apac-sa-absolute-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "No chunks",
+      "risk": "Medium",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-007",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Easy to digest",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-008",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Better nutrient absorption",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-008",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-009",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Sterilize",
+      "risk": "Critical",
+      "issue": "Medical / Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-009",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-010",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Internal note visible",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-010",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
+    },
+    {
+      "case_id": "BL-011",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Certification image with internal note",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-011",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
+    },
+    {
+      "case_id": "BL-012",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese warranty card",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-012",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-013",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Missing AI disclaimer",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-013",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-014",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Finer blending smoother nutrition",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-014",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-015",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Ordinary Blender comparison",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-015",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "BL-016",
+      "expected_skill": "AI Content Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "AI generated family image abnormal",
+      "risk": "Low",
+      "issue": "AI Image Quality",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "BL-016",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Visual quality review; no dedicated playbook pattern."
+    },
+    {
+      "case_id": "RC18-001",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Non-stick",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-002",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese product image",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-003",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Safer and more durable",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-004",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-patent-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "China Patent",
+      "risk": "Medium",
+      "issue": "Patent",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-005",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Missing AI disclaimer",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-006",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "A cleaner way to cook",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-007",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Less peeling",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-008",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Low-sugar rice",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-008",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC18-009",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "304/316 stainless steel claimed as Non-stick",
+      "risk": "High",
+      "issue": "Misleading Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC18-009",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-001",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Medical-grade 316L stainless steel",
+      "risk": "Critical",
+      "issue": "Medical Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-002",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Patent image with internal notes",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
+    },
+    {
+      "case_id": "RC40-003",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Superior Non-stick Performance",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-004",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "1350W",
+      "risk": "Medium",
+      "issue": "Technical Specification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-005",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-absolute-performance",
+      "expected_rule": "demo-apac-sa-absolute-claim",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Every time",
+      "risk": "High",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-006",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-capacity-claim",
+      "expected_rule": "demo-apac-sa-capacity-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Up to 16 bowls",
+      "risk": "Medium",
+      "issue": "Capacity Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-007",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "User manual contains internal notes",
+      "risk": "Medium",
+      "issue": "Internal Note",
+      "modality": "doc",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
+    },
+    {
+      "case_id": "RC40-008",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Missing AI disclaimer",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-008",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "RC40-009",
+      "expected_skill": "Consistency Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-content-consistency-blocker",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Wrong SKU content (actually 50H100)",
+      "risk": "Medium",
+      "issue": "Content Consistency",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "fixture": {
+        "content": {
+          "text": "Rice cooker hero banner",
+          "ocr_text": "Model 50H100 stainless steel inner pot"
+        },
+        "context": {
+          "product_sku": "RC40"
+        }
+      },
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "RC40-009",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
+    },
+    {
+      "case_id": "LZ9-001",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Smarter. Cleaner. More efficient",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ9-002",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "+15% juice yield",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ9-003",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "+12% purer juice",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ9-004",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese product image",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ9-005",
+      "expected_skill": "Consistency Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-apac-sa-content-consistency-blocker",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": true,
+      "text": "Video uses old product",
+      "risk": "Medium",
+      "issue": "Brand Consistency",
+      "modality": "video",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "No dedicated playbook pattern."
+    },
+    {
+      "case_id": "LZ9-006",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese subtitles",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "video",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ9-007",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "IF Award model verification",
+      "risk": "High",
+      "issue": "Award Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ9-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ585-001",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-absolute-performance",
+      "expected_rule": "demo-apac-sa-absolute-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Zero waste",
+      "risk": "Medium",
+      "issue": "Absolute Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ585-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ585-002",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": "sa-grammar-quality",
+      "expected_rule": "demo-apac-sa-grammar-quality",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-performance",
+        "must_remove_terms": [
+          "perfect",
+          "every time",
+          "always works",
+          "flawless",
+          "never fails"
+        ],
+        "must_include_concepts": [
+          "typical",
+          "conditions"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "What's include",
+      "risk": "Low",
+      "issue": "Grammar",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ585-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "LZ585-003",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-patent-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Patented",
+      "risk": "High",
+      "issue": "Patent Verification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "LZ585-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "P655-001",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "99.9999% bacteria removal",
+      "risk": "Critical",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "P655-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "P655-002",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "National standard grade",
+      "risk": "High",
+      "issue": "Certification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "P655-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "P655-003",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Certification image unreadable",
+      "risk": "High",
+      "issue": "Evidence",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "P655-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "P655-004",
+      "expected_skill": "Localization Review",
+      "expected_pattern": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-localization",
+        "must_remove_terms": [
+          "chinese product image",
+          "chinese manual"
+        ],
+        "must_include_concepts": [
+          "local",
+          "english"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Chinese manual",
+      "risk": "Medium",
+      "issue": "Localization",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "P655-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "V9-001",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Fat-reducing",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "V9-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "V9-002",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "remove",
+        "template_id": "remove-health-claim",
+        "must_remove_terms": [
+          "healthier",
+          "lower sugar",
+          "health benefits"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Less fat",
+      "risk": "Critical",
+      "issue": "Health Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "V9-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "V9-003",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Up to 68% less oil",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "V9-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-001",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Third-party laboratory report",
+      "risk": "High",
+      "issue": "Evidence Verification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-001",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-002",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Unreadable certification report",
+      "risk": "High",
+      "issue": "Evidence Quality",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-002",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-003",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Internal laboratory data",
+      "risk": "High",
+      "issue": "Evidence Source",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-003",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-004",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-comparative",
+        "must_remove_terms": [
+          "number one",
+          "goes beyond"
+        ],
+        "must_include_concepts": [
+          "compared",
+          "test"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Traditional / Ordinary comparison",
+      "risk": "Medium",
+      "issue": "Comparative Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-004",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-005",
+      "expected_skill": "AI Content Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "MEDIUM",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "AI generated human image",
+      "risk": "Medium",
+      "issue": "AI Disclosure",
+      "modality": "image",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "fixture": {
+        "content": {
+          "text": "Family cooking together",
+          "images": [
+            "https://demo/golden/GEN-005.png"
+          ],
+          "ocr_text": "Enjoy healthy meals every day"
+        },
+        "context": {
+          "ai_rendered_image": true
+        }
+      },
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-005",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-006",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "expected_decision": "REVIEW",
+      "expected_severity": "LOW",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-ai",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "illustration",
+          "purposes only"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "Missing AI generated disclaimer",
+      "risk": "Low",
+      "issue": "Disclaimer",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-006",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "GEN-007",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "REVIEW",
+      "expected_severity": "HIGH",
+      "expected_action": "ESCALATE",
+      "expected_rewrite": {
+        "strategy": "cite_evidence",
+        "template_id": "cite-evidence",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "substantiation",
+          "certification",
+          "evidence"
+        ]
+      },
+      "evaluation_weight": 0.5,
+      "tier": "extended",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "16-Hour Freshness Mode",
+      "risk": "High",
+      "issue": "Performance Claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "golden-v1",
+        "golden_id": "GEN-007",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "sg-health-reject-cure",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "unsubstantiated-testimonial",
+      "expected_rule": "demo-sg-health-forbidden-claim",
+      "expected_decision": "REJECT",
+      "expected_severity": "BLOCKER",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-efficacy",
+        "must_remove_terms": [
+          "clinically proven",
+          "guaranteed",
+          "100%"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+      "issue": "Forbidden cure claim → REJECT with blocker rule",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "fixture": {
+        "dimensions": {
+          "countryId": "SG",
+          "categoryId": "health.supplement"
+        },
+        "content": {
+          "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+          "images": []
+        }
+      },
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "sg-health-reject-cure",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "sg-health-pass-disclosed",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "MEDIUM",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": true,
+      "text": "Daily vitamins for general wellness. #ad",
+      "issue": "Clean ad with disclosure → PASS",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "fixture": {
+        "dimensions": {
+          "countryId": "SG",
+          "categoryId": "health.supplement"
+        },
+        "content": {
+          "text": "Daily vitamins for general wellness. #ad",
+          "images": []
+        }
+      },
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "sg-health-pass-disclosed",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "sg-health-fp-secure-no-cure",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "MEDIUM",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": true,
+      "text": "Secure checkout for daily wellness supplements. #ad",
+      "issue": "Secure must not false-trigger cure rule",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "fixture": {
+        "dimensions": {
+          "countryId": "SG",
+          "categoryId": "health.supplement"
+        },
+        "content": {
+          "text": "Secure checkout for daily wellness supplements. #ad",
+          "images": []
+        }
+      },
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "sg-health-fp-secure-no-cure",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "sg-health-warn-disclosure",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-sg-sponsored-disclosure",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": true,
+      "text": "Daily vitamins for general wellness.",
+      "issue": "Missing ad disclosure → WARN",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "fixture": {
+        "dimensions": {
+          "countryId": "SG",
+          "categoryId": "health.supplement"
+        },
+        "content": {
+          "text": "Daily vitamins for general wellness.",
+          "images": []
+        }
+      },
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "sg-health-warn-disclosure",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "sg-health-warn-superlative",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "unsubstantiated-testimonial",
+      "expected_rule": "demo-sg-health-superlative",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "template_id": "qualify-efficacy",
+        "must_remove_terms": [
+          "clinically proven",
+          "guaranteed",
+          "100%"
+        ],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Clinically proven vitamins for daily wellness. #ad",
+      "issue": "Superlative claim without blocker → WARN",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "fixture": {
+        "dimensions": {
+          "countryId": "SG",
+          "categoryId": "health.supplement"
+        },
+        "content": {
+          "text": "Clinically proven vitamins for daily wellness. #ad",
+          "images": []
+        }
+      },
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "sg-health-warn-superlative",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "sg-health-playbook-urgency",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": null,
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-urgency",
+        "must_remove_terms": [
+          "limited time",
+          "act now",
+          "hurry"
+        ],
+        "must_include_concepts": [
+          "validity",
+          "offer"
+        ]
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Limited time offer on wellness packs. #ad",
+      "issue": "Urgency CTA playbook → WARN",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "fixture": {
+        "dimensions": {
+          "countryId": "SG",
+          "categoryId": "health.supplement"
+        },
+        "content": {
+          "text": "Limited time offer on wellness packs. #ad",
+          "images": []
+        }
+      },
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "sg-health-playbook-urgency",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      }
+    },
+    {
+      "case_id": "supplement-ad-manifest-urgency",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": null,
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-urgency",
+        "must_remove_terms": [
+          "limited time",
+          "act now",
+          "hurry"
+        ],
+        "must_include_concepts": [
+          "validity",
+          "offer"
+        ]
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": true,
+      "text": "Limited time offer on wellness packs. #ad",
+      "issue": "Urgency CTA with disclosure present — playbook-only WARN",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "provenance": {
+        "source": "ad-manifest",
+        "golden_id": "supplement-ad-manifest-urgency",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Ad includes #ad; disclosure rule must not fire. Pattern-only urgency case."
+    },
+    {
+      "case_id": "supplement-before-after-imagery",
+      "expected_skill": "Content Quality Review",
+      "expected_pattern": "before-after-imagery",
+      "expected_rule": null,
+      "expected_decision": "WARN",
+      "expected_severity": "LOW",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "disclose",
+        "template_id": "disclose-transformation",
+        "must_remove_terms": [],
+        "must_include_concepts": [
+          "disclaimer",
+          "outcomes"
+        ]
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": false,
+      "exclude_from_strict_linkage": false,
+      "text": "See amazing before and after transformation results.",
+      "issue": "Before/after imagery — playbook CONDITIONAL maps to WARN in frozen pipeline",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "health.supplement",
+      "provenance": {
+        "source": "taxonomy-gap-fill",
+        "golden_id": "supplement-before-after-imagery",
+        "generated_at": "2026-06-30T05:14:07.294Z",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "upstream": "benchmark-v2"
+      },
+      "mapping_note": "Frozen decision engine outputs WARN (not REVIEW) for playbook CONDITIONAL findings."
+    },
+    {
+      "case_id": "user-line-01-vitamin-38pct",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "HIGH",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "[Blender] Low-speed cold blend retains 38% more vitamins than high-speed blending",
+      "risk": "Medium",
+      "issue": "Quantified nutrient retention + comparative baseline",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-02-my-million-homes",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "my-local-market-claim",
+      "expected_rule": "demo-my-sa-market-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【电饭煲】马来西亚千万家庭的选择",
+      "risk": "Medium",
+      "issue": "Malaysia market popularity claim",
+      "modality": "text",
+      "country_id": "MY",
+      "category_id": "sa.rice_cooker",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-03-pm25-tuv",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "WARN",
+      "expected_severity": "HIGH",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "[Vacuum] PM2.5 filtration rate 99.7% — certified by TÜV SÜD",
+      "risk": "Medium",
+      "issue": "PM2.5 filtration + third-party certification",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.vacuum_floor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-04-pediatrician",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-medical-claim",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【搅拌机】儿科医生推荐的辅食制作首选",
+      "risk": "Medium",
+      "issue": "Pediatrician medical endorsement",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-05-better-you",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "[Blender] Not just a blender. A step towards a better you",
+      "risk": "Medium",
+      "issue": "Wellness / better-you health implication",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-06-kids-vegetables",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【空气炸锅】让孩子也爱上蔬菜",
+      "risk": "Medium",
+      "issue": "Children diet / vegetable health implication",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-07-oil-76pct",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-oil-reduction-quantified",
+      "expected_rule": "demo-apac-sa-performance-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "HIGH",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【电饭煲】经第三方检测，用油量较传统烹饪方式减少76%",
+      "risk": "Medium",
+      "issue": "Quantified oil reduction with third-party test",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.rice_cooker",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-08-analogy-kiwi",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-analogy-claim",
+      "expected_rule": "demo-apac-sa-analogy-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【搅拌机】每100ml，维他命C含量媲美3颗新鲜奇异果",
+      "risk": "Medium",
+      "issue": "Analogy to fresh fruit vitamin content",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-09-guilt-free",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "[Air Fryer] Guilt-free indulgence, every day",
+      "risk": "Medium",
+      "issue": "Guilt-free diet wellness implication",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-10-wellness-ritual",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "[Blender] Your daily wellness ritual, simplified",
+      "risk": "Medium",
+      "issue": "Daily wellness ritual implication",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-11-pm25-breathe",
+      "expected_skill": "Evidence Review",
+      "expected_pattern": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence",
+      "expected_decision": "WARN",
+      "expected_severity": "HIGH",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【吸尘器】深呼吸，感受PM2.5归零的清洁",
+      "risk": "Medium",
+      "issue": "PM2.5 zero claim + breathe / air-quality cue",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.vacuum_floor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-12-allergy-symptoms",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-medical-claim",
+      "expected_rule": "demo-apac-sa-health-claim-blocker",
+      "expected_decision": "REJECT",
+      "expected_severity": "HIGH",
+      "expected_action": "REJECT",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【吸尘器】让有过敏症状的家人也能深呼吸",
+      "risk": "Medium",
+      "issue": "Allergy symptoms medical claim",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.vacuum_floor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-13-deep-breathe",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【吸尘器】让家里的空气，值得深呼吸",
+      "risk": "Medium",
+      "issue": "Deep-breath air-quality health implication",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.vacuum_floor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "user-line-14-vegetable-nutrition",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 1,
+      "tier": "regression",
+      "lifecycle_status": "HUMAN_VERIFIED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "【搅拌机】帮助孩子补充每日所需蔬菜营养",
+      "risk": "Medium",
+      "issue": "Supplement daily vegetable nutrition implication",
+      "modality": "text",
+      "country_id": "SG",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "user-lines-14",
+        "upstream": "benchmark/user-lines-14.json",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "id-sa-pass-rice-cooker",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Nasi praktis setiap hari — penanak nasi hemat listrik untuk keluarga sibuk. #iklan",
+      "risk": "Medium",
+      "issue": "ID sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "ID",
+      "category_id": "sa.rice_cooker",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "id-sa-pass-rice-cooker",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "id-sa-pass-blender",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Blender serbaguna untuk dapur modern — desain ringkas, mudah dibersihkan. #iklan",
+      "risk": "Medium",
+      "issue": "ID sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "ID",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "id-sa-pass-blender",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "id-sa-pass-air-fryer",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Air fryer untuk camilan renyah — memasak praktis untuk keluarga. #iklan",
+      "risk": "Medium",
+      "issue": "ID sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "ID",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "id-sa-pass-air-fryer",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "id-sa-warn-category-boundary",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-id-product-category-boundary",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Air fryer dengan khasiat alami untuk kesehatan keluarga. #iklan",
+      "risk": "Medium",
+      "issue": "ID sa.* product-category-boundary",
+      "modality": "text",
+      "country_id": "ID",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "id-sa-warn-category-boundary",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "id-sa-warn-market-ranking",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "id-local-market-claim",
+      "expected_rule": "demo-id-sa-market-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Blender terbaik nomor satu di Indonesia untuk dapur Anda. #iklan",
+      "risk": "Medium",
+      "issue": "ID Bahasa market ranking",
+      "modality": "text",
+      "country_id": "ID",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "id-sa-warn-market-ranking",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "id-sa-warn-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-id-sponsored-disclosure",
+      "expected_decision": "WARN",
+      "expected_severity": "LOW",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Beli air fryer sekarang — promosi terbatas untuk keluarga Indonesia.",
+      "risk": "Medium",
+      "issue": "ID sponsored disclosure missing",
+      "modality": "text",
+      "country_id": "ID",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "id-sa-warn-sponsored-disclosure",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "vn-sa-pass-air-fryer",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Nồi chiên không dầu tiện lợi cho bữa ăn gia đình — nấu nhanh, dễ vệ sinh.",
+      "risk": "Medium",
+      "issue": "VN sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "VN",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "vn-sa-pass-air-fryer",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "vn-sa-pass-blender",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Máy xay sinh tố đa năng — thiết kế gọn nhẹ cho căn bếp hiện đại.",
+      "risk": "Medium",
+      "issue": "VN sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "VN",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "vn-sa-pass-blender",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "vn-sa-pass-rice-cooker",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Nồi cơm điện tiết kiệm điện — cơm dẻo thơm mỗi ngày cho gia đình bạn.",
+      "risk": "Medium",
+      "issue": "VN sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "VN",
+      "category_id": "sa.rice_cooker",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "vn-sa-pass-rice-cooker",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "vn-sa-warn-absolute-claim",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-absolute-performance",
+      "expected_rule": "demo-apac-sa-absolute-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Máy nướng không dầu tốt nhất cho gia đình Việt Nam — nấu ăn lành mạnh mỗi ngày.",
+      "risk": "Medium",
+      "issue": "VN absolute claim vn-warn-tier",
+      "modality": "text",
+      "country_id": "VN",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "vn-sa-warn-absolute-claim",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "vn-sa-warn-market-ranking",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "vn-local-market-claim",
+      "expected_rule": "demo-vn-sa-market-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Máy xay số 1 Việt Nam — bán chạy nhất thị trường năm nay.",
+      "risk": "Medium",
+      "issue": "VN market ranking vn-warn-tier",
+      "modality": "text",
+      "country_id": "VN",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "vn-sa-warn-market-ranking",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "vn-sa-review-foreign-brand",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": "demo-vn-foreign-brand-ad-approval",
+      "expected_decision": "PASS",
+      "expected_severity": "MEDIUM",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "GlobalBrand Air Fryer — imported from USA. Order now for Vietnamese families. No local distributor named.",
+      "risk": "Medium",
+      "issue": "VN foreign brand ad approval review signal",
+      "modality": "text",
+      "country_id": "VN",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "vn-sa-review-foreign-brand",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "ph-sa-pass-air-fryer",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Crispy meals made easy — air fryer for busy Filipino homes. #ad",
+      "risk": "Medium",
+      "issue": "PH sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "PH",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "ph-sa-pass-air-fryer",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "ph-sa-pass-blender",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "All-in-one blender for your kitchen — compact design, easy cleanup. #ad",
+      "risk": "Medium",
+      "issue": "PH sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "PH",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "ph-sa-pass-blender",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "ph-sa-pass-rice-cooker",
+      "expected_skill": "Claim Review",
+      "expected_pattern": null,
+      "expected_rule": null,
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Fluffy rice every day — energy-saving rice cooker for your family. #ad",
+      "risk": "Medium",
+      "issue": "PH sa.* lifestyle pass",
+      "modality": "text",
+      "country_id": "PH",
+      "category_id": "sa.rice_cooker",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "ph-sa-pass-rice-cooker",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "ph-sa-warn-health-implication",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-implication",
+      "expected_decision": "WARN",
+      "expected_severity": "HIGH",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Air fryer para sa kalusugan — less oil cooking for your family. #ad",
+      "risk": "Medium",
+      "issue": "PH stricter health-implication",
+      "modality": "text",
+      "country_id": "PH",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "ph-sa-warn-health-implication",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "ph-sa-warn-market-ranking",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "ph-local-market-claim",
+      "expected_rule": "demo-ph-sa-market-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Pinakamahusay na blender sa Pilipinas — numero uno sa benta. #ad",
+      "risk": "Medium",
+      "issue": "PH Tagalog market ranking",
+      "modality": "text",
+      "country_id": "PH",
+      "category_id": "sa.blender_processor",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "ph-sa-warn-market-ranking",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "ph-sa-warn-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-ph-sponsored-disclosure",
+      "expected_decision": "WARN",
+      "expected_severity": "LOW",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Buy our air fryer now — limited promo for Filipino families.",
+      "risk": "Medium",
+      "issue": "PH sponsored disclosure missing",
+      "modality": "text",
+      "country_id": "PH",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "ph-sa-warn-sponsored-disclosure",
+        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "th-sa-warn-social-proof",
+      "expected_skill": "Claim Review",
+      "expected_pattern": "sa-social-proof-claim",
+      "expected_rule": "demo-apac-sa-social-proof-claim",
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "expected_action": "REWRITE",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Loved by home cooks across Thailand. Thousands of households trust our kitchen appliances.",
+      "risk": "Medium",
+      "issue": "TH social-proof quantified claim",
+      "modality": "text",
+      "country_id": "TH",
+      "category_id": "electronics",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "th-sa-warn-social-proof",
+        "v3_generated_at": "2026-07-03T02:30:00.000Z"
+      }
+    }
+  ],
+  "content_fingerprint": "d7f336a242baf619196ac78f7f9d669ed38c8f1ba96e047adc102f61962149e6"
+}

@@ -1,0 +1,32 @@
+{
+  "knowledge_id": "regulation:sg-hsa-traditional-medicine-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hsa-traditional-medicine-claims",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Traditional Medicines Guidelines (HSA)",
+  "citation": "Traditional Medicines Guidelines — Section 3.2 (Permitted claims)",
+  "effective_date": "2019-04-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Traditional medicine advertising is limited to culturally accepted health maintenance claims without modern disease-treatment wording.",
+  "review_guidance": "TRIGGER: TCM, traditional remedy, or herbal product health benefit claims. ACTION: REWRITE — use permitted traditional health maintenance language. CHECK: Herb names, efficacy timelines, and disease references. ESCALATE IF: Modern biomedical cure or anti-disease language appears.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "traditional-medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement",
+    "health.traditional"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

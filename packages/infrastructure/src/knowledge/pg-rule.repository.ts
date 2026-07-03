@@ -45,6 +45,9 @@ type RuleVersionRow = {
   scope_json: unknown;
   payload_json: unknown;
   owner: string | null;
+  owner_type: string | null;
+  last_reviewed_at: Date | null;
+  freshness_status: string | null;
   tags: unknown;
   effective_from: Date | null;
   published_at: Date | null;
@@ -87,6 +90,9 @@ function mapVersion(row: RuleVersionRow): RuleVersion {
     scope,
     payload: parseJson<Record<string, unknown>>(row.payload_json, {}),
     owner: row.owner ?? undefined,
+    ownerType: row.owner_type ?? undefined,
+    lastReviewedAt: row.last_reviewed_at ? toIso(row.last_reviewed_at) : undefined,
+    freshnessStatus: row.freshness_status ?? undefined,
     tags: parseJson<string[]>(row.tags, []),
     effectiveFrom: row.effective_from ? toIso(row.effective_from) : undefined,
     publishedAt: row.published_at ? toIso(row.published_at) : undefined,
@@ -215,8 +221,9 @@ export class PgRuleRepository implements IRuleRepository {
     const versionNumber = next.rows[0]?.next ?? 1;
     const rows = await this.db.query<RuleVersionRow>(
       `INSERT INTO app.rule_version
-         (rule_id, version_number, severity, decision, summary, scope_json, payload_json, owner, tags)
-       VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb, $8, $9::jsonb)
+         (rule_id, version_number, severity, decision, summary, scope_json, payload_json, owner,
+          owner_type, last_reviewed_at, freshness_status, tags)
+       VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb, $8, $9, $10, $11, $12::jsonb)
        RETURNING *`,
       [
         input.ruleId,
@@ -227,6 +234,9 @@ export class PgRuleRepository implements IRuleRepository {
         JSON.stringify(input.scope),
         JSON.stringify(input.payload),
         input.owner ?? null,
+        input.ownerType ?? null,
+        input.lastReviewedAt ?? null,
+        input.freshnessStatus ?? null,
         JSON.stringify(input.tags ?? []),
       ],
     );

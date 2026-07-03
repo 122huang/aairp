@@ -64,6 +64,21 @@ describe('validateAdvertisementUpload', () => {
     }
   });
 
+  it('accepts base64 data URL images', () => {
+    const dataUrl = 'data:image/jpeg;base64,/9j/4AAQSkZJRg==';
+    const result = validateAdvertisementUpload({
+      country_id: 'SG',
+      platform_id: 'META',
+      category_id: 'health.supplement',
+      content: { images: [dataUrl] },
+    });
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.input.content.images[0]).toBe(dataUrl);
+    }
+  });
+
   it('rejects too many images', () => {
     const result = validateAdvertisementUpload({
       country_id: 'SG',

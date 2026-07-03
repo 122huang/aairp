@@ -1,0 +1,529 @@
+{
+  "summary": {
+    "generated_at": "2026-07-02T02:33:29.396Z",
+    "live_mode": true,
+    "provider": "auto",
+    "totals": {
+      "stub": {
+        "REJECT": 2,
+        "WARN": 11,
+        "PASS": 1
+      },
+      "live": {
+        "REJECT": 2,
+        "WARN": 12,
+        "PASS": 0,
+        "errors": 0,
+        "decision_deltas": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": 1,
+      "country": "SG",
+      "text": "[Blender] Low-speed cold blend retains 38% more vitamins than high-speed blending",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "performance-claim",
+          "comparative-claim"
+        ],
+        "playbook": [
+          "sa-comparative-claim",
+          "sa-performance-claim"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "performance-claim",
+          "comparative-claim"
+        ],
+        "playbook": [
+          "sa-comparative-claim",
+          "sa-performance-claim"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 2,
+      "country": "MY",
+      "text": "【电饭煲】马来西亚千万家庭的选择",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "market-claim"
+        ],
+        "playbook": [
+          "my-local-market-claim"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "market-claim"
+        ],
+        "playbook": [
+          "my-local-market-claim"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 3,
+      "country": "SG",
+      "text": "[Vacuum] PM2.5 filtration rate 99.7% — certified by TÜV SÜD",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "performance-claim",
+          "certification-evidence"
+        ],
+        "playbook": [
+          "sa-performance-claim",
+          "sa-certification-evidence"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "performance-claim",
+          "certification-evidence"
+        ],
+        "playbook": [
+          "sa-performance-claim",
+          "sa-certification-evidence"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 4,
+      "country": "SG",
+      "text": "【搅拌机】儿科医生推荐的辅食制作首选",
+      "stub": {
+        "mode": "stub",
+        "decision": "REJECT",
+        "rules": [
+          "health-claim-blocker"
+        ],
+        "playbook": [
+          "sa-medical-claim"
+        ],
+        "llm": [],
+        "llmSkipped": true,
+        "llmSkipReason": "HAS_BLOCKER"
+      },
+      "live": {
+        "mode": "live",
+        "decision": "REJECT",
+        "rules": [
+          "health-claim-blocker"
+        ],
+        "playbook": [
+          "sa-medical-claim"
+        ],
+        "llm": [],
+        "llmSkipped": true,
+        "llmSkipReason": "HAS_BLOCKER"
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 5,
+      "country": "SG",
+      "text": "[Blender] Not just a blender. A step towards a better you",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 6,
+      "country": "SG",
+      "text": "【空气炸锅】让孩子也爱上蔬菜",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 7,
+      "country": "SG",
+      "text": "【电饭煲】经第三方检测，用油量较传统烹饪方式减少76%",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "performance-claim",
+          "certification-evidence"
+        ],
+        "playbook": [
+          "sa-performance-claim",
+          "sa-certification-evidence",
+          "sa-oil-reduction-quantified"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "performance-claim",
+          "certification-evidence"
+        ],
+        "playbook": [
+          "sa-performance-claim",
+          "sa-certification-evidence",
+          "sa-oil-reduction-quantified"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 8,
+      "country": "SG",
+      "text": "【搅拌机】每100ml，维他命C含量媲美3颗新鲜奇异果",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "analogy-claim"
+        ],
+        "playbook": [
+          "sa-analogy-claim"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "analogy-claim"
+        ],
+        "playbook": [
+          "sa-analogy-claim"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 9,
+      "country": "SG",
+      "text": "[Air Fryer] Guilt-free indulgence, every day",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 10,
+      "country": "SG",
+      "text": "[Blender] Your daily wellness ritual, simplified",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 11,
+      "country": "SG",
+      "text": "【吸尘器】深呼吸，感受PM2.5归零的清洁",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "certification-evidence"
+        ],
+        "playbook": [
+          "sa-certification-evidence"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "certification-evidence"
+        ],
+        "playbook": [
+          "sa-certification-evidence"
+        ],
+        "llm": [
+          "health-implication:WARN"
+        ],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": [
+          "health-implication:WARN"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "country": "SG",
+      "text": "【吸尘器】让有过敏症状的家人也能深呼吸",
+      "stub": {
+        "mode": "stub",
+        "decision": "REJECT",
+        "rules": [
+          "health-claim-blocker",
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-medical-claim"
+        ],
+        "llm": [],
+        "llmSkipped": true,
+        "llmSkipReason": "HAS_BLOCKER"
+      },
+      "live": {
+        "mode": "live",
+        "decision": "REJECT",
+        "rules": [
+          "health-claim-blocker",
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-medical-claim"
+        ],
+        "llm": [],
+        "llmSkipped": true,
+        "llmSkipReason": "HAS_BLOCKER"
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    },
+    {
+      "id": 13,
+      "country": "SG",
+      "text": "【吸尘器】让家里的空气，值得深呼吸",
+      "stub": {
+        "mode": "stub",
+        "decision": "PASS",
+        "rules": [],
+        "playbook": [],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [],
+        "playbook": [],
+        "llm": [
+          "health-implication:WARN"
+        ],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": true,
+        "llmFindingsAdded": [
+          "health-implication:WARN"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "country": "SG",
+      "text": "【搅拌机】帮助孩子补充每日所需蔬菜营养",
+      "stub": {
+        "mode": "stub",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "live": {
+        "mode": "live",
+        "decision": "WARN",
+        "rules": [
+          "health-implication"
+        ],
+        "playbook": [
+          "sa-health-implication"
+        ],
+        "llm": [],
+        "llmSkipped": false,
+        "llmSkipReason": null
+      },
+      "delta": {
+        "decisionChanged": false,
+        "llmFindingsAdded": []
+      }
+    }
+  ]
+}

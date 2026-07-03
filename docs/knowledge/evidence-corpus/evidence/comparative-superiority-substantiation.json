@@ -1,0 +1,74 @@
+{
+  "knowledge_id": "evidence:comparative-superiority-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "comparative-superiority-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "comparative-superiority",
+  "evidence_purpose": "Substantiation for superiority and ranking claims against competitors or industry standards.",
+  "summary": "Superiority claims require substantiation with named benchmark and statistically supportable difference.",
+  "review_guidance": "TRIGGER: Number one, industry leading, or goes beyond language. ACTION: Require benchmark substantiation. CHECK: Ranking basis, survey or test method. ESCALATE IF: Omnibus superiority without benchmark.",
+  "evidence_purpose_tags": [
+    "comparative-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH",
+      "JP"
+    ],
+    "claim_types": [
+      "comparative-claim",
+      "superlative-claim"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:jp-jftc-comparative-ads",
+      "regulation:th-ocpb-comparative-ads"
+    ],
+    "rules": [
+      "demo-apac-sa-comparative-claim"
+    ],
+    "skills": [
+      "skill:comparative-claim-review",
+      "skill:superlative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-comparative"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-006"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Identify ranking or superiority basis",
+      "Confirm benchmark named and verifiable",
+      "Check statistical or survey methodology"
+    ],
+    "reject_if": [
+      "Superiority claim without named benchmark"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "comparative"
+  ]
+}

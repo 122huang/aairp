@@ -1,0 +1,28 @@
+{
+  "knowledge_id": "regulation:sg-asas-awards-testimonials",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-asas-awards-testimonials",
+  "country": "SG",
+  "authority": "ASAS",
+  "regulation_name": "Singapore Code of Advertising Practice",
+  "citation": "Singapore Code of Advertising Practice — Rule 5 (Testimonials and awards)",
+  "effective_date": "2019-06-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Awards, seals, and testimonials must be genuine, current, and representative; fabricated endorsements are prohibited.",
+  "review_guidance": "TRIGGER: Award badges, expert endorsements, or consumer testimonial quotes. ACTION: WARN — verify authenticity and typicality. CHECK: Award issuer, date, and whether testimonial is paid. ESCALATE IF: Fabricated review, outdated award, or atypical result presented as norm.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "testimonial"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

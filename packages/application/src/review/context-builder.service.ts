@@ -6,9 +6,9 @@ import type {
 } from '@aairp/shared-kernel';
 
 export const DEMO_KNOWLEDGE_VERSIONS: ResolvedKnowledgeVersions = {
-  rulePackVersion: 'demo-rule-1.0.0',
+  rulePackVersion: 'demo-rule-1.7.3',
   policyPackVersion: 'demo-policy-1.0.0',
-  playbookPackVersion: 'demo-playbook-1.0.0',
+  playbookPackVersion: 'demo-playbook-1.6.1',
 };
 
 export type ContextBuilderConfig = {

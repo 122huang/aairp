@@ -7,14 +7,15 @@ import {
 import { runDatasetEval } from './dataset-evaluator.service.js';
 
 describe('demo dataset index', () => {
-  it('loads index with 32 cases across 8 countries and 4 categories', () => {
+  it('loads index with 50 cases across 9 countries and 4 categories', () => {
     const index = loadDatasetIndex();
 
     expect(index.schema_version).toBe('1.0.0');
     expect(index.dataset_id).toBe('aairp-demo-dataset');
-    expect(index.countries).toHaveLength(8);
+    expect(index.countries).toHaveLength(9);
+    expect(index.countries).toContain('VN');
     expect(index.categories).toHaveLength(4);
-    expect(index.cases).toHaveLength(32);
+    expect(index.cases).toHaveLength(50);
   });
 
   it('loads each indexed case file with matching case_id and upload payload', () => {
@@ -39,18 +40,19 @@ describe('demo dataset index', () => {
     expect(datasetCase.ground_truth?.expected_decision).toBe('REJECT');
   });
 
-  it('has 2 auto-verified cases', () => {
+  it('has 20 auto-verified cases', () => {
     const autoCases = loadAutoVerifiedDatasetCases();
-    const ids = autoCases.map((item) => item.case_id).sort();
-    expect(ids).toEqual(['sg-electronics-edge-secure', 'sg-health-reject-cure']);
+    expect(autoCases.length).toBe(20);
+    expect(autoCases.map((item) => item.case_id)).toContain('sg-health-reject-cure');
+    expect(autoCases.map((item) => item.case_id)).toContain('id-sa-warn-category-boundary');
   });
 });
 
 describe('dataset evaluation', () => {
-  it('passes all 32 dataset cases against current engine ground truth', async () => {
+  it('passes all 50 dataset cases against current engine ground truth', async () => {
     const result = await runDatasetEval({ writeReports: false });
 
-    expect(result.metrics.total_cases).toBe(32);
+    expect(result.metrics.total_cases).toBe(50);
     expect(result.metrics.decision_accuracy).toBe(1);
     expect(result.failed_case_ids).toEqual([]);
   });
@@ -58,7 +60,7 @@ describe('dataset evaluation', () => {
   it('passes auto-verified subset via upload pipeline', async () => {
     const result = await runDatasetEval({ autoOnly: true, writeReports: false });
 
-    expect(result.metrics.total_cases).toBe(2);
-    expect(result.metrics.passed_cases).toBe(2);
+    expect(result.metrics.total_cases).toBe(20);
+    expect(result.metrics.passed_cases).toBe(20);
   });
 });

@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:kr-kftc-pricing-representations",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-kftc-pricing-representations",
+  "country": "KR",
+  "authority": "KFTC",
+  "regulation_name": "Act on Fair Labeling and Advertising (Pricing)",
+  "citation": "Act on Fair Labeling and Advertising — Article 4",
+  "effective_date": "2007-01-01",
+  "category": "Pricing",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Misleading price comparisons and false discount representations are restricted under fair advertising rules.",
+  "review_guidance": "TRIGGER: Discount rate, sale price, or reference price claims. ACTION: WARN — verify prior price and promotion terms. CHECK: Reference price period and exclusions. ESCALATE IF: Inflated reference price or fake discount.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:recommended",
+    "pricing"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

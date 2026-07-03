@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:th-tisi-certification-mark",
+  "corpus_type": "regulation",
+  "regulation_id": "th-tisi-certification-mark",
+  "country": "TH",
+  "authority": "OCPB",
+  "regulation_name": "TIS Product Certification Mark Requirements",
+  "citation": "TIS Product Certification Mark Requirements — Section 5",
+  "effective_date": "2017-01-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "TIS and other standard marks may only appear on products and ads for valid certified models.",
+  "review_guidance": "TRIGGER: TIS mark, Q mark, or standards logo in advertising. ACTION: WARN — verify certification covers advertised SKU. CHECK: Certificate ID, product model, and validity. ESCALATE IF: Mark used on non-certified variant.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [
+    "evidence:product-certification-scope-verification"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

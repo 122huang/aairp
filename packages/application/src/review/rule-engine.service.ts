@@ -4,10 +4,13 @@ import type {
   ReviewContext,
   RuleEvaluationResult,
   RuleFinding,
+  RuntimeRuleCountryDecisionOverride,
   RuntimeRuleDefinition,
   RuntimeRulePack,
 } from '@aairp/shared-kernel';
+import { loadDemoRulePackSync } from '../knowledge/load-demo-rule-pack.js';
 import { findTermMatch, hasAnyTerm, searchableFields } from './content-matching.js';
+import { findSkuMismatchToken, matchesRuleWhen } from './modality-rules.js';
 
 export type RuleEngineConfig = {
   now?: () => Date;
@@ -25,6 +28,53 @@ function matchesScope(context: ReviewContext, scope: RuleScope): boolean {
     scope.countries.includes(context.dimensions.countryId) &&
     scope.categories.includes(context.dimensions.categoryId)
   );
+}
+
+function isRuleLevelCountryOverride(
+  override: RuntimeRuleCountryDecisionOverride | Record<string, RuntimeRuleCountryDecisionOverride>,
+): override is RuntimeRuleCountryDecisionOverride {
+  return 'decision' in override || 'severity' in override;
+}
+
+function resolveRuleDecision(
+  rule: RuntimeRuleDefinition,
+  countryId: string,
+  matchedTerm?: string,
+): { severity: RuleFinding['severity']; decision: RuleFinding['decision'] } {
+  const override = rule.country_decision_overrides?.[countryId];
+  if (!override) {
+    return {
+      severity: rule.severity as RuleFinding['severity'],
+      decision: rule.decision as RuleFinding['decision'],
+    };
+  }
+
+  if (isRuleLevelCountryOverride(override)) {
+    return {
+      severity: (override.severity ?? rule.severity) as RuleFinding['severity'],
+      decision: (override.decision ?? rule.decision) as RuleFinding['decision'],
+    };
+  }
+
+  if (matchedTerm) {
+    const termKey = Object.keys(override).find(
+      (key) => key.toLowerCase() === matchedTerm.toLowerCase(),
+    );
+    const termOverride = termKey
+      ? (override[termKey] as { decision?: string; severity?: string } | undefined)
+      : undefined;
+    if (termOverride && (termOverride.decision || termOverride.severity)) {
+      return {
+        severity: (termOverride.severity ?? rule.severity) as RuleFinding['severity'],
+        decision: (termOverride.decision ?? rule.decision) as RuleFinding['decision'],
+      };
+    }
+  }
+
+  return {
+    severity: rule.severity as RuleFinding['severity'],
+    decision: rule.decision as RuleFinding['decision'],
+  };
 }
 
 function createRuleFinding(
@@ -73,12 +123,15 @@ function evaluateRuleDefinition(
   }
 
   const findings: RuleFinding[] = [];
-  const severity = rule.severity as RuleFinding['severity'];
-  const decision = rule.decision as RuleFinding['decision'];
 
   if (rule.forbidden_terms?.length) {
     const forbiddenMatch = findTermMatch(fields, rule.forbidden_terms);
     if (forbiddenMatch) {
+      const { severity, decision } = resolveRuleDecision(
+        rule,
+        context.dimensions.countryId,
+        forbiddenMatch.term ?? forbiddenMatch.text,
+      );
       findings.push(
         createRuleFinding(config, {
           ruleId: rule.rule_id,
@@ -96,6 +149,11 @@ function evaluateRuleDefinition(
   if (rule.trigger_terms?.length) {
     const triggerMatch = findTermMatch(fields, rule.trigger_terms);
     if (triggerMatch) {
+      const { severity, decision } = resolveRuleDecision(
+        rule,
+        context.dimensions.countryId,
+        triggerMatch.term ?? triggerMatch.text,
+      );
       findings.push(
         createRuleFinding(config, {
           ruleId: rule.rule_id,
@@ -110,7 +168,64 @@ function evaluateRuleDefinition(
     }
   }
 
-  if (rule.required_any_terms?.length && !hasAnyTerm(fields, rule.required_any_terms)) {
+  if (rule.when && !matchesRuleWhen(context, rule.when, fields)) {
+    return findings.length > 0 ? [findings[0]!] : [];
+  }
+
+  const { severity, decision } = resolveRuleDecision(rule, context.dimensions.countryId);
+
+  if (rule.required_any_terms?.length) {
+    if (!hasAnyTerm(fields, rule.required_any_terms)) {
+      findings.push(
+        createRuleFinding(config, {
+          ruleId: rule.rule_id,
+          ruleVersionId: rule.rule_version_id,
+          severity,
+          decision,
+          summary: rule.summary,
+          citation: rule.citation,
+        }),
+      );
+    }
+  }
+
+  if (rule.sku_mismatch_check) {
+    const expectedSku = context.advertisementContext.productSku?.trim();
+    if (expectedSku) {
+      const mismatchToken = findSkuMismatchToken(expectedSku, fields);
+      if (mismatchToken) {
+        findings.push(
+          createRuleFinding(config, {
+            ruleId: rule.rule_id,
+            ruleVersionId: rule.rule_version_id,
+            severity,
+            decision,
+            summary: rule.summary,
+            matchedSpan: {
+              field: 'text',
+              start: 0,
+              end: mismatchToken.length,
+              text: mismatchToken,
+            },
+            citation: rule.citation,
+          }),
+        );
+      }
+    }
+  }
+
+  const hasPositiveMatcher =
+    Boolean(rule.forbidden_terms?.length) ||
+    Boolean(rule.trigger_terms?.length) ||
+    Boolean(rule.required_any_terms?.length) ||
+    Boolean(rule.sku_mismatch_check);
+
+  if (
+    findings.length === 0 &&
+    rule.when &&
+    !hasPositiveMatcher &&
+    matchesRuleWhen(context, rule.when, fields)
+  ) {
     findings.push(
       createRuleFinding(config, {
         ruleId: rule.rule_id,
@@ -123,24 +238,21 @@ function evaluateRuleDefinition(
     );
   }
 
-  return findings;
+  return findings.length > 1 ? [findings[0]!] : findings;
 }
 
 export class RuleEngineService {
   constructor(private readonly config: RuleEngineConfig = {}) {}
 
   evaluate(context: ReviewContext): RuleEvaluationResult {
-    const findings = this.config.rulePack
-      ? this.evaluateFromRulePack(context, this.config.rulePack)
-      : this.evaluateHardcoded(context);
+    const rulePack = this.config.rulePack ?? loadDemoRulePackSync();
+    const findings = this.evaluateFromRulePack(context, rulePack);
 
     const evaluatedAt = (this.config.now ?? (() => new Date()))().toISOString();
-    const rulePackVersion = this.config.rulePack?.pack_version
-      ?? context.resolvedKnowledgeVersions.rulePackVersion;
 
     return {
       reviewId: context.reviewId,
-      rulePackVersion,
+      rulePackVersion: rulePack.pack_version,
       findings,
       hasBlocker: findings.some(
         (finding) => finding.severity === 'BLOCKER' && finding.decision === 'FAIL',
@@ -154,71 +266,5 @@ export class RuleEngineService {
     return rulePack.rules.flatMap((rule) =>
       evaluateRuleDefinition(this.config, context, rule, fields),
     );
-  }
-
-  // Default path when AAIRP_KNOWLEDGE_SOURCE=demo and no injected rulePack.
-  private evaluateHardcoded(context: ReviewContext): RuleFinding[] {
-    const fields = searchableFields(context);
-    const findings: RuleFinding[] = [];
-
-    if (matchesScope(context, { countries: ['SG'], categories: ['health.supplement'] })) {
-      const forbiddenMatch = findTermMatch(fields, [
-        '100% cure',
-        '100% effective',
-        'cure',
-        'miracle',
-      ]);
-      if (forbiddenMatch) {
-        findings.push(
-          createRuleFinding(this.config, {
-            ruleId: 'demo-sg-health-forbidden-claim',
-            ruleVersionId: 'demo-sg-health-forbidden-claim-v1',
-            severity: 'BLOCKER',
-            decision: 'FAIL',
-            summary: 'Prohibited absolute health cure claims are not allowed',
-            matchedSpan: forbiddenMatch,
-            citation: {
-              lawName: 'SG Health Products Act (Demo)',
-              article: 'Section 7 — Prohibited claims',
-            },
-          }),
-        );
-      }
-
-      const superlativeMatch = findTermMatch(fields, [
-        'clinically proven',
-        'guaranteed',
-        '100%',
-        'instant results',
-      ]);
-      if (superlativeMatch) {
-        findings.push(
-          createRuleFinding(this.config, {
-            ruleId: 'demo-sg-health-superlative',
-            ruleVersionId: 'demo-sg-health-superlative-v1',
-            severity: 'MEDIUM',
-            decision: 'WARN',
-            summary:
-              'Unsubstantiated superlative or efficacy claims require substantiation',
-            matchedSpan: superlativeMatch,
-          }),
-        );
-      }
-
-      const disclosureTerms = ['#ad', 'sponsored', 'advertisement', '广告'];
-      if (!hasAnyTerm(fields, disclosureTerms)) {
-        findings.push(
-          createRuleFinding(this.config, {
-            ruleId: 'demo-sg-sponsored-disclosure',
-            ruleVersionId: 'demo-sg-sponsored-disclosure-v1',
-            severity: 'LOW',
-            decision: 'WARN',
-            summary: 'Sponsored or promotional content should include an ad disclosure',
-          }),
-        );
-      }
-    }
-
-    return findings;
   }
 }

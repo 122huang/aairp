@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:th-fda-medical-device-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "th-fda-medical-device-ads",
+  "country": "TH",
+  "authority": "FDA",
+  "regulation_name": "Medical Device Act B.E. 2551",
+  "citation": "Medical Device Act B.E. 2551 — Section 27",
+  "effective_date": "2008-01-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device ads must align with Thai FDA registered intended use and approved advertising content.",
+  "review_guidance": "TRIGGER: Clinical outcome or diagnostic claims for medical devices. ACTION: REWRITE — match registered intended use only. CHECK: TFDA license number and device classification. ESCALATE IF: Unregistered device or off-label clinical claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

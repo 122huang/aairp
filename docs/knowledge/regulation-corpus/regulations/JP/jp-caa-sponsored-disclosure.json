@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:jp-caa-sponsored-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-caa-sponsored-disclosure",
+  "country": "JP",
+  "authority": "CAA",
+  "regulation_name": "Stealth Marketing Guidelines (Consumer Affairs Agency)",
+  "citation": "Stealth Marketing Guidelines — Section 3",
+  "effective_date": "2023-10-01",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Stealth marketing and undisclosed paid endorsements are prohibited; sponsored content must be clearly identified.",
+  "review_guidance": "TRIGGER: Influencer posts, paid reviews, or undisclosed brand partnerships. ACTION: REWRITE — add clear paid promotion disclosure. CHECK: Japanese disclosure labels, #PR, and platform ad settings. ESCALATE IF: Covert paid promotion presented as organic content.",
+  "related_rule_ids": [
+    "demo-apac-sa-ai-image-disclaimer"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "disclosure",
+    "stealth-marketing"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

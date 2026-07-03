@@ -1,0 +1,70 @@
+{
+  "knowledge_id": "evidence:capacity-claim-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "capacity-claim-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "capacity-substantiation",
+  "evidence_purpose": "Substantiation backing volume and capacity claims against on-pack specifications.",
+  "summary": "Capacity substantiation must align advertised volume with packaging label and test conditions.",
+  "review_guidance": "TRIGGER: ml, litre, or capacity figure in ad. ACTION: Compare to on-pack and test file. CHECK: Fill level, tolerance. ESCALATE IF: Ad exceeds labeled capacity.",
+  "evidence_purpose_tags": [
+    "performance-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "performance-claim"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "recommended",
+  "linkage": {
+    "regulations": [
+      "regulation:my-sirim-performance-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-capacity-claim"
+    ],
+    "skills": [
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-performance"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-005"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Match capacity figure to on-pack label",
+      "Confirm test fill conditions",
+      "Check unit consistency"
+    ],
+    "reject_if": [
+      "Ad capacity exceeds labeled maximum"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:recommended",
+    "performance"
+  ]
+}

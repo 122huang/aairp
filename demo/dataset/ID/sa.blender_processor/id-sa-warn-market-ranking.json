@@ -1,0 +1,26 @@
+{
+  "case_id": "id-sa-warn-market-ranking",
+  "country_id": "ID",
+  "category_id": "sa.blender_processor",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "auto",
+  "notes": "6B-2f ID Bahasa market ranking claim. Not legal advice.",
+  "tags": ["6b-2f", "locale-expansion", "demo"],
+  "upload": {
+    "country_id": "ID",
+    "platform_id": "META",
+    "category_id": "sa.blender_processor",
+    "content": {
+      "text": "Blender terbaik nomor satu di Indonesia untuk dapur Anda. #iklan"
+    },
+    "tags": ["pilot:id-sa-warn"]
+  },
+  "ground_truth": {
+    "expected_decision": "WARN",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-id-sa-market-claim" }
+    ],
+    "open_risk_skipped": false
+  }
+}

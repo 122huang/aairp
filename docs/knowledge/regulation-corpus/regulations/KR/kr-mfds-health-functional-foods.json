@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:kr-mfds-health-functional-foods",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-mfds-health-functional-foods",
+  "country": "KR",
+  "authority": "MFDS",
+  "regulation_name": "Health Functional Food Act",
+  "citation": "Health Functional Food Act — Article 14",
+  "effective_date": "2003-07-24",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Health functional foods may only use MFDS-approved function claims; disease treatment claims are prohibited.",
+  "review_guidance": "TRIGGER: HFF, vitamin, or functional food health benefit claims. ACTION: WARN — match approved function claim text. CHECK: MFDS approval number and permitted claim wording. ESCALATE IF: Disease treatment or unapproved function claim.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

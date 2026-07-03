@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:th-ocpb-pricing-promotions",
+  "corpus_type": "regulation",
+  "regulation_id": "th-ocpb-pricing-promotions",
+  "country": "TH",
+  "authority": "OCPB",
+  "regulation_name": "Guidelines on Promotional Pricing",
+  "citation": "Guidelines on Promotional Pricing — Clause 2",
+  "effective_date": "2021-01-01",
+  "category": "Pricing",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Promotional and discount pricing must reflect genuine price reductions without inflated reference prices.",
+  "review_guidance": "TRIGGER: Discount percentage, flash sale, or strikethrough pricing. ACTION: WARN — verify prior selling price. CHECK: Reference price period and promotion duration. ESCALATE IF: Fake discount from inflated reference price.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:recommended",
+    "pricing"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

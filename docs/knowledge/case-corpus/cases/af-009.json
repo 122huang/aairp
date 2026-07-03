@@ -1,0 +1,87 @@
+{
+  "knowledge_id": "case:af-009",
+  "corpus_type": "case",
+  "case_id": "af-009",
+  "case_purpose": "Validation knowledge for benchmark case AF-009 — Certification.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Certification scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case AF-009. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "certification-claim",
+    "claim_types": [
+      "certification-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "HIGH",
+    "signal_summary": "Certification",
+    "benchmark_ref": "AF-009"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "HIGH",
+    "expected_action": "ESCALATE",
+    "expected_pattern": "sa-certification-evidence",
+    "expected_rule": "demo-apac-sa-certification-evidence",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:cite-evidence",
+      "strategy_type": "cite_evidence",
+      "must_remove_terms": [],
+      "must_include_concepts": [
+        "substantiation",
+        "certification",
+        "evidence"
+      ]
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:certification-mark-substantiation",
+      "expected_outcome": "require_substantiation_on_file"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "HIGH",
+    "matched_skill": "skill:certification-claim-review",
+    "applied_rewrite": "rewrite:cite-evidence",
+    "evidence_result": "require_substantiation_on_file"
+  },
+  "benchmark_ref": "AF-009",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-certification-marks",
+      "regulation:my-sirim-certification-marks"
+    ],
+    "rules": [
+      "demo-apac-sa-certification-evidence"
+    ],
+    "skills": [
+      "skill:certification-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:cite-evidence"
+    ],
+    "evidence": [
+      "evidence:certification-mark-substantiation"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 AF-009 for certification-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "certification-claim"
+  ]
+}

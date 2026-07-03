@@ -1,0 +1,38 @@
+{
+  "knowledge_id": "rewrite:cite-evidence",
+  "corpus_type": "rewrite",
+  "rewrite_id": "cite-evidence",
+  "legacy_template_id": "cite-evidence",
+  "rewrite_purpose": "Guide reviewers to require substantiation or certification reference before publishing evidence-dependent claims.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "cite_evidence",
+  "summary": "Require substantiation, certification, or test evidence reference for performance, certification, or quantitative efficacy claims.",
+  "rewrite_guidance": "TRIGGER: Certification, lab-tested, patent, or quantitative performance claims. ACTION: Confirm substantiation document exists and is readable in the ad. CHECK: Certificate scope, expiry, and on-ad legibility. ESCALATE IF: Evidence cannot be verified — route to Rule Corpus.",
+  "review_guidance": "ESCALATE IF: Certification mark is expired, scope-limited, or illegible at published resolution.",
+  "measurable_criteria": {
+    "must_remove_terms": [],
+    "must_include_concepts": ["substantiation", "certification", "evidence"],
+    "scoring_notes": "must_include_concepts checked on playbook rewrite guidance text."
+  },
+  "benchmark_refs": ["AF-009", "AF-010", "AF-004", "RC18-004"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["text", "image"],
+    "claim_types": ["certification-claim", "performance-claim"]
+  },
+  "linkage": {
+    "regulations": ["regulation:sg-hsa-certification-marks", "regulation:sg-asasa-substantiation"],
+    "rules": ["demo-apac-sa-certification-evidence", "demo-apac-sa-performance-claim"],
+    "skills": ["skill:certification-claim-review", "skill:performance-claim-review"]
+  },
+  "expected_evidence_type": "certification",
+  "evidence_requirement": "required",
+  "confidence_level": "high",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "advertising", "evidence"]
+}

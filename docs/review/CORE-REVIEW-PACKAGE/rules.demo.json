@@ -1,0 +1,1189 @@
+{
+  "pack_version": "demo-rule-1.6.12",
+  "rules": [
+    {
+      "rule_id": "demo-sg-health-forbidden-claim",
+      "rule_version_id": "demo-sg-health-forbidden-claim-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Prohibited absolute health cure claims are not allowed",
+      "forbidden_terms": ["100% cure", "100% effective", "cure", "miracle"],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": ["health.supplement"]
+      },
+      "citation": {
+        "law_name": "SG Health Products Act (Demo)",
+        "article": "Section 7 — Prohibited claims"
+      }
+    },
+    {
+      "rule_id": "demo-sg-health-superlative",
+      "rule_version_id": "demo-sg-health-superlative-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Unsubstantiated superlative or efficacy claims require substantiation",
+      "trigger_terms": ["clinically proven", "guaranteed", "100%", "instant results"],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": ["health.supplement"]
+      }
+    },
+    {
+      "rule_id": "demo-sg-sponsored-disclosure",
+      "rule_version_id": "demo-sg-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "WARN",
+      "summary": "Sponsored or promotional content should include an ad disclosure",
+      "required_any_terms": ["#ad", "sponsored", "advertisement", "广告"],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": ["health.supplement"]
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-health-claim-blocker",
+      "rule_version_id": "demo-apac-sa-health-claim-blocker-v5",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Medical claim: disease, organ function, clinical metric, or medical endorsement — small appliances cannot make these claims; substantiation cannot cure overreach (REJECT)",
+      "forbidden_terms": [
+        "easy to digest",
+        "nutrient absorption",
+        "sterilize",
+        "sterilise",
+        "low-sugar",
+        "low sugar",
+        "medical-grade",
+        "medical grade",
+        "fat-reducing",
+        "fat reducing",
+        "less fat",
+        "bacteria removal",
+        "99.9999%",
+        "lower sugar",
+        "healthier every",
+        "clinically proven",
+        "doctor-recommended",
+        "doctor recommended",
+        "cardiologists",
+        "cardiologist",
+        "your cardiologist",
+        "cardiologist would",
+        "would probably approve",
+        "cholesterol risk",
+        "eliminates 99.9% of bacteria",
+        "免疫力",
+        "提升免疫力",
+        "肠胃消化",
+        "心血管疾病",
+        "心血管",
+        "临床验证",
+        "临床认证",
+        "肺部健康",
+        "杀菌除螨",
+        "除螨率100%",
+        "除螨率",
+        "医学证明",
+        "排毒",
+        "净体",
+        "活性酵素",
+        "酵素饮",
+        "糖尿病患者",
+        "糖尿病",
+        "控糖",
+        "low gi",
+        "low-gi",
+        "低gi",
+        "all health risks",
+        "kills 100% of dust mites",
+        "100% of dust mites",
+        "pharmaceutical-grade",
+        "pharmaceutical grade",
+        "boosts immunity",
+        "cleanses your liver",
+        "detox",
+        "medically endorsed",
+        "heart disease",
+        "diabetes management",
+        "eliminates all allergy",
+        "灭螨率100%",
+        "心脏病",
+        "促进肠胃消化",
+        "提升免疫力",
+        "心血管疾病风险",
+        "降低心血管疾病",
+        "适合糖尿病患者",
+        "保护肺部健康",
+        "改善体内环境",
+        "high cholesterol",
+        "blood sugar",
+        "blood sugar levels",
+        "manage blood sugar",
+        "allergy symptoms",
+        "过敏症状",
+        "reduces allergy symptoms",
+        "儿科医生",
+        "儿科医生推荐",
+        "pediatrician",
+        "pediatrician recommended",
+        "pharmaceutical-grade sterilisation",
+        "pharmaceutical grade sterilisation",
+        "improve nutrient absorption",
+        "diabetic users",
+        "respiratory-sensitive"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Prohibited health & medical claims — small appliances"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-absolute-claim",
+      "rule_version_id": "demo-apac-sa-absolute-claim-v5",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Absolute claim: unconditional guarantees (best, first, never, zero-fault) without verifiable basis — may pass with audited substantiation (WARN/BLOCKER by term)",
+      "trigger_terms": [
+        "every time",
+        "every single time",
+        "foolproof",
+        "perfect",
+        "always works",
+        "100% guaranteed",
+        "guaranteed results",
+        "flawless",
+        "never fails",
+        "best ever",
+        "best machine ever",
+        "best machine",
+        "the best",
+        "best in class",
+        "world's best",
+        "world no.1",
+        "world no 1",
+        "world number one",
+        "no.1",
+        "no 1",
+        "world first",
+        "永远是最好的",
+        "永远最好"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Substantiation — absolute claims"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-performance-claim",
+      "rule_version_id": "demo-apac-sa-performance-claim-v5",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "Unsubstantiated quantitative claim: numbers or percentages without comparison baseline, reference product, test standard, or data source (WARN)",
+      "trigger_terms": [
+        "non-stick",
+        "non stick",
+        "enhanced noise reduction",
+        "juice yield",
+        "purer juice",
+        "68% less oil",
+        "68% less",
+        "70% less oil",
+        "70% less",
+        "up to 70%",
+        "70%",
+        "75% less oil",
+        "75% less",
+        "up to 75%",
+        "75%",
+        "80% less oil",
+        "80% less",
+        "up to 80%",
+        "80%",
+        "up to 30%",
+        "30%",
+        "up to 25%",
+        "25%",
+        "减少高达",
+        "用油量",
+        "节能高达",
+        "removes up to 99%",
+        "99% of household",
+        "+15%",
+        "+12%",
+        "in 30 minutes",
+        "16-hour",
+        "freshness mode",
+        "claimed as non-stick",
+        "superior non-stick",
+        "70kpa",
+        "1350w",
+        "38%",
+        "38% more",
+        "retains 38%",
+        "76%",
+        "filtration rate",
+        "99.7%"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Performance claims — substantiation required"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-certification-evidence",
+      "rule_version_id": "demo-apac-sa-certification-evidence-v4",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "HEPA-class filtration: HEPA-class vs True HEPA distinction and/or air-quality health direction — document verification required (WARN)",
+      "trigger_terms": [
+        "national standard grade",
+        "authoritative certification",
+        "third-party laboratory",
+        "third party laboratory",
+        "internal laboratory data",
+        "standard lab conditions",
+        "lab conditions",
+        "tested under standard lab",
+        "标准实验室",
+        "实验室条件",
+        "patented",
+        "if award",
+        "restaurant-quality",
+        "restaurant quality",
+        "hepa-class",
+        "hepa class",
+        "hepa级",
+        "hepa滤网",
+        "hepa级过滤",
+        "medical-grade filter",
+        "captures 99%",
+        "医用级过滤",
+        "มอก",
+        "权威机构认证",
+        "权威机构",
+        "PM2.5",
+        "pm2.5",
+        "TÜV",
+        "TÜV SÜD",
+        "tuv",
+        "tuv sud",
+        "certified by",
+        "第三方检测"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Evidence & certification — verification required"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-content-consistency-blocker",
+      "rule_version_id": "demo-apac-sa-content-consistency-blocker-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Material or product description inconsistency across ad assets must be resolved before publishing",
+      "forbidden_terms": ["inconsistency"],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Content consistency — conflicting claims"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-health-implication",
+      "rule_version_id": "demo-apac-sa-health-implication-v7",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — qualify context or attach data (WARN)",
+      "trigger_terms": [
+        "lower sugar",
+        "healthier",
+        "health benefits",
+        "reduce sugar",
+        "good for your health",
+        "healthy choices",
+        "healthy",
+        "natural goodness",
+        "natural enzymes",
+        "natural enzymes preserved",
+        "retain the natural enzymes",
+        "daily nutrition",
+        "nutrition routine",
+        "nutrition",
+        "improved indoor air quality",
+        "indoor air quality",
+        "室内空气品质",
+        "natural vitamins",
+        "cleaner indoor air",
+        "除螨",
+        "螨虫",
+        "过敏源",
+        "过敏",
+        "营养成分",
+        "天然营养",
+        "天然营养成分",
+        "保留果蔬",
+        "减少营养流失",
+        "冷萃设计",
+        "少油烹饪",
+        "少油",
+        "更少油脂",
+        "吃得更轻盈",
+        "更轻盈",
+        "更清爽",
+        "吃得更清爽",
+        "每天吃得更清爽",
+        "饮食轻松",
+        "饮食更加轻松",
+        "轻松无负担",
+        "无负担的美食体验",
+        "wholesome meals",
+        "goodness locked in",
+        "lighter cooking",
+        "lighter living",
+        "每天喝得更健康",
+        "活力满满",
+        "留住食材天然",
+        "cleaner eating",
+        "feel the difference",
+        "guilt-free",
+        "guilt free",
+        "wellness",
+        "wellness ritual",
+        "daily wellness",
+        "better you",
+        "step towards a better you",
+        "补充营养",
+        "蔬菜营养",
+        "每日所需",
+        "让孩子也爱上",
+        "深呼吸",
+        "eaten well",
+        "breathe easy",
+        "whole benefits",
+        "think about what they eat",
+        "deserves better",
+        "坐月子",
+        "老人家也说香"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Health & nutrition implications"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-comparative-claim",
+      "rule_version_id": "demo-apac-sa-comparative-claim-v7",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Unsupported comparative claim: stronger/faster/quieter without identifiable, verifiable baseline (WARN)",
+      "trigger_terms": [
+        "more efficient",
+        "less noise",
+        "less wear",
+        "less peeling",
+        "better than",
+        "less than",
+        "more than",
+        "#1",
+        "number one",
+        "no.1",
+        "no 1",
+        "world no.1",
+        "world no 1",
+        "world number one",
+        "world's best",
+        "the best",
+        "market leading",
+        "better rice",
+        "every family needs",
+        "goes beyond",
+        "beyond standard",
+        "large capacity",
+        "cook faster",
+        "quieter by design",
+        "finer blending",
+        "smoother nutrition",
+        "ordinary blender",
+        "ordinary comparison",
+        "safer and more durable",
+        "cleaner way to cook",
+        "cleaner than",
+        "比传统",
+        "compared to conventional",
+        "conventional deep frying",
+        "than traditional",
+        "comparison with",
+        "higher-end",
+        "joyoung",
+        "competitor look better",
+        "smarter",
+        "more vitamins than",
+        "than high-speed",
+        "销量第一",
+        "销量冠军",
+        "排名第一",
+        "无可超越",
+        "无出其右",
+        "nothing else comes close",
+        "thailand's no.1",
+        "更强劲",
+        "更快加热",
+        "更省时间",
+        "更安静",
+        "更高效",
+        "比普通电饭煲",
+        "more powerful suction",
+        "heats faster",
+        "quieter operation",
+        "more efficient filtration",
+        "better heat distribution",
+        "midea",
+        "dyson",
+        "philips",
+        "tefal"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Comparative advertising — baseline required"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-capacity-claim",
+      "rule_version_id": "demo-apac-sa-capacity-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Capacity or volume claims (e.g. up to X kg/bowls) require substantiation and clear test conditions",
+      "trigger_terms": ["stew up to", "up to 2kg", "up to 16 bowls"],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Capacity claims — substantiation required"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-absolute-claim-soft",
+      "rule_version_id": "demo-apac-sa-absolute-claim-soft-v4",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Absolute or omnibus claims (e.g. zero waste, zero-fault, never look back, every serving, 每一次) require qualification and substantiation",
+      "trigger_terms": [
+        "zero waste",
+        "zero fault",
+        "zero-fault",
+        "no chunks",
+        "never look back",
+        "every serving",
+        "every use",
+        "每一次",
+        "零故障"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Substantiation — absolute claims"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-patent-claim",
+      "rule_version_id": "demo-apac-sa-patent-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Patent claims require verification of jurisdiction, patent number, and ownership",
+      "trigger_terms": ["china patent"],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Patent claims — verification required"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-wrong-sku",
+      "rule_version_id": "demo-apac-sa-wrong-sku-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Ad content appears to reference the wrong SKU or product model; verify asset-to-SKU alignment",
+      "trigger_terms": ["wrong sku"],
+      "sku_mismatch_check": true,
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Content consistency — SKU alignment"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-localization",
+      "rule_version_id": "demo-apac-sa-localization-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Localisation error: wrong-language panel, model suffix, invalid certification for market, internal placeholders, voltage mismatch — fix before publish; invalid cert citation may upgrade to REJECT (WARN)",
+      "trigger_terms": [
+        "chinese product image",
+        "chinese manual",
+        "chinese subtitles",
+        "chinese warranty card",
+        "待确认",
+        "change to english",
+        "cqc",
+        "gb标准",
+        "[tbd]",
+        "[insert claim here]",
+        "model number suffix is -ms",
+        "voltage listed as 240v",
+        "incorrect for thailand market"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Localization — market-appropriate assets"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-ai-image-disclaimer",
+      "rule_version_id": "demo-apac-sa-ai-image-disclaimer-v2",
+      "severity": "LOW",
+      "decision": "WARN",
+      "summary": "AI-generated or rendered product imagery requires an illustration disclaimer visible in ad copy, OCR text, or image",
+      "when": {
+        "has_images": true,
+        "ai_rendered_image": true
+      },
+      "required_any_terms": [
+        "for illustration purposes only",
+        "illustration purposes only",
+        "simulated image",
+        "ai generated",
+        "ai-generated",
+        "ai rendered",
+        "computer generated",
+        "digitally rendered"
+      ],
+      "trigger_terms": [
+        "missing ai disclaimer",
+        "missing ai generated disclaimer",
+        "without disclaimer",
+        "ai rendered image without disclaimer"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "AI / illustration disclaimer"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-grammar-quality",
+      "rule_version_id": "demo-apac-sa-grammar-quality-v1",
+      "severity": "LOW",
+      "decision": "WARN",
+      "summary": "Grammar, spelling, or formatting errors detected; revise before publishing",
+      "trigger_terms": ["22:00pm", "what's include", "multiple presents"],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Content quality — language accuracy"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-food-safety-blocker",
+      "rule_version_id": "demo-apac-sa-food-safety-blocker-v5",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Food safety hazard: depicting raw meat/seafood/eggs left unrefrigerated for extended periods before cooking — real bacterial risk in APAC ambient conditions; rewrite cannot eliminate liability (REJECT)",
+      "trigger_terms": [
+        "raw chicken before bed",
+        "load raw chicken before bed",
+        "load raw chicken",
+        "prep raw fish and marinated chicken before bed",
+        "放入鸡肉",
+        "生鸡肉",
+        "放入牛腩",
+        "将猪肉",
+        "晚上放入",
+        "隔夜慢炖",
+        "load raw pork",
+        "raw pork before bed",
+        "raw pork and marinated fish",
+        "prep raw fish",
+        "fresh seafood before",
+        "raw beef",
+        "overnight slow cook with raw beef",
+        "睡前备好",
+        "傍晚放好",
+        "出门前放入鲜虾",
+        "海鲜食材"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Food safety — overnight raw-meat depiction"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-material-safety-claim",
+      "rule_version_id": "demo-apac-sa-material-safety-claim-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "Material claim: BPA-free, food-grade, non-toxic coating, stainless steel, etc. — third-party test report required per material standard (WARN)",
+      "trigger_terms": [
+        "bpa-free",
+        "bpa free",
+        "不含bpa",
+        "无bpa",
+        "food-grade",
+        "食品级",
+        "non-toxic coating",
+        "无毒涂层",
+        "304不锈钢",
+        "stainless steel interior",
+        "all-natural materials",
+        "零有害物质"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Material safety — third-party substantiation required"
+      }
+    },
+    {
+      "rule_id": "demo-sg-sa-market-claim",
+      "rule_version_id": "demo-sg-sa-market-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Singapore-local ranking or professional-endorsement claims require substantiation and must not imply official medical endorsement",
+      "trigger_terms": [
+        "新加坡销量第一",
+        "新加坡销量",
+        "singapore's #1",
+        "singapore cardiologists",
+        "endorsed by singapore cardiologists",
+        "endorsed by singapore"
+      ],
+      "scopes": {
+        "countries": ["SG"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "Singapore Code of Advertising Practice (Demo)",
+        "article": "Local ranking and endorsement claims"
+      }
+    },
+    {
+      "rule_id": "demo-my-sa-market-claim",
+      "rule_version_id": "demo-my-sa-market-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Malaysia-local ranking or authority-endorsement claims require substantiation and must not imply official medical or government endorsement",
+      "trigger_terms": [
+        "马来西亚销量冠军",
+        "马来西亚销量",
+        "malaysia's #1",
+        "千万家庭",
+        "马来西亚千万家庭",
+        "national health authorities",
+        "certified by national health"
+      ],
+      "scopes": {
+        "countries": ["MY"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "Malaysia Advertising Code (Demo)",
+        "article": "Local ranking and authority endorsement claims"
+      }
+    },
+    {
+      "rule_id": "demo-th-sa-market-claim",
+      "rule_version_id": "demo-th-sa-market-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Thailand-local ranking or government-health-authority endorsement claims require substantiation and must not imply official medical endorsement",
+      "trigger_terms": [
+        "泰国销量排名第一",
+        "泰国销量",
+        "thailand's no.1",
+        "thailand's ministry of public health",
+        "泰国卫生部"
+      ],
+      "scopes": {
+        "countries": ["TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "Thailand Consumer Protection Act (Demo)",
+        "article": "Local ranking and authority endorsement claims"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-false-authority-endorsement",
+      "rule_version_id": "demo-apac-sa-false-authority-endorsement-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "False certification or government endorsement: unverified official certification, ministry recommendation, or implied state approval (REJECT)",
+      "forbidden_terms": [
+        "卫生部临床认证",
+        "卫生部推荐",
+        "获国家强制安全认证",
+        "国家权威机构认证",
+        "权威机构认证，符合最高食品安全标准",
+        "certified by singapore's ministry of health",
+        "certified by singapore ministry of health",
+        "certified by the ministry of health",
+        "ministry of public health",
+        "recommended by thailand's ministry",
+        "endorsed by national health authorities",
+        "government quality bodies",
+        "officially recognised by regional health",
+        "national safety standards — certified by government"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "False government or authority endorsement"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-competitor-trademark",
+      "rule_version_id": "demo-apac-sa-competitor-trademark-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Unauthorised third-party trademark: identifiable competitor brand, logo, product appearance, or registered mark without rights-holder consent (REJECT)",
+      "trigger_terms": [
+        "dyson logo",
+        "midea logo",
+        "philips product image",
+        "tefal product",
+        "competitor trademarks visible",
+        "competitor packaging",
+        "竞品商标",
+        "than dyson",
+        "than philips",
+        "than tefal",
+        "比midea",
+        "比飞利浦",
+        "outperforms leading brands"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Comparative advertising — competitor IP"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-pricing-misrepresentation",
+      "rule_version_id": "demo-apac-sa-pricing-misrepresentation-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Misleading pricing: false reference price, perpetual flash sale, checkout above headline price, sham closing-down sale — factual falsity, not wording (REJECT)",
+      "trigger_terms": [
+        "划线价",
+        "从未以",
+        "限时48小时",
+        "限时特惠",
+        "即将涨价",
+        "最后机会",
+        "出厂价直销",
+        "结账实付",
+        "strikethrough price",
+        "never sold at",
+        "flash sale",
+        "price increases tomorrow",
+        "closing-down sale",
+        "mandatory service fee not shown",
+        "headline price",
+        "checkout total includes"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Pricing transparency — misleading promotions"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-analogy-claim",
+      "rule_version_id": "demo-apac-sa-analogy-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Analogical claim: 媲美/如同/宛如-style subjective comparison to reference standard (clay-pot, restaurant, cold-pressed) — sensory test data if reference is quantifiable (WARN)",
+      "trigger_terms": [
+        "媲美",
+        "如同石锅",
+        "宛如现榨",
+        "像专业面包房",
+        "餐厅级别",
+        "restaurant-quality results",
+        "clay-pot",
+        "bakery-style",
+        "as fresh as cold-pressed",
+        "slow-cooked over an open flame",
+        "tastes like it was slow-cooked",
+        "delivers the texture and aroma of traditional"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Analogy claims — substantiation required"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-sustainability-claim",
+      "rule_version_id": "demo-apac-sa-sustainability-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Environmental claim: eco/sustainable/low-carbon/zero-pollution — specific, verifiable basis required; generic green labels insufficient (WARN)",
+      "trigger_terms": [
+        "环保设计",
+        "可持续材质",
+        "减少碳足迹",
+        "绿色制造",
+        "零污染生产",
+        "可回收材料",
+        "循环经济",
+        "eco-friendly design",
+        "sustainable materials",
+        "carbon footprint",
+        "green manufacturing",
+        "zero-pollution production",
+        "recycled materials",
+        "circular economy"
+      ],
+      "scopes": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "APAC Advertising Standards (Demo)",
+        "article": "Environmental claims — substantiation required"
+      }
+    }
+  ]
+}

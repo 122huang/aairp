@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:my-sirim-certification-marks",
+  "corpus_type": "regulation",
+  "regulation_id": "my-sirim-certification-marks",
+  "country": "MY",
+  "authority": "KPDNHEP",
+  "regulation_name": "Consumer Protection (Certification and Standards Marks) Regulations 2010",
+  "citation": "Consumer Protection (Certification and Standards Marks) Regulations 2010 — Regulation 5",
+  "effective_date": "2010-07-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "SIRIM, MS, and other certification marks may only be used for certified product scopes and valid periods.",
+  "review_guidance": "TRIGGER: SIRIM, MS ISO, or halal/certification logo in ad creative. ACTION: WARN — verify certificate scope and validity. CHECK: Certificate number, product SKU scope, and expiry. ESCALATE IF: Expired certification or mark used beyond scope.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [
+    "evidence:certification-mark-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

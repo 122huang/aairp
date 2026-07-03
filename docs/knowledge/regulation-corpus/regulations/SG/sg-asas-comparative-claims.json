@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:sg-asas-comparative-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-asas-comparative-claims",
+  "country": "SG",
+  "authority": "ASAS",
+  "regulation_name": "Singapore Code of Advertising Practice",
+  "citation": "Singapore Code of Advertising Practice — Rule 3 (Comparisons)",
+  "effective_date": "2019-06-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative and superiority claims must be fair, identifiable, and substantiated before publication.",
+  "review_guidance": "TRIGGER: Versus, better-than, leading, or ranked superiority claims. ACTION: WARN — require substantiation file or soften claim. CHECK: Named competitors, test methods, and sample sizes cited. ESCALATE IF: Unidentifiable competitor or unsubstantiated head-to-head data.",
+  "related_rule_ids": [
+    "demo-sg-health-superlative",
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:comparative-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

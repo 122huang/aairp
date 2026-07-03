@@ -69,8 +69,8 @@ describe('ReviewContextController', () => {
       review_id: 'rev_test',
       advertisement_id: 'ad_test',
       resolved_knowledge_versions: {
-        rule_pack_version: 'demo-rule-1.0.0',
-        playbook_pack_version: 'demo-playbook-1.0.0',
+        rule_pack_version: DEMO_KNOWLEDGE_VERSIONS.rulePackVersion,
+        playbook_pack_version: DEMO_KNOWLEDGE_VERSIONS.playbookPackVersion,
       },
     });
     expect(service.buildFromAdvertisementId).toHaveBeenCalledWith('ad_test');

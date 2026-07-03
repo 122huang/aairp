@@ -1,0 +1,78 @@
+{
+  "knowledge_id": "evidence:performance-lab-report",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "performance-lab-report",
+  "evidence_type_key": "lab_report",
+  "requirement_scope": "performance-lab-report",
+  "evidence_purpose": "Require laboratory test report substantiation for quantitative performance claims in advertising.",
+  "summary": "Quantitative performance claims require traceable lab test reports with method and conditions disclosed.",
+  "review_guidance": "TRIGGER: Quantitative performance metric in ad copy. ACTION: Request lab report reference. CHECK: Test method, conditions, sample size. ESCALATE IF: Report cannot be traced or conflicts with on-pack label.",
+  "evidence_purpose_tags": [
+    "performance-lab-report"
+  ],
+  "resolves_expected_evidence_types": [
+    "lab_report"
+  ],
+  "document_ref_spec": {
+    "ref_kind": "lab_report",
+    "id_format": "{lab_id}-{report_number}",
+    "storage_system": "compliance_dms",
+    "example": "SGS-LR-2024-8821"
+  },
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "performance-claim"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-efficacy-performance",
+      "regulation:au-accc-performance-representations"
+    ],
+    "rules": [
+      "demo-apac-sa-performance-claim"
+    ],
+    "skills": [
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:cite-evidence"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-004",
+    "AF-005"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Confirm lab is accredited for test type",
+      "Match reported metric to ad claim wording",
+      "Verify test conditions reflect typical use"
+    ],
+    "reject_if": [
+      "Report predates product formulation change"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ]
+}

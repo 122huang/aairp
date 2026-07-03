@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:my-masa-comparative-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "my-masa-comparative-advertising",
+  "country": "MY",
+  "authority": "MASA",
+  "regulation_name": "Malaysian Code of Advertising Practice",
+  "citation": "Malaysian Code of Advertising Practice — Appendix C (Comparisons)",
+  "effective_date": "2018-01-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative claims must be truthful, verifiable, and not denigrate competitors unfairly.",
+  "review_guidance": "TRIGGER: Brand versus brand, market leader, or superiority comparisons. ACTION: WARN — require substantiation on file. CHECK: Named competitor, test protocol, and date of comparison. ESCALATE IF: False denigration or unverifiable head-to-head claim.",
+  "related_rule_ids": [
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:comparative-test-evidence"
+  ],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

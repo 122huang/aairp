@@ -1,4 +1,8 @@
-import type { ILlmGateway, LlmGatewayCompleteResult } from './stub-llm.gateway.types.js';
+import type {
+  ILlmGateway,
+  LlmGatewayCompleteOptions,
+  LlmGatewayCompleteResult,
+} from './stub-llm.gateway.types.js';
 
 export class LlmGatewayTimeoutError extends Error {
   constructor(public readonly timeoutMs: number) {
@@ -37,13 +41,16 @@ export function createResilientLlmGateway(
   options: ResilientLlmGatewayOptions,
 ): ILlmGateway {
   return {
-    async complete(prompt: string): Promise<LlmGatewayCompleteResult> {
+    async complete(
+      prompt: string,
+      completeOptions?: LlmGatewayCompleteOptions,
+    ): Promise<LlmGatewayCompleteResult> {
       let lastError: unknown;
       const attempts = options.maxRetries + 1;
 
       for (let attempt = 1; attempt <= attempts; attempt += 1) {
         try {
-          return await withTimeout(gateway.complete(prompt), options.timeoutMs);
+          return await withTimeout(gateway.complete(prompt, completeOptions), options.timeoutMs);
         } catch (error) {
           lastError = error;
           if (attempt < attempts) {
@@ -58,10 +65,23 @@ export function createResilientLlmGateway(
 }
 
 export function resolveOpenRiskGatewayConfig(): ResilientLlmGatewayOptions {
-  const timeoutMs = Number(process.env.OPEN_RISK_TIMEOUT_MS ?? 5000);
+  const isLive = process.env.AAIRP_OPEN_RISK_MODE?.trim().toLowerCase() === 'live';
+  const defaultTimeout = isLive ? 45000 : 5000;
+  const timeoutMs = Number(process.env.OPEN_RISK_TIMEOUT_MS ?? defaultTimeout);
   const maxRetries = Number(process.env.OPEN_RISK_MAX_RETRIES ?? 1);
   return {
-    timeoutMs: Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : 5000,
+    timeoutMs: Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : defaultTimeout,
+    maxRetries: Number.isFinite(maxRetries) && maxRetries >= 0 ? maxRetries : 1,
+  };
+}
+
+export function resolveRewriteGatewayConfig(): ResilientLlmGatewayOptions {
+  const isLive = process.env.AAIRP_REWRITE_MODE?.trim().toLowerCase() === 'live';
+  const defaultTimeout = isLive ? 45000 : 5000;
+  const timeoutMs = Number(process.env.REWRITE_TIMEOUT_MS ?? defaultTimeout);
+  const maxRetries = Number(process.env.REWRITE_MAX_RETRIES ?? 1);
+  return {
+    timeoutMs: Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : defaultTimeout,
     maxRetries: Number.isFinite(maxRetries) && maxRetries >= 0 ? maxRetries : 1,
   };
 }

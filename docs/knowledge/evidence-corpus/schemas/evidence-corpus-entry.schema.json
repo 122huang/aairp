@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/evidence-corpus-entry.schema.json",
+  "title": "Evidence Corpus Entry",
+  "type": "object",
+  "required": [
+    "knowledge_id",
+    "corpus_type",
+    "evidence_id",
+    "evidence_purpose",
+    "evidence_status",
+    "evidence_version",
+    "evidence_type_key",
+    "requirement_scope",
+    "summary",
+    "review_guidance",
+    "validation_criteria",
+    "applicability",
+    "requirement_level",
+    "linkage",
+    "resolves_expected_evidence_types",
+    "evidence_purpose_tags",
+    "owner",
+    "owner_type",
+    "last_reviewed",
+    "review_status"
+  ],
+  "properties": {
+    "knowledge_id": {
+      "type": "string",
+      "pattern": "^evidence:[a-z0-9][a-z0-9.-]*$"
+    },
+    "corpus_type": { "const": "evidence" },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9.-]*$"
+    },
+    "evidence_purpose": { "type": "string", "minLength": 20 },
+    "evidence_status": {
+      "type": "string",
+      "enum": ["draft", "validated", "production", "deprecated"]
+    },
+    "evidence_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "evidence_type_key": {
+      "type": "string",
+      "enum": [
+        "certification",
+        "lab_report",
+        "clinical",
+        "substantiation_general",
+        "test_method",
+        "patent"
+      ]
+    },
+    "requirement_scope": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Future EvidenceRequirement scope key — claim class or substantiation purpose without jurisdiction."
+    },
+    "summary": { "type": "string", "minLength": 20 },
+    "review_guidance": { "type": "string", "minLength": 20 },
+    "validation_criteria": {
+      "type": "object",
+      "required": ["checks"],
+      "properties": {
+        "checks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 2
+        },
+        "reject_if": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "acceptable_issuers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "scoring_notes": { "type": "string" }
+      }
+    },
+    "applicability": {
+      "type": "object",
+      "properties": {
+        "countries": { "type": "array", "items": { "type": "string" } },
+        "claim_types": { "type": "array", "items": { "type": "string" } },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "modalities": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "requirement_level": {
+      "type": "string",
+      "enum": ["required", "recommended", "optional"]
+    },
+    "document_ref_spec": {
+      "type": "object",
+      "properties": {
+        "ref_kind": { "type": "string" },
+        "id_format": { "type": "string" },
+        "storage_system": { "type": "string" },
+        "example": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "validity_window": {
+      "type": "object",
+      "properties": {
+        "typical_validity_months": { "type": "number" },
+        "renewal_review_trigger": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "linkage": {
+      "type": "object",
+      "properties": {
+        "regulations": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^regulation:" }
+        },
+        "rules": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "skills": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^skill:" }
+        },
+        "rewrites": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^rewrite:" }
+        },
+        "cases": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^case:" }
+        }
+      }
+    },
+    "resolves_expected_evidence_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "certification",
+          "lab_report",
+          "substantiation_general",
+          "test_method"
+        ]
+      },
+      "minItems": 1
+    },
+    "evidence_purpose_tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "benchmark_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "case_refs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^case:" }
+    },
+    "regulation_scope": { "const": "independent" },
+    "regulation_independence_rationale": { "type": "string" },
+    "confidence_level": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "owner": { "type": "string" },
+    "owner_type": {
+      "type": "string",
+      "enum": ["legal", "compliance", "knowledge_eng", "product"]
+    },
+    "last_reviewed": { "type": "string", "format": "date-time" },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "legal_reviewed", "deprecated"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

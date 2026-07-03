@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:sg-hsa-supplement-health-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hsa-supplement-health-claims",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Health Products Act (Singapore)",
+  "citation": "Health Products Act — Section 8 (Health claims)",
+  "effective_date": "2020-01-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Health supplement ads may only use permitted general health claims aligned with product classification and substantiation.",
+  "review_guidance": "TRIGGER: Nutritional, wellness, or general health benefit claims for supplements. ACTION: WARN — require substantiation or qualify wording. CHECK: Ingredient lists, dosage claims, and before/after wellness outcomes. ESCALATE IF: Claim implies disease modification or medicinal effect.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [
+    "evidence:health-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

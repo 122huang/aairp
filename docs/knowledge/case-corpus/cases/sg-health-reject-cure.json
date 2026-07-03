@@ -1,0 +1,87 @@
+{
+  "knowledge_id": "case:sg-health-reject-cure",
+  "corpus_type": "case",
+  "case_id": "sg-health-reject-cure",
+  "case_purpose": "Validation knowledge for benchmark case sg-health-reject-cure — Forbidden cure claim → REJECT with blocker rule.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "legal_verified",
+  "summary": "Validates Forbidden cure claim → REJECT with blocker rule scenario; expected REJECT with REJECT action.",
+  "review_guidance": "TRIGGER: Benchmark case sg-health-reject-cure. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "health.supplement"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "BLOCKER",
+    "signal_summary": "Forbidden cure claim → REJECT with blocker rule",
+    "benchmark_ref": "sg-health-reject-cure"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REJECT",
+    "expected_severity": "BLOCKER",
+    "expected_action": "REJECT",
+    "expected_pattern": "unsubstantiated-testimonial",
+    "expected_rule": "demo-sg-health-forbidden-claim",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:qualify-efficacy",
+      "strategy_type": "qualify",
+      "must_remove_terms": [
+        "clinically proven",
+        "guaranteed",
+        "100%"
+      ],
+      "must_include_concepts": []
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:efficacy-superlative-substantiation",
+      "expected_outcome": "reject_insufficient_substantiation"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REJECT",
+    "risk_level": "BLOCKER",
+    "matched_skill": "skill:superlative-claim-review",
+    "applied_rewrite": "rewrite:qualify-efficacy",
+    "evidence_result": "reject_insufficient_substantiation"
+  },
+  "benchmark_ref": "sg-health-reject-cure",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asasa-substantiation",
+      "regulation:sg-asas-comparative-claims"
+    ],
+    "rules": [
+      "demo-sg-health-forbidden-claim"
+    ],
+    "skills": [
+      "skill:superlative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-efficacy"
+    ],
+    "evidence": [
+      "evidence:efficacy-superlative-substantiation"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 sg-health-reject-cure for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

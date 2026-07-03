@@ -1,0 +1,65 @@
+{
+  "knowledge_id": "case:sg-health-warn-disclosure",
+  "corpus_type": "case",
+  "case_id": "sg-health-warn-disclosure",
+  "case_purpose": "Validation knowledge for benchmark case sg-health-warn-disclosure — Missing ad disclosure → WARN.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "legal_verified",
+  "summary": "Validates Missing ad disclosure → WARN scenario; expected WARN with REWRITE action.",
+  "review_guidance": "TRIGGER: Benchmark case sg-health-warn-disclosure. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "health.supplement"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "MEDIUM",
+    "signal_summary": "Missing ad disclosure → WARN",
+    "benchmark_ref": "sg-health-warn-disclosure"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "WARN",
+    "expected_severity": "MEDIUM",
+    "expected_action": "REWRITE",
+    "expected_rule": "demo-sg-sponsored-disclosure"
+  },
+  "case_result": {
+    "decision_outcome": "WARN",
+    "risk_level": "MEDIUM",
+    "matched_skill": null,
+    "applied_rewrite": null,
+    "evidence_result": "not_applicable"
+  },
+  "benchmark_ref": "sg-health-warn-disclosure",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-scap-disclosure"
+    ],
+    "rules": [
+      "demo-sg-sponsored-disclosure"
+    ],
+    "skills": [],
+    "rewrites": [],
+    "evidence": []
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 sg-health-warn-disclosure for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

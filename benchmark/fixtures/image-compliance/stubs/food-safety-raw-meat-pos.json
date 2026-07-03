@@ -1,0 +1,23 @@
+{
+  "prompt_pack_version": "demo-vision-1.0.0",
+  "extracted_text": ["raw chicken", "prep before work"],
+  "findings": [
+    {
+      "risk_type": "food-safety-hazard",
+      "description": "Raw chicken left unrefrigerated in lifestyle prep scene before delayed cooking.",
+      "severity": "BLOCKER",
+      "suggested_action": "REJECT",
+      "confidence": 0.96,
+      "scan_dimension": "scene_content",
+      "evidence_spans": [
+        {
+          "field": "image",
+          "slice_index": 0,
+          "region_description": "countertop raw chicken bowl",
+          "text": "raw chicken"
+        }
+      ],
+      "related_modules_checked": ["demo-apac-sa-food-safety-blocker"]
+    }
+  ]
+}

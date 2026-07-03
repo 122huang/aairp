@@ -1,0 +1,145 @@
+{
+  "manifest_version": "1.0.0",
+  "pack_version": "image-compliance-v1",
+  "description": "Sprint 6A vision benchmark scaffold — four scenario families with positive/negative polarity. Annotation fixtures to be expanded.",
+  "scenarios": [
+    {
+      "scenario_id": "cn-panel-unreplaced",
+      "label": "Chinese panel not replaced for target market",
+      "polarity": "positive",
+      "case_id": "IMG-CN-PANEL-POS-01",
+      "expected_decision": "WARN",
+      "expected_risk_types": ["localisation-error"],
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "text": "Smart rice cooker for Singapore homes",
+        "image_urls": ["fixture://image-compliance/cn-panel-unreplaced-pos.jpg"],
+        "image_dimensions": [{ "width": 800, "height": 3200 }]
+      },
+      "notes": "Positive control — Chinese control panel visible on SG listing image."
+    },
+    {
+      "scenario_id": "cn-panel-unreplaced",
+      "label": "English/local panel only",
+      "polarity": "negative",
+      "case_id": "IMG-CN-PANEL-NEG-01",
+      "expected_decision": "PASS",
+      "expected_risk_types": [],
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "text": "Smart rice cooker for Singapore homes",
+        "image_urls": ["fixture://image-compliance/cn-panel-unreplaced-neg.jpg"],
+        "image_dimensions": [{ "width": 800, "height": 3200 }]
+      },
+      "notes": "Negative control — localised English panel only."
+    },
+    {
+      "scenario_id": "competitor-logo",
+      "label": "Competitor logo visible",
+      "polarity": "positive",
+      "case_id": "IMG-COMP-LOGO-POS-01",
+      "expected_decision": "REJECT",
+      "expected_risk_types": ["unauthorised-competitor-trademark"],
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "LAZADA",
+        "category_id": "sa.vacuum_floor",
+        "text": "Powerful suction for everyday cleaning",
+        "image_urls": ["fixture://image-compliance/competitor-logo-pos.jpg"],
+        "image_dimensions": [{ "width": 1200, "height": 1200 }]
+      },
+      "notes": "Positive control — identifiable competitor logo in comparison scene."
+    },
+    {
+      "scenario_id": "competitor-logo",
+      "label": "No competitor branding visible",
+      "polarity": "negative",
+      "case_id": "IMG-COMP-LOGO-NEG-01",
+      "expected_decision": "PASS",
+      "expected_risk_types": [],
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "LAZADA",
+        "category_id": "sa.vacuum_floor",
+        "text": "Powerful suction for everyday cleaning",
+        "image_urls": ["fixture://image-compliance/competitor-logo-neg.jpg"],
+        "image_dimensions": [{ "width": 1200, "height": 1200 }]
+      },
+      "notes": "Negative control — own-brand product only."
+    },
+    {
+      "scenario_id": "ai-image-no-disclaimer",
+      "label": "AI-rendered product image without disclaimer",
+      "polarity": "positive",
+      "case_id": "IMG-AI-DISC-POS-01",
+      "expected_decision": "WARN",
+      "expected_risk_types": ["ai-image-disclaimer"],
+      "fixture": {
+        "country_id": "MY",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.air_fryer",
+        "text": "Crisp results with less oil",
+        "image_urls": ["fixture://image-compliance/ai-no-disclaimer-pos.jpg"],
+        "image_dimensions": [{ "width": 1080, "height": 1080 }],
+        "ai_rendered_image": true
+      },
+      "notes": "Positive control — synthetic render with no illustration disclaimer visible."
+    },
+    {
+      "scenario_id": "ai-image-no-disclaimer",
+      "label": "AI-rendered image with visible disclaimer",
+      "polarity": "negative",
+      "case_id": "IMG-AI-DISC-NEG-01",
+      "expected_decision": "PASS",
+      "expected_risk_types": [],
+      "fixture": {
+        "country_id": "MY",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.air_fryer",
+        "text": "Crisp results with less oil",
+        "image_urls": ["fixture://image-compliance/ai-no-disclaimer-neg.jpg"],
+        "image_dimensions": [{ "width": 1080, "height": 1080 }],
+        "ai_rendered_image": true
+      },
+      "notes": "Negative control — disclaimer text visible in image footer."
+    },
+    {
+      "scenario_id": "food-safety-raw-meat",
+      "label": "Raw meat visible in unsafe prep scene",
+      "polarity": "positive",
+      "case_id": "IMG-FOOD-SAFETY-POS-01",
+      "expected_decision": "REJECT",
+      "expected_risk_types": ["food-safety-hazard"],
+      "fixture": {
+        "country_id": "TH",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "text": "Prepare dinner before you leave for work",
+        "image_urls": ["fixture://image-compliance/food-safety-raw-meat-pos.jpg"],
+        "image_dimensions": [{ "width": 900, "height": 2400 }]
+      },
+      "notes": "Positive control — raw chicken/meat left unrefrigerated in lifestyle scene."
+    },
+    {
+      "scenario_id": "food-safety-raw-meat",
+      "label": "Cooked/safe food scene only",
+      "polarity": "negative",
+      "case_id": "IMG-FOOD-SAFETY-NEG-01",
+      "expected_decision": "PASS",
+      "expected_risk_types": [],
+      "fixture": {
+        "country_id": "TH",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "text": "Hot meals ready when you get home",
+        "image_urls": ["fixture://image-compliance/food-safety-raw-meat-neg.jpg"],
+        "image_dimensions": [{ "width": 900, "height": 2400 }]
+      },
+      "notes": "Negative control — plated cooked food only, no raw-meat prep scene."
+    }
+  ]
+}

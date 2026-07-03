@@ -1,0 +1,79 @@
+{
+  "knowledge_id": "evidence:third-party-certification-body",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "third-party-certification-body",
+  "evidence_type_key": "certification",
+  "requirement_scope": "certification-body",
+  "evidence_purpose": "Validate that certification issuer is a recognized third-party body for the target market and claim type.",
+  "summary": "Only recognized certification bodies may substantiate third-party certification claims in advertising.",
+  "review_guidance": "TRIGGER: Third-party certification or quality mark claim. ACTION: Verify issuer against recognized body list. CHECK: Issuer name, accreditation status. ESCALATE IF: Self-declared or unrecognized body.",
+  "evidence_purpose_tags": [
+    "certification-body"
+  ],
+  "resolves_expected_evidence_types": [
+    "certification"
+  ],
+  "document_ref_spec": {
+    "ref_kind": "certification_record",
+    "id_format": "{issuer}-{cert_number}",
+    "storage_system": "KOS",
+    "example": "HSA-GMP-2024-001"
+  },
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "certification-claim"
+    ],
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-certification-marks"
+    ],
+    "rules": [
+      "demo-apac-sa-certification-evidence"
+    ],
+    "skills": [
+      "skill:certification-claim-review"
+    ]
+  },
+  "validation_criteria": {
+    "checks": [
+      "Confirm issuer on recognized body list for market",
+      "Verify accreditation body if applicable",
+      "Reject self-certified or manufacturer-only marks"
+    ],
+    "reject_if": [
+      "Issuer not recognized for target market"
+    ],
+    "acceptable_issuers": [
+      "HSA",
+      "SIRIM",
+      "TISI",
+      "SNI",
+      "KS",
+      "JIS"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ]
+}

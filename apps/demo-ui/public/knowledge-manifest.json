@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0.0-rc1",
-  "description": "Static knowledge trace labels for RC1 demo (matches demo/ assets)",
+  "schema_version": "1.0.0-legal-pilot-zh",
+  "description": "法务内测版 — 知识链路展示标签（对应 demo/ 资产）",
   "regulations": [
     {
       "regulation_key": "sg-hpa-s7-demo",
@@ -48,14 +48,14 @@
     "role": "Open-risk semantic gap analysis (skipped when BLOCKER)"
   },
   "pipeline_stages": [
-    { "id": "upload", "label": "Advertisement", "icon": "📄" },
-    { "id": "context", "label": "Context Builder", "icon": "🧩" },
-    { "id": "regulation", "label": "Regulation", "icon": "⚖️" },
-    { "id": "rule", "label": "Rule Engine", "icon": "📏" },
+    { "id": "upload", "label": "广告上传", "icon": "📄" },
+    { "id": "context", "label": "上下文构建", "icon": "🧩" },
+    { "id": "regulation", "label": "法规", "icon": "⚖️" },
+    { "id": "rule", "label": "规则引擎", "icon": "📏" },
     { "id": "playbook", "label": "Playbook", "icon": "📋" },
     { "id": "llm", "label": "Prompt + LLM", "icon": "🤖" },
-    { "id": "decision", "label": "Decision Engine", "icon": "✅" },
-    { "id": "report", "label": "Review Report", "icon": "📊" },
-    { "id": "case", "label": "Case Library", "icon": "📚" }
+    { "id": "decision", "label": "决策引擎", "icon": "✅" },
+    { "id": "report", "label": "审核报告", "icon": "📊" },
+    { "id": "case", "label": "案例库", "icon": "📚" }
   ]
 }

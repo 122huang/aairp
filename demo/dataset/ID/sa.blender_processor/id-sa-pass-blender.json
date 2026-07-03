@@ -1,0 +1,24 @@
+{
+  "case_id": "id-sa-pass-blender",
+  "country_id": "ID",
+  "category_id": "sa.blender_processor",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "auto",
+  "notes": "6B-2f ID sa.* PASS — convenience blender copy. Not legal advice.",
+  "tags": ["6b-2f", "locale-expansion", "demo"],
+  "upload": {
+    "country_id": "ID",
+    "platform_id": "META",
+    "category_id": "sa.blender_processor",
+    "content": {
+      "text": "Blender serbaguna untuk dapur modern — desain ringkas, mudah dibersihkan. #iklan"
+    },
+    "tags": ["pilot:id-sa-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": [],
+    "open_risk_skipped": false
+  }
+}

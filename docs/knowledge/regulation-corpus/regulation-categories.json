@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Canonical advertising-claim categories for Regulation Corpus classification.",
+  "categories": [
+    {
+      "category_id": "health-claims",
+      "name": "Health Claims",
+      "description": "General health, wellness, and nutritional benefit claims."
+    },
+    {
+      "category_id": "medical-claims",
+      "name": "Medical Claims",
+      "description": "Disease treatment, cure, prevention, and therapeutic claims."
+    },
+    {
+      "category_id": "comparative-advertising",
+      "name": "Comparative Advertising",
+      "description": "Comparative, superlative, and substantiation-dependent claims."
+    },
+    {
+      "category_id": "environmental-claims",
+      "name": "Environmental Claims",
+      "description": "Green, sustainability, and environmental impact claims."
+    },
+    {
+      "category_id": "certification",
+      "name": "Certification",
+      "description": "Certification, standards, awards, and accreditation references."
+    },
+    {
+      "category_id": "safety-claims",
+      "name": "Safety Claims",
+      "description": "Product safety, hazard, and risk-related claims."
+    },
+    {
+      "category_id": "performance-claims",
+      "name": "Performance Claims",
+      "description": "Quantitative performance, efficacy, and results claims."
+    },
+    {
+      "category_id": "pricing",
+      "name": "Pricing",
+      "description": "Price, discount, and value representation."
+    },
+    {
+      "category_id": "consumer-protection",
+      "name": "Consumer Protection",
+      "description": "Fair trading, misleading conduct, and consumer rights."
+    },
+    {
+      "category_id": "ai-generated-content",
+      "name": "AI-generated Content",
+      "description": "AI-rendered imagery, synthetic media, and disclosure requirements."
+    },
+    {
+      "category_id": "image-usage",
+      "name": "Image Usage",
+      "description": "Before/after, transformation imagery, and visual substantiation."
+    },
+    {
+      "category_id": "mandatory-disclaimers",
+      "name": "Mandatory Disclaimers",
+      "description": "Sponsored content identification and required disclosures."
+    }
+  ]
+}

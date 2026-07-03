@@ -9,6 +9,14 @@ export type AdvertisementContext = {
   campaignType?: string;
   adFormat?: string;
   targetAudience?: string;
+  /** Expected product SKU / model for asset alignment checks */
+  productSku?: string;
+  /** User or pipeline flag: image is AI-generated / rendered */
+  aiRenderedImage?: boolean;
+  /** Vision/OCR flag: certification badge in image is illegible */
+  certificationImageUnreadable?: boolean;
+  /** Vision flag: AI image has distortion or abnormal artifacts */
+  aiImageQualityIssue?: boolean;
 };
 
 export type AdvertisementUploadInput = {

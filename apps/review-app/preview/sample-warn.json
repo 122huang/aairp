@@ -1,0 +1,52 @@
+{
+  "final_decision": "WARN",
+  "confidence": 0.9,
+  "rationale": "Warning issued based on: RULE/demo-apac-sa-health-implication (MEDIUM); PLAYBOOK/sa-health-implication (MEDIUM); PLAYBOOK/sa-diet-oil-wellness (MEDIUM). Manual follow-up recommended before publishing.",
+  "text": "少油烹饪，让您吃得更轻盈无负担。",
+  "findings": [
+    {
+      "findingId": "rf_23e02117-45fc-45f3-978e-5bac984d1291",
+      "module": "RULE",
+      "refId": "demo-apac-sa-health-implication",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — qualify context or attach data (WARN)",
+      "rewriteSuggestions": [
+        {
+          "suggestionId": "rs_c3686a74-bd01-4799-ae3d-8af796b47f33",
+          "findingId": "rf_23e02117-45fc-45f3-978e-5bac984d1291",
+          "riskType": "health-implication",
+          "rewriteTemplateId": "remove-health-claim",
+          "originalSpan": {
+            "field": "text",
+            "start": 7,
+            "end": 12,
+            "text": "吃得更轻盈"
+          },
+          "suggestedText": [
+            "空气炸锅煎炸模式，让日常备餐更省事。",
+            "热风循环技术，无需预热，即放即炸。"
+          ],
+          "rationale": "删除对身体状态有益的隐性联想，保留使用体验描述。",
+          "confidence": 0.82
+        }
+      ]
+    },
+    {
+      "findingId": "pf_7ebaff71-56dd-4f14-9330-f59140b58935",
+      "module": "PLAYBOOK",
+      "refId": "sa-health-implication",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "分界：健康暗示（Health Implication）说的是感受与体验；医疗宣称说的是疾病与器官功能。本条为健康暗示 — 须语境限定或软化，必要时附数据；少油/营养保留类须持有对比或测试数据。"
+    },
+    {
+      "findingId": "pf_cfad9d47-1679-4660-823a-06b1732db1d6",
+      "module": "PLAYBOOK",
+      "refId": "sa-diet-oil-wellness",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "「少油」「饮食轻松」等饮食健康暗示须持有证据支持（烹调用油对比数据或合规营养表述依据）后方可发布。"
+    }
+  ]
+}

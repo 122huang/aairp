@@ -1,0 +1,341 @@
+{
+  "benchmark_id": "aairp-benchmark-v3",
+  "schema_version": "3.0.0",
+  "evaluated_at": "2026-06-30T05:11:00.744Z",
+  "knowledge_pack_version": "kp-2026.06.43adee",
+  "knowledge_pack_fingerprint": "2b957fee7e4809affa8314dfe131dc59d3ddda73e93e98c9e943ab9f6542f332",
+  "manifest_path": "C:\\Users\\ShujieHuang\\aairp\\benchmark\\benchmark-v3.json",
+  "case_results": [
+    {
+      "case_id": "AF-002",
+      "expected_skill": "Claim Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 0,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 0.9000000000000001,
+      "failures": [],
+      "expected": {
+        "expected_decision": "REJECT",
+        "expected_pattern": "sa-absolute-performance",
+        "expected_action": "REJECT",
+        "expected_severity": "HIGH"
+      },
+      "actual": {
+        "final_decision": "REJECT",
+        "pattern_ids": [
+          "sa-absolute-performance"
+        ],
+        "severities": [
+          "BLOCKER",
+          "MEDIUM"
+        ],
+        "action": "REJECT",
+        "rewrite_text": "Absolute or omnibus performance wording detected. Qualify the claim (conditions, typical results) or provide substantiation before publishing."
+      }
+    },
+    {
+      "case_id": "sg-health-reject-cure",
+      "expected_skill": "Claim Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "REJECT",
+        "expected_pattern": "unsubstantiated-testimonial",
+        "expected_action": "REJECT",
+        "expected_severity": "BLOCKER"
+      },
+      "actual": {
+        "final_decision": "REJECT",
+        "pattern_ids": [
+          "urgency-cta",
+          "unsubstantiated-testimonial"
+        ],
+        "severities": [
+          "BLOCKER",
+          "MEDIUM",
+          "LOW",
+          "MEDIUM",
+          "HIGH"
+        ],
+        "action": "REJECT",
+        "rewrite_text": "Urgency call-to-action detected. Add offer validity dates or remove pressure language that may mislead consumers. Efficacy or testimonial claim detected. Require substantiation, qualification, or remove absolute wording before publishing."
+      }
+    },
+    {
+      "case_id": "sg-health-pass-disclosed",
+      "expected_skill": "Claim Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "PASS",
+        "expected_pattern": null,
+        "expected_action": "PASS",
+        "expected_severity": "MEDIUM"
+      },
+      "actual": {
+        "final_decision": "PASS",
+        "pattern_ids": [],
+        "severities": [],
+        "action": "PASS",
+        "rewrite_text": ""
+      }
+    },
+    {
+      "case_id": "sg-health-fp-secure-no-cure",
+      "expected_skill": "Claim Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "PASS",
+        "expected_pattern": null,
+        "expected_action": "PASS",
+        "expected_severity": "MEDIUM"
+      },
+      "actual": {
+        "final_decision": "PASS",
+        "pattern_ids": [],
+        "severities": [],
+        "action": "PASS",
+        "rewrite_text": ""
+      }
+    },
+    {
+      "case_id": "sg-health-warn-disclosure",
+      "expected_skill": "Claim Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 0,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 0.9000000000000001,
+      "failures": [],
+      "expected": {
+        "expected_decision": "WARN",
+        "expected_pattern": null,
+        "expected_action": "REWRITE",
+        "expected_severity": "MEDIUM"
+      },
+      "actual": {
+        "final_decision": "WARN",
+        "pattern_ids": [],
+        "severities": [
+          "LOW"
+        ],
+        "action": "REWRITE",
+        "rewrite_text": ""
+      }
+    },
+    {
+      "case_id": "sg-health-warn-superlative",
+      "expected_skill": "Claim Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "WARN",
+        "expected_pattern": "unsubstantiated-testimonial",
+        "expected_action": "REWRITE",
+        "expected_severity": "MEDIUM"
+      },
+      "actual": {
+        "final_decision": "WARN",
+        "pattern_ids": [
+          "unsubstantiated-testimonial"
+        ],
+        "severities": [
+          "MEDIUM",
+          "HIGH"
+        ],
+        "action": "REWRITE",
+        "rewrite_text": "Efficacy or testimonial claim detected. Require substantiation, qualification, or remove absolute wording before publishing."
+      }
+    },
+    {
+      "case_id": "sg-health-playbook-urgency",
+      "expected_skill": "Disclaimer Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "WARN",
+        "expected_pattern": "urgency-cta",
+        "expected_action": "REWRITE",
+        "expected_severity": "MEDIUM"
+      },
+      "actual": {
+        "final_decision": "WARN",
+        "pattern_ids": [
+          "urgency-cta"
+        ],
+        "severities": [
+          "MEDIUM"
+        ],
+        "action": "REWRITE",
+        "rewrite_text": "Urgency call-to-action detected. Add offer validity dates or remove pressure language that may mislead consumers."
+      }
+    },
+    {
+      "case_id": "supplement-ad-manifest-urgency",
+      "expected_skill": "Disclaimer Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "WARN",
+        "expected_pattern": "urgency-cta",
+        "expected_action": "REWRITE",
+        "expected_severity": "MEDIUM"
+      },
+      "actual": {
+        "final_decision": "WARN",
+        "pattern_ids": [
+          "urgency-cta"
+        ],
+        "severities": [
+          "MEDIUM"
+        ],
+        "action": "REWRITE",
+        "rewrite_text": "Urgency call-to-action detected. Add offer validity dates or remove pressure language that may mislead consumers."
+      }
+    },
+    {
+      "case_id": "supplement-before-after-imagery",
+      "expected_skill": "Content Quality Review",
+      "tier": "regression",
+      "weight": 1,
+      "passed": true,
+      "dimension_scores": {
+        "decision": 1,
+        "pattern_hit": 1,
+        "severity": 1,
+        "action": 1,
+        "rewrite": 1
+      },
+      "weighted_score": 1,
+      "failures": [],
+      "expected": {
+        "expected_decision": "WARN",
+        "expected_pattern": "before-after-imagery",
+        "expected_action": "REWRITE",
+        "expected_severity": "LOW"
+      },
+      "actual": {
+        "final_decision": "WARN",
+        "pattern_ids": [
+          "before-after-imagery"
+        ],
+        "severities": [
+          "LOW",
+          "LOW"
+        ],
+        "action": "REWRITE",
+        "rewrite_text": "Before/after or transformation claim detected. Require disclaimers and avoid implying guaranteed outcomes."
+      }
+    }
+  ],
+  "metrics": {
+    "total_cases": 9,
+    "passed_cases": 9,
+    "weighted_quality_score": 0.9777777777777779,
+    "decision_accuracy": 1,
+    "pattern_hit_rate": 1,
+    "severity_accuracy": 0.7777777777777778,
+    "action_accuracy": 1,
+    "rewrite_score": 1,
+    "false_reject_rate": 0,
+    "blocker_miss_rate": 0,
+    "module_scores": [
+      {
+        "skill_module": "Claim Review",
+        "case_count": 6,
+        "weighted_score": 0.9666666666666668,
+        "decision_accuracy": 1,
+        "pattern_hit_rate": 1
+      },
+      {
+        "skill_module": "Disclaimer Review",
+        "case_count": 2,
+        "weighted_score": 1,
+        "decision_accuracy": 1,
+        "pattern_hit_rate": 1
+      },
+      {
+        "skill_module": "Content Quality Review",
+        "case_count": 1,
+        "weighted_score": 1,
+        "decision_accuracy": 1,
+        "pattern_hit_rate": 1
+      }
+    ]
+  },
+  "failed_case_ids": []
+}

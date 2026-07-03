@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:jp-caa-cosmetic-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-caa-cosmetic-claims",
+  "country": "JP",
+  "authority": "CAA",
+  "regulation_name": "Pharmaceutical Affairs Act (Quasi-drugs and Cosmetics)",
+  "citation": "Pharmaceutical Affairs Act — Article 66",
+  "effective_date": "1960-08-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Cosmetics and quasi-drugs may claim approved cosmetic effects but must not make unapproved medicinal claims.",
+  "review_guidance": "TRIGGER: Skin disease treatment or medicinal effect on cosmetics. ACTION: REJECT — use approved cosmetic effect language only. CHECK: Product category (cosmetic vs quasi-drug) and approved claims. ESCALATE IF: Medicinal claim on standard cosmetic product.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "cosmetic"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

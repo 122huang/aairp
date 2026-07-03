@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:jp-caa-health-foods",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-caa-health-foods",
+  "country": "JP",
+  "authority": "CAA",
+  "regulation_name": "Health Promotion Act (Foods with Function Claims)",
+  "citation": "Health Promotion Act — FFC Notification Requirements",
+  "effective_date": "2015-04-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Foods with Function Claims must use only notified claim wording; other health foods must avoid disease-related claims.",
+  "review_guidance": "TRIGGER: FFC, nutraceutical, or general food health benefit claims. ACTION: WARN — match notified claim text exactly. CHECK: Consumer Affairs Agency notification number and claim scope. ESCALATE IF: Disease treatment or unnotified function claim.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

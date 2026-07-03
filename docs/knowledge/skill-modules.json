@@ -1,0 +1,912 @@
+{
+  "schema_version": "1.0.0",
+  "modules_version": "skill-modules-1.3.0",
+  "description": "Canonical Skill Module Contracts for AAIRP — operational/evaluation metadata only (no runtime routing).",
+  "risk_taxonomy_version": "1.2.0",
+  "risk_taxonomy": {
+    "reject": [
+      {
+        "risk_id": "medical-claim",
+        "label_zh": "医疗宣称",
+        "label_en": "Medical Claim",
+        "definition": "产品文案指向具体疾病、身体器官功能、临床指标或医疗专业背书；保健品场景下含 cure/miracle 等禁止性疗效表述。家电与保健品均不具备作出此类声明的资格，补充证据也无法解决越权问题。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-health-claim-blocker", "demo-sg-health-forbidden-claim"],
+        "pattern_ids": ["sa-medical-claim"]
+      },
+      {
+        "risk_id": "food-safety-hazard",
+        "label_zh": "食品安全场景",
+        "label_en": "Food Safety Hazard",
+        "definition": "文案或画面描绘将生肉、海鲜、蛋类等易腐食材在无冷藏条件下长时间放置后烹饪的使用场景。东南亚常温环境下存在真实细菌繁殖风险，改表述不足以消除风险，必须删除。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-food-safety-blocker"],
+        "pattern_ids": ["sa-food-safety-overnight-prep"]
+      },
+      {
+        "risk_id": "false-certification-government-endorsement",
+        "label_zh": "虚假认证／政府背书",
+        "label_en": "False Certification or Government Endorsement",
+        "definition": "文案援引未经证实的官方机构认证、政府部门推荐或权威组织背书，包括以模糊措辞暗示官方认可。属主动虚构，Trade Descriptions Act 等各目的国法规有明文约束。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-false-authority-endorsement"],
+        "pattern_ids": ["sa-false-authority-endorsement"]
+      },
+      {
+        "risk_id": "unauthorised-competitor-trademark",
+        "label_zh": "竞品商标未授权使用",
+        "label_en": "Unauthorised Use of Third-Party Trademark",
+        "definition": "物料中出现可识别的竞品品牌名称、Logo、产品外观或注册商标，且未取得权利人授权。常见于对比图、场景图、测评图中，构成商标侵权，无法通过文案修改解决。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-competitor-trademark"],
+        "pattern_ids": ["sa-competitor-trademark"]
+      },
+      {
+        "risk_id": "misleading-pricing",
+        "label_zh": "促销定价虚假",
+        "label_en": "Misleading Pricing",
+        "definition": "划线价非真实历史售价、限时优惠长期挂载、结账价高于标题价、以虚假停业为由促销等。属已发生的事实虚假，不是文案表述问题，补证据无法还原不存在的真实性。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-pricing-misrepresentation"],
+        "pattern_ids": ["sa-pricing-misrepresentation"]
+      },
+      {
+        "risk_id": "content-consistency",
+        "label_zh": "跨素材内容矛盾",
+        "label_en": "Cross-Asset Content Inconsistency",
+        "definition": "同一广告活动中，文案、图片、规格参数或产品描述之间存在实质性矛盾（如材质、容量、型号不一致），须在发布前统一修正。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-content-consistency-blocker"],
+        "pattern_ids": []
+      },
+      {
+        "risk_id": "absolute-claim-blocker",
+        "label_zh": "绝对化宣称（阻断级）",
+        "label_en": "Absolute Claim (Blocker)",
+        "definition": "使用「世界第一」「销量第一」「无可匹敌」等硬性排名或无条件保证性表述，缺乏可验证依据且构成明确误导，须删除或彻底改写后方可考虑放行。",
+        "default_severity": "BLOCKER",
+        "default_decision": "FAIL",
+        "rule_ids": ["demo-apac-sa-absolute-claim"],
+        "pattern_ids": ["sa-absolute-performance"]
+      }
+    ],
+    "warn": [
+      {
+        "risk_id": "absolute-claim-soft",
+        "label_zh": "绝对化用词（可软化）",
+        "label_en": "Absolute Claim (Qualifiable)",
+        "definition": "使用「完美」「零故障」「每一次」「永不后悔」等广义绝对或全称判断表述，可通过限定语、证据引用或软化措辞降低风险。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-absolute-claim-soft"],
+        "pattern_ids": ["sa-absolute-performance"]
+      },
+      {
+        "risk_id": "unsubstantiated-quantitative-claim",
+        "label_zh": "无基准量化宣称",
+        "label_en": "Unsubstantiated Quantitative Claim",
+        "definition": "文案包含具体数字或百分比，但未注明比较基准、对照对象、测试标准或数据来源。数字本身不构成问题，缺失的测试链路才是 finding。",
+        "default_severity": "HIGH",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-performance-claim"],
+        "pattern_ids": ["sa-performance-claim", "sa-oil-reduction-quantified"]
+      },
+      {
+        "risk_id": "unsupported-comparative-claim",
+        "label_zh": "无基准比较级",
+        "label_en": "Unsupported Comparative Claim",
+        "definition": "使用「更强」「更快」「更安静」等比较级表述，但未指定对照物。隐性比较声明要求基准可识别、可验证，否则消费者无法判断比较的有效性。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-comparative-claim"],
+        "pattern_ids": ["sa-comparative-claim", "sa-comparative-superiority"]
+      },
+      {
+        "risk_id": "health-implication",
+        "label_zh": "健康暗示",
+        "label_en": "Health Implication",
+        "definition": "文案未指向具体疾病或器官，但通过「轻盈」「无负担」「保留营养」「除螨」等表述产生对身体状态有益的隐性联想。不构成医疗宣称，但需要语境限定或软化表述，有时需要后端数据支撑。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-health-implication"],
+        "pattern_ids": ["sa-health-implication", "sa-diet-oil-wellness", "sa-mite-allergen-claim"]
+      },
+      {
+        "risk_id": "health-superlative-claim",
+        "label_zh": "保健品疗效夸大",
+        "label_en": "Health Superlative Claim",
+        "definition": "保健品文案使用 clinically proven、guaranteed、instant results 等夸大疗效或绝对化效果的表述，需附 substantiation 或改为限定性措辞。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-sg-health-superlative"],
+        "pattern_ids": ["unsubstantiated-testimonial"]
+      },
+      {
+        "risk_id": "material-claim",
+        "label_zh": "材质宣称",
+        "label_en": "Material Claim",
+        "definition": "对产品材质的安全性或环保性作出声明，包括 BPA-free、食品级、无毒涂层、不锈钢等。此类宣称需要第三方检测报告支撑，无报告即构成 finding。",
+        "default_severity": "HIGH",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-material-safety-claim"],
+        "pattern_ids": ["sa-material-safety-claim"]
+      },
+      {
+        "risk_id": "certification-evidence",
+        "label_zh": "认证／证据宣称",
+        "label_en": "Certification or Evidence Claim",
+        "definition": "援引 HEPA-class、专利、实验室检测、权威认证、餐厅级品质等表述，但未提供可核验的证书、专利号或测试报告；须区分 HEPA-class 与 True HEPA，避免暗示医疗级过滤或官方背书。",
+        "default_severity": "HIGH",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-certification-evidence", "demo-apac-sa-patent-claim"],
+        "pattern_ids": ["sa-certification-evidence"]
+      },
+      {
+        "risk_id": "analogical-claim",
+        "label_zh": "类比声明",
+        "label_en": "Analogical Claim",
+        "definition": "用「媲美」「如同」「宛如」「还原」等表述将产品效果与参照标准（柴火、石锅、餐厅、现榨）作主观对比。若类比对象有明确可量化的感官或性能标准，则需要测试数据支撑。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-analogy-claim"],
+        "pattern_ids": ["sa-analogy-claim"]
+      },
+      {
+        "risk_id": "environmental-claim",
+        "label_zh": "环保／可持续声明",
+        "label_en": "Environmental Claim",
+        "definition": "以「环保」「可持续」「低碳」「零污染」等表述宣传产品或品牌的环境影响。各目的国均要求此类声明有具体、可证实的依据，泛化标签无量化支撑即构成 finding。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-sustainability-claim"],
+        "pattern_ids": ["sa-sustainability-claim"]
+      },
+      {
+        "risk_id": "localisation-error",
+        "label_zh": "本地化硬伤",
+        "label_en": "Localisation Error",
+        "definition": "物料存在未完成本地化的技术性错误，包括中文面板未替换、型号后缀错配、中国认证误用、内部批注残留、电压规格错误等。部分情况（如主动援引无效认证）可升级为 REJECT。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-localization"],
+        "pattern_ids": ["sa-localization"]
+      },
+      {
+        "risk_id": "ai-image-disclaimer",
+        "label_zh": "AI 图片声明缺失",
+        "label_en": "AI Image Disclaimer Missing",
+        "definition": "AI 生成或数字渲染的产品图片/文案缺少 illustration disclaimer（如 for illustration purposes only、simulated image），或文案明示缺失声明。属内容透明度要求，与资产本地化（localisation-error）性质不同。",
+        "default_severity": "LOW",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-ai-image-disclaimer"],
+        "pattern_ids": ["sa-disclaimer-required"]
+      },
+      {
+        "risk_id": "capacity-claim",
+        "label_zh": "容量宣称",
+        "label_en": "Capacity Claim",
+        "definition": "宣称最大容量、份数或处理量（如 up to 2kg、16 bowls），但未说明测试条件或缺乏 substantiation。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-capacity-claim"],
+        "pattern_ids": ["sa-capacity-claim"]
+      },
+      {
+        "risk_id": "sku-mismatch",
+        "label_zh": "SKU／型号错配",
+        "label_en": "SKU or Model Mismatch",
+        "definition": "广告素材展示的产品型号、外观或规格与 listing SKU 不一致，可能导致消费者误解或履约纠纷。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-wrong-sku"],
+        "pattern_ids": []
+      },
+      {
+        "risk_id": "grammar-quality",
+        "label_zh": "语法／拼写质量",
+        "label_en": "Grammar or Spelling Quality",
+        "definition": "文案存在明显语法、拼写或格式错误（如错误时间格式、病句），影响专业形象与消费者理解。",
+        "default_severity": "LOW",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-apac-sa-grammar-quality"],
+        "pattern_ids": ["sa-grammar-quality"]
+      },
+      {
+        "risk_id": "market-ranking-claim",
+        "label_zh": "本地市场排名宣称",
+        "label_en": "Local Market Ranking Claim",
+        "definition": "宣称某国销量第一、千万家庭选择等本地排名或广泛采纳表述，或暗示当地医疗／政府权威背书，需附审计数据且不得暗示官方医疗认可。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": [
+          "demo-sg-sa-market-claim",
+          "demo-my-sa-market-claim",
+          "demo-th-sa-market-claim",
+          "demo-id-sa-market-claim",
+          "demo-vn-sa-market-claim",
+          "demo-ph-sa-market-claim"
+        ],
+        "pattern_ids": [
+          "sg-local-market-claim",
+          "my-local-market-claim",
+          "th-local-market-claim",
+          "id-local-market-claim",
+          "vn-local-market-claim",
+          "ph-local-market-claim"
+        ]
+      },
+      {
+        "risk_id": "product-category-boundary",
+        "label_zh": "产品类目边界",
+        "label_en": "Product Category Boundary",
+        "definition": "小家电（sa.*）广告文案触及保健品或健康功效用语（如 suplemen、khasiat、klaim kesehatan），需确认类目标注是否正确，避免越界宣称。",
+        "default_severity": "MEDIUM",
+        "default_decision": "WARN",
+        "rule_ids": ["demo-id-product-category-boundary"],
+        "pattern_ids": []
+      },
+      {
+        "risk_id": "foreign-brand-ad-approval",
+        "label_zh": "跨境品牌广告审批",
+        "label_en": "Foreign Brand Ad Approval",
+        "definition": "跨境或外国品牌广告在越南投放时，若缺少本地实体披露或审批依据，需人工合规确认；属审查信号，不构成阻断。",
+        "default_severity": "MEDIUM",
+        "default_decision": "REVIEW",
+        "rule_ids": ["demo-vn-foreign-brand-ad-approval"],
+        "pattern_ids": []
+      },
+      {
+        "risk_id": "sponsored-disclosure",
+        "label_zh": "赞助披露缺失",
+        "label_en": "Sponsored Disclosure Missing",
+        "definition": "促销或 KOL 内容缺少市场要求的赞助披露标识（如 SG #ad、ID #iklan、PH #ad 或 Tagalog bayad na nilalaman）。",
+        "default_severity": "LOW",
+        "default_decision": "WARN",
+        "rule_ids": [
+          "demo-sg-sponsored-disclosure",
+          "demo-id-sponsored-disclosure",
+          "demo-ph-sponsored-disclosure"
+        ],
+        "pattern_ids": ["urgency-cta"]
+      }
+    ]
+  },
+  "playbook_source": "demo/playbook.demo.md",
+  "playbook_id": "demo-health-supplement-playbook",
+  "modules": [
+    {
+      "skill_module": "Claim Review",
+      "description": "Substantiation and wording of product, performance, health, and comparative claims.",
+      "owner": "legal-apac@aairp",
+      "owner_type": "legal",
+      "last_reviewed_at": "2026-06-15T00:00:00.000Z",
+      "freshness_status": "current",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "health.supplement", "electronics"],
+        "modalities": ["text", "image"]
+      },
+      "applicable_rules": [
+        "demo-sg-health-forbidden-claim",
+        "demo-sg-health-superlative",
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft",
+        "demo-apac-sa-social-proof-claim",
+        "demo-apac-sa-comparative-claim",
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim",
+        "demo-apac-sa-health-implication",
+        "demo-apac-sa-food-safety-blocker",
+        "demo-sg-sa-market-claim",
+        "demo-apac-sa-material-safety-claim",
+        "demo-my-sa-market-claim",
+        "demo-th-sa-market-claim",
+        "demo-id-sa-market-claim",
+        "demo-vn-sa-market-claim",
+        "demo-ph-sa-market-claim",
+        "demo-id-product-category-boundary",
+        "demo-vn-foreign-brand-ad-approval",
+        "demo-apac-sa-false-authority-endorsement",
+        "demo-apac-sa-competitor-trademark",
+        "demo-apac-sa-pricing-misrepresentation",
+        "demo-apac-sa-analogy-claim",
+        "demo-apac-sa-sustainability-claim"
+      ],
+      "benchmark_scope": { "skill_module": "Claim Review" },
+      "rewrite_strategy": { "default": "qualify" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "WARN"
+      },
+      "patterns": [
+        {
+          "pattern_id": "unsubstantiated-testimonial",
+          "purpose": "Flag efficacy or testimonial claims that require substantiation or qualification.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Replace absolute efficacy wording with qualified statements supported by evidence.",
+          "rewrite_template_id": "qualify-efficacy"
+        },
+        {
+          "pattern_id": "sa-absolute-performance",
+          "purpose": "Detect absolute or omnibus performance claims without conditions or substantiation.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Qualify with typical results under normal use conditions or remove absolute wording.",
+          "rewrite_template_id": "qualify-performance"
+        },
+        {
+          "pattern_id": "sa-social-proof-claim",
+          "purpose": "Detect unsubstantiated social-proof or popularity claims without verifiable user or household data.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Replace broad popularity counts with qualified, substantiated wording or cite the data source.",
+          "rewrite_template_id": "qualify-performance"
+        },
+        {
+          "pattern_id": "sa-health-implication",
+          "purpose": "Detect diet-wellness or nutrient-retention implications without specific disease or organ-function claims.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Use neutral cooking-function wording or attach substantiation before less-oil, lighter-eating, or nutrient-retention claims.",
+          "rewrite_template_id": "remove-health-claim"
+        },
+        {
+          "pattern_id": "sa-medical-claim",
+          "purpose": "Block medical or disease-specific claims and clinical or professional endorsements on non-health product categories.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove disease, organ-function, clinical-validation, and doctor-endorsement wording.",
+          "rewrite_template_id": "remove-health-claim"
+        },
+        {
+          "pattern_id": "sa-comparative-claim",
+          "purpose": "Detect comparative claims missing baseline product or test conditions.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "State the comparison baseline, test method, and measurable difference.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "sa-performance-claim",
+          "purpose": "Detect quantitative or efficacy performance claims requiring verification.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Verify substantiation, test conditions, and on-pack specifications before publishing.",
+          "rewrite_template_id": "cite-evidence"
+        },
+        {
+          "pattern_id": "sa-comparative-superiority",
+          "purpose": "Detect superiority or beyond-standard comparative claims.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Name the benchmark product, test method, and measurable difference.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "sa-capacity-claim",
+          "purpose": "Detect capacity or volume claims requiring test-method confirmation.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Confirm fill level, test method, and on-pack specifications.",
+          "rewrite_template_id": "qualify-performance"
+        },
+        {
+          "pattern_id": "sa-oil-reduction-quantified",
+          "purpose": "Quantified oil-use reduction claims requiring test data substantiation.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove specific percentages unless test data is on file; state comparison method and oil-measurement protocol.",
+          "rewrite_template_id": "cite-evidence"
+        },
+        {
+          "pattern_id": "sa-mite-allergen-claim",
+          "purpose": "Mite removal or indoor allergen reduction claims requiring laboratory test reports.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove mite/allergen efficacy conclusions or attach third-party test reports before publishing.",
+          "rewrite_template_id": "cite-evidence"
+        },
+        {
+          "pattern_id": "sa-diet-oil-wellness",
+          "purpose": "Less-oil or diet-ease wellness implications requiring substantiation evidence.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Use neutral cooking-function wording or attach substantiation before less-oil or diet-ease claims.",
+          "rewrite_template_id": "remove-health-claim"
+        },
+        {
+          "pattern_id": "sa-food-safety-overnight-prep",
+          "purpose": "Block ads depicting unrefrigerated overnight raw meat, seafood, or egg preparation — product liability evidence; must delete, not rewrite.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Delete the unrefrigerated raw-meat/seafood/egg overnight scenario entirely from copy and visuals.",
+          "rewrite_template_id": "remove-health-claim"
+        },
+        {
+          "pattern_id": "sg-local-market-claim",
+          "purpose": "Flag Singapore-specific ranking or cardiologist endorsement claims requiring local substantiation.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove #1/Singapore ranking unless substantiated; replace doctor endorsement with qualified, verifiable statements.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "my-local-market-claim",
+          "purpose": "Flag Malaysia-specific ranking or authority endorsement claims requiring local substantiation.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove #1/Malaysia ranking unless substantiated; replace authority endorsement with qualified, verifiable statements.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "th-local-market-claim",
+          "purpose": "Flag Thailand-specific ranking or government-health-authority endorsement claims requiring local substantiation.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove #1/Thailand ranking unless substantiated; replace ministry endorsement with qualified, verifiable statements.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "id-local-market-claim",
+          "purpose": "Flag Indonesia-specific ranking or superiority claims requiring local substantiation.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Remove terbaik/nomor satu ranking unless substantiated with audited local market data.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "vn-local-market-claim",
+          "purpose": "Flag Vietnam-specific ranking claims requiring local substantiation under MOIT advertising rules.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Remove số 1/hàng đầu claims unless substantiated with verifiable ranking source and period.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "ph-local-market-claim",
+          "purpose": "Flag Philippines-specific ranking claims requiring substantiation under Consumer Act misleading-representation rules.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Remove pinakamahusay/#1 sa Pilipinas claims unless substantiated with audited local data.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "sa-pricing-misrepresentation",
+          "purpose": "Block misleading pricing mechanics and perpetual urgency promotions.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove false reference prices and perpetual flash-sale wording; disclose promotion period and checkout total.",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "sa-analogy-claim",
+          "purpose": "Detect analogy or sensory-equivalence claims requiring substantiation.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Qualify with inspiration-style wording or attach sensory test methodology.",
+          "rewrite_template_id": "qualify-performance"
+        },
+        {
+          "pattern_id": "sa-sustainability-claim",
+          "purpose": "Detect environmental or sustainability claims requiring substantiation.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "State specific environmental attributes with evidence or use neutral product-feature wording.",
+          "rewrite_template_id": "qualify-performance"
+        }
+      ]
+    },
+    {
+      "skill_module": "Evidence Review",
+      "description": "Certification, patent, award, and laboratory evidence referenced in advertising.",
+      "owner": "legal-apac@aairp",
+      "owner_type": "legal",
+      "last_reviewed_at": "2026-06-15T00:00:00.000Z",
+      "freshness_status": "current",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "electronics"],
+        "modalities": ["text", "image"]
+      },
+      "applicable_rules": [
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-patent-claim",
+        "demo-apac-sa-material-safety-claim",
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "benchmark_scope": { "skill_module": "Evidence Review" },
+      "rewrite_strategy": { "default": "cite_evidence" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "WARN"
+      },
+      "patterns": [
+        {
+          "pattern_id": "sa-certification-evidence",
+          "purpose": "Verify certification, patent, award, or laboratory evidence authenticity and scope.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Confirm document authenticity, scope, and readability before publishing.",
+          "rewrite_template_id": "cite-evidence"
+        },
+        {
+          "pattern_id": "sa-material-safety-claim",
+          "purpose": "Flag material-safety claims requiring third-party laboratory substantiation.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove BPA-free unless an SGS/Intertek (or equivalent) test report is on file; or qualify with the specific standard tested and report scope.",
+          "rewrite_template_id": "cite-evidence"
+        },
+        {
+          "pattern_id": "sa-false-authority-endorsement",
+          "purpose": "Block false government, ministry, or national-authority health endorsements.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove government or ministry endorsement; use verifiable third-party test or certification wording.",
+          "rewrite_template_id": "cite-evidence"
+        }
+      ]
+    },
+    {
+      "skill_module": "Localization Review",
+      "description": "Market-appropriate language, packaging, and asset localization.",
+      "owner": "compliance-apac@aairp",
+      "owner_type": "compliance",
+      "last_reviewed_at": "2026-06-10T00:00:00.000Z",
+      "freshness_status": "current",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "electronics"],
+        "modalities": ["text", "image"]
+      },
+      "applicable_rules": ["demo-apac-sa-localization"],
+      "benchmark_scope": { "skill_module": "Localization Review" },
+      "rewrite_strategy": { "default": "disclose" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "REVIEW"
+      },
+      "patterns": [
+        {
+          "pattern_id": "sa-localization",
+          "purpose": "Detect assets localized for a market other than the target country.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Use English or local-market packaging, manual, or subtitles for the target country.",
+          "rewrite_template_id": "disclose-localization"
+        }
+      ]
+    },
+    {
+      "skill_module": "Consistency Review",
+      "description": "Cross-asset, SKU, and brand consistency across advertisement materials.",
+      "owner": "compliance-apac@aairp",
+      "owner_type": "compliance",
+      "last_reviewed_at": "2026-06-01T00:00:00.000Z",
+      "freshness_status": "review_due",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "electronics"],
+        "modalities": ["text", "image"]
+      },
+      "applicable_rules": ["demo-apac-sa-content-consistency-blocker"],
+      "benchmark_scope": { "skill_module": "Consistency Review" },
+      "rewrite_strategy": { "default": "remove" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "REVIEW"
+      },
+      "patterns": []
+    },
+    {
+      "skill_module": "Brand/IP Review",
+      "description": "Third-party brand references and intellectual-property conflicts.",
+      "owner": "legal-apac@aairp",
+      "owner_type": "legal",
+      "last_reviewed_at": "2026-06-01T00:00:00.000Z",
+      "freshness_status": "review_due",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "electronics"],
+        "modalities": ["image"]
+      },
+      "applicable_rules": ["demo-apac-sa-wrong-sku", "demo-apac-sa-competitor-trademark"],
+      "benchmark_scope": { "skill_module": "Brand/IP Review" },
+      "rewrite_strategy": { "default": "remove" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REJECT",
+        "default": "REVIEW"
+      },
+      "patterns": [
+        {
+          "pattern_id": "sa-competitor-trademark",
+          "purpose": "Block unauthorized competitor trademarks or product images in comparative assets.",
+          "default_expected_severity": "HIGH",
+          "suggested_rewrite": "Remove identifiable competitor trademarks or product images, or obtain written authorization.",
+          "rewrite_template_id": "remove-health-claim"
+        }
+      ]
+    },
+    {
+      "skill_module": "Content Quality Review",
+      "description": "Grammar, imagery quality, before/after presentation, and general copy quality.",
+      "owner": "knowledge-eng@aairp",
+      "owner_type": "knowledge_eng",
+      "last_reviewed_at": "2026-06-20T00:00:00.000Z",
+      "freshness_status": "current",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "health.supplement", "electronics"],
+        "modalities": ["text", "image"]
+      },
+      "applicable_rules": ["demo-apac-sa-grammar-quality"],
+      "benchmark_scope": { "skill_module": "Content Quality Review" },
+      "rewrite_strategy": { "default": "qualify" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "WARN"
+      },
+      "patterns": [
+        {
+          "pattern_id": "before-after-imagery",
+          "purpose": "Detect before/after or transformation imagery requiring disclaimers.",
+          "default_expected_severity": "LOW",
+          "suggested_rewrite": "Add disclaimers and avoid implying guaranteed outcomes.",
+          "rewrite_template_id": "disclose-transformation"
+        },
+        {
+          "pattern_id": "sa-grammar-quality",
+          "purpose": "Detect grammar, spelling, or time-format errors in copy.",
+          "default_expected_severity": "LOW",
+          "suggested_rewrite": "Correct grammar, spelling, and time-format errors before publishing.",
+          "rewrite_template_id": "qualify-performance"
+        }
+      ]
+    },
+    {
+      "skill_module": "AI Content Review",
+      "description": "AI-rendered or synthetic imagery and related disclosure requirements.",
+      "owner": "compliance-apac@aairp",
+      "owner_type": "compliance",
+      "last_reviewed_at": "2026-06-10T00:00:00.000Z",
+      "freshness_status": "current",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "electronics"],
+        "modalities": ["image"]
+      },
+      "applicable_rules": ["demo-apac-sa-ai-image-disclaimer"],
+      "benchmark_scope": { "skill_module": "AI Content Review" },
+      "rewrite_strategy": { "default": "disclose" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "REVIEW"
+      },
+      "patterns": []
+    },
+    {
+      "skill_module": "Disclaimer Review",
+      "description": "Advertising disclosures, urgency CTAs, and sponsored-content identification.",
+      "owner": "legal-apac@aairp",
+      "owner_type": "legal",
+      "last_reviewed_at": "2026-06-15T00:00:00.000Z",
+      "freshness_status": "current",
+      "activation_conditions": {
+        "countries": ["SG", "MY", "TH"],
+        "categories": ["sa.*", "health.supplement", "electronics"],
+        "modalities": ["text", "image"]
+      },
+      "applicable_rules": [
+        "demo-sg-sponsored-disclosure",
+        "demo-id-sponsored-disclosure",
+        "demo-ph-sponsored-disclosure",
+        "demo-apac-sa-ai-image-disclaimer",
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "benchmark_scope": { "skill_module": "Disclaimer Review" },
+      "rewrite_strategy": { "default": "disclose" },
+      "escalation_policy": {
+        "blocker_rule_present": "REJECT",
+        "unverified_high_severity": "REVIEW",
+        "default": "WARN"
+      },
+      "patterns": [
+        {
+          "pattern_id": "urgency-cta",
+          "purpose": "Detect urgency or pressure language that may mislead consumers.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "Add offer validity dates or remove pressure language.",
+          "rewrite_template_id": "disclose-urgency"
+        },
+        {
+          "pattern_id": "sa-disclaimer-required",
+          "purpose": "Require illustration disclaimer for AI-rendered or synthetic imagery.",
+          "default_expected_severity": "LOW",
+          "suggested_rewrite": "Add an illustration disclaimer (e.g. for illustration purposes only).",
+          "rewrite_template_id": "disclose-ai"
+        }
+      ]
+    }
+  ],
+  "pattern_rule_links": {
+    "urgency-cta": [
+      "demo-sg-sponsored-disclosure",
+      "demo-id-sponsored-disclosure",
+      "demo-ph-sponsored-disclosure"
+    ],
+    "unsubstantiated-testimonial": [
+      "demo-sg-health-forbidden-claim",
+      "demo-apac-sa-health-claim-blocker"
+    ],
+    "sa-absolute-performance": [
+      "demo-apac-sa-absolute-claim",
+      "demo-apac-sa-absolute-claim-soft"
+    ],
+    "sa-social-proof-claim": ["demo-apac-sa-social-proof-claim"],
+    "sa-health-implication": ["demo-apac-sa-health-implication"],
+    "sa-medical-claim": ["demo-apac-sa-health-claim-blocker"],
+    "sa-comparative-claim": ["demo-apac-sa-comparative-claim"],
+    "sa-performance-claim": ["demo-apac-sa-performance-claim"],
+    "sa-certification-evidence": [
+      "demo-apac-sa-certification-evidence",
+      "demo-apac-sa-patent-claim"
+    ],
+    "sa-comparative-superiority": ["demo-apac-sa-comparative-claim"],
+    "sa-capacity-claim": ["demo-apac-sa-capacity-claim"],
+    "sa-oil-reduction-quantified": ["demo-apac-sa-performance-claim"],
+    "sa-mite-allergen-claim": ["demo-apac-sa-health-implication"],
+    "sa-diet-oil-wellness": ["demo-apac-sa-health-implication"],
+    "sa-localization": ["demo-apac-sa-localization"],
+    "sa-disclaimer-required": ["demo-apac-sa-ai-image-disclaimer"],
+    "sa-grammar-quality": ["demo-apac-sa-grammar-quality"],
+    "sa-food-safety-overnight-prep": ["demo-apac-sa-food-safety-blocker"],
+    "sa-material-safety-claim": ["demo-apac-sa-material-safety-claim"],
+    "sg-local-market-claim": ["demo-sg-sa-market-claim"],
+    "my-local-market-claim": ["demo-my-sa-market-claim"],
+    "th-local-market-claim": ["demo-th-sa-market-claim"],
+    "id-local-market-claim": ["demo-id-sa-market-claim"],
+    "vn-local-market-claim": ["demo-vn-sa-market-claim"],
+    "ph-local-market-claim": ["demo-ph-sa-market-claim"],
+    "sa-false-authority-endorsement": ["demo-apac-sa-false-authority-endorsement"],
+    "sa-competitor-trademark": ["demo-apac-sa-competitor-trademark"],
+    "sa-pricing-misrepresentation": ["demo-apac-sa-pricing-misrepresentation"],
+    "sa-analogy-claim": ["demo-apac-sa-analogy-claim"],
+    "sa-sustainability-claim": ["demo-apac-sa-sustainability-claim"]
+  },
+  "golden_issue_map": {
+    "Absolute Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-absolute-performance",
+      "expected_rule": "demo-apac-sa-absolute-claim"
+    },
+    "Comparative Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim"
+    },
+    "Comparative Advertising": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-comparative-superiority",
+      "expected_rule": "demo-apac-sa-comparative-claim"
+    },
+    "Comparative Strategy": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-comparative-claim",
+      "expected_rule": "demo-apac-sa-comparative-claim"
+    },
+    "Performance Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim"
+    },
+    "Misleading Performance Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim"
+    },
+    "Capacity Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-capacity-claim",
+      "expected_rule": "demo-apac-sa-capacity-claim"
+    },
+    "Health Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker"
+    },
+    "Medical / Health Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker"
+    },
+    "Medical Claim": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-health-implication",
+      "expected_rule": "demo-apac-sa-health-claim-blocker"
+    },
+    "Technical Specification": {
+      "skill_module": "Claim Review",
+      "pattern_id": "sa-performance-claim",
+      "expected_rule": "demo-apac-sa-performance-claim"
+    },
+    "Certification": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence"
+    },
+    "Evidence": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence"
+    },
+    "Patent": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-patent-claim"
+    },
+    "Patent Verification": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-patent-claim"
+    },
+    "Award Claim": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence"
+    },
+    "Evidence Verification": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence"
+    },
+    "Evidence Quality": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence"
+    },
+    "Evidence Source": {
+      "skill_module": "Evidence Review",
+      "pattern_id": "sa-certification-evidence",
+      "expected_rule": "demo-apac-sa-certification-evidence"
+    },
+    "Localization": {
+      "skill_module": "Localization Review",
+      "pattern_id": "sa-localization",
+      "expected_rule": "demo-apac-sa-localization"
+    },
+    "Content Consistency": {
+      "skill_module": "Consistency Review",
+      "pattern_id": null,
+      "expected_rule": "demo-apac-sa-content-consistency-blocker",
+      "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
+    },
+    "Brand / IP": {
+      "skill_module": "Brand/IP Review",
+      "pattern_id": null,
+      "expected_rule": "demo-apac-sa-wrong-sku",
+      "mapping_note": "No dedicated playbook pattern; image-brand cases use rule engine."
+    },
+    "Brand Consistency": {
+      "skill_module": "Consistency Review",
+      "pattern_id": null,
+      "expected_rule": "demo-apac-sa-content-consistency-blocker",
+      "mapping_note": "No dedicated playbook pattern."
+    },
+    "Disclaimer": {
+      "skill_module": "Disclaimer Review",
+      "pattern_id": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer"
+    },
+    "AI Disclosure": {
+      "skill_module": "AI Content Review",
+      "pattern_id": "sa-disclaimer-required",
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer"
+    },
+    "AI Image Quality": {
+      "skill_module": "AI Content Review",
+      "pattern_id": null,
+      "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+      "mapping_note": "Visual quality review; no dedicated playbook pattern."
+    },
+    "Grammar": {
+      "skill_module": "Content Quality Review",
+      "pattern_id": "sa-grammar-quality",
+      "expected_rule": "demo-apac-sa-grammar-quality"
+    },
+    "Internal Note": {
+      "skill_module": "Content Quality Review",
+      "pattern_id": null,
+      "expected_rule": null,
+      "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
+    }
+  }
+}

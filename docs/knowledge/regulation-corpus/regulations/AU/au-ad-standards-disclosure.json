@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:au-ad-standards-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "au-ad-standards-disclosure",
+  "country": "AU",
+  "authority": "Ad Standards",
+  "regulation_name": "AANA Code of Ethics (Identifying advertising)",
+  "citation": "AANA Code of Ethics — Section 2.7",
+  "effective_date": "2021-02-01",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "LOW",
+  "summary": "Influencer and native advertising must be clearly identifiable as marketing communication.",
+  "review_guidance": "TRIGGER: Influencer, gifted, or affiliate promotional content. ACTION: REWRITE — add clear ad identification (#ad, Ad, Paid). CHECK: Caption, overlay, and platform-native ad disclosure. ESCALATE IF: Undisclosed paid promotion.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "disclosure"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

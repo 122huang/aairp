@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:my-kpdnhep-misleading-conduct",
+  "corpus_type": "regulation",
+  "regulation_id": "my-kpdnhep-misleading-conduct",
+  "country": "MY",
+  "authority": "KPDNHEP",
+  "regulation_name": "Consumer Protection Act 1999",
+  "citation": "Consumer Protection Act 1999 — Part III (Misleading conduct)",
+  "effective_date": "1999-11-15",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Misleading or deceptive conduct in trade including false product representations is prohibited.",
+  "review_guidance": "TRIGGER: False origin, fake discounts, or deceptive product descriptions. ACTION: REJECT — correct material misrepresentation. CHECK: Price history, stock availability, and product specs. ESCALATE IF: Systematic consumer deception or regulatory notice received.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "consumer-protection"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

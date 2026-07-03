@@ -17,6 +17,8 @@ export type AdvertisementUploadResponseDto = {
     campaign_type?: string;
     ad_format?: string;
     target_audience?: string;
+    product_sku?: string;
+    ai_rendered_image?: boolean;
   };
   tags: string[];
   content_hash: string;
@@ -55,6 +57,18 @@ export function toAdvertisementUploadResponseDto(
         : {}),
       ...(advertisement.context.targetAudience
         ? { target_audience: advertisement.context.targetAudience }
+        : {}),
+      ...(advertisement.context.productSku
+        ? { product_sku: advertisement.context.productSku }
+        : {}),
+      ...(advertisement.context.aiRenderedImage
+        ? { ai_rendered_image: true }
+        : {}),
+      ...(advertisement.context.certificationImageUnreadable
+        ? { certification_image_unreadable: true }
+        : {}),
+      ...(advertisement.context.aiImageQualityIssue
+        ? { ai_image_quality_issue: true }
         : {}),
     },
     tags: advertisement.tags,

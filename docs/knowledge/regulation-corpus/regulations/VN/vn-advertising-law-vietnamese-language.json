@@ -1,0 +1,32 @@
+{
+  "knowledge_id": "regulation:vn-advertising-law-vietnamese-language",
+  "corpus_type": "regulation",
+  "regulation_id": "vn-advertising-law-vietnamese-language",
+  "country": "VN",
+  "authority": "MOIT",
+  "regulation_name": "Law on Advertising 2012",
+  "citation": "Law on Advertising No. 16/2012/QH13 — Article 5 (Language of advertisements)",
+  "effective_date": "2013-01-01",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Advertisements distributed in Vietnam must use Vietnamese for mandatory consumer-facing information, warnings, and material terms unless a lawful exception applies.",
+  "review_guidance": "TRIGGER: English-only or mixed-language consumer warnings, instructions, or material terms in VN-targeted ads. ACTION: WARN — require Vietnamese localisation for mandatory elements. CHECK: Warnings, usage instructions, pricing terms, and disclosures. ESCALATE IF: Safety or health warnings absent in Vietnamese.",
+  "related_rule_ids": [
+    "demo-apac-sa-localization"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:none",
+    "localisation",
+    "vietnamese"
+  ],
+  "jurisdiction_scope": [
+    "sa.*"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

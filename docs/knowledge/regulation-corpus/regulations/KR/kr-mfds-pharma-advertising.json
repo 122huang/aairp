@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:kr-mfds-pharma-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-mfds-pharma-advertising",
+  "country": "KR",
+  "authority": "MFDS",
+  "regulation_name": "Pharmaceutical Affairs Act (Advertising)",
+  "citation": "Pharmaceutical Affairs Act — Article 68",
+  "effective_date": "1963-12-16",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Drug advertising is restricted; Rx drugs must not be promoted to consumers and claims must match MFDS approval.",
+  "review_guidance": "TRIGGER: Drug cure, Rx promotion, or unapproved drug efficacy claims. ACTION: REJECT — remove prohibited pharmaceutical ads. CHECK: MFDS approval, OTC/Rx status, and permitted labeling. ESCALATE IF: Public Rx ad or unapproved indication claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

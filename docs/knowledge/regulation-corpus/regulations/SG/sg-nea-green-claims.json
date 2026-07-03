@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:sg-nea-green-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-nea-green-claims",
+  "country": "SG",
+  "authority": "IMDA",
+  "regulation_name": "Environmental Claims Guidance (NEA-aligned)",
+  "citation": "Environmental Claims Guidance — Section 2 (Substantiation)",
+  "effective_date": "2022-01-01",
+  "category": "Environmental Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Green, recyclable, and carbon-neutral claims must be specific, substantiated, and not overstate environmental benefit.",
+  "review_guidance": "TRIGGER: Eco-friendly, sustainable, carbon-neutral, or recyclable claims. ACTION: WARN — require lifecycle evidence or narrow claim scope. CHECK: Certification body, scope boundary, and disposal instructions. ESCALATE IF: Vague greenwash without measurable basis.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "environmental"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

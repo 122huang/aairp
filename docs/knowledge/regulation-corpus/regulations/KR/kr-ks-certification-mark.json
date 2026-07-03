@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:kr-ks-certification-mark",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-ks-certification-mark",
+  "country": "KR",
+  "authority": "KFTC",
+  "regulation_name": "KS Mark and Quality Certification Requirements",
+  "citation": "KS Mark Requirements — Article 9",
+  "effective_date": "2016-01-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "KS and KC certification marks may only be used on products within valid certified scope and period.",
+  "review_guidance": "TRIGGER: KS, KC, or quality certification logo in advertising. ACTION: WARN — verify certification covers advertised model. CHECK: Certificate ID, product scope, and expiry. ESCALATE IF: Expired or scope-mismatched certification mark.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [
+    "evidence:certification-expiry-validation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

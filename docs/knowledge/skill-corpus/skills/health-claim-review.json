@@ -1,0 +1,71 @@
+{
+  "knowledge_id": "skill:health-claim-review",
+  "corpus_type": "skill",
+  "skill_id": "health-claim-review",
+  "skill_purpose": "Review nutritional, wellness, and implied health benefit claims for substantiation alignment and permitted wording scope.",
+  "skill_status": "production",
+  "skill_version": "1.0.0",
+  "summary": "Detects health and nutrition benefit claims on supplements and general products; guides reviewers to verify classification, substantiation, and prohibited disease-style wording.",
+  "review_guidance": "TRIGGER: Nutritional, wellness, or implied health benefit language on ad copy or imagery. ACTION: Inspect product category and on-pack classification before assessing claim scope. CHECK: Ingredient lists, dosage claims, before/after wellness outcomes, and disease-implication phrases. ESCALATE IF: Copy implies cure, disease modification, or medicinal effect — route to Rule Corpus for binding decision.",
+  "input_definition": {
+    "modalities": ["text", "image"],
+    "countries": ["SG", "MY", "TH"],
+    "categories": ["health.supplement", "sa.*"],
+    "claim_types": ["health-claim"],
+    "required_context": ["product_category", "ad_copy"]
+  },
+  "detection_patterns": [
+    {
+      "pattern_id": "health-implication",
+      "description": "Implied health or nutrition benefits on non-health or misclassified product categories.",
+      "signal_terms": ["healthier", "lower sugar", "health benefits"],
+      "signal_concepts": ["nutritional benefit", "wellness outcome"],
+      "playbook_pattern_id": "sa-health-implication",
+      "rewrite_template_id": "remove-health-claim"
+    }
+  ],
+  "skill_behavior": {
+    "rewrite_strategy": "remove",
+    "checkpoint_actions": [
+      "Confirm product regulatory category matches claim type",
+      "Check whether substantiation documents are on file",
+      "Flag disease or cure language for legal escalation"
+    ],
+    "escalation_hints": [
+      "Escalate to legal when health claim appears on non-permitted product class",
+      "Escalate when substantiation is missing for high-visibility claims"
+    ]
+  },
+  "output_schema": {
+    "fields": ["matched_patterns", "matched_rules", "rationale", "rewrite_guidance_ref"],
+    "rewrite_linkage": ["rewrite:remove-health-claim"]
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-supplement-health-claims",
+      "regulation:sg-hpa-s7-prohibited-claims",
+      "regulation:sg-hsa-product-safety-claims"
+    ],
+    "rules": [
+      "demo-sg-health-forbidden-claim",
+      "demo-apac-sa-health-claim-blocker",
+      "demo-apac-sa-health-implication"
+    ],
+    "evidence": [
+      "evidence:health-claim-substantiation",
+      "evidence:supplement-health-evidence",
+      "evidence:health-implication-substantiation"
+    ],
+    "rewrites": ["rewrite:remove-health-claim"],
+    "benchmarks": ["PC-008", "PC-011", "PC-013"]
+  },
+  "legacy_skill_module": "Claim Review",
+  "legacy_pattern_ids": ["sa-health-implication"],
+  "confidence_level": "high",
+  "evidence_requirement": "required",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "advertising", "health"]
+}

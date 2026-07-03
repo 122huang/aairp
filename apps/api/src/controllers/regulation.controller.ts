@@ -140,6 +140,9 @@ export async function registerRegulationController(
           bodyText: body.body_text,
           tags: body.tags,
           searchText: body.search_text,
+          effectiveDate: body.effective_date,
+          mandatory: body.mandatory,
+          riskLevel: body.risk_level,
         },
         adminCtx(request),
       );
@@ -186,6 +189,9 @@ export async function registerRegulationController(
             bodyText: body.body_text,
             tags: body.tags,
             searchText: body.search_text,
+            effectiveDate: body.effective_date,
+            mandatory: body.mandatory,
+            riskLevel: body.risk_level,
           },
           adminCtx(request),
         );

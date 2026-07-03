@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Evidence type taxonomy and expected_evidence_type resolution mapping. Supports future separation of EvidenceType (type_key) and EvidenceRequirement (requirement_scope).",
+  "evidence_type_keys": [
+    {
+      "type_key": "certification",
+      "name": "Certification",
+      "description": "Third-party certification mark, registration, or credential substantiation."
+    },
+    {
+      "type_key": "lab_report",
+      "name": "Laboratory Report",
+      "description": "Laboratory test report or quantitative performance validation document."
+    },
+    {
+      "type_key": "clinical",
+      "name": "Clinical Evidence",
+      "description": "Clinical study or trial substantiation for health or efficacy claims."
+    },
+    {
+      "type_key": "substantiation_general",
+      "name": "General Substantiation",
+      "description": "General substantiation file supporting advertising claims."
+    },
+    {
+      "type_key": "test_method",
+      "name": "Test Method",
+      "description": "Documented test method aligned with on-pack or advertised specifications."
+    },
+    {
+      "type_key": "patent",
+      "name": "Patent",
+      "description": "Patent registration reference substantiation."
+    }
+  ],
+  "document_backed_type_keys": ["certification", "lab_report", "clinical", "patent"],
+  "expected_evidence_type_resolution": [
+    {
+      "expected_evidence_type": "certification",
+      "evidence_type_keys": ["certification"],
+      "purpose_tags": [
+        "certification-mark",
+        "certification-scope",
+        "certification-expiry",
+        "certification-legibility",
+        "certification-body"
+      ]
+    },
+    {
+      "expected_evidence_type": "lab_report",
+      "evidence_type_keys": ["lab_report"],
+      "purpose_tags": ["performance-lab-report", "quantitative-lab-report"]
+    },
+    {
+      "expected_evidence_type": "test_method",
+      "evidence_type_keys": ["test_method"],
+      "purpose_tags": ["capacity-test-method", "standardized-test-protocol"]
+    },
+    {
+      "expected_evidence_type": "substantiation_general",
+      "evidence_type_keys": ["substantiation_general"],
+      "purpose_tags": [
+        "performance-substantiation",
+        "health-substantiation",
+        "comparative-substantiation",
+        "efficacy-substantiation",
+        "general-substantiation"
+      ]
+    }
+  ]
+}

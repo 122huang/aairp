@@ -1,0 +1,36 @@
+{
+  "knowledge_id": "regulation:vn-advertising-law-absolute-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "vn-advertising-law-absolute-claims",
+  "country": "VN",
+  "authority": "MOIT",
+  "regulation_name": "Law on Advertising 2012",
+  "citation": "Law on Advertising No. 16/2012/QH13 — Articles 8, 9 (Truthfulness and prohibited misleading content)",
+  "effective_date": "2013-01-01",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Advertising must be truthful and must not use unsubstantiated absolute or superlative performance claims that mislead consumers.",
+  "review_guidance": "TRIGGER: Absolute efficacy, superiority, or best-in-class claims (Vietnamese or English). ACTION: WARN for VN scope — require substantiation; do not auto-BLOCK without legal review. CHECK: Test data, scope, and claim wording in Vietnamese. ESCALATE IF: Medical or therapeutic absolute claims.",
+  "related_rule_ids": [
+    "demo-apac-sa-absolute-claim",
+    "demo-apac-sa-absolute-claim-soft"
+  ],
+  "related_evidence_ids": [
+    "evidence:absolute-performance-substantiation",
+    "evidence:efficacy-superlative-substantiation"
+  ],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "absolute",
+    "vn-warn-tier"
+  ],
+  "jurisdiction_scope": [
+    "sa.*"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

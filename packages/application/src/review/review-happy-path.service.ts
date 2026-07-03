@@ -1,4 +1,4 @@
-import type { ReviewHappyPathResult, ReviewPipelineTimings } from '@aairp/shared-kernel';
+import type { ContextualRewriteBatchResult, ReviewHappyPathResult, ReviewPipelineTimings } from '@aairp/shared-kernel';
 import type { ReviewCaseSnapshot } from '@aairp/shared-kernel';
 import { AdvertisementUploadService } from '../advertisement/advertisement-upload.service.js';
 import { ContextBuilderService } from './context-builder.service.js';
@@ -12,6 +12,7 @@ export type ReviewHappyPathServiceDeps = {
 
 export type ReviewHappyPathRunResult = ReviewHappyPathResult & {
   timings: ReviewPipelineTimings;
+  contextualRewrites?: ContextualRewriteBatchResult;
   /** Read-only snapshot for Case Library; not used by review logic. */
   caseSnapshot: ReviewCaseSnapshot;
 };
@@ -30,11 +31,13 @@ export class ReviewHappyPathService {
       decision: pipeline.decision,
       report: pipeline.report,
       timings: pipeline.timings,
+      ...(pipeline.contextualRewrites ? { contextualRewrites: pipeline.contextualRewrites } : {}),
       caseSnapshot: {
         context,
         ruleResult: pipeline.ruleResult,
         playbookResult: pipeline.playbookResult,
         openRiskResult: pipeline.openRiskResult,
+        ...(pipeline.visionResult ? { visionResult: pipeline.visionResult } : {}),
       },
     };
   }

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/skill-corpus-entry.json",
+  "title": "SkillCorpusEntry",
+  "description": "Skill Corpus knowledge entry — review capability and execution guidance (not regulatory decision logic).",
+  "type": "object",
+  "required": [
+    "knowledge_id",
+    "corpus_type",
+    "skill_id",
+    "skill_purpose",
+    "skill_status",
+    "skill_version",
+    "summary",
+    "review_guidance",
+    "input_definition",
+    "detection_patterns",
+    "skill_behavior",
+    "output_schema",
+    "linkage",
+    "owner",
+    "owner_type",
+    "last_reviewed",
+    "review_status"
+  ],
+  "properties": {
+    "knowledge_id": {
+      "type": "string",
+      "pattern": "^skill:[a-z0-9][a-z0-9.-]*$"
+    },
+    "corpus_type": { "const": "skill" },
+    "skill_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "skill_purpose": { "type": "string", "minLength": 20 },
+    "skill_status": {
+      "type": "string",
+      "enum": ["draft", "validated", "production", "deprecated"]
+    },
+    "skill_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "summary": { "type": "string", "minLength": 20 },
+    "review_guidance": { "type": "string", "minLength": 20 },
+    "input_definition": {
+      "type": "object",
+      "required": ["modalities", "countries", "categories", "claim_types"],
+      "properties": {
+        "modalities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "countries": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "categories": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "claim_types": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "required_context": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "detection_patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["pattern_id", "description"],
+        "properties": {
+          "pattern_id": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 10 },
+          "signal_terms": { "type": "array", "items": { "type": "string" } },
+          "signal_concepts": { "type": "array", "items": { "type": "string" } },
+          "playbook_pattern_id": { "type": "string" },
+          "rewrite_template_id": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "skill_behavior": {
+      "type": "object",
+      "properties": {
+        "rewrite_strategy": {
+          "type": "string",
+          "enum": ["qualify", "remove", "disclose", "cite_evidence"]
+        },
+        "checkpoint_actions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "escalation_hints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "output_schema": {
+      "type": "object",
+      "required": ["fields"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "rewrite_linkage": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "linkage": {
+      "type": "object",
+      "properties": {
+        "regulations": { "type": "array", "items": { "type": "string" } },
+        "rules": { "type": "array", "items": { "type": "string" } },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "cases": { "type": "array", "items": { "type": "string" } },
+        "rewrites": { "type": "array", "items": { "type": "string" } },
+        "benchmarks": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "regulation_scope": {
+      "type": "string",
+      "const": "independent",
+      "description": "Explicit opt-out from regulation linkage (future skills only)."
+    },
+    "regulation_independence_rationale": { "type": "string", "minLength": 20 },
+    "legacy_skill_module": { "type": "string" },
+    "legacy_pattern_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "confidence_level": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "evidence_requirement": {
+      "type": "string",
+      "enum": ["none", "recommended", "required"]
+    },
+    "owner": { "type": "string", "minLength": 1 },
+    "owner_type": {
+      "type": "string",
+      "enum": ["legal", "compliance", "knowledge_eng", "product"]
+    },
+    "last_reviewed": { "type": "string", "format": "date-time" },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "legal_reviewed", "deprecated"]
+    },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "skill_status": { "enum": ["validated", "production"] } },
+        "required": ["skill_status"]
+      },
+      "then": {
+        "anyOf": [
+          { "properties": { "regulation_scope": { "const": "independent" } }, "required": ["regulation_scope", "regulation_independence_rationale"] },
+          { "properties": { "linkage": { "properties": { "regulations": { "type": "array", "minItems": 1 } }, "required": ["regulations"] } } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "knowledge_id": "evidence:comparative-claim-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "comparative-claim-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "comparative-substantiation",
+  "evidence_purpose": "Substantiation for comparative advertising claims including baseline product and test method disclosure.",
+  "summary": "Comparative claims require substantiation identifying baseline product, test method, and measurable difference.",
+  "review_guidance": "TRIGGER: Versus, compared to, or better than language. ACTION: Request comparison substantiation file. CHECK: Named baseline, test conditions. ESCALATE IF: Competitor identifiable but test absent.",
+  "evidence_purpose_tags": [
+    "comparative-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH",
+      "AU"
+    ],
+    "claim_types": [
+      "comparative-claim"
+    ],
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asas-comparative-claims",
+      "regulation:au-accc-comparative-advertising"
+    ],
+    "rules": [
+      "demo-apac-sa-comparative-claim"
+    ],
+    "skills": [
+      "skill:comparative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-comparative"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-003",
+    "AF-006"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Confirm baseline product named in substantiation",
+      "Verify test method and conditions disclosed",
+      "Check measurable difference stated"
+    ],
+    "reject_if": [
+      "No identifiable comparison baseline"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "comparative"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "knowledge_id": "regulation:au-accc-comparative-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "au-accc-comparative-advertising",
+  "country": "AU",
+  "authority": "ACCC",
+  "regulation_name": "Competition and Consumer Act 2010",
+  "citation": "Competition and Consumer Act 2010 — Schedule 2, s 29 (Comparative claims)",
+  "effective_date": "2010-01-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative claims must be accurate and substantiated; false comparisons may breach the Australian Consumer Law.",
+  "review_guidance": "TRIGGER: Versus, better-than, or market leadership comparisons. ACTION: WARN — require substantiation before publication. CHECK: Named competitor, test method, and comparison date. ESCALATE IF: False or misleading comparative claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [
+    "evidence:comparative-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

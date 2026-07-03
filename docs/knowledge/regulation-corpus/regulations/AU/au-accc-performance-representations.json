@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:au-accc-performance-representations",
+  "corpus_type": "regulation",
+  "regulation_id": "au-accc-performance-representations",
+  "country": "AU",
+  "authority": "ACCC",
+  "regulation_name": "Australian Consumer Law",
+  "citation": "Australian Consumer Law — Schedule 2, s 18 (Performance)",
+  "effective_date": "2010-01-01",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Performance representations must not mislead; businesses must have reasonable grounds for quantified claims.",
+  "review_guidance": "TRIGGER: Performance stats, savings claims, or guaranteed outcomes. ACTION: WARN — require reasonable substantiation. CHECK: Test standard (AS/NZS), conditions, and typical results. ESCALATE IF: Misleading or unsubstantiated performance claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [
+    "evidence:performance-lab-report"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "consumer.goods"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

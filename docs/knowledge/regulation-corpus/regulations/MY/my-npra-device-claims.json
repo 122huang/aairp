@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:my-npra-device-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "my-npra-device-claims",
+  "country": "MY",
+  "authority": "NPRA",
+  "regulation_name": "Medical Device Act 2012 (Advertising)",
+  "citation": "Medical Device Act 2012 — Section 34",
+  "effective_date": "2012-07-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device advertising must not claim unregistered intended purposes or clinical outcomes beyond approval.",
+  "review_guidance": "TRIGGER: Clinical benefit or diagnostic claims for medical devices. ACTION: REWRITE — limit to registered intended use. CHECK: MDA registration status and device class. ESCALATE IF: Unregistered device or expanded clinical claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

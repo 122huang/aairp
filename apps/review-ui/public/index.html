@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ad Compliance Hub · 广告审核</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/review/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">Ad Compliance Hub</span>
+        <span class="brand-sub">小家电广告审核 · 法务内测</span>
+      </div>
+      <div class="topbar-meta">
+        <a class="link-muted" href="/knowledge/index.html">知识平台</a>
+        <a class="link-muted" href="/admin-ui/index.html">管理端</a>
+        <span id="api-status" class="status-pill status-unknown">API …</span>
+      </div>
+    </header>
+
+    <div class="pilot-banner" role="note">
+      用户端 · 粘贴文案或上传长图 · 输出仅供决策辅助
+    </div>
+
+    <div class="layout layout-user">
+      <section class="panel-form">
+        <h1>新建审核</h1>
+        <p class="muted">粘贴文案或上传长图，任选其一；规则审核以下方<strong>广告文案</strong>为准。</p>
+
+        <fieldset class="field-group">
+          <legend>目标市场（可多选）</legend>
+          <div id="country-checkboxes" class="checkbox-row"></div>
+        </fieldset>
+
+        <div class="field-group">
+          <label class="field-label" for="category-select">产品类目 <span class="field-required">必填</span></label>
+          <select id="category-select" class="field-select" required>
+            <option value="" selected disabled>请选择产品类目</option>
+          </select>
+          <p class="field-hint">影响规则适用范围与知识依据；请勿使用默认项，请按实际产品选择</p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="product-sku">产品 SKU / 型号（可选）</label>
+          <input
+            id="product-sku"
+            class="field-input"
+            type="text"
+            placeholder="例如 RC40-006"
+            autocomplete="off"
+          />
+          <p class="field-hint">填写后将校验广告文案/OCR 中的型号是否一致</p>
+        </div>
+
+        <div class="field-group">
+          <label class="checkbox-chip">
+            <input id="ai-rendered-image" type="checkbox" />
+            含 AI 生成 / 渲染产品图（需配 illustration disclaimer）
+          </label>
+        </div>
+
+        <div id="text-pane" class="field-group field-group-primary">
+          <label class="field-label field-label-prominent" for="ad-text">广告文案</label>
+          <p class="field-hint">
+            <strong>直接在此粘贴文字即可审核</strong>，无需上传图片。若上传长图，识别结果会填入此处，请核对后提交。
+          </p>
+          <textarea
+            id="ad-text"
+            class="field-textarea field-textarea-tall"
+            rows="8"
+            placeholder="粘贴广告文案，例如：Goes beyond standard air fryer (200℃)"
+          ></textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="ad-image">上传长图 / Banner（可选）</label>
+          <input id="ad-image" type="file" accept="image/*" class="field-file" />
+          <p id="ocr-mode-hint" class="field-hint"></p>
+          <div
+            id="ocr-progress"
+            class="ocr-progress hidden"
+            role="status"
+            aria-live="polite"
+            aria-busy="false"
+          >
+            <div class="ocr-progress-top">
+              <div class="ocr-progress-spinner" aria-hidden="true"></div>
+              <div class="ocr-progress-headings">
+                <p id="ocr-progress-title" class="ocr-progress-title">正在处理…</p>
+                <p id="ocr-progress-elapsed" class="ocr-progress-elapsed">已用时 0:00</p>
+              </div>
+            </div>
+            <div class="ocr-progress-bar" aria-hidden="true">
+              <div class="ocr-progress-bar-fill"></div>
+            </div>
+            <ol id="ocr-progress-steps" class="ocr-progress-steps">
+              <li data-step="prepare">① 准备图片</li>
+              <li data-step="ocr">② OCR 抓字</li>
+              <li data-step="llm">③ LLM 整理文案</li>
+              <li data-step="done">④ 填入广告文案</li>
+            </ol>
+            <p id="ocr-progress-detail" class="ocr-progress-detail"></p>
+          </div>
+          <p id="ocr-status" class="field-hint"></p>
+          <button type="button" id="btn-ocr" class="btn secondary block" disabled>
+            重新识别图中文字
+          </button>
+          <p class="field-hint ocr-disclaimer hidden" id="ocr-disclaimer">
+            流程：OCR 抓字 → LLM 整理结构 → 人工核对。识别结果填入上方<strong>广告文案</strong>；包装清单、型号对比等结构化内容见下方，请对照原图整组确认。
+          </p>
+        </div>
+
+        <div id="content-split" class="content-split content-split--text-only hidden">
+          <div class="image-pane" id="image-pane">
+            <p class="field-label">原图对照</p>
+            <div class="image-preview-scroll" id="image-preview-scroll">
+              <div class="image-preview-frame">
+                <img id="image-preview" alt="广告原图" />
+                <canvas id="image-highlight" class="image-highlight" aria-hidden="true"></canvas>
+              </div>
+            </div>
+            <p class="field-hint">点击 OCR 分段可定位到原图对应区域</p>
+            <div id="ocr-segments" class="ocr-segments"></div>
+            <div id="ocr-structured" class="ocr-structured hidden"></div>
+          </div>
+        </div>
+
+        <button type="button" id="btn-submit" class="btn primary block">提交审核</button>
+      </section>
+
+      <section class="panel-results">
+        <h2>审核结果</h2>
+        <p id="results-empty" class="muted">提交后将按国家展示结论与建议措施；有上传原图时左侧可持续对照。</p>
+
+        <div id="results-body" class="results-body results-body--no-image hidden">
+          <aside id="result-image-pane" class="result-image-pane hidden">
+            <p class="field-label">原图对照</p>
+            <div class="result-image-scroll">
+              <img id="result-image" alt="广告原图" />
+            </div>
+          </aside>
+
+          <div class="result-main">
+            <div id="country-tabs" class="country-tabs" role="tablist"></div>
+            <div id="results-summary" class="results-summary"></div>
+            <div id="knowledge-basis-wrap" class="knowledge-basis-wrap hidden">
+              <details class="knowledge-basis-details" open>
+                <summary class="knowledge-basis-summary">
+                  <span>Knowledge Basis</span>
+                  <span class="knowledge-basis-sub">知识依据 · governed knowledge (not a compliance decision)</span>
+                </summary>
+                <div class="kb-content knowledge-basis-body"></div>
+              </details>
+            </div>
+            <div id="report-wrap" class="report-wrap hidden">
+              <iframe id="report-frame" title="审核报告"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <span>用户端 · 历史记录与规则调试请使用管理端</span>
+    </footer>
+
+    <script src="/review/app.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "prompt_pack_version": "demo-vision-1.0.0",
+  "extracted_text": ["Dyson"],
+  "findings": [
+    {
+      "risk_type": "unauthorised-competitor-trademark",
+      "description": "Identifiable competitor logo visible in product comparison scene without authorisation.",
+      "severity": "BLOCKER",
+      "suggested_action": "REJECT",
+      "confidence": 0.95,
+      "scan_dimension": "scene_content",
+      "evidence_spans": [
+        {
+          "field": "image",
+          "slice_index": 0,
+          "region_description": "top-right comparison badge",
+          "text": "Dyson"
+        }
+      ],
+      "related_modules_checked": ["demo-apac-sa-competitor-trademark"]
+    }
+  ]
+}

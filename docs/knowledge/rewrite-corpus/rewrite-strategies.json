@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Rewrite strategy types and expected evidence classification for Rewrite Corpus entries.",
+  "rewrite_strategy_types": [
+    {
+      "strategy_type": "qualify",
+      "name": "Qualify",
+      "description": "Replace absolute or unsubstantiated wording with qualified typical-results language."
+    },
+    {
+      "strategy_type": "remove",
+      "name": "Remove",
+      "description": "Remove non-compliant claim wording from ad copy."
+    },
+    {
+      "strategy_type": "disclose",
+      "name": "Disclose",
+      "description": "Add disclosure, disclaimer, or contextual clarification without changing core product claims."
+    },
+    {
+      "strategy_type": "cite_evidence",
+      "name": "Cite Evidence",
+      "description": "Require substantiation or certification reference before publishing the claim."
+    }
+  ],
+  "expected_evidence_types": [
+    {
+      "evidence_type": "none",
+      "description": "No substantiation artifact expected for this rewrite guidance."
+    },
+    {
+      "evidence_type": "certification",
+      "description": "Certification mark, patent, award, or third-party credential."
+    },
+    {
+      "evidence_type": "lab_report",
+      "description": "Laboratory test report or method validation document."
+    },
+    {
+      "evidence_type": "substantiation_general",
+      "description": "General substantiation file supporting efficacy or performance claims."
+    },
+    {
+      "evidence_type": "test_method",
+      "description": "Documented test method aligned with on-pack performance specifications."
+    }
+  ]
+}

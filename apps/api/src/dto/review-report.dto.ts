@@ -25,11 +25,33 @@ export type ReviewReportResponseDto = {
       category_id: string;
     };
     findings: Array<{
+      finding_id: string;
       module: string;
       ref_id: string;
       severity: string;
       decision: string;
       summary: string;
+      evidence_spans?: Array<{
+        field: string;
+        start?: number;
+        end?: number;
+        text: string;
+      }>;
+      rewrite_suggestions?: Array<{
+        suggestion_id: string;
+        finding_id: string;
+        risk_type: string;
+        rewrite_template_id: string;
+        original_span: {
+          field: string;
+          start?: number;
+          end?: number;
+          text: string;
+        };
+        suggested_text: string[];
+        rationale: string;
+        confidence: number;
+      }>;
     }>;
     open_risk_skipped: boolean;
     open_risk_skip_reason?: string;
@@ -61,11 +83,36 @@ export function toReviewReportResponseDto(result: ReviewReportResult): ReviewRep
         category_id: result.summary.advertisement.categoryId,
       },
       findings: result.summary.findings.map((finding) => ({
+        finding_id: finding.findingId,
         module: finding.module,
         ref_id: finding.refId,
         severity: finding.severity,
         decision: finding.decision,
         summary: finding.summary,
+        ...(finding.evidenceSpans?.length
+          ? {
+              evidence_spans: finding.evidenceSpans.map((span) => ({
+                field: span.field,
+                start: span.start,
+                end: span.end,
+                text: span.text,
+              })),
+            }
+          : {}),
+        ...(finding.rewriteSuggestions?.length
+          ? {
+              rewrite_suggestions: finding.rewriteSuggestions.map((suggestion) => ({
+                suggestion_id: suggestion.suggestionId,
+                finding_id: suggestion.findingId,
+                risk_type: suggestion.riskType,
+                rewrite_template_id: suggestion.rewriteTemplateId,
+                original_span: suggestion.originalSpan,
+                suggested_text: suggestion.suggestedText,
+                rationale: suggestion.rationale,
+                confidence: suggestion.confidence,
+              })),
+            }
+          : {}),
       })),
       open_risk_skipped: result.summary.openRiskSkipped,
       open_risk_skip_reason: result.summary.openRiskSkipReason,

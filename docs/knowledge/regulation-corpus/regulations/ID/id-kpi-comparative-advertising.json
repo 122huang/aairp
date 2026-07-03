@@ -1,0 +1,28 @@
+{
+  "knowledge_id": "regulation:id-kpi-comparative-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "id-kpi-comparative-advertising",
+  "country": "ID",
+  "authority": "KPI",
+  "regulation_name": "Indonesian Broadcasting Code (Comparative ads)",
+  "citation": "Indonesian Broadcasting Code — Article 11",
+  "effective_date": "2012-01-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative advertising must be honest, substantiated, and must not unfairly harm competitor reputation.",
+  "review_guidance": "TRIGGER: Brand comparison, best-in-class, or superiority claims. ACTION: WARN — require substantiation documentation. CHECK: Named competitor, evidence date, and claim scope. ESCALATE IF: Unsubstantiated superiority or unfair disparagement.",
+  "related_rule_ids": [
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

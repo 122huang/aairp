@@ -7,6 +7,7 @@ const state = {
   running: false,
   trace: [],
   lastReviewId: null,
+  caseFilter: 'all',
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -66,27 +67,86 @@ function renderStepper() {
   $('#pipeline-stepper').innerHTML = stages
     .map(
       (s) =>
-        `<div class="step pending" data-step="${s.id}"><span class="step-icon">${s.icon}</span><span class="step-label">${s.label}</span></div>`,
+        `<div class="step pending" data-step="${s.id}"><span class="step-dot" aria-hidden="true"></span><span class="step-label">${s.label}</span></div>`,
     )
     .join('');
 }
 
+function filteredCases() {
+  if (state.caseFilter === 'all') return state.demoCases;
+  return state.demoCases.filter((c) => c.group === state.caseFilter);
+}
+
 function renderDemoCases() {
   const list = $('#demo-case-list');
-  list.innerHTML = state.demoCases
-    .map(
-      (c) => `
+  const cases = filteredCases();
+  if (!cases.length) {
+    list.innerHTML = '<p class="muted">该分类下暂无案例。</p>';
+    return;
+  }
+
+  list.innerHTML = cases
+    .map((c) => {
+      const humanBadge = c.human_intent
+        ? `<span class="case-card-human">人工 ${c.human_intent}</span>`
+        : '';
+      const decisionBadge =
+        c.expected_decision === '—'
+          ? ''
+          : `<span class="case-card-decision decision-${c.expected_decision}">${c.expected_decision}</span>`;
+      return `
     <button type="button" class="case-card" data-id="${c.id}">
-      <span class="case-card-title">${c.title}</span>
+      <span class="case-card-title">${c.title}${humanBadge}</span>
       <span class="case-card-sub">${c.subtitle}</span>
-      <span class="case-card-decision decision-${c.expected_decision}">${c.expected_decision}</span>
-    </button>`,
-    )
+      ${decisionBadge}
+    </button>`;
+    })
     .join('');
 
   list.querySelectorAll('.case-card').forEach((btn) => {
     btn.addEventListener('click', () => selectCase(btn.dataset.id));
   });
+
+  if (state.selectedCase) {
+    const sel = list.querySelector(`[data-id="${state.selectedCase.id}"]`);
+    if (sel) sel.classList.add('selected');
+  }
+}
+
+function setCaseFilter(filter) {
+  state.caseFilter = filter;
+  $$('.filter-btn').forEach((btn) => btn.classList.toggle('active', btn.dataset.filter === filter));
+  renderDemoCases();
+}
+
+function useCustomCase(andRun = false) {
+  const text = $('#custom-text').value.trim();
+  if (!text) {
+    alert('请先粘贴广告文案');
+    return;
+  }
+  const country = $('#custom-country').value;
+  const category = $('#custom-category').value;
+  const customCase = {
+    id: `custom-${Date.now()}`,
+    group: 'custom',
+    title: '自定义文案',
+    subtitle: `${country} · ${category}`,
+    expected_decision: '—',
+    highlight: '真实文案试跑 · 无预设人工标签',
+    upload: {
+      country_id: country,
+      platform_id: 'META',
+      category_id: category,
+      content: { text },
+      tags: ['legal-pilot:custom'],
+    },
+  };
+  state.demoCases = state.demoCases.filter((c) => c.group !== 'custom' || !c.id.startsWith('custom-'));
+  state.demoCases.unshift(customCase);
+  setCaseFilter('all');
+  selectCase(customCase.id);
+  if (andRun) runReview();
 }
 
 function selectCase(id) {
@@ -95,7 +155,9 @@ function selectCase(id) {
   state.selectedCase = c;
   $$('.case-card').forEach((el) => el.classList.toggle('selected', el.dataset.id === id));
   $('#selected-case-title').textContent = c.title;
-  $('#selected-case-sub').textContent = `${c.subtitle} · ${c.highlight}`;
+  const engineNote =
+    c.engine_may_differ ? ' · AI 结果可能与人工预期不同（Pilot GAP 案例）' : '';
+  $('#selected-case-sub').textContent = `${c.subtitle} · ${c.highlight}${engineNote}`;
   $('#btn-run-review').disabled = false;
 
   const u = c.upload;
@@ -120,7 +182,8 @@ function escapeHtml(s) {
 function renderTrace() {
   const box = $('#trace-timeline');
   if (!state.trace.length) {
-    box.innerHTML = '<p class="muted">完成审核后，Knowledge Trace 将在此展示各阶段版本与命中。</p>';
+    box.innerHTML =
+      '<p class="muted">审核完成后，此处展示各阶段知识包版本与命中详情。</p>';
     return;
   }
   box.innerHTML = state.trace
@@ -161,23 +224,23 @@ async function runReview() {
 
   try {
     setStepStatus('upload', 'running');
-    log('上传广告…');
+    log('正在上传广告…');
     const adRes = await api('/demo/advertisements', upload);
     setStepStatus('upload', 'done');
-    pushTrace('upload', 'Advertisement Upload', `advertisement_id: ${adRes.advertisement_id}`);
+    pushTrace('upload', '广告上传', `advertisement_id: ${adRes.advertisement_id}`);
     await sleep(400);
 
     const adId = adRes.advertisement_id;
 
     setStepStatus('context', 'running');
-    log('构建审核上下文…');
+    log('正在构建审核上下文…');
     const ctx = await api('/demo/review-context', { advertisement_id: adId });
     setStepStatus('context', 'done');
     const kv = ctx.resolved_knowledge_versions;
     pushTrace(
       'context',
-      'Context Builder',
-      `review_id: ${ctx.review_id} · 绑定知识包版本`,
+      '上下文构建',
+      `review_id: ${ctx.review_id} · 已绑定知识包版本`,
       {
         code: `rule=${kv.rule_pack_version} · playbook=${kv.playbook_pack_version}`,
       },
@@ -185,25 +248,25 @@ async function runReview() {
     await sleep(400);
 
     setStepStatus('regulation', 'running');
-    log('解析适用法规…');
+    log('正在解析适用法规…');
     const regs = state.knowledge.regulations.filter(
       (r) => r.jurisdiction === upload.country_id || r.jurisdiction === 'SG',
     );
     setStepStatus('regulation', 'done');
     pushTrace(
       'regulation',
-      'Regulation',
-      regs.map((r) => `${r.law_name} — ${r.article}`).join(' · ') || 'Demo regulation corpus',
+      '法规',
+      regs.map((r) => `${r.law_name} — ${r.article}`).join(' · ') || '演示法规库',
     );
     await sleep(350);
 
     setStepStatus('rule', 'running');
-    log('Rule Engine 评估…');
+    log('规则引擎评估…');
     const ruleRes = await api('/demo/rule-evaluation', { advertisement_id: adId });
     setStepStatus('rule', 'done');
     const ruleDetail =
       ruleRes.findings.length === 0
-        ? '无 Rule 命中'
+        ? '规则无命中'
         : ruleRes.findings
             .map((f) => {
               const cite = f.evaluation_detail?.citation;
@@ -211,10 +274,10 @@ async function runReview() {
               return `${f.ref_id} (${f.severity})${citeStr}: ${f.summary}`;
             })
             .join(' · ');
-    pushTrace('rule', 'Rule Engine', ruleDetail, {
+    pushTrace('rule', '规则引擎', ruleDetail, {
       code: `pack ${ruleRes.rule_pack_version} · blocker=${ruleRes.has_blocker}`,
     });
-    log('Rule 完成', ruleDetail);
+    log('规则评估完成', ruleDetail);
     await sleep(450);
 
     setStepStatus('playbook', 'running');
@@ -223,7 +286,7 @@ async function runReview() {
     setStepStatus('playbook', 'done');
     const pbDetail =
       pbRes.findings.length === 0
-        ? '无 Playbook 命中'
+        ? 'Playbook 无命中'
         : pbRes.findings.map((f) => `${f.ref_id}: ${f.summary}`).join(' · ');
     pushTrace('playbook', 'Playbook', pbDetail, {
       code: `pack ${pbRes.playbook_pack_version}`,
@@ -238,16 +301,16 @@ async function runReview() {
       setStepStatus('llm', 'skipped');
       pushTrace(
         'llm',
-        'Prompt + LLM (skipped)',
+        'Prompt + LLM（已跳过）',
         `BLOCKER 已 decisive — skip_reason: ${llmRes.skip_reason ?? 'HAS_BLOCKER'}`,
         { code: llmRes.prompt_pack_version },
       );
-      log('LLM 跳过', llmRes.skip_reason ?? 'HAS_BLOCKER');
+      log('LLM 已跳过', llmRes.skip_reason ?? 'HAS_BLOCKER');
     } else {
       setStepStatus('llm', 'done');
       const llmDetail =
         llmRes.findings.length === 0
-          ? '无额外开放风险'
+          ? '无额外 open-risk 发现'
           : llmRes.findings.map((f) => f.summary).join(' · ');
       pushTrace('llm', 'Prompt + LLM', llmDetail, { code: llmRes.prompt_pack_version });
       log('LLM 完成', llmDetail);
@@ -255,22 +318,22 @@ async function runReview() {
     await sleep(450);
 
     setStepStatus('decision', 'running');
-    log('Decision Engine 融合…');
+    log('决策引擎融合…');
     const decRes = await api('/demo/decision', { advertisement_id: adId });
     setStepStatus('decision', 'done');
     pushTrace(
       'decision',
-      'Decision Engine',
-      `${decRes.final_decision} (confidence ${decRes.confidence}) — ${decRes.rationale}`,
+      '决策引擎',
+      `${decRes.final_decision}（置信度 ${decRes.confidence}）— ${decRes.rationale}`,
       {
         code: `rule=${decRes.finding_counts.rule} playbook=${decRes.finding_counts.playbook} llm=${decRes.finding_counts.llm}`,
       },
     );
-    log('Decision', `${decRes.final_decision} · ${decRes.rationale}`);
+    log('决策结果', `${decRes.final_decision} · ${decRes.rationale}`);
     await sleep(400);
 
     setStepStatus('report', 'running');
-    log('生成报告 & 写入 Case Library…');
+    log('正在生成报告并写入案例库…');
     const full = await api('/demo/review', upload);
     setStepStatus('report', 'done');
     state.lastReviewId = full.review_id;
@@ -278,17 +341,25 @@ async function runReview() {
 
     pushTrace(
       'report',
-      'Review Report',
-      `${full.summary.findings.length} findings · open_risk_skipped=${full.summary.open_risk_skipped}`,
+      '审核报告',
+      `${full.summary.findings.length} 条 finding · open_risk_skipped=${full.summary.open_risk_skipped}`,
     );
     showReport(full.report_html, full.final_decision);
 
     setStepStatus('case', 'running');
     await sleep(300);
     setStepStatus('case', 'done');
-    pushTrace('case', 'Case Library', '判例已自动保存（sidecar），可在 Case Library 浏览');
+    pushTrace('case', '案例库', '案例已自动保存，可在「案例库」标签页查看。');
 
     log('审核完成', `决策: ${full.final_decision} · review_id: ${full.review_id}`);
+
+    if (state.selectedCase.human_intent && state.selectedCase.human_intent !== full.final_decision) {
+      log(
+        '人工对比',
+        `人工预期 ${state.selectedCase.human_intent} · AI 输出 ${full.final_decision}（Pilot GAP — 可记录反馈）`,
+      );
+    }
+
     await loadCaseLibrary();
 
     switchTab('report');
@@ -307,7 +378,7 @@ async function loadCaseLibrary() {
   try {
     const data = await apiGet('/admin/cases?limit=50');
     if (!data.cases?.length) {
-      grid.innerHTML = '<p class="muted">暂无 Case。请先运行一次审核。</p>';
+      grid.innerHTML = '<p class="muted">暂无案例。请先运行一次审核。</p>';
       return;
     }
     grid.innerHTML = data.cases
@@ -326,7 +397,7 @@ async function loadCaseLibrary() {
       card.addEventListener('click', () => showCaseDetail(card.dataset.caseId));
     });
   } catch (err) {
-    grid.innerHTML = `<p class="muted">无法加载 Case Library: ${escapeHtml(err.message)}</p>`;
+    grid.innerHTML = `<p class="muted">无法加载案例库：${escapeHtml(err.message)}</p>`;
   }
 }
 
@@ -376,6 +447,11 @@ async function init() {
   $$('.tab').forEach((tab) => {
     tab.addEventListener('click', () => switchTab(tab.dataset.tab));
   });
+  $$('.filter-btn').forEach((btn) => {
+    btn.addEventListener('click', () => setCaseFilter(btn.dataset.filter));
+  });
+  $('#btn-use-custom').addEventListener('click', () => useCustomCase(false));
+  $('#btn-run-custom').addEventListener('click', () => useCustomCase(true));
   $('#btn-run-review').addEventListener('click', runReview);
   $('#btn-refresh-cases').addEventListener('click', loadCaseLibrary);
 

@@ -1,0 +1,65 @@
+{
+  "knowledge_id": "case:af-008",
+  "corpus_type": "case",
+  "case_id": "af-008",
+  "case_purpose": "Validation knowledge for benchmark case AF-008 — AI Image Quality.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates AI Image Quality scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case AF-008. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "image"
+    ],
+    "risk_class": "LOW",
+    "signal_summary": "AI Image Quality",
+    "benchmark_ref": "AF-008"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "LOW",
+    "expected_action": "ESCALATE",
+    "expected_rule": "demo-apac-sa-ai-image-disclaimer"
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "LOW",
+    "matched_skill": null,
+    "applied_rewrite": null,
+    "evidence_result": "not_applicable"
+  },
+  "benchmark_ref": "AF-008",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-scap-disclosure"
+    ],
+    "rules": [
+      "demo-apac-sa-ai-image-disclaimer"
+    ],
+    "skills": [],
+    "rewrites": [],
+    "evidence": []
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 AF-008 for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

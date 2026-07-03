@@ -1,0 +1,38 @@
+{
+  "knowledge_id": "rewrite:qualify-efficacy",
+  "corpus_type": "rewrite",
+  "rewrite_id": "qualify-efficacy",
+  "legacy_template_id": "qualify-efficacy",
+  "rewrite_purpose": "Guide reviewers to qualify efficacy or testimonial claims with substantiation framing instead of absolute wording.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "qualify",
+  "summary": "Replace absolute efficacy or testimonial claims with qualified language supported by substantiation or typical-results framing.",
+  "rewrite_guidance": "TRIGGER: Clinically proven, guaranteed, or 100% efficacy language. ACTION: Qualify with substantiation framing or typical-results wording. CHECK: Testimonial attribution and substantiation file. ESCALATE IF: Absolute cure or miracle language on health products.",
+  "review_guidance": "ESCALATE IF: No substantiation trace exists for a high-visibility superlative claim.",
+  "measurable_criteria": {
+    "must_remove_terms": ["clinically proven", "guaranteed", "100%"],
+    "must_include_concepts": [],
+    "scoring_notes": "must_remove_terms on ad text; must_include_concepts on rewrite guidance text."
+  },
+  "benchmark_refs": ["sg-health-reject-cure", "sg-health-warn-superlative"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["text", "image"],
+    "claim_types": ["superlative-claim"]
+  },
+  "linkage": {
+    "regulations": ["regulation:sg-asasa-substantiation", "regulation:sg-hpa-s7-prohibited-claims"],
+    "rules": ["demo-sg-health-superlative", "demo-apac-sa-absolute-claim"],
+    "skills": ["skill:superlative-claim-review"]
+  },
+  "expected_evidence_type": "substantiation_general",
+  "evidence_requirement": "recommended",
+  "confidence_level": "high",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:recommended", "advertising", "superlative"]
+}

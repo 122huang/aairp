@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:kr-kftc-performance-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-kftc-performance-claims",
+  "country": "KR",
+  "authority": "KFTC",
+  "regulation_name": "Act on Fair Labeling and Advertising",
+  "citation": "Act on Fair Labeling and Advertising — Article 3",
+  "effective_date": "2007-01-01",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Performance and efficacy claims must be truthful and supported by adequate evidence under fair labeling rules.",
+  "review_guidance": "TRIGGER: Performance statistics, guaranteed results, or efficacy percentages. ACTION: WARN — require substantiation or qualify claim. CHECK: Test method, KS standard, and typical results. ESCALATE IF: Absolute or unsubstantiated performance claim.",
+  "related_rule_ids": [
+    "demo-apac-sa-performance-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:quantitative-claim-lab-report"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "consumer.goods"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

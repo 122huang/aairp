@@ -1,0 +1,32 @@
+{
+  "knowledge_id": "regulation:sg-hsa-certification-marks",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hsa-certification-marks",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Health Products Act (Singapore)",
+  "citation": "Health Products Act — Section 12 (Misleading use of certification)",
+  "effective_date": "2020-01-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Ads must not misuse HSA registration, GMP, or quality marks to imply unapproved benefits.",
+  "review_guidance": "TRIGGER: HSA logo, GMP badge, ISO mark, or quality seal in creative. ACTION: WARN — verify mark scope matches claim. CHECK: Registration number, certificate scope, and expiry. ESCALATE IF: Mark implies therapeutic approval beyond registration class.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [
+    "evidence:certification-mark-substantiation",
+    "evidence:product-certification-scope-verification",
+    "evidence:third-party-certification-body"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

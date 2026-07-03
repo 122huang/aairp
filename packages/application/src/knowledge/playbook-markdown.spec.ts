@@ -38,7 +38,7 @@ describe('playbook markdown export', () => {
     const roundTrip = parsePlaybookMarkdown(rendered);
     expect(roundTrip.packVersion).toBe(parsed.packVersion);
     expect(roundTrip.playbookId).toBe(parsed.playbookId);
-    expect(roundTrip.items).toHaveLength(3);
+    expect(roundTrip.items).toHaveLength(parsed.items.length);
     expect(roundTrip.items.map((item) => item.patternId)).toEqual(
       parsed.items.map((item) => item.patternId),
     );

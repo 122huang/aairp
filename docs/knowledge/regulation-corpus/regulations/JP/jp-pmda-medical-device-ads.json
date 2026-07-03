@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:jp-pmda-medical-device-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-pmda-medical-device-ads",
+  "country": "JP",
+  "authority": "PMDA",
+  "regulation_name": "Pharmaceutical Affairs Act (Medical Devices)",
+  "citation": "Pharmaceutical Affairs Act — Article 68-2",
+  "effective_date": "2014-11-25",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device advertising must reflect approved indications and must not expand beyond PMDA clearance.",
+  "review_guidance": "TRIGGER: Clinical outcome or unapproved indication for medical devices. ACTION: REWRITE — limit to approved intended use. CHECK: Approval number, risk class, and labeling. ESCALATE IF: Off-label or unapproved device promotion.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

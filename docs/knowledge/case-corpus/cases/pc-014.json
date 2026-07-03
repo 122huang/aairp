@@ -1,0 +1,77 @@
+{
+  "knowledge_id": "case:pc-014",
+  "corpus_type": "case",
+  "case_id": "pc-014",
+  "case_purpose": "Validation knowledge for benchmark case PC-014 — Disclaimer.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Disclaimer scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case PC-014. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "LOW",
+    "signal_summary": "Disclaimer",
+    "benchmark_ref": "PC-014"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "LOW",
+    "expected_action": "ESCALATE",
+    "expected_pattern": "sa-disclaimer-required",
+    "expected_rule": "demo-apac-sa-ai-image-disclaimer",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:disclose-ai",
+      "strategy_type": "disclose",
+      "must_remove_terms": [],
+      "must_include_concepts": [
+        "illustration",
+        "purposes only"
+      ]
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "LOW",
+    "matched_skill": null,
+    "applied_rewrite": "rewrite:disclose-ai",
+    "evidence_result": "not_applicable"
+  },
+  "benchmark_ref": "PC-014",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-scap-disclosure"
+    ],
+    "rules": [
+      "demo-apac-sa-ai-image-disclaimer"
+    ],
+    "skills": [],
+    "rewrites": [
+      "rewrite:disclose-ai"
+    ],
+    "evidence": []
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 PC-014 for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:jp-jftc-pricing-representations",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-jftc-pricing-representations",
+  "country": "JP",
+  "authority": "JFTC",
+  "regulation_name": "Act against Unjustifiable Premiums and Misleading Representations",
+  "citation": "Act against Unjustifiable Premiums — Section 5 (Price)",
+  "effective_date": "1962-09-15",
+  "category": "Pricing",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Double pricing and misleading discount representations are prohibited under fair representation rules.",
+  "review_guidance": "TRIGGER: Two-price display, percentage off, or limited-time sale claims. ACTION: WARN — verify reference price compliance. CHECK: Reference price period and actual selling history. ESCALATE IF: Fake reference price or misleading two-price tactic.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:recommended",
+    "pricing"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

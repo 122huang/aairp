@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import type { CaseFinding, LlmFinding, PlaybookFinding, RuleFinding } from '@aairp/shared-kernel';
+import type { CaseFinding, LlmFinding, PlaybookFinding, RuleFinding, VisionFinding } from '@aairp/shared-kernel';
 import {
   DecisionEngineService,
+  applyCountryConfidenceModifier,
   buildDecisionFusionInput,
+  computeCombinedHasBlocker,
 } from './decision-engine.service.js';
 
 const fixedDate = new Date('2026-06-26T10:09:00.000Z');
@@ -65,10 +67,56 @@ describe('DecisionEngineService', () => {
       reviewId: 'rev_test',
       finalDecision: 'REJECT',
       confidence: 1,
-      findingCounts: { rule: 1, playbook: 1, llm: 1, case: 0 },
+      findingCounts: { rule: 1, playbook: 1, llm: 1, case: 0, vision: 0 },
       decidedAt: '2026-06-26T10:09:00.000Z',
     });
-    expect(result.rationale).toContain('Rejected due to blocking rule finding');
+    expect(result.rationale).toContain('Rejected due to blocking finding');
+  });
+
+  it('returns REJECT when vision BLOCKER finding is present', () => {
+    const service = createService();
+    const visionBlocker: VisionFinding = {
+      module: 'VISION',
+      findingId: 'vf_blocker',
+      severity: 'BLOCKER',
+      decision: 'FAIL',
+      refType: 'VISION_RISK',
+      refId: 'sa-competitor-trademark',
+      refVersionId: 'demo-vision-1.0.0-sa-competitor-trademark-v1',
+      summary: 'Competitor logo visible without authorisation',
+      confidence: 0.95,
+      sliceId: 'img0-s0-hero',
+      evaluationDetail: {
+        riskType: 'sa-competitor-trademark',
+        suggestedAction: 'REJECT',
+        scanDimension: 'scene_content',
+        evidenceSpans: [
+          {
+            field: 'image',
+            sliceIndex: 0,
+            regionDescription: 'top-right corner logo',
+            text: 'Dyson',
+          },
+        ],
+      },
+    };
+
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: computeCombinedHasBlocker({
+        ruleHasBlocker: false,
+        visionFindings: [visionBlocker],
+      }),
+      ruleFindings: [],
+      playbookFindings: [],
+      llmFindings: [],
+      visionFindings: [visionBlocker],
+    });
+
+    expect(result.finalDecision).toBe('REJECT');
+    expect(result.confidence).toBe(1);
+    expect(result.findingCounts.vision).toBe(1);
+    expect(result.rationale).toContain('VISION/sa-competitor-trademark');
   });
 
   it('returns WARN with higher confidence when rule warnings exist', () => {
@@ -131,7 +179,7 @@ describe('DecisionEngineService', () => {
       reviewId: 'rev_test',
       finalDecision: 'PASS',
       confidence: 0.95,
-      findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0 },
+      findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 0 },
       decidedAt: '2026-06-26T10:09:00.000Z',
     });
     expect(result.rationale).toContain('No blocking or warning findings');
@@ -214,5 +262,48 @@ describe('DecisionEngineService', () => {
     expect(result.confidence).toBe(0.82);
     expect(result.findingCounts.case).toBe(1);
     expect(result.rationale).toContain('CASE/case_example');
+  });
+
+  it('applyCountryConfidenceModifier clamps PH enforcement-density adjustment', () => {
+    expect(applyCountryConfidenceModifier(0.9, 'PH')).toBe(0.8);
+    expect(applyCountryConfidenceModifier(0.05, 'PH')).toBe(0);
+    expect(applyCountryConfidenceModifier(0.9, 'SG')).toBe(0.9);
+  });
+
+  it('reduces WARN confidence for PH market without affecting PASS or REJECT', () => {
+    const service = createService();
+
+    const warnResult = service.fuseFromFindings({
+      reviewId: 'rev_ph',
+      countryId: 'PH',
+      hasBlocker: false,
+      ruleFindings: [ruleWarnFinding],
+      playbookFindings: [],
+      llmFindings: [],
+    });
+    expect(warnResult.finalDecision).toBe('WARN');
+    expect(warnResult.confidence).toBe(0.8);
+
+    const passResult = service.fuseFromFindings({
+      reviewId: 'rev_ph_pass',
+      countryId: 'PH',
+      hasBlocker: false,
+      ruleFindings: [],
+      playbookFindings: [],
+      llmFindings: [],
+    });
+    expect(passResult.finalDecision).toBe('PASS');
+    expect(passResult.confidence).toBe(0.95);
+
+    const rejectResult = service.fuseFromFindings({
+      reviewId: 'rev_ph_reject',
+      countryId: 'PH',
+      hasBlocker: true,
+      ruleFindings: [ruleWarnFinding],
+      playbookFindings: [],
+      llmFindings: [],
+    });
+    expect(rejectResult.finalDecision).toBe('REJECT');
+    expect(rejectResult.confidence).toBe(1);
   });
 });

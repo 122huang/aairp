@@ -1,0 +1,34 @@
+{
+  "locale_pack_version": "1.0.0",
+  "country_id": "ID",
+  "terms": [
+    {
+      "risk_type": "sponsored-disclosure",
+      "lang": "id",
+      "terms": ["#iklan", "berbayar", "konten berbayar"],
+      "source_regulation_id": "id-kpi-ad-labeling",
+      "note": "Bahasa disclosure markers for sponsored content"
+    },
+    {
+      "risk_type": "localisation-error",
+      "lang": "id",
+      "terms": ["sni", "standar nasional indonesia"],
+      "source_regulation_id": "id-sni-certification-mark",
+      "note": "SNI certification references requiring local compliance context"
+    },
+    {
+      "risk_type": "product-category-boundary",
+      "lang": "id",
+      "terms": ["suplemen", "kesehatan", "khasiat"],
+      "source_regulation_id": "id-bpom-supplement-claims",
+      "note": "sa.* copy touching supplement/health vocabulary — confirm category annotation"
+    },
+    {
+      "risk_type": "market-ranking-claim",
+      "lang": "id",
+      "terms": ["terbaik", "nomor satu", "terpercaya"],
+      "source_regulation_id": "id-kpi-comparative-advertising",
+      "note": "Bahasa comparative and ranking superlatives"
+    }
+  ]
+}

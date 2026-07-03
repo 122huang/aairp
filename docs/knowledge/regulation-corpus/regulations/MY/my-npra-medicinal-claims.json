@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:my-npra-medicinal-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "my-npra-medicinal-claims",
+  "country": "MY",
+  "authority": "NPRA",
+  "regulation_name": "Medicines (Advertisement and Sale) Act 1956",
+  "citation": "Medicines (Advertisement and Sale) Act 1956 — Section 4",
+  "effective_date": "1956-01-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Medicine ads must not promote unregistered products or make prohibited therapeutic claims without NPRA approval.",
+  "review_guidance": "TRIGGER: Cure, treat, prevent disease, or Rx medicine promotion in consumer ads. ACTION: REJECT — remove prohibited medicinal claims. CHECK: MAL registration number, product category, and indication wording. ESCALATE IF: Unregistered product or serious disease claim without approval.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

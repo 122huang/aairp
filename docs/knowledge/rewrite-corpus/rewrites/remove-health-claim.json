@@ -1,0 +1,41 @@
+{
+  "knowledge_id": "rewrite:remove-health-claim",
+  "corpus_type": "rewrite",
+  "rewrite_id": "remove-health-claim",
+  "legacy_template_id": "remove-health-claim",
+  "rewrite_purpose": "Guide reviewers to remove implied health or nutrition benefit wording from non-compliant ad copy.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "remove",
+  "summary": "Remove implied health or nutrition benefit wording when product category or substantiation does not support the claim.",
+  "rewrite_guidance": "TRIGGER: Healthier, lower sugar, or general health benefit language on misclassified products. ACTION: Remove health-implication phrases from copy and imagery. CHECK: Product category, on-pack claims, and ingredient context. ESCALATE IF: Disease or cure language remains — route to Rule Corpus.",
+  "review_guidance": "ESCALATE IF: Removing the claim leaves misleading product positioning or conflicts with on-pack label.",
+  "measurable_criteria": {
+    "must_remove_terms": ["healthier", "lower sugar", "health benefits"],
+    "must_include_concepts": [],
+    "scoring_notes": "must_remove_terms checked on original ad text; concepts on playbook rewrite guidance (benchmark v3)."
+  },
+  "benchmark_refs": ["PC-008", "PC-011", "PC-013", "sg-health-reject-cure"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["text", "image"],
+    "claim_types": ["health-claim"]
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-supplement-health-claims",
+      "regulation:sg-hpa-s7-prohibited-claims"
+    ],
+    "rules": ["demo-apac-sa-health-claim-blocker", "demo-apac-sa-health-implication"],
+    "skills": ["skill:health-claim-review"]
+  },
+  "expected_evidence_type": "none",
+  "evidence_requirement": "none",
+  "confidence_level": "high",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:none", "advertising", "health"]
+}

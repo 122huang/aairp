@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "platform_version": "1.0.0",
+  "corpus_type": "evidence",
+  "generated_at": "2026-07-01T03:17:12.449Z",
+  "corpus_root": "C:\\Users\\ShujieHuang\\aairp\\docs\\knowledge\\evidence-corpus",
+  "fingerprint": "6ab19675e5d99a44",
+  "entry_count": 20,
+  "knowledge_quality_score": 97.7,
+  "freshness": {
+    "green": 20,
+    "yellow": 0,
+    "red": 0,
+    "green_pct": 100,
+    "yellow_pct": 0,
+    "red_pct": 0
+  },
+  "knowledge_ids": [
+    "evidence:absolute-performance-substantiation",
+    "evidence:capacity-claim-substantiation",
+    "evidence:capacity-test-method-evidence",
+    "evidence:certification-expiry-validation",
+    "evidence:certification-mark-substantiation",
+    "evidence:certification-on-ad-legibility",
+    "evidence:comparative-claim-substantiation",
+    "evidence:comparative-superiority-substantiation",
+    "evidence:comparative-test-evidence",
+    "evidence:efficacy-superlative-substantiation",
+    "evidence:general-advertising-substantiation",
+    "evidence:health-claim-substantiation",
+    "evidence:health-implication-substantiation",
+    "evidence:performance-claim-substantiation",
+    "evidence:performance-lab-report",
+    "evidence:product-certification-scope-verification",
+    "evidence:quantitative-claim-lab-report",
+    "evidence:standardized-test-protocol-reference",
+    "evidence:supplement-health-evidence",
+    "evidence:third-party-certification-body"
+  ],
+  "dimensions": {
+    "by_type": {
+      "certification": 5,
+      "lab_report": 2,
+      "clinical": 0,
+      "substantiation_general": 11,
+      "test_method": 2,
+      "patent": 0
+    },
+    "by_status": {
+      "production": 20
+    }
+  },
+  "manifest_filename": "evidence-corpus.manifest.json",
+  "metadata": {
+    "evidence_type_keys": [
+      "certification",
+      "lab_report",
+      "clinical",
+      "substantiation_general",
+      "test_method",
+      "patent"
+    ]
+  }
+}

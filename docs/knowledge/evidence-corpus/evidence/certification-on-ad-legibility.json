@@ -1,0 +1,79 @@
+{
+  "knowledge_id": "evidence:certification-on-ad-legibility",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "certification-on-ad-legibility",
+  "evidence_type_key": "certification",
+  "requirement_scope": "certification-legibility",
+  "evidence_purpose": "Require certification marks and registration references to be legible at published ad resolution.",
+  "summary": "On-ad certification marks must be readable and not misleading through distortion or partial display.",
+  "review_guidance": "TRIGGER: Small or stylized certification badge in digital creative. ACTION: Inspect at published resolution. CHECK: Mark clarity, registration number readability. ESCALATE IF: Mark is illegible or altered.",
+  "evidence_purpose_tags": [
+    "certification-legibility"
+  ],
+  "resolves_expected_evidence_types": [
+    "certification"
+  ],
+  "document_ref_spec": {
+    "ref_kind": "certification_record",
+    "id_format": "{issuer}-{cert_number}",
+    "storage_system": "KOS",
+    "example": "ISO-9001-ORG-2024"
+  },
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH",
+      "AU"
+    ],
+    "claim_types": [
+      "certification-claim"
+    ],
+    "modalities": [
+      "image",
+      "text"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:au-accc-certification-schemes",
+      "regulation:jp-jis-certification-mark"
+    ],
+    "rules": [
+      "demo-apac-sa-certification-evidence"
+    ],
+    "skills": [
+      "skill:certification-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:cite-evidence"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-010"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "View mark at final published resolution",
+      "Confirm registration number is readable if required by regulation",
+      "Verify mark is official artwork not recreated"
+    ],
+    "reject_if": [
+      "Mark illegible at published size"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ]
+}

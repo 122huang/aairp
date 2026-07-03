@@ -1,0 +1,28 @@
+{
+  "knowledge_id": "regulation:kr-kftc-ad-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-kftc-ad-disclosure",
+  "country": "KR",
+  "authority": "KFTC",
+  "regulation_name": "Guidelines on Labeling and Advertising",
+  "citation": "Guidelines on Labeling and Advertising — Article 5",
+  "effective_date": "2018-01-01",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "LOW",
+  "summary": "Advertisements including influencer and native content must be clearly distinguishable as commercial messages.",
+  "review_guidance": "TRIGGER: Paid influencer, review, or native ad content. ACTION: REWRITE — add clear ad/sponsorship disclosure. CHECK: Korean disclosure text, #광고, and platform ad labels. ESCALATE IF: Undisclosed paid promotion.",
+  "related_rule_ids": [
+    "demo-apac-sa-ai-image-disclaimer"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "disclosure"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

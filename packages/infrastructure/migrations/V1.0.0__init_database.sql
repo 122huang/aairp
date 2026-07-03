@@ -12,16 +12,18 @@ COMMENT ON SCHEMA app IS 'Business domain tables. Empty in Sprint 1. Populated f
 CREATE SCHEMA IF NOT EXISTS audit;
 COMMENT ON SCHEMA audit IS 'Append-only audit/event store. Empty in Sprint 1.';
 
+-- NOLOGIN roles: grant targets only. App connects via DATABASE_URL user (Docker or Neon owner).
+-- LOGIN + PASSWORD omitted so managed Postgres (e.g. Neon) does not reject weak placeholder passwords.
 DO $$ BEGIN
-  CREATE ROLE aairp_migration LOGIN PASSWORD 'CHANGE_ME';
+  CREATE ROLE aairp_migration NOLOGIN;
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE ROLE aairp_app LOGIN PASSWORD 'CHANGE_ME';
+  CREATE ROLE aairp_app NOLOGIN;
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE ROLE aairp_readonly LOGIN PASSWORD 'CHANGE_ME';
+  CREATE ROLE aairp_readonly NOLOGIN;
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 GRANT USAGE ON SCHEMA infra TO aairp_migration, aairp_app, aairp_readonly;

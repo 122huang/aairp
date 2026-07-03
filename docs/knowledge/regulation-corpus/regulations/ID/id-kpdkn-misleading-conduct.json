@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:id-kpdkn-misleading-conduct",
+  "corpus_type": "regulation",
+  "regulation_id": "id-kpdkn-misleading-conduct",
+  "country": "ID",
+  "authority": "KPI",
+  "regulation_name": "Consumer Protection Law",
+  "citation": "Law No. 8/1999 on Consumer Protection — Article 18",
+  "effective_date": "1999-04-20",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Business actors must not provide false or misleading information about goods or services.",
+  "review_guidance": "TRIGGER: False specs, deceptive offers, or misrepresented product benefits. ACTION: REJECT — correct material misrepresentation. CHECK: Offer terms, warranties, and product attributes. ESCALATE IF: Widespread consumer harm or regulatory inquiry.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "consumer-protection"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

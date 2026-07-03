@@ -1,0 +1,87 @@
+{
+  "knowledge_id": "case:af-004",
+  "corpus_type": "case",
+  "case_id": "af-004",
+  "case_purpose": "Validation knowledge for benchmark case AF-004 — Performance Claim.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Performance Claim scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case AF-004. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "performance-claim",
+    "claim_types": [
+      "performance-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "HIGH",
+    "signal_summary": "Performance Claim",
+    "benchmark_ref": "AF-004"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "HIGH",
+    "expected_action": "ESCALATE",
+    "expected_pattern": "sa-performance-claim",
+    "expected_rule": "demo-apac-sa-performance-claim",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:cite-evidence",
+      "strategy_type": "cite_evidence",
+      "must_remove_terms": [],
+      "must_include_concepts": [
+        "substantiation",
+        "certification",
+        "evidence"
+      ]
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:performance-lab-report",
+      "expected_outcome": "require_substantiation_on_file"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "HIGH",
+    "matched_skill": "skill:performance-claim-review",
+    "applied_rewrite": "rewrite:cite-evidence",
+    "evidence_result": "require_substantiation_on_file"
+  },
+  "benchmark_ref": "AF-004",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-efficacy-performance",
+      "regulation:th-tisi-performance-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-performance-claim"
+    ],
+    "skills": [
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:cite-evidence"
+    ],
+    "evidence": [
+      "evidence:performance-lab-report"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 AF-004 for performance-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "performance-claim"
+  ]
+}

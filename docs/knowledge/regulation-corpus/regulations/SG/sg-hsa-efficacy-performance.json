@@ -1,0 +1,35 @@
+{
+  "knowledge_id": "regulation:sg-hsa-efficacy-performance",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hsa-efficacy-performance",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Health Products (Advertisement of Health Products) Regulations",
+  "citation": "Health Products (Advertisement of Health Products) Regulations — Regulation 6",
+  "effective_date": "2016-11-01",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Quantified efficacy, speed, or results claims for health products require valid substantiation and must not be absolute.",
+  "review_guidance": "TRIGGER: Percentage improvement, time-bound results, or guaranteed outcomes. ACTION: WARN — require test evidence or qualify with typical results. CHECK: Study citations, sample size, and measurement methodology. ESCALATE IF: 100% efficacy, miracle results, or unsupported statistics.",
+  "related_rule_ids": [
+    "demo-apac-sa-performance-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:performance-claim-substantiation",
+    "evidence:performance-lab-report"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement",
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

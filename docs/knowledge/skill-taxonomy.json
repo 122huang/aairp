@@ -1,0 +1,6 @@
+{
+  "_deprecated": "Use docs/knowledge/skill-modules.json — this file is a frozen Sprint 3 snapshot.",
+  "_redirect": "docs/knowledge/skill-modules.json",
+  "taxonomy_version": "skill-taxonomy-1.0.0",
+  "note": "Authoring is disabled. Edit skill-modules.json and regenerate exports."
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/rewrite-corpus-entry.json",
+  "title": "RewriteCorpusEntry",
+  "description": "Rewrite Corpus knowledge entry — measurable rewrite guidance, not generated text or LLM instructions.",
+  "type": "object",
+  "required": [
+    "knowledge_id",
+    "corpus_type",
+    "rewrite_id",
+    "rewrite_purpose",
+    "rewrite_status",
+    "rewrite_version",
+    "rewrite_strategy_type",
+    "rewrite_guidance",
+    "measurable_criteria",
+    "benchmark_refs",
+    "case_refs",
+    "summary",
+    "review_guidance",
+    "linkage",
+    "owner",
+    "owner_type",
+    "last_reviewed",
+    "review_status"
+  ],
+  "properties": {
+    "knowledge_id": {
+      "type": "string",
+      "pattern": "^rewrite:[a-z0-9][a-z0-9.-]*$"
+    },
+    "corpus_type": { "const": "rewrite" },
+    "rewrite_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "legacy_template_id": { "type": "string" },
+    "rewrite_purpose": { "type": "string", "minLength": 20 },
+    "rewrite_status": {
+      "type": "string",
+      "enum": ["draft", "validated", "production", "deprecated"]
+    },
+    "rewrite_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "rewrite_strategy_type": {
+      "type": "string",
+      "enum": ["qualify", "remove", "disclose", "cite_evidence"]
+    },
+    "rewrite_guidance": { "type": "string", "minLength": 20 },
+    "measurable_criteria": {
+      "type": "object",
+      "required": ["must_remove_terms", "must_include_concepts"],
+      "properties": {
+        "must_remove_terms": { "type": "array", "items": { "type": "string" } },
+        "must_include_concepts": { "type": "array", "items": { "type": "string" } },
+        "scoring_notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "benchmark_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "benchmark-v3 case_id references for eval alignment"
+    },
+    "case_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Future Case Corpus knowledge_id references (case:…)"
+    },
+    "applicability": {
+      "type": "object",
+      "properties": {
+        "countries": { "type": "array", "items": { "type": "string" } },
+        "modalities": { "type": "array", "items": { "type": "string" } },
+        "claim_types": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "linkage": {
+      "type": "object",
+      "properties": {
+        "regulations": { "type": "array", "items": { "type": "string" } },
+        "rules": { "type": "array", "items": { "type": "string" } },
+        "skills": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "rewrite_linkage_scope": {
+      "type": "string",
+      "const": "independent",
+      "description": "Standalone rewrite strategy not bound to a skill entry (e.g. disclosure templates)."
+    },
+    "rewrite_independence_rationale": { "type": "string", "minLength": 20 },
+    "regulation_scope": {
+      "type": "string",
+      "const": "independent"
+    },
+    "regulation_independence_rationale": { "type": "string", "minLength": 20 },
+    "expected_evidence_type": {
+      "type": "string",
+      "enum": ["none", "certification", "lab_report", "substantiation_general", "test_method"]
+    },
+    "evidence_requirement": {
+      "type": "string",
+      "enum": ["none", "recommended", "required"]
+    },
+    "confidence_level": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "summary": { "type": "string", "minLength": 20 },
+    "review_guidance": { "type": "string", "minLength": 20 },
+    "owner": { "type": "string", "minLength": 1 },
+    "owner_type": {
+      "type": "string",
+      "enum": ["legal", "compliance", "knowledge_eng", "product"]
+    },
+    "last_reviewed": { "type": "string", "format": "date-time" },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "legal_reviewed", "deprecated"]
+    },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

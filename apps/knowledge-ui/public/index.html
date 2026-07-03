@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AAIRP Knowledge · 知识平台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/knowledge/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AAIRP Knowledge</span>
+        <span class="brand-sub">Governed Knowledge Experience</span>
+      </div>
+      <div class="topbar-meta">
+        <a class="link-muted" href="/review/index.html">审核端</a>
+        <a class="link-muted" href="/admin-ui/index.html">管理端</a>
+        <span id="pack-status-pill" class="status-pill status-unknown">Pack …</span>
+      </div>
+    </header>
+
+    <div id="draft-banner" class="draft-banner hidden" role="alert">
+      Draft knowledge pack. Not approved for compliance use.
+    </div>
+
+    <nav class="tab-nav" aria-label="Knowledge sections">
+      <button type="button" class="tab active" data-tab="dashboard">Dashboard</button>
+      <button type="button" class="tab" data-tab="explorer">Graph Explorer</button>
+      <button type="button" class="tab" data-tab="preview">Review Preview</button>
+    </nav>
+
+    <main class="main">
+      <section id="panel-dashboard" class="panel active">
+        <header class="panel-head">
+          <h1>Knowledge Dashboard</h1>
+          <p class="muted" id="snapshot-meta">Loading snapshot…</p>
+        </header>
+        <div id="pack-header" class="pack-header card"></div>
+        <div class="section-title">Five Corpus Health</div>
+        <div id="corpus-grid" class="corpus-grid"></div>
+        <div class="section-title">Quality vs Coverage</div>
+        <div id="quality-coverage" class="quality-coverage card"></div>
+        <div class="section-title">Knowledge Improvement Queue</div>
+        <div id="improvement-queue" class="improvement-queue card"></div>
+      </section>
+
+      <section id="panel-explorer" class="panel">
+        <header class="panel-head">
+          <h1>Knowledge Graph Explorer</h1>
+          <p class="muted">Skill-centric linkage — regulations, evidence, rewrites, and cases.</p>
+        </header>
+        <div class="explorer-layout">
+          <aside class="explorer-sidebar card">
+            <label class="field-label" for="skill-select">Review Skill</label>
+            <select id="skill-select" class="field-select"></select>
+            <label class="field-label" for="claim-filter">Claim Type Filter</label>
+            <select id="claim-filter" class="field-select">
+              <option value="">All claim types</option>
+            </select>
+          </aside>
+          <div id="graph-tree" class="graph-tree card"></div>
+          <aside id="node-detail" class="node-detail card">
+            <p class="muted">Select a node to view summary.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="panel-preview" class="panel">
+        <header class="panel-head">
+          <h1>Review Preview</h1>
+          <p class="muted">Deterministic knowledge lookup — not a compliance decision.</p>
+        </header>
+        <form id="preview-form" class="preview-form card">
+          <label class="field-label" for="claim-text">Claim text</label>
+          <textarea
+            id="claim-text"
+            class="field-textarea"
+            rows="3"
+            placeholder='e.g. "99.9999% bacteria removal"'
+          >removes 99.9999% bacteria</textarea>
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label" for="preview-country">Country</label>
+              <input id="preview-country" class="field-input" type="text" value="SG" />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="preview-category">Category (optional)</label>
+              <input id="preview-category" class="field-input" type="text" />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">Generate Preview</button>
+        </form>
+        <div id="preview-result" class="preview-result hidden"></div>
+      </section>
+    </main>
+
+    <script src="/knowledge/app.js" type="module"></script>
+  </body>
+</html>

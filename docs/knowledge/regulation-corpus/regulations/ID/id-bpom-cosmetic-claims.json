@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:id-bpom-cosmetic-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "id-bpom-cosmetic-claims",
+  "country": "ID",
+  "authority": "BPOM",
+  "regulation_name": "Cosmetic Advertising Guidelines (BPOM)",
+  "citation": "Cosmetic Advertising Guidelines — Section 4",
+  "effective_date": "2018-06-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Cosmetic advertising is limited to appearance and hygiene benefits without therapeutic or drug claims.",
+  "review_guidance": "TRIGGER: Healing, anti-disease, or medicinal skin claims on cosmetics. ACTION: REJECT — restrict to cosmetic benefit language. CHECK: Cosmetic notification and prohibited ingredients. ESCALATE IF: Drug-like therapeutic claim on cosmetic.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "cosmetic"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

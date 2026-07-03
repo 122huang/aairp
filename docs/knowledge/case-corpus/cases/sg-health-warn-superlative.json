@@ -1,0 +1,87 @@
+{
+  "knowledge_id": "case:sg-health-warn-superlative",
+  "corpus_type": "case",
+  "case_id": "sg-health-warn-superlative",
+  "case_purpose": "Validation knowledge for benchmark case sg-health-warn-superlative — Superlative claim without blocker → WARN.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "legal_verified",
+  "summary": "Validates Superlative claim without blocker → WARN scenario; expected WARN with REWRITE action.",
+  "review_guidance": "TRIGGER: Benchmark case sg-health-warn-superlative. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "health.supplement"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "MEDIUM",
+    "signal_summary": "Superlative claim without blocker → WARN",
+    "benchmark_ref": "sg-health-warn-superlative"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "WARN",
+    "expected_severity": "MEDIUM",
+    "expected_action": "REWRITE",
+    "expected_pattern": "unsubstantiated-testimonial",
+    "expected_rule": "demo-sg-health-superlative",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:qualify-efficacy",
+      "strategy_type": "qualify",
+      "must_remove_terms": [
+        "clinically proven",
+        "guaranteed",
+        "100%"
+      ],
+      "must_include_concepts": []
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:efficacy-superlative-substantiation",
+      "expected_outcome": "require_substantiation_on_file"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "WARN",
+    "risk_level": "MEDIUM",
+    "matched_skill": "skill:superlative-claim-review",
+    "applied_rewrite": "rewrite:qualify-efficacy",
+    "evidence_result": "require_substantiation_on_file"
+  },
+  "benchmark_ref": "sg-health-warn-superlative",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asasa-substantiation",
+      "regulation:sg-asas-comparative-claims"
+    ],
+    "rules": [
+      "demo-sg-health-superlative"
+    ],
+    "skills": [
+      "skill:superlative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-efficacy"
+    ],
+    "evidence": [
+      "evidence:efficacy-superlative-substantiation"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 sg-health-warn-superlative for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

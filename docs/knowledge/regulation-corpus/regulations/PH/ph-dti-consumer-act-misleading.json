@@ -1,0 +1,34 @@
+{
+  "knowledge_id": "regulation:ph-dti-consumer-act-misleading",
+  "corpus_type": "regulation",
+  "regulation_id": "ph-dti-consumer-act-misleading",
+  "country": "PH",
+  "authority": "DTI",
+  "regulation_name": "Consumer Act of the Philippines (RA 7394)",
+  "citation": "Republic Act No. 7394 — Article 50 (Deceptive, unfair, or unconscionable sales acts)",
+  "effective_date": "1992-04-13",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Advertising must not contain false, deceptive, or misleading representations about product characteristics, benefits, or pricing.",
+  "review_guidance": "TRIGGER: Misleading price, discount, feature, or benefit representations. ACTION: WARN — require substantiation or qualification. CHECK: Price basis, comparative claims, and material omissions. ESCALATE IF: Systematic deception or bait-and-switch pricing.",
+  "related_rule_ids": [
+    "demo-apac-sa-pricing-misrepresentation",
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:general-advertising-substantiation"
+  ],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "misleading"
+  ],
+  "jurisdiction_scope": [
+    "sa.*"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

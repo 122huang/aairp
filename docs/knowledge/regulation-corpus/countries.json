@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Target jurisdictions for Regulation Corpus (Sprint 5A APAC focus).",
+  "countries": [
+    {
+      "country_code": "SG",
+      "name": "Singapore",
+      "authorities": ["HSA", "ASAS", "IMDA"]
+    },
+    {
+      "country_code": "MY",
+      "name": "Malaysia",
+      "authorities": ["KPDNHEP", "MASA", "NPRA"]
+    },
+    {
+      "country_code": "TH",
+      "name": "Thailand",
+      "authorities": ["FDA", "OCPB"]
+    },
+    {
+      "country_code": "ID",
+      "name": "Indonesia",
+      "authorities": ["BPOM", "KPI"]
+    },
+    {
+      "country_code": "JP",
+      "name": "Japan",
+      "authorities": ["CAA", "PMDA", "JFTC"]
+    },
+    {
+      "country_code": "KR",
+      "name": "South Korea",
+      "authorities": ["KFTC", "MFDS"]
+    },
+    {
+      "country_code": "AU",
+      "name": "Australia",
+      "authorities": ["TGA", "ACCC", "Ad Standards"]
+    },
+    {
+      "country_code": "VN",
+      "name": "Vietnam",
+      "authorities": ["MOIT", "MOH", "QLTT"]
+    },
+    {
+      "country_code": "PH",
+      "name": "Philippines",
+      "authorities": ["FDA Philippines", "DTI", "ASC"]
+    }
+  ]
+}

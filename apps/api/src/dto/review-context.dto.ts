@@ -31,6 +31,10 @@ export type ReviewContextResponseDto = {
     campaign_type?: string;
     ad_format?: string;
     target_audience?: string;
+    product_sku?: string;
+    ai_rendered_image?: boolean;
+    certification_image_unreadable?: boolean;
+    ai_image_quality_issue?: boolean;
   };
   tags: string[];
   built_at: string;
@@ -79,6 +83,18 @@ export function toReviewContextResponseDto(
         : {}),
       ...(context.advertisementContext.targetAudience
         ? { target_audience: context.advertisementContext.targetAudience }
+        : {}),
+      ...(context.advertisementContext.productSku
+        ? { product_sku: context.advertisementContext.productSku }
+        : {}),
+      ...(context.advertisementContext.aiRenderedImage
+        ? { ai_rendered_image: true }
+        : {}),
+      ...(context.advertisementContext.certificationImageUnreadable
+        ? { certification_image_unreadable: true }
+        : {}),
+      ...(context.advertisementContext.aiImageQualityIssue
+        ? { ai_image_quality_issue: true }
         : {}),
     },
     tags: context.tags,

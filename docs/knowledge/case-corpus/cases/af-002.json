@@ -1,0 +1,92 @@
+{
+  "knowledge_id": "case:af-002",
+  "corpus_type": "case",
+  "case_id": "af-002",
+  "case_purpose": "Validation knowledge for benchmark case AF-002 — Absolute Claim.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "legal_verified",
+  "summary": "Validates Absolute Claim scenario; expected REJECT with REJECT action.",
+  "review_guidance": "TRIGGER: Benchmark case AF-002. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "performance-claim",
+    "claim_types": [
+      "performance-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "HIGH",
+    "signal_summary": "Absolute Claim",
+    "benchmark_ref": "AF-002"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REJECT",
+    "expected_severity": "HIGH",
+    "expected_action": "REJECT",
+    "expected_pattern": "sa-absolute-performance",
+    "expected_rule": "demo-apac-sa-absolute-claim",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:qualify-performance",
+      "strategy_type": "qualify",
+      "must_remove_terms": [
+        "perfect",
+        "every time",
+        "always works",
+        "flawless",
+        "never fails"
+      ],
+      "must_include_concepts": [
+        "typical",
+        "conditions"
+      ]
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:efficacy-superlative-substantiation",
+      "expected_outcome": "reject_insufficient_substantiation"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REJECT",
+    "risk_level": "HIGH",
+    "matched_skill": "skill:superlative-claim-review",
+    "applied_rewrite": "rewrite:qualify-performance",
+    "evidence_result": "reject_insufficient_substantiation"
+  },
+  "benchmark_ref": "AF-002",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asasa-substantiation",
+      "regulation:sg-asas-comparative-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-absolute-claim"
+    ],
+    "skills": [
+      "skill:superlative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-performance"
+    ],
+    "evidence": [
+      "evidence:efficacy-superlative-substantiation"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 AF-002 for performance-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "performance-claim"
+  ]
+}

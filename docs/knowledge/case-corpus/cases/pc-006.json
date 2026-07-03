@@ -1,0 +1,92 @@
+{
+  "knowledge_id": "case:pc-006",
+  "corpus_type": "case",
+  "case_id": "pc-006",
+  "case_purpose": "Validation knowledge for benchmark case PC-006 — Capacity Claim.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Capacity Claim scenario; expected REVIEW with ESCALATE action.",
+  "review_guidance": "TRIGGER: Benchmark case PC-006. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "performance-claim",
+    "claim_types": [
+      "performance-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "electronics"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "MEDIUM",
+    "signal_summary": "Capacity Claim",
+    "benchmark_ref": "PC-006"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "REVIEW",
+    "expected_severity": "MEDIUM",
+    "expected_action": "ESCALATE",
+    "expected_pattern": "sa-capacity-claim",
+    "expected_rule": "demo-apac-sa-capacity-claim",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:qualify-performance",
+      "strategy_type": "qualify",
+      "must_remove_terms": [
+        "perfect",
+        "every time",
+        "always works",
+        "flawless",
+        "never fails"
+      ],
+      "must_include_concepts": [
+        "typical",
+        "conditions"
+      ]
+    },
+    "evidence_validation": {
+      "evidence_id": "evidence:performance-lab-report",
+      "expected_outcome": "require_substantiation_on_file"
+    }
+  },
+  "case_result": {
+    "decision_outcome": "REVIEW",
+    "risk_level": "MEDIUM",
+    "matched_skill": "skill:performance-claim-review",
+    "applied_rewrite": "rewrite:qualify-performance",
+    "evidence_result": "require_substantiation_on_file"
+  },
+  "benchmark_ref": "PC-006",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-efficacy-performance",
+      "regulation:th-tisi-performance-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-capacity-claim"
+    ],
+    "skills": [
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-performance"
+    ],
+    "evidence": [
+      "evidence:performance-lab-report"
+    ]
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 PC-006 for performance-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "performance-claim"
+  ]
+}

@@ -20,6 +20,7 @@ describe('review-report.dto', () => {
         },
         findings: [
           {
+            findingId: 'rf_blocker',
             module: 'RULE',
             refId: 'demo-sg-health-forbidden-claim',
             severity: 'BLOCKER',
@@ -50,6 +51,7 @@ describe('review-report.dto', () => {
         },
         findings: [
           {
+            finding_id: 'rf_blocker',
             module: 'RULE',
             ref_id: 'demo-sg-health-forbidden-claim',
             severity: 'BLOCKER',

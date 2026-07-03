@@ -1,0 +1,72 @@
+{
+  "knowledge_id": "evidence:supplement-health-evidence",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "supplement-health-evidence",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "supplement-health",
+  "evidence_purpose": "Evidence requirements specific to supplement health claims including classification and substantiation alignment.",
+  "summary": "Supplement ads making health claims must hold classification-appropriate substantiation on file.",
+  "review_guidance": "TRIGGER: Supplement product with nutritional or functional benefit claim. ACTION: Verify NPRA/HSA classification. CHECK: On-pack label, substantiation dossier. ESCALATE IF: Unregistered supplement or off-label claim.",
+  "evidence_purpose_tags": [
+    "health-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH",
+      "ID"
+    ],
+    "claim_types": [
+      "health-claim"
+    ],
+    "categories": [
+      "health.supplement"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:id-bpom-supplement-claims",
+      "regulation:th-fda-supplement-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-health-claim-blocker"
+    ],
+    "skills": [
+      "skill:health-claim-review"
+    ]
+  },
+  "benchmark_refs": [
+    "PC-013"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Confirm supplement registration status",
+      "Match claim to approved label wording",
+      "Verify substantiation dossier on file"
+    ],
+    "reject_if": [
+      "Product not registered for claimed market"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "health"
+  ]
+}

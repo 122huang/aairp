@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:sg-asas-influencer-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-asas-influencer-disclosure",
+  "country": "SG",
+  "authority": "ASAS",
+  "regulation_name": "Singapore Code of Advertising Practice",
+  "citation": "Singapore Code of Advertising Practice — Rule 2.4 (Influencer content)",
+  "effective_date": "2021-03-15",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "LOW",
+  "summary": "Paid influencer and branded content must be clearly disclosed as advertising across all formats.",
+  "review_guidance": "TRIGGER: Influencer posts, gifted product reviews, or affiliate promotions. ACTION: REWRITE — add clear sponsorship disclosure. CHECK: Hashtags, captions, video overlays, and platform-native ad labels. ESCALATE IF: Covert promotion without #ad, Paid Partnership, or equivalent.",
+  "related_rule_ids": [
+    "demo-sg-sponsored-disclosure",
+    "demo-apac-sa-ai-image-disclaimer"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "disclosure",
+    "influencer"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

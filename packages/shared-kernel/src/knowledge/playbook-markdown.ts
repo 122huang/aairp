@@ -45,6 +45,18 @@ export function renderPlaybookMarkdown(input: {
       `guidance: ${pattern.guidance ?? ''}`,
       `typical_decision: ${extra.typical_decision ?? 'REVIEW'}`,
     ];
+    if (extra.skill_module) {
+      lines.push(`skill_module: ${extra.skill_module}`);
+    }
+    if (extra.purpose) {
+      lines.push(`purpose: ${extra.purpose}`);
+    }
+    if (extra.suggested_rewrite) {
+      lines.push(`suggested_rewrite: ${extra.suggested_rewrite}`);
+    }
+    if (extra.expected_severity) {
+      lines.push(`expected_severity: ${extra.expected_severity}`);
+    }
     return lines.join('\n');
   });
 
@@ -55,10 +67,27 @@ export function buildPatternMarkdownBody(input: {
   severityHint?: string;
   decision?: string;
   typicalDecision?: string;
+  skillModule?: string;
+  purpose?: string;
+  suggestedRewrite?: string;
+  expectedSeverity?: string;
 }): string {
-  return [
+  const lines = [
     `severity_hint: ${input.severityHint ?? 'MEDIUM'}`,
     `decision: ${input.decision ?? 'WARN'}`,
     `typical_decision: ${input.typicalDecision ?? 'REVIEW'}`,
-  ].join('\n');
+  ];
+  if (input.skillModule) {
+    lines.push(`skill_module: ${input.skillModule}`);
+  }
+  if (input.purpose) {
+    lines.push(`purpose: ${input.purpose}`);
+  }
+  if (input.suggestedRewrite) {
+    lines.push(`suggested_rewrite: ${input.suggestedRewrite}`);
+  }
+  if (input.expectedSeverity) {
+    lines.push(`expected_severity: ${input.expectedSeverity}`);
+  }
+  return lines.join('\n');
 }

@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:sg-imda-ai-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-imda-ai-disclosure",
+  "country": "SG",
+  "authority": "IMDA",
+  "regulation_name": "IMDA Model AI Governance Framework (Advertising)",
+  "citation": "Model AI Governance Framework — Principle 4 (Transparency)",
+  "effective_date": "2024-06-01",
+  "category": "AI-generated Content",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Synthetic or AI-generated people, scenes, or voice in ads should be disclosed where consumers could be misled.",
+  "review_guidance": "TRIGGER: AI-generated models, deepfake-style imagery, or synthetic voiceover. ACTION: REWRITE — add AI/synthetic media disclosure. CHECK: Visual realism, likeness rights, and disclosure placement. ESCALATE IF: Synthetic human likeness mimicking real person without consent.",
+  "related_rule_ids": [
+    "demo-apac-sa-ai-image-disclaimer"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:none",
+    "ai",
+    "synthetic-media"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

@@ -1,0 +1,23 @@
+{
+  "prompt_pack_version": "demo-vision-1.0.0",
+  "extracted_text": ["Air Fryer Pro"],
+  "findings": [
+    {
+      "risk_type": "ai-image-disclaimer",
+      "description": "AI-rendered or synthetic product image lacks a visible illustration disclaimer for the target market listing.",
+      "severity": "MEDIUM",
+      "suggested_action": "WARN",
+      "confidence": 0.87,
+      "scan_dimension": "visible_text",
+      "evidence_spans": [
+        {
+          "field": "image",
+          "slice_index": 0,
+          "region_description": "full product render without footer disclaimer",
+          "text": "Air Fryer Pro"
+        }
+      ],
+      "related_modules_checked": ["demo-apac-sa-ai-image-disclaimer"]
+    }
+  ]
+}

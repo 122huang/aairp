@@ -19,6 +19,13 @@ export type RegulationVersion = {
   bodyText?: string;
   tags: string[];
   searchText?: string;
+  effectiveDate?: string;
+  mandatory?: boolean;
+  riskLevel?: string;
+  owner?: string;
+  ownerType?: string;
+  lastReviewedAt?: string;
+  freshnessStatus?: string;
   publishedAt?: string;
   createdAt: string;
   updatedAt: string;
@@ -45,6 +52,13 @@ export type CreateRegulationVersionInput = {
   bodyText?: string;
   tags?: string[];
   searchText?: string;
+  effectiveDate?: string;
+  mandatory?: boolean;
+  riskLevel?: string;
+  owner?: string;
+  ownerType?: string;
+  lastReviewedAt?: string;
+  freshnessStatus?: string;
 };
 
 export type UpdateRegulationVersionInput = {
@@ -54,6 +68,9 @@ export type UpdateRegulationVersionInput = {
   bodyText?: string;
   tags?: string[];
   searchText?: string;
+  effectiveDate?: string;
+  mandatory?: boolean;
+  riskLevel?: string;
 };
 
 export type IRegulationRepository = {

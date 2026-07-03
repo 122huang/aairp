@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:th-fda-cosmetic-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "th-fda-cosmetic-claims",
+  "country": "TH",
+  "authority": "FDA",
+  "regulation_name": "Cosmetics Act B.E. 2558",
+  "citation": "Cosmetics Act B.E. 2558 — Section 32",
+  "effective_date": "2015-09-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Cosmetic advertising may claim appearance benefits but must not assert therapeutic or drug-like effects.",
+  "review_guidance": "TRIGGER: Skin disease treatment, healing, or medicinal cosmetic claims. ACTION: REJECT — limit to cosmetic appearance effects. CHECK: Cosmetic notification and ingredient restrictions. ESCALATE IF: Drug-like efficacy claim on cosmetic product.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "cosmetic"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:au-tga-medical-device-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "au-tga-medical-device-ads",
+  "country": "AU",
+  "authority": "TGA",
+  "regulation_name": "Therapeutic Goods (Medical Devices) Regulations",
+  "citation": "Therapeutic Goods (Medical Devices) Regulations — Regulation 10.3",
+  "effective_date": "2002-10-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device advertising must not claim benefits beyond ARTG inclusion and intended purpose.",
+  "review_guidance": "TRIGGER: Clinical outcome or unapproved indication for devices. ACTION: REWRITE — align with ARTG intended purpose. CHECK: ARTG number, device class, and instructions for use. ESCALATE IF: Off-label or unregistered device claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

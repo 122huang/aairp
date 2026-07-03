@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:kr-mfds-cosmetic-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-mfds-cosmetic-claims",
+  "country": "KR",
+  "authority": "MFDS",
+  "regulation_name": "Cosmetics Act (Advertising)",
+  "citation": "Cosmetics Act — Article 14",
+  "effective_date": "2000-01-12",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Cosmetic ads may describe appearance effects but must not claim disease treatment or drug-like efficacy.",
+  "review_guidance": "TRIGGER: Skin disease, healing, or medicinal cosmetic claims. ACTION: REJECT — limit to permitted cosmetic effect claims. CHECK: Cosmetic report number and functional cosmetic status. ESCALATE IF: Drug-like therapeutic claim on cosmetic.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "cosmetic"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

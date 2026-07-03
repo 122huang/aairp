@@ -1,0 +1,47 @@
+{
+  "description": "Per-case overrides and supplemental benchmark cases for v2 generation.",
+  "overrides": {
+    "AF-002": {
+      "verified_by_legal": true
+    },
+    "sg-health-playbook-urgency": {
+      "exclude_from_strict_linkage": false
+    }
+  },
+  "supplemental_cases": [
+    {
+      "case_id": "supplement-ad-manifest-urgency",
+      "source": "ad-manifest",
+      "skill_module": "Disclaimer Review",
+      "pattern_id": "urgency-cta",
+      "expected_rule": null,
+      "expected_decision": "WARN",
+      "expected_severity": "MEDIUM",
+      "verified_by_legal": true,
+      "text": "Limited time offer on wellness packs. #ad",
+      "issue": "Urgency CTA with disclosure present — playbook-only WARN",
+      "modality": "text",
+      "category_id": "health.supplement",
+      "country_id": "SG",
+      "exclude_from_strict_linkage": true,
+      "mapping_note": "Ad includes #ad; disclosure rule must not fire. Pattern-only urgency case."
+    },
+    {
+      "case_id": "supplement-before-after-imagery",
+      "source": "taxonomy-gap-fill",
+      "skill_module": "Content Quality Review",
+      "pattern_id": "before-after-imagery",
+      "expected_rule": null,
+      "expected_decision": "WARN",
+      "expected_severity": "LOW",
+      "verified_by_legal": false,
+      "text": "See amazing before and after transformation results.",
+      "issue": "Before/after imagery — playbook CONDITIONAL maps to WARN in frozen pipeline",
+      "modality": "text",
+      "category_id": "health.supplement",
+      "country_id": "SG",
+      "exclude_from_strict_linkage": false,
+      "mapping_note": "Frozen decision engine outputs WARN (not REVIEW) for playbook CONDITIONAL findings."
+    }
+  ]
+}

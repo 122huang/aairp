@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0-legal-pilot-zh",
+  "description": "法务内测版 — 知识链路展示标签（对应 demo/ 资产）",
+  "regulations": [
+    {
+      "regulation_key": "sg-hpa-s7-demo",
+      "jurisdiction": "SG",
+      "law_name": "SG Health Products Act (Demo)",
+      "article": "Section 7 — Prohibited claims",
+      "linked_rules": ["demo-sg-health-forbidden-claim"]
+    },
+    {
+      "regulation_key": "sg-ascm-disclosure-demo",
+      "jurisdiction": "SG",
+      "law_name": "SG ASCM Advertising Standards (Demo)",
+      "article": "Sponsored content disclosure",
+      "linked_rules": ["demo-sg-sponsored-disclosure"]
+    }
+  ],
+  "rule_pack": {
+    "pack_version": "demo-rule-1.4.0",
+    "rules": [
+      {
+        "rule_id": "demo-sg-health-forbidden-claim",
+        "severity": "BLOCKER",
+        "summary": "Prohibited absolute health cure claims"
+      },
+      {
+        "rule_id": "demo-sg-health-superlative",
+        "severity": "MEDIUM",
+        "summary": "Unsubstantiated superlative claims"
+      },
+      "demo-apac-sa-absolute-claim": {
+        "rule_id": "demo-apac-sa-absolute-claim",
+        "severity": "MEDIUM",
+        "summary": "Absolute or omnibus performance claims require substantiation"
+      },
+      "demo-apac-sa-health-claim-blocker": {
+        "rule_id": "demo-apac-sa-health-claim-blocker",
+        "severity": "BLOCKER",
+        "summary": "Prohibited health or medical claims for small appliances"
+      },
+      "demo-apac-sa-performance-claim": {
+        "rule_id": "demo-apac-sa-performance-claim",
+        "severity": "HIGH",
+        "summary": "Unsubstantiated performance claims require verification"
+      },
+      "demo-apac-sa-certification-evidence": {
+        "rule_id": "demo-apac-sa-certification-evidence",
+        "severity": "HIGH",
+        "summary": "Certification and evidence claims require document verification"
+      },
+      "demo-apac-sa-content-consistency-blocker": {
+        "rule_id": "demo-apac-sa-content-consistency-blocker",
+        "severity": "BLOCKER",
+        "summary": "Cross-asset content inconsistency must be resolved"
+      },
+    ]
+  },
+  "playbook_pack": {
+    "pack_version": "demo-playbook-1.1.0",
+    "playbook_id": "demo-health-supplement-playbook",
+    "patterns": ["urgency-cta", "unsubstantiated-testimonial", "before-after-imagery"]
+  },
+  "prompt_pack": {
+    "pack_version": "demo-open-risk-1.1.0",
+    "template_key": "open-risk-discovery",
+    "role": "Open-risk semantic gap analysis (skipped when BLOCKER)"
+  },
+  "pipeline_stages": [
+    { "id": "upload", "label": "广告上传", "icon": "📄" },
+    { "id": "context", "label": "上下文构建", "icon": "🧩" },
+    { "id": "regulation", "label": "法规", "icon": "⚖️" },
+    { "id": "rule", "label": "规则引擎", "icon": "📏" },
+    { "id": "playbook", "label": "Playbook", "icon": "📋" },
+    { "id": "llm", "label": "Prompt + LLM", "icon": "🤖" },
+    { "id": "decision", "label": "决策引擎", "icon": "✅" },
+    { "id": "report", "label": "审核报告", "icon": "📊" },
+    { "id": "case", "label": "案例库", "icon": "📚" }
+  ]
+}

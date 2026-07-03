@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:id-bpom-drug-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "id-bpom-drug-advertising",
+  "country": "ID",
+  "authority": "BPOM",
+  "regulation_name": "Government Regulation on Drug and Food Control (Advertising)",
+  "citation": "Government Regulation No. 72/1998 — Article 17",
+  "effective_date": "1998-01-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Drug advertising to consumers is heavily restricted; cure and unapproved therapeutic claims are prohibited.",
+  "review_guidance": "TRIGGER: Drug cure, Rx promotion, or disease treatment guarantees. ACTION: REJECT — remove prohibited drug claims. CHECK: BPOM registration (NA/ML), ad approval, and indication. ESCALATE IF: Unregistered drug or public Rx ad without approval.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

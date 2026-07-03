@@ -1,0 +1,38 @@
+{
+  "knowledge_id": "rewrite:qualify-comparative",
+  "corpus_type": "rewrite",
+  "rewrite_id": "qualify-comparative",
+  "legacy_template_id": "qualify-comparative",
+  "rewrite_purpose": "Guide reviewers to add comparison baseline, test method, and measurable difference to comparative claims.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "qualify",
+  "summary": "Add named comparison baseline, test conditions, and measurable difference to comparative or superiority claims.",
+  "rewrite_guidance": "TRIGGER: Versus, compared to, number one, or goes beyond language without baseline. ACTION: State benchmark product, test method, and measurable difference. CHECK: Charts, side-by-side imagery, and headline claims. ESCALATE IF: Competitor identifiable but test conditions absent.",
+  "review_guidance": "ESCALATE IF: Comparative chart lacks axis labels or implied superiority without data source.",
+  "measurable_criteria": {
+    "must_remove_terms": ["number one", "goes beyond"],
+    "must_include_concepts": ["compared", "test"],
+    "scoring_notes": "must_remove_terms on ad text; must_include_concepts on rewrite guidance text."
+  },
+  "benchmark_refs": ["AF-003", "AF-006", "PC-012"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["text", "image"],
+    "claim_types": ["comparative-claim", "superlative-claim"]
+  },
+  "linkage": {
+    "regulations": ["regulation:sg-asas-comparative-claims", "regulation:my-masa-comparative-advertising"],
+    "rules": ["demo-apac-sa-comparative-claim"],
+    "skills": ["skill:comparative-claim-review", "skill:superlative-claim-review"]
+  },
+  "expected_evidence_type": "substantiation_general",
+  "evidence_requirement": "recommended",
+  "confidence_level": "high",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:recommended", "advertising", "comparative"]
+}

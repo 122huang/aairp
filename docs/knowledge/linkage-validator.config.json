@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Linkage validator exemptions — legacy taxonomy patterns only (6B-2g: locale-expansion benchmark coverage for ID/VN/PH rules).",
+  "rules_excluded_from_strict_linkage": {},
+  "legacy_patterns": {
+    "sa-medical-claim": { "legacy_pattern": true },
+    "sa-oil-reduction-quantified": { "legacy_pattern": true },
+    "sa-mite-allergen-claim": { "legacy_pattern": true },
+    "sa-diet-oil-wellness": { "legacy_pattern": true },
+    "sa-food-safety-overnight-prep": { "legacy_pattern": true },
+    "sg-local-market-claim": { "legacy_pattern": true },
+    "my-local-market-claim": { "legacy_pattern": true },
+    "th-local-market-claim": { "legacy_pattern": true },
+    "sa-pricing-misrepresentation": { "legacy_pattern": true },
+    "sa-analogy-claim": { "legacy_pattern": true },
+    "sa-sustainability-claim": { "legacy_pattern": true },
+    "sa-material-safety-claim": { "legacy_pattern": true },
+    "sa-false-authority-endorsement": { "legacy_pattern": true },
+    "sa-competitor-trademark": { "legacy_pattern": true },
+    "id-local-market-claim": { "legacy_pattern": true },
+    "vn-local-market-claim": { "legacy_pattern": true },
+    "ph-local-market-claim": { "legacy_pattern": true }
+  }
+}

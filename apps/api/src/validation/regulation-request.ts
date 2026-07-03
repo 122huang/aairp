@@ -12,6 +12,9 @@ export type CreateRegulationVersionBody = {
   body_text?: string;
   tags?: string[];
   search_text?: string;
+  effective_date?: string;
+  mandatory?: boolean;
+  risk_level?: string;
 };
 
 export type UpdateRegulationVersionBody = Partial<CreateRegulationVersionBody>;
@@ -31,6 +34,24 @@ function optionalString(value: unknown): string | undefined {
     throw new AppError('INVALID_REQUEST', 400, 'Bad Request', 'Invalid string field');
   }
   return value.trim() || undefined;
+}
+
+function optionalBoolean(value: unknown): boolean | undefined {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+  if (typeof value !== 'boolean') {
+    throw new AppError('INVALID_REQUEST', 400, 'Bad Request', 'Invalid boolean field');
+  }
+  return value;
+}
+
+function parseRegulationMetadata(record: Record<string, unknown>) {
+  return {
+    effective_date: optionalString(record.effective_date),
+    mandatory: optionalBoolean(record.mandatory),
+    risk_level: optionalString(record.risk_level),
+  };
 }
 
 function optionalTags(value: unknown): string[] | undefined {
@@ -68,6 +89,7 @@ export function parseCreateRegulationVersionBody(
     body_text: optionalString(record.body_text),
     tags: optionalTags(record.tags),
     search_text: optionalString(record.search_text),
+    ...parseRegulationMetadata(record),
   };
 }
 
@@ -96,6 +118,15 @@ export function parseUpdateRegulationVersionBody(
   }
   if (record.search_text !== undefined) {
     parsed.search_text = optionalString(record.search_text);
+  }
+  if (record.effective_date !== undefined) {
+    parsed.effective_date = optionalString(record.effective_date);
+  }
+  if (record.mandatory !== undefined) {
+    parsed.mandatory = optionalBoolean(record.mandatory);
+  }
+  if (record.risk_level !== undefined) {
+    parsed.risk_level = optionalString(record.risk_level);
   }
   return parsed;
 }

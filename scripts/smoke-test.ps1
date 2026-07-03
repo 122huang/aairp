@@ -17,6 +17,7 @@ Write-Host "AAIRP offline smoke test (unit + regression eval)"
 Invoke-Step "pnpm build" { pnpm build }
 Invoke-Step "pnpm test" { pnpm test }
 Invoke-Step "benchmark regression" { pnpm eval:benchmark -- --regression }
+Invoke-Step "golden benchmark (text)" { pnpm eval:golden -- --no-write }
 Invoke-Step "dataset auto eval" { pnpm eval:dataset -- --auto }
 
 Write-Host ""

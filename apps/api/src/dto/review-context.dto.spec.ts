@@ -43,9 +43,9 @@ describe('toReviewContextResponseDto', () => {
         ocr_text: 'ocr',
       },
       resolved_knowledge_versions: {
-        rule_pack_version: 'demo-rule-1.0.0',
-        policy_pack_version: 'demo-policy-1.0.0',
-        playbook_pack_version: 'demo-playbook-1.0.0',
+        rule_pack_version: DEMO_KNOWLEDGE_VERSIONS.rulePackVersion,
+        policy_pack_version: DEMO_KNOWLEDGE_VERSIONS.policyPackVersion,
+        playbook_pack_version: DEMO_KNOWLEDGE_VERSIONS.playbookPackVersion,
       },
       advertisement_context: { campaign_type: 'conversion' },
       tags: ['campaign:demo'],

@@ -15,6 +15,10 @@ export type CreatePlaybookPatternBody = {
   severity_hint?: string;
   decision?: string;
   typical_decision?: string;
+  skill_module?: string;
+  purpose?: string;
+  suggested_rewrite?: string;
+  expected_severity?: string;
 };
 
 export type UpdatePlaybookPatternBody = Partial<CreatePlaybookPatternBody>;
@@ -51,12 +55,20 @@ function resolveMarkdownBody(record: Record<string, unknown>): string | undefine
   if (
     record.severity_hint !== undefined ||
     record.decision !== undefined ||
-    record.typical_decision !== undefined
+    record.typical_decision !== undefined ||
+    record.skill_module !== undefined ||
+    record.purpose !== undefined ||
+    record.suggested_rewrite !== undefined ||
+    record.expected_severity !== undefined
   ) {
     return buildPatternMarkdownBody({
       severityHint: optionalString(record.severity_hint),
       decision: optionalString(record.decision),
       typicalDecision: optionalString(record.typical_decision),
+      skillModule: optionalString(record.skill_module),
+      purpose: optionalString(record.purpose),
+      suggestedRewrite: optionalString(record.suggested_rewrite),
+      expectedSeverity: optionalString(record.expected_severity),
     });
   }
   return undefined;
@@ -88,6 +100,10 @@ export function parseCreatePlaybookPatternBody(body: unknown): CreatePlaybookPat
     severity_hint: optionalString(record.severity_hint),
     decision: optionalString(record.decision),
     typical_decision: optionalString(record.typical_decision),
+    skill_module: optionalString(record.skill_module),
+    purpose: optionalString(record.purpose),
+    suggested_rewrite: optionalString(record.suggested_rewrite),
+    expected_severity: optionalString(record.expected_severity),
   };
 }
 
@@ -106,7 +122,11 @@ export function parseUpdatePlaybookPatternBody(body: unknown): UpdatePlaybookPat
   } else if (
     record.severity_hint !== undefined ||
     record.decision !== undefined ||
-    record.typical_decision !== undefined
+    record.typical_decision !== undefined ||
+    record.skill_module !== undefined ||
+    record.purpose !== undefined ||
+    record.suggested_rewrite !== undefined ||
+    record.expected_severity !== undefined
   ) {
     parsed.markdown_body = resolveMarkdownBody(record);
   }
@@ -116,6 +136,16 @@ export function parseUpdatePlaybookPatternBody(body: unknown): UpdatePlaybookPat
   if (record.decision !== undefined) parsed.decision = optionalString(record.decision);
   if (record.typical_decision !== undefined) {
     parsed.typical_decision = optionalString(record.typical_decision);
+  }
+  if (record.skill_module !== undefined) {
+    parsed.skill_module = optionalString(record.skill_module);
+  }
+  if (record.purpose !== undefined) parsed.purpose = optionalString(record.purpose);
+  if (record.suggested_rewrite !== undefined) {
+    parsed.suggested_rewrite = optionalString(record.suggested_rewrite);
+  }
+  if (record.expected_severity !== undefined) {
+    parsed.expected_severity = optionalString(record.expected_severity);
   }
   return parsed;
 }

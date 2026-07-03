@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "industry_id": "small_appliance",
+  "industry_label": "小家电",
+  "countries": [
+    { "id": "SG", "label": "新加坡" },
+    { "id": "MY", "label": "马来西亚" },
+    { "id": "TH", "label": "泰国" }
+  ],
+  "categories": [
+    { "id": "sa.vacuum_floor", "label": "吸尘器 / 洗地" },
+    { "id": "sa.steam_mop", "label": "蒸汽拖把" },
+    { "id": "sa.air_fryer", "label": "空气炸锅" },
+    { "id": "sa.blender_processor", "label": "破壁 / 料理机" },
+    { "id": "sa.rice_cooker", "label": "电饭煲" },
+    { "id": "sa.soy_milk", "label": "豆浆机" },
+    { "id": "sa.coffee_espresso", "label": "咖啡机" },
+    { "id": "sa.kettle_cooker", "label": "电水壶 / 小厨电" },
+    { "id": "sa.other", "label": "其他小家电" }
+  ]
+}

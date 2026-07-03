@@ -1,0 +1,73 @@
+{
+  "knowledge_id": "evidence:health-claim-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "health-claim-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "health-substantiation",
+  "evidence_purpose": "Substantiation requirements for permitted health and wellness benefit claims in advertising.",
+  "summary": "Health benefit claims require substantiation aligned with product regulatory classification and permitted claim list.",
+  "review_guidance": "TRIGGER: Health or wellness benefit language on supplement or food ad. ACTION: Check product class and permitted claims. CHECK: Substantiation file, ingredient dosage. ESCALATE IF: Disease or cure implication.",
+  "evidence_purpose_tags": [
+    "health-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "health-claim"
+    ],
+    "categories": [
+      "health.supplement"
+    ],
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-supplement-health-claims",
+      "regulation:my-npra-supplement-health"
+    ],
+    "rules": [
+      "demo-apac-sa-health-implication"
+    ],
+    "skills": [
+      "skill:health-claim-review"
+    ]
+  },
+  "benchmark_refs": [
+    "PC-008",
+    "PC-011"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Confirm product regulatory category permits claim",
+      "Verify substantiation matches ingredient and dosage",
+      "Check for prohibited disease wording"
+    ],
+    "reject_if": [
+      "Claim exceeds permitted health claim list"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "health"
+  ]
+}

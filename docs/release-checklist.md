@@ -3,7 +3,8 @@
 - [ ] `docker compose up -d` healthy
 - [ ] `.env` copied from `.env.example`
 - [ ] `pnpm install && pnpm build && pnpm test` green
-- [ ] `pnpm eval:benchmark -- --regression` green
+- [ ] `pnpm eval:benchmark -- --regression` green (SG health, 6 cases)
+- [ ] `pnpm eval:golden -- --no-write` green (Golden v1: 82 runnable — 61 text + 20 image + 1 doc fixtures; 2 video skip)
 - [ ] `pnpm eval:dataset` green (32 cases)
 - [ ] `scripts/smoke-test.ps1` green
 - [ ] `POST /demo/review` with `demo/sample-ad-upload.json` → REJECT

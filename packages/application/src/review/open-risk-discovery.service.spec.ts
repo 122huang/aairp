@@ -230,7 +230,7 @@ describe('OpenRiskDiscoveryService', () => {
 
     expect(gateway.complete).toHaveBeenCalledTimes(1);
     expect(result.skipped).toBe(false);
-    expect(result.promptPackVersion).toBe('demo-open-risk-1.1.0');
+    expect(result.promptPackVersion).toBe('demo-open-risk-1.4.0');
     expect(result.findings).toHaveLength(1);
     expect(result.findings[0]).toMatchObject({
       module: 'LLM',
@@ -303,6 +303,7 @@ describe('OpenRiskDiscoveryService', () => {
   });
 
   it('downgrades REJECT suggested_action to MANUAL_REVIEW', async () => {
+    const adText = baseContext.normalizedContent.text;
     const service = new OpenRiskDiscoveryService({
       promptPath: demoPromptPath,
       llmGateway: {
@@ -315,6 +316,7 @@ describe('OpenRiskDiscoveryService', () => {
                 severity: 'HIGH',
                 suggested_action: 'REJECT',
                 confidence: 0.9,
+                evidence_spans: [{ field: 'text', start: 0, end: adText.length, text: adText }],
               },
             ],
           }),
@@ -330,7 +332,21 @@ describe('OpenRiskDiscoveryService', () => {
 
   it('aligns with demo/open-risk.stub.json reference asset', () => {
     const asset = parseOpenRiskStubResponse(readFileSync(demoStubPath, 'utf8'));
-    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.1.0');
+    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.4.0');
     expect(asset.findings[0]?.risk_type).toBe('combined-misleading-claim');
+  });
+
+  it('renders ID/VN/PH mixed-language guidance in the prompt template', () => {
+    const prompt = renderOpenRiskPrompt(
+      readFileSync(demoPromptPath, 'utf8'),
+      baseContext,
+      priorWithoutBlocker,
+    );
+
+    expect(prompt).toContain('## ID / VN / PH guidance');
+    expect(prompt).toContain('product-category-boundary');
+    expect(prompt).toContain('vn-warn-tier');
+    expect(prompt).toContain('do not inflate confidence to compensate');
+    expect(prompt).toContain('Never translate evidence_spans');
   });
 });

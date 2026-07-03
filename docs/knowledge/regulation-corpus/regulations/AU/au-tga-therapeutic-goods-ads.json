@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:au-tga-therapeutic-goods-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "au-tga-therapeutic-goods-ads",
+  "country": "AU",
+  "authority": "TGA",
+  "regulation_name": "Therapeutic Goods Act 1989",
+  "citation": "Therapeutic Goods Act 1989 — Section 42DL (Advertising)",
+  "effective_date": "1989-09-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Therapeutic goods advertising must comply with the Therapeutic Goods Advertising Code; prohibited claims include unapproved indications.",
+  "review_guidance": "TRIGGER: Disease treatment, cure, or unapproved therapeutic claims. ACTION: REJECT — remove non-compliant therapeutic advertising. CHECK: AUST R/L number, permitted indications, and required statements. ESCALATE IF: Serious disease claim or unapproved indication.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine",
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

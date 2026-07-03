@@ -24,7 +24,7 @@ function createDeps(): { reviewHappyPathService: ReviewHappyPathService } {
           finalDecision: 'PASS',
           confidence: 0.95,
           rationale: 'No blocking or warning findings.',
-          findingCounts: { rule: 0, playbook: 0, llm: 0 },
+          findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 0 },
           decidedAt: '2026-06-26T10:09:00.000Z',
         },
         report: {
@@ -35,7 +35,7 @@ function createDeps(): { reviewHappyPathService: ReviewHappyPathService } {
             finalDecision: 'PASS',
             confidence: 0.95,
             rationale: 'No blocking or warning findings.',
-            findingCounts: { rule: 0, playbook: 0, llm: 0 },
+            findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 0 },
             advertisement: {
               textPreview: 'Daily vitamins for general wellness.',
               countryId: 'SG',
@@ -46,6 +46,15 @@ function createDeps(): { reviewHappyPathService: ReviewHappyPathService } {
             openRiskSkipped: false,
           },
           generatedAt: '2026-06-26T10:10:00.000Z',
+        },
+        timings: {
+          ruleMs: 1,
+          playbookMs: 1,
+          openRiskMs: 1,
+          visionMs: 0,
+          decisionMs: 1,
+          reportMs: 1,
+          totalMs: 5,
         },
       }),
     } as unknown as ReviewHappyPathService,
@@ -135,6 +144,7 @@ describe('DemoReviewController integration', () => {
       ReviewPipelineService,
       ReviewReportService,
       RuleEngineService,
+      VisionComplianceService,
     } = await import('@aairp/application');
     const { InMemoryAdvertisementRepository } = await import('@aairp/infrastructure');
 
@@ -151,6 +161,7 @@ describe('DemoReviewController integration', () => {
       reviewReportService: new ReviewReportService({
         now: () => new Date('2026-06-26T10:10:00.000Z'),
       }),
+      visionComplianceService: new VisionComplianceService(),
     });
     const reviewHappyPathService = new ReviewHappyPathService({
       advertisementUploadService: new AdvertisementUploadService(repository, {
@@ -206,6 +217,7 @@ describe('DemoReviewController integration', () => {
       ReviewPipelineService,
       ReviewReportService,
       RuleEngineService,
+      VisionComplianceService,
     } = await import('@aairp/application');
     const { InMemoryAdvertisementRepository } = await import('@aairp/infrastructure');
 
@@ -222,6 +234,7 @@ describe('DemoReviewController integration', () => {
       reviewReportService: new ReviewReportService({
         now: () => new Date('2026-06-26T10:10:00.000Z'),
       }),
+      visionComplianceService: new VisionComplianceService(),
     });
     const reviewHappyPathService = new ReviewHappyPathService({
       advertisementUploadService: new AdvertisementUploadService(repository, {
@@ -251,8 +264,8 @@ describe('DemoReviewController integration', () => {
       payload: {
         country_id: 'SG',
         platform_id: 'META',
-        category_id: 'health.supplement',
-        content: { text: 'Daily vitamins for general wellness.' },
+        category_id: 'sa.vacuum_floor',
+        content: { text: 'Compact cordless vacuum for everyday floor cleaning.' },
       },
     });
 
@@ -262,5 +275,92 @@ describe('DemoReviewController integration', () => {
     expect(body.report_html).toContain('PASS');
     expect(body.summary.findings).toEqual([]);
     await app.close();
+  });
+
+  it('POST /demo/review fuses vision BLOCKER findings for image upload', async () => {
+    const previousVisionMode = process.env.AAIRP_VISION_MODE;
+    process.env.AAIRP_VISION_MODE = 'stub';
+
+    try {
+      const {
+        AdvertisementUploadService,
+        ContextBuilderService,
+        DecisionEngineService,
+        OpenRiskDiscoveryService,
+        PlaybookEngineService,
+        ReviewHappyPathService,
+        ReviewPipelineService,
+        ReviewReportService,
+        RuleEngineService,
+        VisionComplianceService,
+      } = await import('@aairp/application');
+      const { InMemoryAdvertisementRepository } = await import('@aairp/infrastructure');
+
+      const repository = new InMemoryAdvertisementRepository();
+      const reviewPipelineService = new ReviewPipelineService({
+        ruleEngineService: new RuleEngineService(),
+        playbookEngineService: new PlaybookEngineService(),
+        openRiskDiscoveryService: new OpenRiskDiscoveryService({
+          now: () => new Date('2026-06-26T10:08:00.000Z'),
+        }),
+        decisionEngineService: new DecisionEngineService({
+          now: () => new Date('2026-06-26T10:09:00.000Z'),
+        }),
+        reviewReportService: new ReviewReportService({
+          now: () => new Date('2026-06-26T10:10:00.000Z'),
+        }),
+        visionComplianceService: new VisionComplianceService(),
+      });
+      const reviewHappyPathService = new ReviewHappyPathService({
+        advertisementUploadService: new AdvertisementUploadService(repository, {
+          createId: () => '29292929-2929-2929-2929-292929292929',
+          now: () => new Date('2026-06-26T10:00:00.000Z'),
+        }),
+        contextBuilderService: new ContextBuilderService(repository, {
+          createReviewId: () => '30303030-3030-3030-3030-303030303030',
+          now: () => new Date('2026-06-26T10:05:00.000Z'),
+        }),
+        reviewPipelineService,
+      });
+
+      const app = Fastify();
+      registerTraceMiddleware(app);
+      registerErrorHandler(app);
+      await registerDemoReviewController(app, { reviewHappyPathService });
+      await app.ready();
+
+      const response = await app.inject({
+        method: 'POST',
+        url: '/demo/review',
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+        },
+        payload: {
+          country_id: 'SG',
+          platform_id: 'LAZADA',
+          category_id: 'sa.vacuum_floor',
+          content: {
+            text: 'Powerful suction for everyday cleaning',
+            images: ['fixture://image-compliance/competitor-logo-pos.jpg'],
+          },
+        },
+      });
+
+      expect(response.statusCode).toBe(200);
+      const body = response.json();
+      expect(body.final_decision).toBe('REJECT');
+      expect(body.finding_counts.vision).toBe(1);
+      expect(body.summary.findings.some((finding: { module: string }) => finding.module === 'VISION')).toBe(
+        true,
+      );
+      await app.close();
+    } finally {
+      if (previousVisionMode === undefined) {
+        delete process.env.AAIRP_VISION_MODE;
+      } else {
+        process.env.AAIRP_VISION_MODE = previousVisionMode;
+      }
+    }
   });
 });

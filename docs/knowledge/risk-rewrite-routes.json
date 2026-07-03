@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "routes_version": "risk-rewrite-routes-1.1.1",
+  "description": "Maps WARN-layer risk_type (skill-modules taxonomy) to rewrite_template_id. REJECT/BLOCKER risk types are intentionally omitted — delete guidance only, no rewrite.",
+  "source_taxonomy": "docs/knowledge/skill-modules.json",
+  "strategy_definitions": {
+    "remove": "删除触发词，不做替换",
+    "qualify": "加限定语（如「通常」「在标准测试条件下」）",
+    "substantiate": "保留宣称但要求附证据，加注脚格式",
+    "rephrase": "换一种表述方式，功能不变",
+    "append": "添加缺失的必要声明或标注，不修改现有内容"
+  },
+  "routes": [
+    {
+      "risk_type": "absolute-claim-soft",
+      "rewrite_template_id": "qualify-performance",
+      "strategy": "qualify",
+      "rule_ids": ["demo-apac-sa-absolute-claim-soft"]
+    },
+    {
+      "risk_type": "unsubstantiated-quantitative-claim",
+      "rewrite_template_id": "qualify-performance",
+      "strategy": "substantiate",
+      "rule_ids": ["demo-apac-sa-performance-claim"]
+    },
+    {
+      "risk_type": "unsupported-comparative-claim",
+      "rewrite_template_id": "qualify-comparative",
+      "strategy": "qualify",
+      "rule_ids": ["demo-apac-sa-comparative-claim"]
+    },
+    {
+      "risk_type": "health-implication",
+      "rewrite_template_id": "remove-health-claim",
+      "strategy": "remove",
+      "rule_ids": ["demo-apac-sa-health-implication"]
+    },
+    {
+      "risk_type": "health-superlative-claim",
+      "rewrite_template_id": "qualify-efficacy",
+      "strategy": "qualify",
+      "rule_ids": ["demo-sg-health-superlative"]
+    },
+    {
+      "risk_type": "material-claim",
+      "rewrite_template_id": "cite-evidence",
+      "strategy": "substantiate",
+      "rule_ids": ["demo-apac-sa-material-safety-claim"]
+    },
+    {
+      "risk_type": "certification-evidence",
+      "rewrite_template_id": "cite-evidence",
+      "strategy": "substantiate",
+      "rule_ids": ["demo-apac-sa-certification-evidence", "demo-apac-sa-patent-claim"]
+    },
+    {
+      "risk_type": "analogical-claim",
+      "rewrite_template_id": "qualify-comparative",
+      "strategy": "qualify",
+      "rule_ids": ["demo-apac-sa-analogy-claim"]
+    },
+    {
+      "risk_type": "environmental-claim",
+      "rewrite_template_id": "cite-evidence",
+      "strategy": "substantiate",
+      "rule_ids": ["demo-apac-sa-sustainability-claim"]
+    },
+    {
+      "risk_type": "localisation-error",
+      "rewrite_template_id": "disclose-localization",
+      "strategy": "rephrase",
+      "rule_ids": ["demo-apac-sa-localization", "demo-apac-sa-localization-cjk"]
+    },
+    {
+      "risk_type": "ai-image-disclaimer",
+      "rewrite_template_id": "disclose-ai",
+      "strategy": "append",
+      "rule_ids": ["demo-apac-sa-ai-image-disclaimer"]
+    },
+    {
+      "risk_type": "capacity-claim",
+      "rewrite_template_id": "qualify-performance",
+      "strategy": "qualify",
+      "rule_ids": ["demo-apac-sa-capacity-claim"]
+    },
+    {
+      "risk_type": "sku-mismatch",
+      "rewrite_template_id": "disclose-localization",
+      "strategy": "rephrase",
+      "rule_ids": ["demo-apac-sa-wrong-sku"]
+    },
+    {
+      "risk_type": "grammar-quality",
+      "rewrite_template_id": "fix-copy-quality",
+      "strategy": "rephrase",
+      "rule_ids": ["demo-apac-sa-grammar-quality"]
+    },
+    {
+      "risk_type": "market-ranking-claim",
+      "rewrite_template_id": "qualify-comparative",
+      "strategy": "substantiate",
+      "rule_ids": ["demo-sg-sa-market-claim", "demo-my-sa-market-claim", "demo-th-sa-market-claim"]
+    },
+    {
+      "risk_type": "sponsored-disclosure",
+      "rewrite_template_id": "disclose-urgency",
+      "strategy": "append",
+      "rule_ids": ["demo-sg-sponsored-disclosure"]
+    }
+  ]
+}

@@ -77,7 +77,7 @@ describe('ReviewHappyPathService', () => {
       country_id: 'SG',
       platform_id: 'META',
       category_id: 'health.supplement',
-      content: { text: 'Daily vitamins for general wellness.' },
+      content: { text: 'Daily vitamins for general wellness. #ad' },
     });
 
     expect(result.decision.finalDecision).toBe('PASS');

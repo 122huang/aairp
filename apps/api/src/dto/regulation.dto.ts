@@ -19,6 +19,9 @@ export type RegulationVersionDto = {
   body_text?: string;
   tags: string[];
   search_text?: string;
+  effective_date?: string;
+  mandatory?: boolean;
+  risk_level?: string;
   published_at?: string;
   created_at: string;
   updated_at: string;
@@ -46,6 +49,9 @@ export function toRegulationVersionDto(version: RegulationVersion): RegulationVe
     body_text: version.bodyText,
     tags: version.tags,
     search_text: version.searchText,
+    effective_date: version.effectiveDate,
+    mandatory: version.mandatory,
+    risk_level: version.riskLevel,
     published_at: version.publishedAt,
     created_at: version.createdAt,
     updated_at: version.updatedAt,

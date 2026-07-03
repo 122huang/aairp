@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:th-ocpb-unfair-trade",
+  "corpus_type": "regulation",
+  "regulation_id": "th-ocpb-unfair-trade",
+  "country": "TH",
+  "authority": "OCPB",
+  "regulation_name": "Consumer Protection Act B.E. 2522",
+  "citation": "Consumer Protection Act B.E. 2522 — Section 57",
+  "effective_date": "1979-01-01",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Unfair trade practices including false descriptions of goods or services are prohibited.",
+  "review_guidance": "TRIGGER: False product origin, quality, or benefit descriptions. ACTION: REJECT — correct misleading representation. CHECK: Material terms, warranties, and conditions. ESCALATE IF: Pattern of deceptive trade practice.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "consumer-protection"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

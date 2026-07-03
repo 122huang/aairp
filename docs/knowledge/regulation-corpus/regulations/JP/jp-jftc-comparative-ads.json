@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:jp-jftc-comparative-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-jftc-comparative-ads",
+  "country": "JP",
+  "authority": "JFTC",
+  "regulation_name": "Act against Unjustifiable Premiums and Misleading Representations",
+  "citation": "Act against Unjustifiable Premiums — Section 5 (Comparative representations)",
+  "effective_date": "1962-09-15",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative and superiority representations must be substantiated and must not mislead consumers.",
+  "review_guidance": "TRIGGER: No.1, best, versus competitor, or superiority claims. ACTION: WARN — require objective evidence. CHECK: Survey methodology, sample, and comparison date. ESCALATE IF: Unsubstantiated No.1 or misleading comparison.",
+  "related_rule_ids": [
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:comparative-superiority-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

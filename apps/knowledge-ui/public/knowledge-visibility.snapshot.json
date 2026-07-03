@@ -1,0 +1,2665 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-01T06:03:21.049Z",
+  "knowledge_pack": {
+    "knowledge_pack_id": "kp-2026.07.3",
+    "release_status": "released",
+    "knowledge_pack_fingerprint": "43833358c6e744e9f948b63af6bd5367a9c21f5dac197d929f5391cb9ffc8079",
+    "released_at": "2026-07-01T12:00:00.000Z",
+    "released_by": "test@aairp",
+    "draft_warning": null
+  },
+  "platform": {
+    "platform_version": "1.0.0",
+    "corpora": [
+      {
+        "corpus_type": "regulation",
+        "entry_count": 75,
+        "knowledge_quality_score": 92.2,
+        "freshness": {
+          "green": 75,
+          "yellow": 0,
+          "red": 0,
+          "green_pct": 100,
+          "yellow_pct": 0,
+          "red_pct": 0
+        },
+        "validation_errors": 0,
+        "governance_warnings": 28,
+        "fingerprint": "64490f801dadc376"
+      },
+      {
+        "corpus_type": "skill",
+        "entry_count": 5,
+        "knowledge_quality_score": 100,
+        "freshness": {
+          "green": 5,
+          "yellow": 0,
+          "red": 0,
+          "green_pct": 100,
+          "yellow_pct": 0,
+          "red_pct": 0
+        },
+        "validation_errors": 0,
+        "governance_warnings": 0,
+        "fingerprint": "8b4c576e3e17c957"
+      },
+      {
+        "corpus_type": "rewrite",
+        "entry_count": 9,
+        "knowledge_quality_score": 95.8,
+        "freshness": {
+          "green": 9,
+          "yellow": 0,
+          "red": 0,
+          "green_pct": 100,
+          "yellow_pct": 0,
+          "red_pct": 0
+        },
+        "validation_errors": 0,
+        "governance_warnings": 0,
+        "fingerprint": "debe4e045600afed"
+      },
+      {
+        "corpus_type": "evidence",
+        "entry_count": 20,
+        "knowledge_quality_score": 97.7,
+        "freshness": {
+          "green": 20,
+          "yellow": 0,
+          "red": 0,
+          "green_pct": 100,
+          "yellow_pct": 0,
+          "red_pct": 0
+        },
+        "validation_errors": 0,
+        "governance_warnings": 20,
+        "fingerprint": "6ab19675e5d99a44"
+      },
+      {
+        "corpus_type": "case",
+        "entry_count": 28,
+        "knowledge_quality_score": 84.7,
+        "freshness": {
+          "green": 28,
+          "yellow": 0,
+          "red": 0,
+          "green_pct": 100,
+          "yellow_pct": 0,
+          "red_pct": 0
+        },
+        "validation_errors": 0,
+        "governance_warnings": 42,
+        "fingerprint": "179fa1f65209c21e"
+      }
+    ],
+    "total_entries": 137
+  },
+  "quality_vs_coverage": {
+    "kqs_by_corpus": {
+      "regulation": 92.2,
+      "skill": 100,
+      "rewrite": 95.8,
+      "evidence": 97.7,
+      "case": 84.7
+    },
+    "case_benchmark_coverage_pct": 30.4,
+    "case_benchmark_covered": 28,
+    "case_benchmark_total": 92,
+    "regulation_countries": [
+      "AU",
+      "ID",
+      "JP",
+      "KR",
+      "MY",
+      "SG",
+      "TH"
+    ]
+  },
+  "dependency_graph_summary": {
+    "frozen_at": "2026-07-01T12:00:00.000Z",
+    "nodes": {
+      "rule": 18,
+      "regulation": 75,
+      "skill": 5,
+      "rewrite": 9,
+      "evidence": 20,
+      "case": 28
+    },
+    "edges": {
+      "regulation_to_skill": 14,
+      "skill_to_rewrite": 8,
+      "skill_to_evidence": 24,
+      "rewrite_to_case": 25,
+      "evidence_to_case": 15,
+      "case_to_benchmark": 28
+    },
+    "orphan_counts": {
+      "regulation_without_rule": 75,
+      "skill_without_regulation": 0,
+      "rewrite_without_skill": 4,
+      "case_without_benchmark_ref": 0
+    }
+  },
+  "evaluation_linkage": {
+    "benchmark": {
+      "benchmark_id": "aairp-benchmark-v3",
+      "schema_version": "3.0.0",
+      "content_fingerprint": "491cfcbd01f4a587e014d156aa45597a749cd889ae3f0f5952fc761071fe743d",
+      "case_count": 92,
+      "source": "benchmark/benchmark-v3.json"
+    },
+    "case_corpus": {
+      "fingerprint": "179fa1f65209c21e",
+      "entry_count": 28,
+      "benchmark_coverage": {
+        "covered": 28,
+        "total": 92,
+        "pct": 30.4
+      },
+      "verified_count": 28,
+      "regression_count": 0
+    },
+    "evaluation_profile": {
+      "dimensions": [
+        "decision",
+        "pattern_hit",
+        "severity",
+        "action",
+        "rewrite"
+      ],
+      "default_weights": {
+        "decision": 0.35,
+        "pattern_hit": 0.2,
+        "severity": 0.1,
+        "action": 0.15,
+        "rewrite": 0.2
+      }
+    },
+    "regression_baseline_ref": "benchmark-v3-baseline-2026-06-30"
+  },
+  "improvement_queue": {
+    "p1_gaps": 63,
+    "p2_gaps": 0,
+    "p3_gaps": 0,
+    "p4_gaps": 0,
+    "p5_gaps": 3,
+    "evidence_gaps": 0,
+    "unmapped_claims": 0,
+    "feedback_needs_update": 0
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "case:af-001",
+        "corpus_type": "case",
+        "label": "Af 001",
+        "summary": "Validates Localization scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-001"
+      },
+      {
+        "id": "case:af-002",
+        "corpus_type": "case",
+        "label": "Af 002",
+        "summary": "Validates Absolute Claim scenario; expected REJECT with REJECT action.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "AF-002"
+      },
+      {
+        "id": "case:af-003",
+        "corpus_type": "case",
+        "label": "Af 003",
+        "summary": "Validates Comparative Claim scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "comparative-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-003"
+      },
+      {
+        "id": "case:af-004",
+        "corpus_type": "case",
+        "label": "Af 004",
+        "summary": "Validates Performance Claim scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-004"
+      },
+      {
+        "id": "case:af-006",
+        "corpus_type": "case",
+        "label": "Af 006",
+        "summary": "Validates Comparative Advertising scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "comparative-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-006"
+      },
+      {
+        "id": "case:af-007",
+        "corpus_type": "case",
+        "label": "Af 007",
+        "summary": "Validates Disclaimer scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-007"
+      },
+      {
+        "id": "case:af-008",
+        "corpus_type": "case",
+        "label": "Af 008",
+        "summary": "Validates AI Image Quality scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-008"
+      },
+      {
+        "id": "case:af-009",
+        "corpus_type": "case",
+        "label": "Af 009",
+        "summary": "Validates Certification scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-009"
+      },
+      {
+        "id": "case:af-010",
+        "corpus_type": "case",
+        "label": "Af 010",
+        "summary": "Validates Evidence scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "AF-010"
+      },
+      {
+        "id": "case:gen-007",
+        "corpus_type": "case",
+        "label": "Gen 007",
+        "summary": "Validates Performance Claim scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "GEN-007"
+      },
+      {
+        "id": "case:pc-001",
+        "corpus_type": "case",
+        "label": "Pc 001",
+        "summary": "Validates Localization scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-001"
+      },
+      {
+        "id": "case:pc-006",
+        "corpus_type": "case",
+        "label": "Pc 006",
+        "summary": "Validates Capacity Claim scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-006"
+      },
+      {
+        "id": "case:pc-007",
+        "corpus_type": "case",
+        "label": "Pc 007",
+        "summary": "Validates Performance Claim scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-007"
+      },
+      {
+        "id": "case:pc-008",
+        "corpus_type": "case",
+        "label": "Pc 008",
+        "summary": "Validates Health Claim scenario; expected REJECT with REJECT action.",
+        "claim_types": [
+          "health-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-008"
+      },
+      {
+        "id": "case:pc-012",
+        "corpus_type": "case",
+        "label": "Pc 012",
+        "summary": "Validates Comparative Advertising scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "comparative-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-012"
+      },
+      {
+        "id": "case:pc-013",
+        "corpus_type": "case",
+        "label": "Pc 013",
+        "summary": "Validates Localization scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-013"
+      },
+      {
+        "id": "case:pc-014",
+        "corpus_type": "case",
+        "label": "Pc 014",
+        "summary": "Validates Disclaimer scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "PC-014"
+      },
+      {
+        "id": "case:rc18-002",
+        "corpus_type": "case",
+        "label": "Rc18 002",
+        "summary": "Validates Localization scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "RC18-002"
+      },
+      {
+        "id": "case:rc18-003",
+        "corpus_type": "case",
+        "label": "Rc18 003",
+        "summary": "Validates Comparative Claim scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "comparative-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "RC18-003"
+      },
+      {
+        "id": "case:rc18-004",
+        "corpus_type": "case",
+        "label": "Rc18 004",
+        "summary": "Validates Patent scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "RC18-004"
+      },
+      {
+        "id": "case:rc18-005",
+        "corpus_type": "case",
+        "label": "Rc18 005",
+        "summary": "Validates Disclaimer scenario; expected REVIEW with ESCALATE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "RC18-005"
+      },
+      {
+        "id": "case:sg-health-pass-disclosed",
+        "corpus_type": "case",
+        "label": "Sg Health Pass Disclosed",
+        "summary": "Validates Clean ad with disclosure → PASS scenario; expected PASS with PASS action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "sg-health-pass-disclosed"
+      },
+      {
+        "id": "case:sg-health-playbook-urgency",
+        "corpus_type": "case",
+        "label": "Sg Health Playbook Urgency",
+        "summary": "Validates Urgency CTA playbook → WARN scenario; expected WARN with REWRITE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "sg-health-playbook-urgency"
+      },
+      {
+        "id": "case:sg-health-reject-cure",
+        "corpus_type": "case",
+        "label": "Sg Health Reject Cure",
+        "summary": "Validates Forbidden cure claim → REJECT with blocker rule scenario; expected REJECT with REJECT action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "sg-health-reject-cure"
+      },
+      {
+        "id": "case:sg-health-warn-disclosure",
+        "corpus_type": "case",
+        "label": "Sg Health Warn Disclosure",
+        "summary": "Validates Missing ad disclosure → WARN scenario; expected WARN with REWRITE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "sg-health-warn-disclosure"
+      },
+      {
+        "id": "case:sg-health-warn-superlative",
+        "corpus_type": "case",
+        "label": "Sg Health Warn Superlative",
+        "summary": "Validates Superlative claim without blocker → WARN scenario; expected WARN with REWRITE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "sg-health-warn-superlative"
+      },
+      {
+        "id": "case:supplement-ad-manifest-urgency",
+        "corpus_type": "case",
+        "label": "Supplement Ad Manifest Urgency",
+        "summary": "Validates Urgency CTA with disclosure present — playbook-only WARN scenario; expected WARN with REWRITE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "legal_verified",
+        "benchmark_ref": "supplement-ad-manifest-urgency"
+      },
+      {
+        "id": "case:supplement-before-after-imagery",
+        "corpus_type": "case",
+        "label": "Supplement Before After Imagery",
+        "summary": "Validates Before/after imagery — playbook CONDITIONAL maps to WARN in frozen pipeline scenario; expected WARN with REWRITE action.",
+        "claim_types": [
+          "disclosure-claim"
+        ],
+        "verification_status": "human_verified",
+        "benchmark_ref": "supplement-before-after-imagery"
+      },
+      {
+        "id": "evidence:absolute-performance-substantiation",
+        "corpus_type": "evidence",
+        "label": "Absolute Performance Substantiation",
+        "summary": "Absolute performance claims require substantiation demonstrating the stated outcome under defined conditions.",
+        "claim_types": [
+          "performance-claim",
+          "superlative-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:capacity-claim-substantiation",
+        "corpus_type": "evidence",
+        "label": "Capacity Claim Substantiation",
+        "summary": "Capacity substantiation must align advertised volume with packaging label and test conditions.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "requirement_level": "recommended"
+      },
+      {
+        "id": "evidence:capacity-test-method-evidence",
+        "corpus_type": "evidence",
+        "label": "Capacity Test Method Evidence",
+        "summary": "Capacity claims must reference a documented test method aligned with on-pack specifications.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "requirement_level": "recommended"
+      },
+      {
+        "id": "evidence:certification-expiry-validation",
+        "corpus_type": "evidence",
+        "label": "Certification Expiry Validation",
+        "summary": "Certification substantiation must not be expired relative to campaign dates and review date.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:certification-mark-substantiation",
+        "corpus_type": "evidence",
+        "label": "Certification Mark Substantiation",
+        "summary": "Certification marks in ads require verifiable certificate records covering product scope and applicable market.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:certification-on-ad-legibility",
+        "corpus_type": "evidence",
+        "label": "Certification On Ad Legibility",
+        "summary": "On-ad certification marks must be readable and not misleading through distortion or partial display.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:comparative-claim-substantiation",
+        "corpus_type": "evidence",
+        "label": "Comparative Claim Substantiation",
+        "summary": "Comparative claims require substantiation identifying baseline product, test method, and measurable difference.",
+        "claim_types": [
+          "comparative-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:comparative-superiority-substantiation",
+        "corpus_type": "evidence",
+        "label": "Comparative Superiority Substantiation",
+        "summary": "Superiority claims require substantiation with named benchmark and statistically supportable difference.",
+        "claim_types": [
+          "comparative-claim",
+          "superlative-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:comparative-test-evidence",
+        "corpus_type": "evidence",
+        "label": "Comparative Test Evidence",
+        "summary": "Chart and side-by-side comparisons require test evidence with axis labels and fair comparison methodology.",
+        "claim_types": [
+          "comparative-claim"
+        ],
+        "requirement_level": "recommended"
+      },
+      {
+        "id": "evidence:efficacy-superlative-substantiation",
+        "corpus_type": "evidence",
+        "label": "Efficacy Superlative Substantiation",
+        "summary": "Superlative efficacy claims require substantiation file or must be qualified to typical-results framing.",
+        "claim_types": [
+          "superlative-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:general-advertising-substantiation",
+        "corpus_type": "evidence",
+        "label": "General Advertising Substantiation",
+        "summary": "Advertisers must hold substantiation for material claims before publication under general substantiation obligations.",
+        "claim_types": [
+          "performance-claim",
+          "health-claim",
+          "comparative-claim",
+          "superlative-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:health-claim-substantiation",
+        "corpus_type": "evidence",
+        "label": "Health Claim Substantiation",
+        "summary": "Health benefit claims require substantiation aligned with product regulatory classification and permitted claim list.",
+        "claim_types": [
+          "health-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:health-implication-substantiation",
+        "corpus_type": "evidence",
+        "label": "Health Implication Substantiation",
+        "summary": "Implied health benefits on general products require substantiation or claim removal per health implication rules.",
+        "claim_types": [
+          "health-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:performance-claim-substantiation",
+        "corpus_type": "evidence",
+        "label": "Performance Claim Substantiation",
+        "summary": "Performance claims require substantiation file demonstrating typical results under disclosed conditions.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:performance-lab-report",
+        "corpus_type": "evidence",
+        "label": "Performance Lab Report",
+        "summary": "Quantitative performance claims require traceable lab test reports with method and conditions disclosed.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:product-certification-scope-verification",
+        "corpus_type": "evidence",
+        "label": "Product Certification Scope Verification",
+        "summary": "Reviewers must confirm certificate scope explicitly covers the product and claims shown in the advertisement.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:quantitative-claim-lab-report",
+        "corpus_type": "evidence",
+        "label": "Quantitative Claim Lab Report",
+        "summary": "Percentage, duration, and capacity numbers in ads require lab reports showing measurement methodology.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:standardized-test-protocol-reference",
+        "corpus_type": "evidence",
+        "label": "Standardized Test Protocol Reference",
+        "summary": "Performance qualification may cite recognized industry test protocols when full lab report is supplementary.",
+        "claim_types": [
+          "performance-claim"
+        ],
+        "requirement_level": "recommended"
+      },
+      {
+        "id": "evidence:supplement-health-evidence",
+        "corpus_type": "evidence",
+        "label": "Supplement Health Evidence",
+        "summary": "Supplement ads making health claims must hold classification-appropriate substantiation on file.",
+        "claim_types": [
+          "health-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "evidence:third-party-certification-body",
+        "corpus_type": "evidence",
+        "label": "Third Party Certification Body",
+        "summary": "Only recognized certification bodies may substantiate third-party certification claims in advertising.",
+        "claim_types": [
+          "certification-claim"
+        ],
+        "requirement_level": "required"
+      },
+      {
+        "id": "regulation:au-accc-certification-schemes",
+        "corpus_type": "regulation",
+        "label": "Australian Consumer Law (Certification and approval claims)",
+        "summary": "False or misleading representations about approvals, certifications, or quality marks are prohibited.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-accc-comparative-advertising",
+        "corpus_type": "regulation",
+        "label": "Competition and Consumer Act 2010",
+        "summary": "Comparative claims must be accurate and substantiated; false comparisons may breach the Australian Consumer Law.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-accc-misleading-conduct",
+        "corpus_type": "regulation",
+        "label": "Australian Consumer Law",
+        "summary": "Misleading or deceptive conduct in trade or commerce is prohibited under the Australian Consumer Law.",
+        "claim_types": [
+          "Consumer Protection"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-accc-performance-representations",
+        "corpus_type": "regulation",
+        "label": "Australian Consumer Law",
+        "summary": "Performance representations must not mislead; businesses must have reasonable grounds for quantified claims.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-ad-standards-disclosure",
+        "corpus_type": "regulation",
+        "label": "AANA Code of Ethics (Identifying advertising)",
+        "summary": "Influencer and native advertising must be clearly identifiable as marketing communication.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-tga-complementary-medicines",
+        "corpus_type": "regulation",
+        "label": "Therapeutic Goods Advertising Code (Complementary medicines)",
+        "summary": "Complementary medicine ads must use permitted indications and mandatory warnings; disease claims require TGA approval.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-tga-cosmetic-therapeutic-border",
+        "corpus_type": "regulation",
+        "label": "Therapeutic Goods Act 1989 (Cosmetic vs therapeutic)",
+        "summary": "Products making therapeutic skin claims may be regulated as therapeutic goods; cosmetic ads must not cross into therapeutic claims.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-tga-medical-device-ads",
+        "corpus_type": "regulation",
+        "label": "Therapeutic Goods (Medical Devices) Regulations",
+        "summary": "Medical device advertising must not claim benefits beyond ARTG inclusion and intended purpose.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:au-tga-therapeutic-goods-ads",
+        "corpus_type": "regulation",
+        "label": "Therapeutic Goods Act 1989",
+        "summary": "Therapeutic goods advertising must comply with the Therapeutic Goods Advertising Code; prohibited claims include unapproved indications.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "AU"
+      },
+      {
+        "id": "regulation:id-bpom-cosmetic-claims",
+        "corpus_type": "regulation",
+        "label": "Cosmetic Advertising Guidelines (BPOM)",
+        "summary": "Cosmetic advertising is limited to appearance and hygiene benefits without therapeutic or drug claims.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-bpom-drug-advertising",
+        "corpus_type": "regulation",
+        "label": "Government Regulation on Drug and Food Control (Advertising)",
+        "summary": "Drug advertising to consumers is heavily restricted; cure and unapproved therapeutic claims are prohibited.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-bpom-medical-device-ads",
+        "corpus_type": "regulation",
+        "label": "Regulation of Medical Device Advertising (BPOM)",
+        "summary": "Medical device ads must stay within BPOM-registered intended use and approved promotional materials.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-bpom-performance-claims",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Law (Product claims alignment)",
+        "summary": "Product efficacy and performance claims must be truthful and must not mislead about quality or results.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-bpom-supplement-claims",
+        "corpus_type": "regulation",
+        "label": "BPOM Regulation on Health Supplement Claims",
+        "summary": "Health supplement ads must use BPOM-permitted claims and must not imply disease treatment or prevention.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-kpdkn-misleading-conduct",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Law",
+        "summary": "Business actors must not provide false or misleading information about goods or services.",
+        "claim_types": [
+          "Consumer Protection"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-kpdkn-pricing-promotions",
+        "corpus_type": "regulation",
+        "label": "Trade Competition Law (Promotional pricing)",
+        "summary": "Promotional pricing and discount claims must not deceive consumers about actual savings or price history.",
+        "claim_types": [
+          "Pricing"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-kpi-ad-labeling",
+        "corpus_type": "regulation",
+        "label": "Indonesian Advertising Ethics Code",
+        "summary": "Advertisements including digital and influencer content must be clearly identifiable as commercial messages.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-kpi-comparative-advertising",
+        "corpus_type": "regulation",
+        "label": "Indonesian Broadcasting Code (Comparative ads)",
+        "summary": "Comparative advertising must be honest, substantiated, and must not unfairly harm competitor reputation.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:id-sni-certification-mark",
+        "corpus_type": "regulation",
+        "label": "SNI Mark Usage Requirements",
+        "summary": "SNI and halal certification marks may only be used where valid certification covers the advertised product.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "ID"
+      },
+      {
+        "id": "regulation:jp-caa-cosmetic-claims",
+        "corpus_type": "regulation",
+        "label": "Pharmaceutical Affairs Act (Quasi-drugs and Cosmetics)",
+        "summary": "Cosmetics and quasi-drugs may claim approved cosmetic effects but must not make unapproved medicinal claims.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-caa-health-foods",
+        "corpus_type": "regulation",
+        "label": "Health Promotion Act (Foods with Function Claims)",
+        "summary": "Foods with Function Claims must use only notified claim wording; other health foods must avoid disease-related claims.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-caa-misleading-representations",
+        "corpus_type": "regulation",
+        "label": "Consumer Contract Act (Misleading representations)",
+        "summary": "Misleading representations about goods or services that affect consumer decisions are restricted.",
+        "claim_types": [
+          "Consumer Protection"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-caa-sponsored-disclosure",
+        "corpus_type": "regulation",
+        "label": "Stealth Marketing Guidelines (Consumer Affairs Agency)",
+        "summary": "Stealth marketing and undisclosed paid endorsements are prohibited; sponsored content must be clearly identified.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-jftc-comparative-ads",
+        "corpus_type": "regulation",
+        "label": "Act against Unjustifiable Premiums and Misleading Representations",
+        "summary": "Comparative and superiority representations must be substantiated and must not mislead consumers.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-jftc-performance-representations",
+        "corpus_type": "regulation",
+        "label": "Act against Unjustifiable Premiums and Misleading Representations",
+        "summary": "Performance and efficacy representations must be based on fact and must not exaggerate beyond substantiation.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-jftc-pricing-representations",
+        "corpus_type": "regulation",
+        "label": "Act against Unjustifiable Premiums and Misleading Representations",
+        "summary": "Double pricing and misleading discount representations are prohibited under fair representation rules.",
+        "claim_types": [
+          "Pricing"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-jis-certification-mark",
+        "corpus_type": "regulation",
+        "label": "JIS Mark Certification Requirements",
+        "summary": "JIS and other certification marks may only be displayed for products within valid certified scope.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-pmda-medical-device-ads",
+        "corpus_type": "regulation",
+        "label": "Pharmaceutical Affairs Act (Medical Devices)",
+        "summary": "Medical device advertising must reflect approved indications and must not expand beyond PMDA clearance.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:jp-pmda-pharma-advertising",
+        "corpus_type": "regulation",
+        "label": "Pharmaceutical Affairs Act (Advertising)",
+        "summary": "Prescription drug advertising to the general public is prohibited; OTC drug ads must comply with approved labeling.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "JP"
+      },
+      {
+        "id": "regulation:kr-kftc-ad-disclosure",
+        "corpus_type": "regulation",
+        "label": "Guidelines on Labeling and Advertising",
+        "summary": "Advertisements including influencer and native content must be clearly distinguishable as commercial messages.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-kftc-comparative-ads",
+        "corpus_type": "regulation",
+        "label": "Monopoly Regulation and Fair Trade Act",
+        "summary": "Comparative advertising must be objective, substantiated, and must not unfairly disparage competitors.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-kftc-performance-claims",
+        "corpus_type": "regulation",
+        "label": "Act on Fair Labeling and Advertising",
+        "summary": "Performance and efficacy claims must be truthful and supported by adequate evidence under fair labeling rules.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-kftc-pricing-representations",
+        "corpus_type": "regulation",
+        "label": "Act on Fair Labeling and Advertising (Pricing)",
+        "summary": "Misleading price comparisons and false discount representations are restricted under fair advertising rules.",
+        "claim_types": [
+          "Pricing"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-kftc-unfair-trade",
+        "corpus_type": "regulation",
+        "label": "Act on Fair Labeling and Advertising",
+        "summary": "False or exaggerated labeling and advertising that deceives consumers is prohibited.",
+        "claim_types": [
+          "Consumer Protection"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-ks-certification-mark",
+        "corpus_type": "regulation",
+        "label": "KS Mark and Quality Certification Requirements",
+        "summary": "KS and KC certification marks may only be used on products within valid certified scope and period.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-mfds-cosmetic-claims",
+        "corpus_type": "regulation",
+        "label": "Cosmetics Act (Advertising)",
+        "summary": "Cosmetic ads may describe appearance effects but must not claim disease treatment or drug-like efficacy.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-mfds-health-functional-foods",
+        "corpus_type": "regulation",
+        "label": "Health Functional Food Act",
+        "summary": "Health functional foods may only use MFDS-approved function claims; disease treatment claims are prohibited.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-mfds-medical-device-ads",
+        "corpus_type": "regulation",
+        "label": "Medical Devices Act (Advertising)",
+        "summary": "Medical device advertising must align with MFDS-permitted intended use and approved promotional content.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:kr-mfds-pharma-advertising",
+        "corpus_type": "regulation",
+        "label": "Pharmaceutical Affairs Act (Advertising)",
+        "summary": "Drug advertising is restricted; Rx drugs must not be promoted to consumers and claims must match MFDS approval.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "KR"
+      },
+      {
+        "id": "regulation:my-kpdnhep-misleading-conduct",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Act 1999",
+        "summary": "Misleading or deceptive conduct in trade including false product representations is prohibited.",
+        "claim_types": [
+          "Consumer Protection"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-kpdnhep-pricing-representation",
+        "corpus_type": "regulation",
+        "label": "Price Control and Anti-Profiteering Act 2011",
+        "summary": "Promotional pricing must reflect genuine savings; strikethrough and limited-time offers must not mislead consumers.",
+        "claim_types": [
+          "Pricing"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-masa-comparative-advertising",
+        "corpus_type": "regulation",
+        "label": "Malaysian Code of Advertising Practice",
+        "summary": "Comparative claims must be truthful, verifiable, and not denigrate competitors unfairly.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-masa-sponsorship-disclosure",
+        "corpus_type": "regulation",
+        "label": "Malaysian Code of Advertising Practice",
+        "summary": "Advertorial and sponsored social content must be clearly identified as paid advertising.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-npra-cosmetic-claims",
+        "corpus_type": "regulation",
+        "label": "Control of Drugs and Cosmetics Regulations",
+        "summary": "Cosmetic ads may describe appearance effects but must not claim therapeutic or disease-related benefits.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-npra-device-claims",
+        "corpus_type": "regulation",
+        "label": "Medical Device Act 2012 (Advertising)",
+        "summary": "Medical device advertising must not claim unregistered intended purposes or clinical outcomes beyond approval.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-npra-medicinal-claims",
+        "corpus_type": "regulation",
+        "label": "Medicines (Advertisement and Sale) Act 1956",
+        "summary": "Medicine ads must not promote unregistered products or make prohibited therapeutic claims without NPRA approval.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-npra-supplement-health",
+        "corpus_type": "regulation",
+        "label": "Guidelines on Advertisement of Health Supplements",
+        "summary": "Health supplement ads are restricted to general health maintenance claims and must not imply medicinal effects.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-sirim-certification-marks",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection (Certification and Standards Marks) Regulations 2010",
+        "summary": "SIRIM, MS, and other certification marks may only be used for certified product scopes and valid periods.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:my-sirim-performance-claims",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Act 1999 (Performance representations)",
+        "summary": "Performance and results claims for consumer goods must be accurate and supported by adequate testing.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "MY"
+      },
+      {
+        "id": "regulation:sg-asas-awards-testimonials",
+        "corpus_type": "regulation",
+        "label": "Singapore Code of Advertising Practice",
+        "summary": "Awards, seals, and testimonials must be genuine, current, and representative; fabricated endorsements are prohibited.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-asas-before-after-imagery",
+        "corpus_type": "regulation",
+        "label": "Singapore Code of Advertising Practice",
+        "summary": "Before/after and transformation images must reflect typical results and must not be misleading through staging or editing.",
+        "claim_types": [
+          "Image Usage"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-asas-comparative-claims",
+        "corpus_type": "regulation",
+        "label": "Singapore Code of Advertising Practice",
+        "summary": "Comparative and superiority claims must be fair, identifiable, and substantiated before publication.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-asas-influencer-disclosure",
+        "corpus_type": "regulation",
+        "label": "Singapore Code of Advertising Practice",
+        "summary": "Paid influencer and branded content must be clearly disclosed as advertising across all formats.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-asasa-substantiation",
+        "corpus_type": "regulation",
+        "label": "Singapore Code of Advertising Practice",
+        "summary": "Advertisers must hold substantiation for comparative, superlative, and efficacy claims before publication.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hpa-s7-prohibited-claims",
+        "corpus_type": "regulation",
+        "label": "Health Products Act (Singapore)",
+        "summary": "Prohibited health claims including cure, miracle, and absolute efficacy statements for health products.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-certification-marks",
+        "corpus_type": "regulation",
+        "label": "Health Products Act (Singapore)",
+        "summary": "Ads must not misuse HSA registration, GMP, or quality marks to imply unapproved benefits.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-efficacy-performance",
+        "corpus_type": "regulation",
+        "label": "Health Products (Advertisement of Health Products) Regulations",
+        "summary": "Quantified efficacy, speed, or results claims for health products require valid substantiation and must not be absolute.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-medical-device-intended-use",
+        "corpus_type": "regulation",
+        "label": "Health Products (Medical Devices) Regulations",
+        "summary": "Medical device advertising must stay within registered intended use and must not imply unregistered clinical outcomes.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-product-safety-claims",
+        "corpus_type": "regulation",
+        "label": "Health Products (Safety Requirements) Regulations",
+        "summary": "Safety claims such as non-toxic, child-safe, or side-effect-free must not contradict known product risks or label warnings.",
+        "claim_types": [
+          "Safety Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-supplement-health-claims",
+        "corpus_type": "regulation",
+        "label": "Health Products Act (Singapore)",
+        "summary": "Health supplement ads may only use permitted general health claims aligned with product classification and substantiation.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-therapeutic-claims",
+        "corpus_type": "regulation",
+        "label": "Health Products (Advertisement of Therapeutic Products) Regulations",
+        "summary": "Therapeutic product ads must not claim to treat, prevent, or cure diseases unless HSA-approved indications are reflected.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-hsa-traditional-medicine-claims",
+        "corpus_type": "regulation",
+        "label": "Traditional Medicines Guidelines (HSA)",
+        "summary": "Traditional medicine advertising is limited to culturally accepted health maintenance claims without modern disease-treatment wording.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-imda-ai-disclosure",
+        "corpus_type": "regulation",
+        "label": "IMDA Model AI Governance Framework (Advertising)",
+        "summary": "Synthetic or AI-generated people, scenes, or voice in ads should be disclosed where consumers could be misled.",
+        "claim_types": [
+          "AI-generated Content"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-nea-green-claims",
+        "corpus_type": "regulation",
+        "label": "Environmental Claims Guidance (NEA-aligned)",
+        "summary": "Green, recyclable, and carbon-neutral claims must be specific, substantiated, and not overstate environmental benefit.",
+        "claim_types": [
+          "Environmental Claims"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:sg-scap-disclosure",
+        "corpus_type": "regulation",
+        "label": "Singapore Code of Advertising Practice",
+        "summary": "Sponsored or promotional content must be clearly identified as advertising.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "SG"
+      },
+      {
+        "id": "regulation:th-fda-cosmetic-claims",
+        "corpus_type": "regulation",
+        "label": "Cosmetics Act B.E. 2558",
+        "summary": "Cosmetic advertising may claim appearance benefits but must not assert therapeutic or drug-like effects.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-fda-drug-advertising",
+        "corpus_type": "regulation",
+        "label": "Drug Act B.E. 2510 (Advertising)",
+        "summary": "Drug advertising to the public is restricted; prohibited claims include cure guarantees and unapproved indications.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-fda-medical-device-ads",
+        "corpus_type": "regulation",
+        "label": "Medical Device Act B.E. 2551",
+        "summary": "Medical device ads must align with Thai FDA registered intended use and approved advertising content.",
+        "claim_types": [
+          "Medical Claims"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-fda-supplement-claims",
+        "corpus_type": "regulation",
+        "label": "Notification of Food Supplements (Advertising)",
+        "summary": "Food supplement ads must use permitted health claims and must not imply medicinal or disease-treatment effects.",
+        "claim_types": [
+          "Health Claims"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-ocpb-ad-identification",
+        "corpus_type": "regulation",
+        "label": "Guidelines on Identification of Advertisements",
+        "summary": "Sponsored online and social media content must be clearly labeled as advertising to consumers.",
+        "claim_types": [
+          "Mandatory Disclaimers"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-ocpb-comparative-ads",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Act B.E. 2522",
+        "summary": "Comparative advertising must be truthful, not misleading, and must not unfairly disparage competitors.",
+        "claim_types": [
+          "Comparative Advertising"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-ocpb-pricing-promotions",
+        "corpus_type": "regulation",
+        "label": "Guidelines on Promotional Pricing",
+        "summary": "Promotional and discount pricing must reflect genuine price reductions without inflated reference prices.",
+        "claim_types": [
+          "Pricing"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-ocpb-unfair-trade",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Act B.E. 2522",
+        "summary": "Unfair trade practices including false descriptions of goods or services are prohibited.",
+        "claim_types": [
+          "Consumer Protection"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-tisi-certification-mark",
+        "corpus_type": "regulation",
+        "label": "TIS Product Certification Mark Requirements",
+        "summary": "TIS and other standard marks may only appear on products and ads for valid certified models.",
+        "claim_types": [
+          "Certification"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "regulation:th-tisi-performance-claims",
+        "corpus_type": "regulation",
+        "label": "Consumer Protection Act B.E. 2522 (Product performance)",
+        "summary": "Product performance claims must not deceive consumers about quality, durability, or efficacy.",
+        "claim_types": [
+          "Performance Claims"
+        ],
+        "country": "TH"
+      },
+      {
+        "id": "rewrite:cite-evidence",
+        "corpus_type": "rewrite",
+        "label": "Cite Evidence",
+        "summary": "Require substantiation, certification, or test evidence reference for performance, certification, or quantitative efficacy claims.",
+        "claim_types": [
+          "certification-claim",
+          "performance-claim"
+        ],
+        "strategy": "cite_evidence"
+      },
+      {
+        "id": "rewrite:disclose-ai",
+        "corpus_type": "rewrite",
+        "label": "Disclose Ai",
+        "summary": "Add clear AI-rendered or illustration-only disclaimer when synthetic imagery could be mistaken for real photography.",
+        "claim_types": [
+          "disclosure-ai"
+        ],
+        "strategy": "disclose"
+      },
+      {
+        "id": "rewrite:disclose-localization",
+        "corpus_type": "rewrite",
+        "label": "Disclose Localization",
+        "summary": "Clarify or replace assets localized for a market other than the target country with English or local-market appropriate materials.",
+        "claim_types": [
+          "disclosure-localization"
+        ],
+        "strategy": "disclose"
+      },
+      {
+        "id": "rewrite:disclose-transformation",
+        "corpus_type": "rewrite",
+        "label": "Disclose Transformation",
+        "summary": "Add disclaimer that before/after or transformation imagery does not represent typical outcomes for all users.",
+        "claim_types": [
+          "disclosure-transformation"
+        ],
+        "strategy": "disclose"
+      },
+      {
+        "id": "rewrite:disclose-urgency",
+        "corpus_type": "rewrite",
+        "label": "Disclose Urgency",
+        "summary": "Add offer validity terms or remove limited-time pressure language that may mislead consumers about availability or pricing.",
+        "claim_types": [
+          "disclosure-urgency"
+        ],
+        "strategy": "disclose"
+      },
+      {
+        "id": "rewrite:qualify-comparative",
+        "corpus_type": "rewrite",
+        "label": "Qualify Comparative",
+        "summary": "Add named comparison baseline, test conditions, and measurable difference to comparative or superiority claims.",
+        "claim_types": [
+          "comparative-claim",
+          "superlative-claim"
+        ],
+        "strategy": "qualify"
+      },
+      {
+        "id": "rewrite:qualify-efficacy",
+        "corpus_type": "rewrite",
+        "label": "Qualify Efficacy",
+        "summary": "Replace absolute efficacy or testimonial claims with qualified language supported by substantiation or typical-results framing.",
+        "claim_types": [
+          "superlative-claim"
+        ],
+        "strategy": "qualify"
+      },
+      {
+        "id": "rewrite:qualify-performance",
+        "corpus_type": "rewrite",
+        "label": "Qualify Performance",
+        "summary": "Replace absolute or omnibus performance claims with qualified typical-results language and normal-use conditions.",
+        "claim_types": [
+          "performance-claim",
+          "superlative-claim"
+        ],
+        "strategy": "qualify"
+      },
+      {
+        "id": "rewrite:remove-health-claim",
+        "corpus_type": "rewrite",
+        "label": "Remove Health Claim",
+        "summary": "Remove implied health or nutrition benefit wording when product category or substantiation does not support the claim.",
+        "claim_types": [
+          "health-claim"
+        ],
+        "strategy": "remove"
+      },
+      {
+        "id": "rule:demo-apac-sa-absolute-claim",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-absolute-claim",
+        "summary": "Absolute or omnibus performance claims (e.g. every time, perfect) are not permitted without qualification and substantiation"
+      },
+      {
+        "id": "rule:demo-apac-sa-absolute-claim-soft",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-absolute-claim-soft",
+        "summary": "Absolute or omnibus claims (e.g. zero waste, no chunks) require qualification and substantiation"
+      },
+      {
+        "id": "rule:demo-apac-sa-ai-image-disclaimer",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-ai-image-disclaimer",
+        "summary": "AI-generated or rendered product imagery requires an illustration disclaimer visible in ad copy or OCR text"
+      },
+      {
+        "id": "rule:demo-apac-sa-capacity-claim",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-capacity-claim",
+        "summary": "Capacity or volume claims (e.g. up to X kg/bowls) require substantiation and clear test conditions"
+      },
+      {
+        "id": "rule:demo-apac-sa-certification-evidence",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-certification-evidence",
+        "summary": "Certification, patent, award, or laboratory evidence claims require document verification before publishing"
+      },
+      {
+        "id": "rule:demo-apac-sa-comparative-claim",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-comparative-claim",
+        "summary": "Comparative claims (less/more/better than, vs competitor, capacity/speed superiority) require a clear baseline and test conditions"
+      },
+      {
+        "id": "rule:demo-apac-sa-content-consistency-blocker",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-content-consistency-blocker",
+        "summary": "Material or product description inconsistency across ad assets must be resolved before publishing"
+      },
+      {
+        "id": "rule:demo-apac-sa-disclaimer-required",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-disclaimer-required",
+        "summary": "AI-generated or digitally rendered imagery requires an illustration disclaimer (e.g. for illustration purposes only)"
+      },
+      {
+        "id": "rule:demo-apac-sa-grammar-quality",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-grammar-quality",
+        "summary": "Grammar, spelling, or formatting errors detected; revise before publishing"
+      },
+      {
+        "id": "rule:demo-apac-sa-health-claim-blocker",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-health-claim-blocker",
+        "summary": "Prohibited health or medical claims for small appliances (nutrition, sterilization, fat reduction, antibacterial, etc.)"
+      },
+      {
+        "id": "rule:demo-apac-sa-health-implication",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-health-implication",
+        "summary": "Health-related claims for small appliances require substantiation; avoid implied health or nutrition benefits"
+      },
+      {
+        "id": "rule:demo-apac-sa-localization",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-localization",
+        "summary": "Localized-market assets (Chinese packaging, manual, subtitles) require market-appropriate version for target country"
+      },
+      {
+        "id": "rule:demo-apac-sa-patent-claim",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-patent-claim",
+        "summary": "Patent claims require verification of jurisdiction, patent number, and ownership"
+      },
+      {
+        "id": "rule:demo-apac-sa-performance-claim",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-performance-claim",
+        "summary": "Quantitative or unsubstantiated performance claims (efficacy, yield, timing, specs) require verification before publishing"
+      },
+      {
+        "id": "rule:demo-apac-sa-wrong-sku",
+        "corpus_type": "rule",
+        "label": "demo-apac-sa-wrong-sku",
+        "summary": "Ad content appears to reference the wrong SKU or product model; verify asset-to-SKU alignment"
+      },
+      {
+        "id": "rule:demo-sg-health-forbidden-claim",
+        "corpus_type": "rule",
+        "label": "demo-sg-health-forbidden-claim",
+        "summary": "Prohibited absolute health cure claims are not allowed"
+      },
+      {
+        "id": "rule:demo-sg-health-superlative",
+        "corpus_type": "rule",
+        "label": "demo-sg-health-superlative",
+        "summary": "Unsubstantiated superlative or efficacy claims require substantiation"
+      },
+      {
+        "id": "rule:demo-sg-sponsored-disclosure",
+        "corpus_type": "rule",
+        "label": "demo-sg-sponsored-disclosure",
+        "summary": "Sponsored or promotional content should include an ad disclosure"
+      },
+      {
+        "id": "skill:certification-claim-review",
+        "corpus_type": "skill",
+        "label": "Certification Claim Review",
+        "summary": "Detects certification and evidence claims in advertising; guides reviewers to verify document authenticity, applicable scope, and on-ad readability before publication.",
+        "claim_types": [
+          "certification-claim"
+        ]
+      },
+      {
+        "id": "skill:comparative-claim-review",
+        "corpus_type": "skill",
+        "label": "Comparative Claim Review",
+        "summary": "Detects comparative and superiority claims missing benchmark product, test conditions, or measurable difference; guides reviewers to require fair-comparison substantiation.",
+        "claim_types": [
+          "comparative-claim"
+        ]
+      },
+      {
+        "id": "skill:health-claim-review",
+        "corpus_type": "skill",
+        "label": "Health Claim Review",
+        "summary": "Detects health and nutrition benefit claims on supplements and general products; guides reviewers to verify classification, substantiation, and prohibited disease-style wording.",
+        "claim_types": [
+          "health-claim"
+        ]
+      },
+      {
+        "id": "skill:performance-claim-review",
+        "corpus_type": "skill",
+        "label": "Performance Claim Review",
+        "summary": "Detects quantitative and efficacy performance claims; guides reviewers to verify test methods, typical results framing, and alignment with on-pack specifications.",
+        "claim_types": [
+          "performance-claim"
+        ]
+      },
+      {
+        "id": "skill:superlative-claim-review",
+        "corpus_type": "skill",
+        "label": "Superlative Claim Review",
+        "summary": "Detects superlative, absolute, and testimonial efficacy claims; guides reviewers to verify substantiation exists before publication and to qualify omnibus wording.",
+        "claim_types": [
+          "superlative-claim"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "from": "case:af-001",
+        "to": "rewrite:disclose-localization",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-002",
+        "to": "evidence:efficacy-superlative-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:af-002",
+        "to": "rewrite:qualify-performance",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-003",
+        "to": "evidence:comparative-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:af-003",
+        "to": "rewrite:qualify-comparative",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-004",
+        "to": "evidence:performance-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:af-004",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-006",
+        "to": "evidence:comparative-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:af-006",
+        "to": "rewrite:qualify-comparative",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-007",
+        "to": "rewrite:disclose-ai",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-009",
+        "to": "evidence:certification-mark-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:af-009",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:af-010",
+        "to": "evidence:certification-mark-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:af-010",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:gen-007",
+        "to": "evidence:performance-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:gen-007",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-001",
+        "to": "rewrite:disclose-localization",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-006",
+        "to": "evidence:performance-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:pc-006",
+        "to": "rewrite:qualify-performance",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-007",
+        "to": "evidence:performance-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:pc-007",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-008",
+        "to": "evidence:health-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:pc-008",
+        "to": "rewrite:remove-health-claim",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-012",
+        "to": "evidence:comparative-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:pc-012",
+        "to": "rewrite:qualify-comparative",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-013",
+        "to": "rewrite:disclose-localization",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:pc-014",
+        "to": "rewrite:disclose-ai",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:rc18-002",
+        "to": "rewrite:disclose-localization",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:rc18-003",
+        "to": "evidence:comparative-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:rc18-003",
+        "to": "rewrite:qualify-comparative",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:rc18-004",
+        "to": "evidence:certification-mark-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:rc18-004",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:rc18-005",
+        "to": "rewrite:disclose-ai",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:sg-health-playbook-urgency",
+        "to": "rewrite:disclose-urgency",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:sg-health-reject-cure",
+        "to": "evidence:efficacy-superlative-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:sg-health-reject-cure",
+        "to": "rewrite:qualify-efficacy",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:sg-health-warn-superlative",
+        "to": "evidence:efficacy-superlative-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "case:sg-health-warn-superlative",
+        "to": "rewrite:qualify-efficacy",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:supplement-ad-manifest-urgency",
+        "to": "rewrite:disclose-urgency",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "case:supplement-before-after-imagery",
+        "to": "rewrite:disclose-transformation",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "case:af-009",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "case:af-010",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "case:rc18-004",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "evidence:certification-expiry-validation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "evidence:certification-mark-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "evidence:certification-on-ad-legibility",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "evidence:product-certification-scope-verification",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "evidence:third-party-certification-body",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "regulation:my-sirim-certification-marks",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "regulation:sg-hsa-certification-marks",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "rule:demo-apac-sa-certification-evidence",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:certification-claim-review",
+        "to": "rule:demo-apac-sa-patent-claim",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "case:af-003",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "case:af-006",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "case:pc-012",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "case:rc18-003",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "evidence:comparative-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "evidence:comparative-superiority-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "evidence:comparative-test-evidence",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "regulation:au-accc-comparative-advertising",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "regulation:my-masa-comparative-advertising",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "regulation:sg-asas-comparative-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "rewrite:qualify-comparative",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:comparative-claim-review",
+        "to": "rule:demo-apac-sa-comparative-claim",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "case:pc-008",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "evidence:health-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "evidence:health-implication-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "evidence:supplement-health-evidence",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "regulation:sg-hpa-s7-prohibited-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "regulation:sg-hsa-product-safety-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "regulation:sg-hsa-supplement-health-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "rewrite:remove-health-claim",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "rule:demo-apac-sa-health-claim-blocker",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "rule:demo-apac-sa-health-implication",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:health-claim-review",
+        "to": "rule:demo-sg-health-forbidden-claim",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "case:af-004",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "case:gen-007",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "case:pc-006",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "case:pc-007",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:absolute-performance-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:capacity-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:capacity-test-method-evidence",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:performance-claim-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:performance-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:quantitative-claim-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "evidence:standardized-test-protocol-reference",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "regulation:kr-kftc-performance-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "regulation:sg-hsa-efficacy-performance",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "regulation:th-tisi-performance-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "rewrite:cite-evidence",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "rewrite:qualify-performance",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "rule:demo-apac-sa-capacity-claim",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:performance-claim-review",
+        "to": "rule:demo-apac-sa-performance-claim",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "case:af-002",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "case:sg-health-reject-cure",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "case:sg-health-warn-superlative",
+        "relation": "validates"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "evidence:absolute-performance-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "evidence:comparative-superiority-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "evidence:comparative-test-evidence",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "evidence:efficacy-superlative-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "evidence:general-advertising-substantiation",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "evidence:quantitative-claim-lab-report",
+        "relation": "requires_evidence"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "regulation:sg-asas-comparative-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "regulation:sg-asasa-substantiation",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "regulation:sg-hpa-s7-prohibited-claims",
+        "relation": "governed_by"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "rewrite:qualify-comparative",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "rewrite:qualify-efficacy",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "rewrite:qualify-performance",
+        "relation": "rewrite_guidance"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "rule:demo-apac-sa-absolute-claim",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "rule:demo-apac-sa-absolute-claim-soft",
+        "relation": "linked_rule"
+      },
+      {
+        "from": "skill:superlative-claim-review",
+        "to": "rule:demo-sg-health-superlative",
+        "relation": "linked_rule"
+      }
+    ],
+    "indexes": {
+      "by_claim_type": {
+        "Certification": [
+          "regulation:au-accc-certification-schemes",
+          "regulation:id-sni-certification-mark",
+          "regulation:jp-jis-certification-mark",
+          "regulation:kr-ks-certification-mark",
+          "regulation:my-sirim-certification-marks",
+          "regulation:sg-asas-awards-testimonials",
+          "regulation:sg-hsa-certification-marks",
+          "regulation:th-tisi-certification-mark"
+        ],
+        "Comparative Advertising": [
+          "regulation:au-accc-comparative-advertising",
+          "regulation:id-kpi-comparative-advertising",
+          "regulation:jp-jftc-comparative-ads",
+          "regulation:kr-kftc-comparative-ads",
+          "regulation:my-masa-comparative-advertising",
+          "regulation:sg-asas-comparative-claims",
+          "regulation:sg-asasa-substantiation",
+          "regulation:th-ocpb-comparative-ads"
+        ],
+        "Consumer Protection": [
+          "regulation:au-accc-misleading-conduct",
+          "regulation:id-kpdkn-misleading-conduct",
+          "regulation:jp-caa-misleading-representations",
+          "regulation:kr-kftc-unfair-trade",
+          "regulation:my-kpdnhep-misleading-conduct",
+          "regulation:th-ocpb-unfair-trade"
+        ],
+        "Performance Claims": [
+          "regulation:au-accc-performance-representations",
+          "regulation:id-bpom-performance-claims",
+          "regulation:jp-jftc-performance-representations",
+          "regulation:kr-kftc-performance-claims",
+          "regulation:my-sirim-performance-claims",
+          "regulation:sg-hsa-efficacy-performance",
+          "regulation:th-tisi-performance-claims"
+        ],
+        "Mandatory Disclaimers": [
+          "regulation:au-ad-standards-disclosure",
+          "regulation:id-kpi-ad-labeling",
+          "regulation:jp-caa-sponsored-disclosure",
+          "regulation:kr-kftc-ad-disclosure",
+          "regulation:my-masa-sponsorship-disclosure",
+          "regulation:sg-asas-influencer-disclosure",
+          "regulation:sg-scap-disclosure",
+          "regulation:th-ocpb-ad-identification"
+        ],
+        "Health Claims": [
+          "regulation:au-tga-complementary-medicines",
+          "regulation:au-tga-cosmetic-therapeutic-border",
+          "regulation:id-bpom-cosmetic-claims",
+          "regulation:id-bpom-supplement-claims",
+          "regulation:jp-caa-cosmetic-claims",
+          "regulation:jp-caa-health-foods",
+          "regulation:kr-mfds-cosmetic-claims",
+          "regulation:kr-mfds-health-functional-foods",
+          "regulation:my-npra-cosmetic-claims",
+          "regulation:my-npra-supplement-health",
+          "regulation:sg-hsa-supplement-health-claims",
+          "regulation:sg-hsa-traditional-medicine-claims",
+          "regulation:th-fda-cosmetic-claims",
+          "regulation:th-fda-supplement-claims"
+        ],
+        "Medical Claims": [
+          "regulation:au-tga-medical-device-ads",
+          "regulation:au-tga-therapeutic-goods-ads",
+          "regulation:id-bpom-drug-advertising",
+          "regulation:id-bpom-medical-device-ads",
+          "regulation:jp-pmda-medical-device-ads",
+          "regulation:jp-pmda-pharma-advertising",
+          "regulation:kr-mfds-medical-device-ads",
+          "regulation:kr-mfds-pharma-advertising",
+          "regulation:my-npra-device-claims",
+          "regulation:my-npra-medicinal-claims",
+          "regulation:sg-hpa-s7-prohibited-claims",
+          "regulation:sg-hsa-medical-device-intended-use",
+          "regulation:sg-hsa-therapeutic-claims",
+          "regulation:th-fda-drug-advertising",
+          "regulation:th-fda-medical-device-ads"
+        ],
+        "Pricing": [
+          "regulation:id-kpdkn-pricing-promotions",
+          "regulation:jp-jftc-pricing-representations",
+          "regulation:kr-kftc-pricing-representations",
+          "regulation:my-kpdnhep-pricing-representation",
+          "regulation:th-ocpb-pricing-promotions"
+        ],
+        "Image Usage": [
+          "regulation:sg-asas-before-after-imagery"
+        ],
+        "Safety Claims": [
+          "regulation:sg-hsa-product-safety-claims"
+        ],
+        "AI-generated Content": [
+          "regulation:sg-imda-ai-disclosure"
+        ],
+        "Environmental Claims": [
+          "regulation:sg-nea-green-claims"
+        ],
+        "certification-claim": [
+          "skill:certification-claim-review",
+          "evidence:certification-expiry-validation",
+          "evidence:certification-mark-substantiation",
+          "evidence:certification-on-ad-legibility",
+          "evidence:product-certification-scope-verification",
+          "evidence:third-party-certification-body",
+          "rewrite:cite-evidence",
+          "case:af-009",
+          "case:af-010",
+          "case:rc18-004"
+        ],
+        "comparative-claim": [
+          "skill:comparative-claim-review",
+          "evidence:comparative-claim-substantiation",
+          "evidence:comparative-superiority-substantiation",
+          "evidence:comparative-test-evidence",
+          "evidence:general-advertising-substantiation",
+          "rewrite:qualify-comparative",
+          "case:af-003",
+          "case:af-006",
+          "case:pc-012",
+          "case:rc18-003"
+        ],
+        "health-claim": [
+          "skill:health-claim-review",
+          "evidence:general-advertising-substantiation",
+          "evidence:health-claim-substantiation",
+          "evidence:health-implication-substantiation",
+          "evidence:supplement-health-evidence",
+          "rewrite:remove-health-claim",
+          "case:pc-008"
+        ],
+        "performance-claim": [
+          "skill:performance-claim-review",
+          "evidence:absolute-performance-substantiation",
+          "evidence:capacity-claim-substantiation",
+          "evidence:capacity-test-method-evidence",
+          "evidence:general-advertising-substantiation",
+          "evidence:performance-claim-substantiation",
+          "evidence:performance-lab-report",
+          "evidence:quantitative-claim-lab-report",
+          "evidence:standardized-test-protocol-reference",
+          "rewrite:cite-evidence",
+          "rewrite:qualify-performance",
+          "case:af-002",
+          "case:af-004",
+          "case:gen-007",
+          "case:pc-006",
+          "case:pc-007"
+        ],
+        "superlative-claim": [
+          "skill:superlative-claim-review",
+          "evidence:absolute-performance-substantiation",
+          "evidence:comparative-superiority-substantiation",
+          "evidence:efficacy-superlative-substantiation",
+          "evidence:general-advertising-substantiation",
+          "rewrite:qualify-comparative",
+          "rewrite:qualify-efficacy",
+          "rewrite:qualify-performance"
+        ],
+        "disclosure-ai": [
+          "rewrite:disclose-ai"
+        ],
+        "disclosure-localization": [
+          "rewrite:disclose-localization"
+        ],
+        "disclosure-transformation": [
+          "rewrite:disclose-transformation"
+        ],
+        "disclosure-urgency": [
+          "rewrite:disclose-urgency"
+        ],
+        "disclosure-claim": [
+          "case:af-001",
+          "case:af-007",
+          "case:af-008",
+          "case:pc-001",
+          "case:pc-013",
+          "case:pc-014",
+          "case:rc18-002",
+          "case:rc18-005",
+          "case:sg-health-pass-disclosed",
+          "case:sg-health-playbook-urgency",
+          "case:sg-health-reject-cure",
+          "case:sg-health-warn-disclosure",
+          "case:sg-health-warn-superlative",
+          "case:supplement-ad-manifest-urgency",
+          "case:supplement-before-after-imagery"
+        ]
+      },
+      "by_corpus_type": {
+        "rule": [
+          "rule:demo-sg-health-forbidden-claim",
+          "rule:demo-sg-health-superlative",
+          "rule:demo-sg-sponsored-disclosure",
+          "rule:demo-apac-sa-health-claim-blocker",
+          "rule:demo-apac-sa-absolute-claim",
+          "rule:demo-apac-sa-performance-claim",
+          "rule:demo-apac-sa-certification-evidence",
+          "rule:demo-apac-sa-content-consistency-blocker",
+          "rule:demo-apac-sa-health-implication",
+          "rule:demo-apac-sa-comparative-claim",
+          "rule:demo-apac-sa-capacity-claim",
+          "rule:demo-apac-sa-absolute-claim-soft",
+          "rule:demo-apac-sa-patent-claim",
+          "rule:demo-apac-sa-wrong-sku",
+          "rule:demo-apac-sa-localization",
+          "rule:demo-apac-sa-ai-image-disclaimer",
+          "rule:demo-apac-sa-disclaimer-required",
+          "rule:demo-apac-sa-grammar-quality"
+        ],
+        "regulation": [
+          "regulation:au-accc-certification-schemes",
+          "regulation:au-accc-comparative-advertising",
+          "regulation:au-accc-misleading-conduct",
+          "regulation:au-accc-performance-representations",
+          "regulation:au-ad-standards-disclosure",
+          "regulation:au-tga-complementary-medicines",
+          "regulation:au-tga-cosmetic-therapeutic-border",
+          "regulation:au-tga-medical-device-ads",
+          "regulation:au-tga-therapeutic-goods-ads",
+          "regulation:id-bpom-cosmetic-claims",
+          "regulation:id-bpom-drug-advertising",
+          "regulation:id-bpom-medical-device-ads",
+          "regulation:id-bpom-performance-claims",
+          "regulation:id-bpom-supplement-claims",
+          "regulation:id-kpdkn-misleading-conduct",
+          "regulation:id-kpdkn-pricing-promotions",
+          "regulation:id-kpi-ad-labeling",
+          "regulation:id-kpi-comparative-advertising",
+          "regulation:id-sni-certification-mark",
+          "regulation:jp-caa-cosmetic-claims",
+          "regulation:jp-caa-health-foods",
+          "regulation:jp-caa-misleading-representations",
+          "regulation:jp-caa-sponsored-disclosure",
+          "regulation:jp-jftc-comparative-ads",
+          "regulation:jp-jftc-performance-representations",
+          "regulation:jp-jftc-pricing-representations",
+          "regulation:jp-jis-certification-mark",
+          "regulation:jp-pmda-medical-device-ads",
+          "regulation:jp-pmda-pharma-advertising",
+          "regulation:kr-kftc-ad-disclosure",
+          "regulation:kr-kftc-comparative-ads",
+          "regulation:kr-kftc-performance-claims",
+          "regulation:kr-kftc-pricing-representations",
+          "regulation:kr-kftc-unfair-trade",
+          "regulation:kr-ks-certification-mark",
+          "regulation:kr-mfds-cosmetic-claims",
+          "regulation:kr-mfds-health-functional-foods",
+          "regulation:kr-mfds-medical-device-ads",
+          "regulation:kr-mfds-pharma-advertising",
+          "regulation:my-kpdnhep-misleading-conduct",
+          "regulation:my-kpdnhep-pricing-representation",
+          "regulation:my-masa-comparative-advertising",
+          "regulation:my-masa-sponsorship-disclosure",
+          "regulation:my-npra-cosmetic-claims",
+          "regulation:my-npra-device-claims",
+          "regulation:my-npra-medicinal-claims",
+          "regulation:my-npra-supplement-health",
+          "regulation:my-sirim-certification-marks",
+          "regulation:my-sirim-performance-claims",
+          "regulation:sg-asas-awards-testimonials",
+          "regulation:sg-asas-before-after-imagery",
+          "regulation:sg-asas-comparative-claims",
+          "regulation:sg-asas-influencer-disclosure",
+          "regulation:sg-asasa-substantiation",
+          "regulation:sg-hpa-s7-prohibited-claims",
+          "regulation:sg-hsa-certification-marks",
+          "regulation:sg-hsa-efficacy-performance",
+          "regulation:sg-hsa-medical-device-intended-use",
+          "regulation:sg-hsa-product-safety-claims",
+          "regulation:sg-hsa-supplement-health-claims",
+          "regulation:sg-hsa-therapeutic-claims",
+          "regulation:sg-hsa-traditional-medicine-claims",
+          "regulation:sg-imda-ai-disclosure",
+          "regulation:sg-nea-green-claims",
+          "regulation:sg-scap-disclosure",
+          "regulation:th-fda-cosmetic-claims",
+          "regulation:th-fda-drug-advertising",
+          "regulation:th-fda-medical-device-ads",
+          "regulation:th-fda-supplement-claims",
+          "regulation:th-ocpb-ad-identification",
+          "regulation:th-ocpb-comparative-ads",
+          "regulation:th-ocpb-pricing-promotions",
+          "regulation:th-ocpb-unfair-trade",
+          "regulation:th-tisi-certification-mark",
+          "regulation:th-tisi-performance-claims"
+        ],
+        "skill": [
+          "skill:certification-claim-review",
+          "skill:comparative-claim-review",
+          "skill:health-claim-review",
+          "skill:performance-claim-review",
+          "skill:superlative-claim-review"
+        ],
+        "evidence": [
+          "evidence:absolute-performance-substantiation",
+          "evidence:capacity-claim-substantiation",
+          "evidence:capacity-test-method-evidence",
+          "evidence:certification-expiry-validation",
+          "evidence:certification-mark-substantiation",
+          "evidence:certification-on-ad-legibility",
+          "evidence:comparative-claim-substantiation",
+          "evidence:comparative-superiority-substantiation",
+          "evidence:comparative-test-evidence",
+          "evidence:efficacy-superlative-substantiation",
+          "evidence:general-advertising-substantiation",
+          "evidence:health-claim-substantiation",
+          "evidence:health-implication-substantiation",
+          "evidence:performance-claim-substantiation",
+          "evidence:performance-lab-report",
+          "evidence:product-certification-scope-verification",
+          "evidence:quantitative-claim-lab-report",
+          "evidence:standardized-test-protocol-reference",
+          "evidence:supplement-health-evidence",
+          "evidence:third-party-certification-body"
+        ],
+        "rewrite": [
+          "rewrite:cite-evidence",
+          "rewrite:disclose-ai",
+          "rewrite:disclose-localization",
+          "rewrite:disclose-transformation",
+          "rewrite:disclose-urgency",
+          "rewrite:qualify-comparative",
+          "rewrite:qualify-efficacy",
+          "rewrite:qualify-performance",
+          "rewrite:remove-health-claim"
+        ],
+        "case": [
+          "case:af-001",
+          "case:af-002",
+          "case:af-003",
+          "case:af-004",
+          "case:af-006",
+          "case:af-007",
+          "case:af-008",
+          "case:af-009",
+          "case:af-010",
+          "case:gen-007",
+          "case:pc-001",
+          "case:pc-006",
+          "case:pc-007",
+          "case:pc-008",
+          "case:pc-012",
+          "case:pc-013",
+          "case:pc-014",
+          "case:rc18-002",
+          "case:rc18-003",
+          "case:rc18-004",
+          "case:rc18-005",
+          "case:sg-health-pass-disclosed",
+          "case:sg-health-playbook-urgency",
+          "case:sg-health-reject-cure",
+          "case:sg-health-warn-disclosure",
+          "case:sg-health-warn-superlative",
+          "case:supplement-ad-manifest-urgency",
+          "case:supplement-before-after-imagery"
+        ]
+      },
+      "skills": [
+        {
+          "id": "skill:certification-claim-review",
+          "label": "Certification Claim Review",
+          "claim_types": [
+            "certification-claim"
+          ]
+        },
+        {
+          "id": "skill:comparative-claim-review",
+          "label": "Comparative Claim Review",
+          "claim_types": [
+            "comparative-claim"
+          ]
+        },
+        {
+          "id": "skill:health-claim-review",
+          "label": "Health Claim Review",
+          "claim_types": [
+            "health-claim"
+          ]
+        },
+        {
+          "id": "skill:performance-claim-review",
+          "label": "Performance Claim Review",
+          "claim_types": [
+            "performance-claim"
+          ]
+        },
+        {
+          "id": "skill:superlative-claim-review",
+          "label": "Superlative Claim Review",
+          "claim_types": [
+            "superlative-claim"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:sg-hsa-therapeutic-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hsa-therapeutic-claims",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Health Products (Advertisement of Therapeutic Products) Regulations",
+  "citation": "Health Products (Advertisement of Therapeutic Products) Regulations — Regulation 4",
+  "effective_date": "2016-11-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Therapeutic product ads must not claim to treat, prevent, or cure diseases unless HSA-approved indications are reflected.",
+  "review_guidance": "TRIGGER: Disease treatment, prevention, cure, or prescription-only medicine positioning. ACTION: REJECT — remove unapproved therapeutic claims. CHECK: Headlines, pack shots, testimonials, and disease names in copy. ESCALATE IF: Scheduled medicine, serious disease, or Rx-only product referenced.",
+  "related_rule_ids": [
+    "demo-sg-health-forbidden-claim"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "health",
+    "therapeutic"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine"
+  ],
+  "source_url": "https://www.hsa.gov.sg/health-products/regulations/overview",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

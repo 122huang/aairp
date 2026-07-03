@@ -1,0 +1,190 @@
+{
+  "schema_version": "2.0.0",
+  "knowledge_pack_id": "kp-2026.07.1",
+  "knowledge_pack_version": "kp-2026.07.1",
+  "platform_version": "1.0.0",
+  "generated_at": "2026-07-01T12:00:00.000Z",
+  "release_status": "released",
+  "corpora": {
+    "regulation": {
+      "corpus_type": "regulation",
+      "manifest_path": "docs/knowledge/regulation-corpus/regulation-corpus.manifest.json",
+      "schema_version": "1.0.0",
+      "fingerprint": "64490f801dadc376",
+      "entry_count": 75,
+      "knowledge_quality_score": 92.2,
+      "manifest_generated_at": "2026-07-01T12:00:00.000Z",
+      "validation": {
+        "errors": 0,
+        "warnings": 28
+      }
+    },
+    "skill": {
+      "corpus_type": "skill",
+      "manifest_path": "docs/knowledge/skill-corpus/skill-corpus.manifest.json",
+      "schema_version": "1.0.0",
+      "fingerprint": "8b4c576e3e17c957",
+      "entry_count": 5,
+      "knowledge_quality_score": 100,
+      "manifest_generated_at": "2026-07-01T12:00:00.000Z",
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "rewrite": {
+      "corpus_type": "rewrite",
+      "manifest_path": "docs/knowledge/rewrite-corpus/rewrite-corpus.manifest.json",
+      "schema_version": "1.0.0",
+      "fingerprint": "debe4e045600afed",
+      "entry_count": 9,
+      "knowledge_quality_score": 95.8,
+      "manifest_generated_at": "2026-07-01T12:00:00.000Z",
+      "validation": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    "evidence": {
+      "corpus_type": "evidence",
+      "manifest_path": "docs/knowledge/evidence-corpus/evidence-corpus.manifest.json",
+      "schema_version": "1.0.0",
+      "fingerprint": "6ab19675e5d99a44",
+      "entry_count": 20,
+      "knowledge_quality_score": 97.7,
+      "manifest_generated_at": "2026-07-01T12:00:00.000Z",
+      "validation": {
+        "errors": 0,
+        "warnings": 20
+      }
+    },
+    "case": {
+      "corpus_type": "case",
+      "manifest_path": "docs/knowledge/case-corpus/case-corpus.manifest.json",
+      "schema_version": "1.0.0",
+      "fingerprint": "179fa1f65209c21e",
+      "entry_count": 28,
+      "knowledge_quality_score": 84.7,
+      "manifest_generated_at": "2026-07-01T12:00:00.000Z",
+      "validation": {
+        "errors": 0,
+        "warnings": 42
+      }
+    }
+  },
+  "dependency_graph": {
+    "frozen_at": "2026-07-01T12:00:00.000Z",
+    "nodes": {
+      "rule": 18,
+      "regulation": 75,
+      "skill": 5,
+      "rewrite": 9,
+      "evidence": 20,
+      "case": 28
+    },
+    "edges": {
+      "regulation_to_skill": 14,
+      "skill_to_rewrite": 8,
+      "skill_to_evidence": 24,
+      "rewrite_to_case": 25,
+      "evidence_to_case": 15,
+      "case_to_benchmark": 28
+    },
+    "orphan_counts": {
+      "regulation_without_rule": 75,
+      "skill_without_regulation": 0,
+      "rewrite_without_skill": 4,
+      "case_without_benchmark_ref": 0
+    }
+  },
+  "runtime_components": {
+    "rules": {
+      "version": "demo-rule-1.5.0",
+      "count": 18,
+      "source": "demo/rules.demo.json"
+    },
+    "playbooks": {
+      "version": "demo-playbook-1.4.0",
+      "playbook_id": "demo-health-supplement-playbook",
+      "pattern_count": 13,
+      "source": "demo/playbook.demo.md"
+    },
+    "legacy_references": {
+      "skill_modules": "docs/knowledge/skill-modules.json"
+    }
+  },
+  "evaluation_linkage": {
+    "benchmark": {
+      "benchmark_id": "aairp-benchmark-v3",
+      "schema_version": "3.0.0",
+      "content_fingerprint": "491cfcbd01f4a587e014d156aa45597a749cd889ae3f0f5952fc761071fe743d",
+      "case_count": 92,
+      "source": "benchmark/benchmark-v3.json"
+    },
+    "case_corpus": {
+      "fingerprint": "179fa1f65209c21e",
+      "entry_count": 28,
+      "benchmark_coverage": {
+        "covered": 28,
+        "total": 92,
+        "pct": 30.4
+      },
+      "verified_count": 28,
+      "regression_count": 0
+    },
+    "evaluation_profile": {
+      "dimensions": [
+        "decision",
+        "pattern_hit",
+        "severity",
+        "action",
+        "rewrite"
+      ],
+      "default_weights": {
+        "decision": 0.35,
+        "pattern_hit": 0.2,
+        "severity": 0.1,
+        "action": 0.15,
+        "rewrite": 0.2
+      }
+    },
+    "regression_baseline_ref": "benchmark-v3-baseline-2026-06-30"
+  },
+  "compatibility": {
+    "min_platform_version": "1.0.0",
+    "max_platform_version": "1.x",
+    "required_corpora": [
+      {
+        "corpus_type": "regulation",
+        "min_schema_version": "1.0.0"
+      },
+      {
+        "corpus_type": "skill",
+        "min_schema_version": "1.0.0"
+      },
+      {
+        "corpus_type": "rewrite",
+        "min_schema_version": "1.0.0"
+      },
+      {
+        "corpus_type": "evidence",
+        "min_schema_version": "1.0.0"
+      },
+      {
+        "corpus_type": "case",
+        "min_schema_version": "1.0.0"
+      }
+    ],
+    "benchmark_min_schema": "3.0.0",
+    "linkage_validator_version": "2.0.0"
+  },
+  "ownership_summary": {
+    "corpora_total_entries": 137,
+    "freshness_green": 137,
+    "freshness_yellow": 0,
+    "freshness_red": 0
+  },
+  "knowledge_pack_fingerprint": "43833358c6e744e9f948b63af6bd5367a9c21f5dac197d929f5391cb9ffc8079",
+  "released_at": "2026-07-01T12:00:00.000Z",
+  "released_by": "test@aairp"
+}

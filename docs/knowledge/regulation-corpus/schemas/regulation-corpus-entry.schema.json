@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/regulation-corpus-entry.json",
+  "title": "RegulationCorpusEntry",
+  "description": "Regulation Corpus entry (corpus_type: regulation).",
+  "allOf": [
+    { "$ref": "knowledge-corpus.schema.json" },
+    {
+      "type": "object",
+      "required": [
+        "regulation_id",
+        "country",
+        "authority",
+        "regulation_name",
+        "citation",
+        "effective_date",
+        "category",
+        "mandatory",
+        "risk_level",
+        "summary",
+        "review_guidance",
+        "related_rule_ids",
+        "related_evidence_ids"
+      ],
+      "properties": {
+        "corpus_type": { "const": "regulation" },
+        "regulation_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "country": {
+          "type": "string",
+          "enum": ["SG", "MY", "TH", "ID", "JP", "KR", "AU", "VN", "PH"]
+        },
+        "authority": { "type": "string", "minLength": 1 },
+        "regulation_name": { "type": "string", "minLength": 1 },
+        "citation": { "type": "string", "minLength": 1 },
+        "effective_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Health Claims",
+            "Medical Claims",
+            "Comparative Advertising",
+            "Environmental Claims",
+            "Certification",
+            "Safety Claims",
+            "Performance Claims",
+            "Pricing",
+            "Consumer Protection",
+            "AI-generated Content",
+            "Image Usage",
+            "Mandatory Disclaimers"
+          ]
+        },
+        "mandatory": { "type": "boolean" },
+        "risk_level": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+        },
+        "summary": { "type": "string", "minLength": 1 },
+        "review_guidance": { "type": "string", "minLength": 1 },
+        "related_rule_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "pending_rule_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "related_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^evidence:[a-z0-9][a-z0-9.-]*$"
+          }
+        },
+        "source_url": { "type": "string", "format": "uri" },
+        "jurisdiction_scope": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

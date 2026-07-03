@@ -1,0 +1,28 @@
+{
+  "knowledge_id": "regulation:au-accc-certification-schemes",
+  "corpus_type": "regulation",
+  "regulation_id": "au-accc-certification-schemes",
+  "country": "AU",
+  "authority": "ACCC",
+  "regulation_name": "Australian Consumer Law (Certification and approval claims)",
+  "citation": "Australian Consumer Law — Schedule 2, s 29 (False certifications)",
+  "effective_date": "2010-01-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "False or misleading representations about approvals, certifications, or quality marks are prohibited.",
+  "review_guidance": "TRIGGER: Certification logo, award, or approval badge in creative. ACTION: WARN — verify certification validity and scope. CHECK: Certifying body, product scope, and expiry. ESCALATE IF: False certification or mark beyond scope.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [
+    "evidence:certification-on-ad-legibility"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

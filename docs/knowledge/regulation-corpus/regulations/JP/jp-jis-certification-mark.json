@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:jp-jis-certification-mark",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-jis-certification-mark",
+  "country": "JP",
+  "authority": "CAA",
+  "regulation_name": "JIS Mark Certification Requirements",
+  "citation": "JIS Mark Certification Requirements — Article 7",
+  "effective_date": "2018-01-01",
+  "category": "Certification",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "JIS and other certification marks may only be displayed for products within valid certified scope.",
+  "review_guidance": "TRIGGER: JIS mark, JQA logo, or quality certification in ads. ACTION: WARN — verify certification covers product model. CHECK: Certificate number, scope, and validity. ESCALATE IF: Mark on non-certified product or expired cert.",
+  "related_rule_ids": [
+    "demo-apac-sa-certification-evidence"
+  ],
+  "related_evidence_ids": [
+    "evidence:certification-on-ad-legibility"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "certification"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

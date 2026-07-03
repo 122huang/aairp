@@ -1,0 +1,74 @@
+{
+  "knowledge_id": "case:supplement-before-after-imagery",
+  "corpus_type": "case",
+  "case_id": "supplement-before-after-imagery",
+  "case_purpose": "Validation knowledge for benchmark case supplement-before-after-imagery — Before/after imagery — playbook CONDITIONAL maps to WARN in frozen pipeline.",
+  "case_status": "verified",
+  "case_version": "1.0.0",
+  "verification_status": "human_verified",
+  "summary": "Validates Before/after imagery — playbook CONDITIONAL maps to WARN in frozen pipeline scenario; expected WARN with REWRITE action.",
+  "review_guidance": "TRIGGER: Benchmark case supplement-before-after-imagery. ACTION: Compare eval output to case_result. CHECK: decision, skill, rewrite, evidence expectations. ESCALATE IF: regression against verified ground truth.",
+  "scenario_spec": {
+    "claim_cluster": "disclosure-claim",
+    "claim_types": [
+      "disclosure-claim"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "categories": [
+      "health.supplement"
+    ],
+    "modalities": [
+      "text"
+    ],
+    "risk_class": "LOW",
+    "signal_summary": "Before/after imagery — playbook CONDITIONAL maps to WARN in frozen pipeline",
+    "benchmark_ref": "supplement-before-after-imagery"
+  },
+  "ground_truth_spec": {
+    "expected_decision": "WARN",
+    "expected_severity": "LOW",
+    "expected_action": "REWRITE",
+    "expected_pattern": "before-after-imagery",
+    "expected_rewrite": {
+      "rewrite_id": "rewrite:disclose-transformation",
+      "strategy_type": "disclose",
+      "must_remove_terms": [],
+      "must_include_concepts": [
+        "disclaimer",
+        "outcomes"
+      ]
+    }
+  },
+  "case_result": {
+    "decision_outcome": "WARN",
+    "risk_level": "LOW",
+    "matched_skill": null,
+    "applied_rewrite": "rewrite:disclose-transformation",
+    "evidence_result": "not_applicable"
+  },
+  "benchmark_ref": "supplement-before-after-imagery",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-scap-disclosure"
+    ],
+    "rules": [],
+    "skills": [],
+    "rewrites": [
+      "rewrite:disclose-transformation"
+    ],
+    "evidence": []
+  },
+  "promotion_rationale": "Pilot Case Corpus entry aligned to benchmark-v3 supplement-before-after-imagery for disclosure-claim validation.",
+  "owner": "knowledge-eng@aairp",
+  "owner_type": "knowledge_eng",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "medium",
+  "tags": [
+    "confidence:medium",
+    "validation",
+    "disclosure-claim"
+  ]
+}

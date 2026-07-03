@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:my-kpdnhep-pricing-representation",
+  "corpus_type": "regulation",
+  "regulation_id": "my-kpdnhep-pricing-representation",
+  "country": "MY",
+  "authority": "KPDNHEP",
+  "regulation_name": "Price Control and Anti-Profiteering Act 2011",
+  "citation": "Price Control and Anti-Profiteering Act 2011 — Section 10",
+  "effective_date": "2011-04-01",
+  "category": "Pricing",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Promotional pricing must reflect genuine savings; strikethrough and limited-time offers must not mislead consumers.",
+  "review_guidance": "TRIGGER: Was/now pricing, percentage off, or limited-time discount claims. ACTION: WARN — verify price history and offer terms. CHECK: Reference price period, currency, and exclusions. ESCALATE IF: Inflated reference price or fake urgency.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:recommended",
+    "pricing"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

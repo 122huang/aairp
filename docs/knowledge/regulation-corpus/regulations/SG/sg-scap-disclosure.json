@@ -1,0 +1,22 @@
+{
+  "knowledge_id": "regulation:sg-scap-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-scap-disclosure",
+  "country": "SG",
+  "authority": "ASAS",
+  "regulation_name": "Singapore Code of Advertising Practice",
+  "citation": "Rule 2 — Identification of Advertisements",
+  "effective_date": "2021-03-15",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "LOW",
+  "summary": "Sponsored or promotional content must be clearly identified as advertising.",
+  "review_guidance": "TRIGGER: Sponsored or promotional content without clear ad identification. ACTION: WARN — require disclosure marker. CHECK: Copy, captions, and visible creative. ESCALATE IF: Influencer content lacks #ad or equivalent.",
+  "related_rule_ids": ["demo-sg-sponsored-disclosure"],
+  "related_evidence_ids": [],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-15T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:none", "disclosure", "sponsored", "demo-seed"]
+}

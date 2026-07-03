@@ -1,0 +1,34 @@
+{
+  "knowledge_id": "regulation:my-sirim-performance-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "my-sirim-performance-claims",
+  "country": "MY",
+  "authority": "KPDNHEP",
+  "regulation_name": "Consumer Protection Act 1999 (Performance representations)",
+  "citation": "Consumer Protection Act 1999 — Section 12",
+  "effective_date": "1999-11-15",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Performance and results claims for consumer goods must be accurate and supported by adequate testing.",
+  "review_guidance": "TRIGGER: Speed, durability, energy saving, or efficacy statistics. ACTION: WARN — require test report or qualify claim. CHECK: Test standard, sample size, and measurement conditions. ESCALATE IF: Absolute or exaggerated performance without basis.",
+  "related_rule_ids": [
+    "demo-apac-sa-performance-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:capacity-claim-substantiation",
+    "evidence:quantitative-claim-lab-report"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "consumer.goods"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

@@ -11,7 +11,7 @@ describe('demo-review.dto', () => {
         finalDecision: 'REJECT',
         confidence: 1,
         rationale: 'Rule BLOCKER finding requires rejection.',
-        findingCounts: { rule: 1, playbook: 1, llm: 0 },
+        findingCounts: { rule: 1, playbook: 1, llm: 0, case: 0, vision: 0 },
         decidedAt: '2026-06-26T10:09:00.000Z',
       },
       report: {
@@ -22,7 +22,7 @@ describe('demo-review.dto', () => {
           finalDecision: 'REJECT',
           confidence: 1,
           rationale: 'Rule BLOCKER finding requires rejection.',
-          findingCounts: { rule: 1, playbook: 1, llm: 0 },
+          findingCounts: { rule: 1, playbook: 1, llm: 0, case: 0, vision: 0 },
           advertisement: {
             textPreview: 'Sample ad text',
             countryId: 'SG',

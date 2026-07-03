@@ -1,0 +1,218 @@
+{
+  "summary": {
+    "generated_at": "2026-07-02T02:52:45.171Z",
+    "live_mode": true,
+    "rule_playbook": {
+      "REJECT": 1,
+      "WARN": 10,
+      "PASS": 3
+    },
+    "stub_with_llm": null,
+    "live": {
+      "REJECT": 1,
+      "WARN": 10,
+      "PASS": 3,
+      "deltas": 0
+    }
+  },
+  "results": [
+    {
+      "id": 1,
+      "text": "【电饭煲】煮出来的饭，老人家也说香",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 2,
+      "text": "【空气炸锅】同样的炸鸡，不一样的第二天早晨",
+      "rulePlaybook": "PASS",
+      "stub": "PASS",
+      "live": "PASS",
+      "rules": [],
+      "playbook": [],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 3,
+      "text": "[Rice Cooker] Cooked slow. Eaten well",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 4,
+      "text": "[Rice Cooker] Cooked slow. Eaten well",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 5,
+      "text": "[Blender] The 6am version of you deserves better",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 6,
+      "text": "【吸尘器】吸走的不只是灰尘",
+      "rulePlaybook": "PASS",
+      "stub": "PASS",
+      "live": "PASS",
+      "rules": [],
+      "playbook": [],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 7,
+      "text": "[Air Fryer] Your cardiologist would probably approve",
+      "rulePlaybook": "REJECT",
+      "stub": "REJECT",
+      "live": "REJECT",
+      "rules": [
+        "health-claim-blocker"
+      ],
+      "playbook": [
+        "sa-medical-claim"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 8,
+      "text": "[Rice Cooker] Designed for people who think about what they eat",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 9,
+      "text": "[Rice Cooker] Designed for people who think about what they eat",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 10,
+      "text": "[Blender] Whole fruits. Whole benefits",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 11,
+      "text": "【电饭煲】给坐月子的她，煮一锅用心的粥",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 12,
+      "text": "[Vacuum] Breathe easy. We've got the rest",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 13,
+      "text": "搅拌机：What goes in is what you choose — nothing else",
+      "rulePlaybook": "PASS",
+      "stub": "PASS",
+      "live": "PASS",
+      "rules": [],
+      "playbook": [],
+      "liveLlm": [],
+      "delta": false
+    },
+    {
+      "id": 14,
+      "text": "[Rice Cooker] Designed for people who think about what they eat",
+      "rulePlaybook": "WARN",
+      "stub": "WARN",
+      "live": "WARN",
+      "rules": [
+        "health-implication"
+      ],
+      "playbook": [
+        "sa-health-implication"
+      ],
+      "liveLlm": [],
+      "delta": false
+    }
+  ]
+}

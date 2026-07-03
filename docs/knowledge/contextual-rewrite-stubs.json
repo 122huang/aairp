@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0.0",
+  "stubs_version": "contextual-rewrite-stubs-1.0.2",
+  "description": "Stub rewrite drafts for ContextualRewriteService (6B-1c). Keyed by risk_type; each locale provides 1–3 copy-ready variants. All variants validated against route rule_ids — no trigger_terms hit.",
+  "stubs": {
+    "absolute-claim-soft": {
+      "zh": [
+        {
+          "text": "在典型使用条件下，可帮助您更顺畅地完成日常清洁。",
+          "rationale": "将绝对化表述改为有条件、可验证的典型效果描述。"
+        },
+        {
+          "text": "设计用于提升日常清洁效率，实际效果因使用环境而异。",
+          "rationale": "加入使用条件限定，避免无条件保证。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Designed to help streamline everyday cleaning under typical use conditions.",
+          "rationale": "Replaces omnibus guarantee with qualified typical-results wording."
+        }
+      ]
+    },
+    "unsubstantiated-quantitative-claim": {
+      "zh": [
+        {
+          "text": "在内部测试流程中，吸力较上一代有所提升（测试数据与条件详见产品页）。",
+          "rationale": "补充测试方法与数据来源入口，避免无依据的百分比宣称。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Improved suction versus previous model per internal test protocol (see product page for data and conditions).",
+          "rationale": "Adds baseline, method, and data source without unsubstantiated percentages."
+        }
+      ]
+    },
+    "unsupported-comparative-claim": {
+      "zh": [
+        {
+          "text": "与本公司上一代产品相比，工作噪音更低（实验室测试条件见详情页）。",
+          "rationale": "明确比较对象与测试条件，避免无基准的比较级措辞。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Operating noise reduced versus our previous-generation model (lab test conditions on product page).",
+          "rationale": "Names an identifiable comparison baseline without comparative trigger phrasing."
+        }
+      ]
+    },
+    "health-implication": {
+      "zh": [
+        {
+          "text": "空气炸锅煎炸模式，让日常备餐更省事。",
+          "rationale": "删除对身体状态有益的隐性联想，保留使用体验描述。"
+        },
+        {
+          "text": "热风循环技术，无需预热，即放即炸。",
+          "rationale": "以纯功能描述替代隐含健康联想的烹饪方式表述。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Cook with less oil for everyday meals.",
+          "rationale": "Removes implied health benefit; keeps factual usage framing."
+        }
+      ]
+    },
+    "health-superlative-claim": {
+      "zh": [
+        {
+          "text": "有助于支持日常膳食补充习惯（食品补充剂，非药品）。",
+          "rationale": "软化疗效夸大表述并明确产品属性。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Supports your daily dietary supplement routine (food supplement — not a medicine).",
+          "rationale": "Qualifies superlative efficacy with product category disclosure."
+        }
+      ]
+    },
+    "material-claim": {
+      "zh": [
+        {
+          "text": "接触食品部件采用不锈钢材质（附第三方检测报告编号 XXX）。",
+          "rationale": "材质宣称需附可核验的检测证据引用。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Food-contact parts use stainless steel construction (third-party test report ref. XXX).",
+          "rationale": "Material safety claims require cited lab evidence."
+        }
+      ]
+    },
+    "certification-evidence": {
+      "zh": [
+        {
+          "text": "配备高效微粒滤网（过滤等级与效率数据见检测报告）。",
+          "rationale": "以可核验数据替代未区分的认证类表述。"
+        }
+      ],
+      "en": [
+        {
+          "text": "High-efficiency particulate filtration (grade and efficiency data per test report).",
+          "rationale": "Clarifies filter performance and points to verification."
+        }
+      ]
+    },
+    "analogical-claim": {
+      "zh": [
+        {
+          "text": "力求还原柴火饭口感（感官评价因个人口味而异）。",
+          "rationale": "类比表述加入主观限定，避免暗示可量化等同。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Aims for a traditional-style rice texture (sensory results may vary).",
+          "rationale": "Qualifies analogical comparison as subjective experience."
+        }
+      ]
+    },
+    "environmental-claim": {
+      "zh": [
+        {
+          "text": "机身外壳含经认证的再生来源塑料（具体比例见产品环保说明）。",
+          "rationale": "环保宣称需具体化并可证实，避免泛化标签。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Housing incorporates certified post-consumer plastic content (see product eco sheet for % and certification).",
+          "rationale": "Environmental claims need specific substantiation."
+        }
+      ]
+    },
+    "localisation-error": {
+      "zh": [
+        {
+          "text": "请使用新加坡市场英文面板素材替换当前中文面板图。",
+          "rationale": "本地化硬伤需更换为目标市场合规资产。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Replace Chinese-only panel artwork with English/local-market assets for SG listing.",
+          "rationale": "Localisation errors require market-appropriate asset swap."
+        }
+      ]
+    },
+    "ai-image-disclaimer": {
+      "zh": [
+        {
+          "text": "模拟效果图仅供展示（Image for illustration purposes only），请以实物为准。",
+          "rationale": "AI/渲染图需展示 illustration disclaimer 以满足透明度要求。"
+        },
+        {
+          "text": "产品主图标注：Simulated image for illustration purposes only.",
+          "rationale": "补充可视化声明，与 localisation-error 性质区分。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Image for illustration purposes only.",
+          "rationale": "Synthetic imagery requires visible illustration disclaimer."
+        }
+      ]
+    },
+    "capacity-claim": {
+      "zh": [
+        {
+          "text": "一次最多可炖煮约两公斤牛肉（标准测试条件见说明书）。",
+          "rationale": "容量宣称需注明测试条件与 substantiation 入口。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Cooks approximately two kilograms of beef per batch (standard test conditions in manual).",
+          "rationale": "Capacity claims need stated test conditions."
+        }
+      ]
+    },
+    "sku-mismatch": {
+      "zh": [
+        {
+          "text": "将素材中的型号替换为与 listing SKU（RC40）一致的产品图。",
+          "rationale": "SKU 错配需统一素材与上架型号。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Swap creative to product images matching listing SKU RC40.",
+          "rationale": "SKU mismatch requires asset-to-listing alignment."
+        }
+      ]
+    },
+    "grammar-quality": {
+      "zh": [
+        {
+          "text": "将时间格式统一为24小时制「22:00」或12小时制「10:00 pm」。",
+          "rationale": "修正明显格式/语法错误以提升发布质量。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Use \"22:00\" (24-hour) or \"10:00 pm\" (12-hour) for time formatting.",
+          "rationale": "Fixes formatting errors before publish."
+        }
+      ]
+    },
+    "market-ranking-claim": {
+      "zh": [
+        {
+          "text": "在马来西亚市场位居畅销品类前列（数据来源：20XX 年度审计报告，备索）。",
+          "rationale": "本地排名宣称需附可核验数据来源，避免暗示官方背书。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Among Malaysia's top-selling brands (source: audited 20XX sales report, available on request).",
+          "rationale": "Ranking claims require cited substantiation."
+        }
+      ]
+    },
+    "sponsored-disclosure": {
+      "zh": [
+        {
+          "text": "在文案末尾添加 #广告 或「赞助内容」标识。",
+          "rationale": "促销/KOL 内容需包含赞助披露标识。"
+        }
+      ],
+      "en": [
+        {
+          "text": "Add \"#ad\" or \"Sponsored\" at the end of the caption.",
+          "rationale": "Promotional content requires sponsorship disclosure."
+        }
+      ]
+    }
+  }
+}

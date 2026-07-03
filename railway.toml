@@ -1,0 +1,12 @@
+# Ad Compliance Hub — same-origin deploy (API serves /review/ static + /demo/* API)
+# Docs: docs/deployment/VERCEL.md (Option: same-origin without rewrites)
+
+[build]
+buildCommand = "pnpm build:review-app && pnpm --filter @aairp/domain build && pnpm --filter @aairp/application build && pnpm --filter @aairp/infrastructure build && pnpm --filter @aairp/api build"
+
+[deploy]
+preDeployCommand = "pnpm migrate"
+startCommand = "node apps/api/dist/main.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"

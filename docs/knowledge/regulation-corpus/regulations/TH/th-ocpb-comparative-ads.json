@@ -1,0 +1,30 @@
+{
+  "knowledge_id": "regulation:th-ocpb-comparative-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "th-ocpb-comparative-ads",
+  "country": "TH",
+  "authority": "OCPB",
+  "regulation_name": "Consumer Protection Act B.E. 2522",
+  "citation": "Consumer Protection Act B.E. 2522 — Section 42 (Comparative advertising)",
+  "effective_date": "1979-01-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Comparative advertising must be truthful, not misleading, and must not unfairly disparage competitors.",
+  "review_guidance": "TRIGGER: Competitor comparison, market share, or superiority claims. ACTION: WARN — require objective substantiation. CHECK: Identifiable competitor, test date, and methodology. ESCALATE IF: False comparison or unfair denigration.",
+  "related_rule_ids": [
+    "demo-apac-sa-comparative-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:comparative-superiority-substantiation"
+  ],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "comparative"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

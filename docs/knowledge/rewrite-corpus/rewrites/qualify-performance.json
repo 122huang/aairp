@@ -1,0 +1,38 @@
+{
+  "knowledge_id": "rewrite:qualify-performance",
+  "corpus_type": "rewrite",
+  "rewrite_id": "qualify-performance",
+  "legacy_template_id": "qualify-performance",
+  "rewrite_purpose": "Guide reviewers to replace absolute performance wording with qualified typical-results language under stated conditions.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "qualify",
+  "summary": "Replace absolute or omnibus performance claims with qualified typical-results language and normal-use conditions.",
+  "rewrite_guidance": "TRIGGER: Perfect, flawless, or always-works performance language. ACTION: Qualify with typical results under normal use conditions. CHECK: On-pack specs and test method references. ESCALATE IF: Quantitative metric lacks substantiation.",
+  "review_guidance": "ESCALATE IF: Qualified wording still conflicts with on-pack label specifications.",
+  "measurable_criteria": {
+    "must_remove_terms": ["perfect", "every time", "always works", "flawless", "never fails"],
+    "must_include_concepts": ["typical", "conditions"],
+    "scoring_notes": "must_remove_terms on ad text; must_include_concepts on rewrite guidance text."
+  },
+  "benchmark_refs": ["AF-002", "BL-006", "PC-007", "LZ585-001"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["text", "image"],
+    "claim_types": ["performance-claim", "superlative-claim"]
+  },
+  "linkage": {
+    "regulations": ["regulation:sg-hsa-efficacy-performance", "regulation:th-tisi-performance-claims"],
+    "rules": ["demo-apac-sa-performance-claim", "demo-apac-sa-absolute-claim"],
+    "skills": ["skill:performance-claim-review", "skill:superlative-claim-review"]
+  },
+  "expected_evidence_type": "test_method",
+  "evidence_requirement": "recommended",
+  "confidence_level": "high",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:recommended", "advertising", "performance"]
+}

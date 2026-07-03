@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "dataset_id": "aairp-demo-dataset",
-  "description": "Sprint 1.5 demo advertisement dataset — 8 countries × 4 categories",
-  "countries": ["SG", "MY", "TH", "ID", "JP", "KR", "AU", "PH"],
+  "description": "Sprint 1.5 demo advertisement dataset — 9 countries; 6B-2f adds ID/VN/PH sa.* smoke cases",
+  "countries": ["SG", "MY", "TH", "ID", "VN", "JP", "KR", "AU", "PH"],
   "categories": ["health.supplement", "cosmetic", "food", "electronics"],
   "intents": ["PASS", "WARN", "REJECT", "EDGE"],
   "verification_levels": {
@@ -45,6 +45,24 @@
     { "case_id": "ph-health-pass-multivitamin", "path": "PH/health.supplement/ph-health-pass-multivitamin.json", "intent": "PASS", "verification": "manual" },
     { "case_id": "ph-cosmetic-warn-brightening", "path": "PH/cosmetic/ph-cosmetic-warn-brightening.json", "intent": "WARN", "verification": "manual" },
     { "case_id": "ph-food-pass-coconut", "path": "PH/food/ph-food-pass-coconut.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "ph-electronics-edge-delivery", "path": "PH/electronics/ph-electronics-edge-delivery.json", "intent": "EDGE", "verification": "manual" }
+    { "case_id": "ph-electronics-edge-delivery", "path": "PH/electronics/ph-electronics-edge-delivery.json", "intent": "EDGE", "verification": "manual" },
+    { "case_id": "id-sa-pass-rice-cooker", "path": "ID/sa.rice_cooker/id-sa-pass-rice-cooker.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "id-sa-pass-blender", "path": "ID/sa.blender_processor/id-sa-pass-blender.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "id-sa-pass-air-fryer", "path": "ID/sa.air_fryer/id-sa-pass-air-fryer.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "id-sa-warn-category-boundary", "path": "ID/sa.air_fryer/id-sa-warn-category-boundary.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "id-sa-warn-market-ranking", "path": "ID/sa.blender_processor/id-sa-warn-market-ranking.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "id-sa-warn-sponsored-disclosure", "path": "ID/sa.air_fryer/id-sa-warn-sponsored-disclosure.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "vn-sa-pass-air-fryer", "path": "VN/sa.air_fryer/vn-sa-pass-air-fryer.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "vn-sa-pass-blender", "path": "VN/sa.blender_processor/vn-sa-pass-blender.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "vn-sa-pass-rice-cooker", "path": "VN/sa.rice_cooker/vn-sa-pass-rice-cooker.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "vn-sa-warn-absolute-claim", "path": "VN/sa.air_fryer/vn-sa-warn-absolute-claim.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "vn-sa-warn-market-ranking", "path": "VN/sa.blender_processor/vn-sa-warn-market-ranking.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "vn-sa-review-foreign-brand", "path": "VN/sa.air_fryer/vn-sa-review-foreign-brand.json", "intent": "EDGE", "verification": "auto" },
+    { "case_id": "ph-sa-pass-air-fryer", "path": "PH/sa.air_fryer/ph-sa-pass-air-fryer.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "ph-sa-pass-blender", "path": "PH/sa.blender_processor/ph-sa-pass-blender.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "ph-sa-pass-rice-cooker", "path": "PH/sa.rice_cooker/ph-sa-pass-rice-cooker.json", "intent": "PASS", "verification": "auto" },
+    { "case_id": "ph-sa-warn-health-implication", "path": "PH/sa.air_fryer/ph-sa-warn-health-implication.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "ph-sa-warn-market-ranking", "path": "PH/sa.blender_processor/ph-sa-warn-market-ranking.json", "intent": "WARN", "verification": "auto" },
+    { "case_id": "ph-sa-warn-sponsored-disclosure", "path": "PH/sa.air_fryer/ph-sa-warn-sponsored-disclosure.json", "intent": "WARN", "verification": "auto" }
   ]
 }

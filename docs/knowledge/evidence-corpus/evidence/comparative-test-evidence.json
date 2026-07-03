@@ -1,0 +1,73 @@
+{
+  "knowledge_id": "evidence:comparative-test-evidence",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "comparative-test-evidence",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "comparative-test",
+  "evidence_purpose": "Test evidence supporting side-by-side or chart-based comparative advertising claims.",
+  "summary": "Chart and side-by-side comparisons require test evidence with axis labels and fair comparison methodology.",
+  "review_guidance": "TRIGGER: Comparison chart or side-by-side imagery. ACTION: Inspect test evidence for chart data. CHECK: Axis labels, sample parity. ESCALATE IF: Chart misleading or incomplete.",
+  "evidence_purpose_tags": [
+    "comparative-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "comparative-claim"
+    ],
+    "modalities": [
+      "image",
+      "text"
+    ]
+  },
+  "requirement_level": "recommended",
+  "linkage": {
+    "regulations": [
+      "regulation:my-masa-comparative-advertising",
+      "regulation:kr-kftc-comparative-ads"
+    ],
+    "rules": [
+      "demo-apac-sa-comparative-claim"
+    ],
+    "skills": [
+      "skill:comparative-claim-review",
+      "skill:superlative-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-comparative"
+    ]
+  },
+  "benchmark_refs": [
+    "PC-012"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Trace chart data to test report",
+      "Confirm axis labels and units present",
+      "Verify fair comparison sample design"
+    ],
+    "reject_if": [
+      "Chart data unsupported by test file"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:recommended",
+    "comparative"
+  ]
+}

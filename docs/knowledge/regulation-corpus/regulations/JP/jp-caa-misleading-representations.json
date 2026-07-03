@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:jp-caa-misleading-representations",
+  "corpus_type": "regulation",
+  "regulation_id": "jp-caa-misleading-representations",
+  "country": "JP",
+  "authority": "CAA",
+  "regulation_name": "Consumer Contract Act (Misleading representations)",
+  "citation": "Consumer Contract Act — Article 10",
+  "effective_date": "2000-06-01",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Misleading representations about goods or services that affect consumer decisions are restricted.",
+  "review_guidance": "TRIGGER: False quality, origin, or benefit representations. ACTION: REJECT — correct misleading material claims. CHECK: Contract terms, product specs, and offer conditions. ESCALATE IF: Systemic misleading practice or JFTC inquiry risk.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "consumer-protection"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

@@ -1,0 +1,455 @@
+{
+  "manifest_version": "1.0.0",
+  "pack_version": "rewrite-quality-v1",
+  "description": "Sprint 6B-1h — contextual WARN rewrite quality benchmark (stub mode). 20 cases: 16 risk_types covered; health-implication, unsubstantiated-quantitative-claim, unsupported-comparative-claim ×2; zh/en ×10.",
+  "scoring": {
+    "pass": "All stub_expected.suggested_text_contains patterns match at least one suggested_text variant; no self_check rule trigger.",
+    "fail": "Any suggested_text triggers a rule listed in self_check.must_not_trigger_rule_ids.",
+    "warn": "suggestion.confidence below stub_expected.confidence_min — recorded but does not fail the case."
+  },
+  "cases": [
+    {
+      "case_id": "rw-001",
+      "risk_type": "health-implication",
+      "locale": "zh",
+      "ad_text": "少油烹饪，让您吃得更轻盈无负担。",
+      "original_span": "更轻盈",
+      "rewrite_strategy": "remove",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.air_fryer",
+        "rule_ref_id": "demo-apac-sa-health-implication"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["热风", "煎炸"],
+        "rationale_contains": ["体验"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-health-implication"]
+      }
+    },
+    {
+      "case_id": "rw-002",
+      "risk_type": "health-implication",
+      "locale": "en",
+      "ad_text": "Feel lighter after every meal with our air fryer.",
+      "original_span": "lighter",
+      "rewrite_strategy": "remove",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.air_fryer",
+        "rule_ref_id": "demo-apac-sa-health-implication"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["Cook", "oil"],
+        "rationale_contains": ["health"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-health-implication"]
+      }
+    },
+    {
+      "case_id": "rw-003",
+      "risk_type": "unsubstantiated-quantitative-claim",
+      "locale": "zh",
+      "ad_text": "吸力提升30%，无对比数据。",
+      "original_span": "30%",
+      "rewrite_strategy": "substantiate",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.vacuum_floor",
+        "rule_ref_id": "demo-apac-sa-performance-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["测试", "上一代"],
+        "rationale_contains": ["测试"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-performance-claim"]
+      }
+    },
+    {
+      "case_id": "rw-004",
+      "risk_type": "unsubstantiated-quantitative-claim",
+      "locale": "en",
+      "ad_text": "Up to 30% more suction vs competitors.",
+      "original_span": "Up to 30%",
+      "rewrite_strategy": "substantiate",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.vacuum_floor",
+        "rule_ref_id": "demo-apac-sa-performance-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["internal test", "previous model"],
+        "rationale_contains": ["baseline"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-performance-claim"]
+      }
+    },
+    {
+      "case_id": "rw-005",
+      "risk_type": "unsupported-comparative-claim",
+      "locale": "zh",
+      "ad_text": "与上一代相比，运行更安静。",
+      "original_span": "更安静",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.blender_processor",
+        "rule_ref_id": "demo-apac-sa-comparative-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["上一代", "噪音"],
+        "rationale_contains": ["比较"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-comparative-claim"]
+      }
+    },
+    {
+      "case_id": "rw-006",
+      "risk_type": "unsupported-comparative-claim",
+      "locale": "en",
+      "ad_text": "Quieter by design than ordinary blenders.",
+      "original_span": "Quieter by design",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.blender_processor",
+        "rule_ref_id": "demo-apac-sa-comparative-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["previous-generation", "noise"],
+        "rationale_contains": ["baseline"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-comparative-claim"]
+      }
+    },
+    {
+      "case_id": "rw-007",
+      "risk_type": "absolute-claim-soft",
+      "locale": "zh",
+      "ad_text": "每一次都完美清洁，零烦恼。",
+      "original_span": "每一次",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.vacuum_floor",
+        "rule_ref_id": "demo-apac-sa-absolute-claim-soft"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["典型", "清洁"],
+        "rationale_contains": ["绝对"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-absolute-claim-soft"]
+      }
+    },
+    {
+      "case_id": "rw-008",
+      "risk_type": "health-superlative-claim",
+      "locale": "zh",
+      "ad_text": "临床证明，100%保证速效见效。",
+      "original_span": "100%",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "health.supplement",
+        "rule_ref_id": "demo-sg-health-superlative"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["补充剂", "非药品"],
+        "rationale_contains": ["疗效"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-sg-health-superlative"]
+      }
+    },
+    {
+      "case_id": "rw-009",
+      "risk_type": "material-claim",
+      "locale": "zh",
+      "ad_text": "食品级不锈钢内胆，安全放心。",
+      "original_span": "食品级",
+      "rewrite_strategy": "substantiate",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "rule_ref_id": "demo-apac-sa-material-safety-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["不锈钢", "检测"],
+        "rationale_contains": ["证据"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-material-safety-claim"]
+      }
+    },
+    {
+      "case_id": "rw-010",
+      "risk_type": "certification-evidence",
+      "locale": "zh",
+      "ad_text": "配备 HEPA-class 滤网，深度净化。",
+      "original_span": "HEPA-class",
+      "rewrite_strategy": "substantiate",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.vacuum_floor",
+        "rule_ref_id": "demo-apac-sa-certification-evidence"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["滤网", "检测"],
+        "rationale_contains": ["核验"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-certification-evidence"]
+      }
+    },
+    {
+      "case_id": "rw-011",
+      "risk_type": "analogical-claim",
+      "locale": "zh",
+      "ad_text": "还原柴火饭口感，每晚尽享。",
+      "original_span": "柴火饭",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "rule_ref_id": "demo-apac-sa-analogy-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["柴火饭", "感官"],
+        "rationale_contains": ["主观"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-analogy-claim"]
+      }
+    },
+    {
+      "case_id": "rw-012",
+      "risk_type": "environmental-claim",
+      "locale": "zh",
+      "ad_text": "机身采用可回收材料，绿色之选。",
+      "original_span": "可回收材料",
+      "rewrite_strategy": "substantiate",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.air_fryer",
+        "rule_ref_id": "demo-apac-sa-sustainability-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["再生", "环保"],
+        "rationale_contains": ["具体"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-sustainability-claim"]
+      }
+    },
+    {
+      "case_id": "rw-013",
+      "risk_type": "localisation-error",
+      "locale": "zh",
+      "ad_text": "产品图仍显示中文操作面板。",
+      "original_span": "中文操作面板",
+      "rewrite_strategy": "rephrase",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "rule_ref_id": "demo-apac-sa-localization"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["英文", "新加坡"],
+        "rationale_contains": ["本地化"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-localization", "demo-apac-sa-localization-cjk"]
+      }
+    },
+    {
+      "case_id": "rw-014",
+      "risk_type": "ai-image-disclaimer",
+      "locale": "en",
+      "ad_text": "Premium air fryer with crisp results.",
+      "original_span": "Premium air fryer",
+      "rewrite_strategy": "append",
+      "fixture": {
+        "country_id": "MY",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.air_fryer",
+        "rule_ref_id": "demo-apac-sa-ai-image-disclaimer",
+        "ai_rendered_image": true
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["illustration purposes only"],
+        "rationale_contains": ["Synthetic"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-ai-image-disclaimer"]
+      }
+    },
+    {
+      "case_id": "rw-015",
+      "risk_type": "capacity-claim",
+      "locale": "en",
+      "ad_text": "Stew up to 2kg beef in one go.",
+      "original_span": "up to 2kg",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "rule_ref_id": "demo-apac-sa-capacity-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["kilograms", "test conditions"],
+        "rationale_contains": ["Capacity"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-capacity-claim"]
+      }
+    },
+    {
+      "case_id": "rw-016",
+      "risk_type": "sku-mismatch",
+      "locale": "en",
+      "ad_text": "Model 50H100 shown in hero image.",
+      "original_span": "50H100",
+      "rewrite_strategy": "rephrase",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.rice_cooker",
+        "rule_ref_id": "demo-apac-sa-wrong-sku",
+        "product_sku": "RC40",
+        "ocr_text": "Model 50H100 stainless steel"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["RC40", "SKU"],
+        "rationale_contains": ["SKU"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-wrong-sku"]
+      }
+    },
+    {
+      "case_id": "rw-017",
+      "risk_type": "grammar-quality",
+      "locale": "en",
+      "ad_text": "Flash sale ends 22:00pm tonight.",
+      "original_span": "22:00pm",
+      "rewrite_strategy": "rephrase",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.kettle_cooker",
+        "rule_ref_id": "demo-apac-sa-grammar-quality"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["22:00", "10:00 pm"],
+        "rationale_contains": ["formatting"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-grammar-quality"]
+      }
+    },
+    {
+      "case_id": "rw-018",
+      "risk_type": "market-ranking-claim",
+      "locale": "en",
+      "ad_text": "Malaysia's #1 selling blender brand.",
+      "original_span": "Malaysia's #1",
+      "rewrite_strategy": "substantiate",
+      "fixture": {
+        "country_id": "MY",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.blender_processor",
+        "rule_ref_id": "demo-my-sa-market-claim"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["top-selling", "source"],
+        "rationale_contains": ["substantiation"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-my-sa-market-claim"]
+      }
+    },
+    {
+      "case_id": "rw-019",
+      "risk_type": "sponsored-disclosure",
+      "locale": "en",
+      "ad_text": "Try our new collagen gummies today!",
+      "original_span": "collagen gummies",
+      "rewrite_strategy": "append",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "META",
+        "category_id": "health.supplement",
+        "rule_ref_id": "demo-sg-sponsored-disclosure"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["#ad", "Sponsored"],
+        "rationale_contains": ["sponsorship"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-sg-sponsored-disclosure"]
+      }
+    },
+    {
+      "case_id": "rw-020",
+      "risk_type": "absolute-claim-soft",
+      "locale": "en",
+      "ad_text": "Zero fault performance every use.",
+      "original_span": "every use",
+      "rewrite_strategy": "qualify",
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.vacuum_floor",
+        "rule_ref_id": "demo-apac-sa-absolute-claim-soft"
+      },
+      "stub_expected": {
+        "suggested_text_contains": ["typical", "cleaning"],
+        "rationale_contains": ["qualified"],
+        "confidence_min": 0.7
+      },
+      "self_check": {
+        "must_not_trigger_rule_ids": ["demo-apac-sa-absolute-claim-soft"]
+      }
+    }
+  ]
+}

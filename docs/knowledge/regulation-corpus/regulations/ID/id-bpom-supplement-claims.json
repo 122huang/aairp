@@ -1,0 +1,34 @@
+{
+  "knowledge_id": "regulation:id-bpom-supplement-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "id-bpom-supplement-claims",
+  "country": "ID",
+  "authority": "BPOM",
+  "regulation_name": "BPOM Regulation on Health Supplement Claims",
+  "citation": "BPOM Regulation on Health Supplement Claims — Article 12",
+  "effective_date": "2020-01-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Health supplement ads must use BPOM-permitted claims and must not imply disease treatment or prevention.",
+  "review_guidance": "TRIGGER: Nutraceutical, herbal, or vitamin health benefit claims. ACTION: WARN — verify against BPOM permitted claim list. CHECK: ML registration, label claims, and dosage. ESCALATE IF: Disease treatment or medicinal effect implied.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker",
+    "demo-id-product-category-boundary"
+  ],
+  "related_evidence_ids": [
+    "evidence:supplement-health-evidence"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "supplement"
+  ],
+  "jurisdiction_scope": [
+    "health.supplement"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

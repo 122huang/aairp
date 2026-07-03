@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:my-npra-cosmetic-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "my-npra-cosmetic-claims",
+  "country": "MY",
+  "authority": "NPRA",
+  "regulation_name": "Control of Drugs and Cosmetics Regulations",
+  "citation": "Control of Drugs and Cosmetics Regulations — Regulation 18A",
+  "effective_date": "2020-01-01",
+  "category": "Health Claims",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Cosmetic ads may describe appearance effects but must not claim therapeutic or disease-related benefits.",
+  "review_guidance": "TRIGGER: Skin healing, anti-disease, or medicinal cosmetic claims. ACTION: REJECT — reclassify as cosmetic appearance claim only. CHECK: Product notification (NOT) number and claim type. ESCALATE IF: Therapeutic or NPRA drug-like claim on cosmetic.",
+  "related_rule_ids": [
+    "demo-apac-sa-health-claim-blocker"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "cosmetic"
+  ],
+  "jurisdiction_scope": [
+    "health.cosmetic"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

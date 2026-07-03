@@ -340,8 +340,8 @@ describe('ReviewReportController integration', () => {
       payload: {
         country_id: 'SG',
         platform_id: 'META',
-        category_id: 'health.supplement',
-        content: { text: 'Daily vitamins for general wellness.' },
+        category_id: 'sa.vacuum_floor',
+        content: { text: 'Compact cordless vacuum for everyday floor cleaning.' },
       },
     });
 

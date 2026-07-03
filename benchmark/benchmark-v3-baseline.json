@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "baseline_id": "benchmark-v3-baseline-2026-06-30",
+  "frozen_at": "2026-06-30T00:00:00.000Z",
+  "approved_in": "Sprint 4A.1 calibration",
+  "description": "First trusted evaluation baseline for benchmark-v3 regression tier. Do not modify scores without a new baseline version.",
+  "benchmark_v3": {
+    "benchmark_id": "aairp-benchmark-v3",
+    "schema_version": "3.0.0",
+    "modules_version": "skill-modules-1.0.0",
+    "content_fingerprint": "491cfcbd01f4a587e014d156aa45597a749cd889ae3f0f5952fc761071fe743d",
+    "source_path": "benchmark/benchmark-v3.json"
+  },
+  "regression_tier": {
+    "tier": "regression",
+    "case_count": 9,
+    "case_ids": [
+      "AF-002",
+      "sg-health-reject-cure",
+      "sg-health-pass-disclosed",
+      "sg-health-fp-secure-no-cure",
+      "sg-health-warn-disclosure",
+      "sg-health-warn-superlative",
+      "sg-health-playbook-urgency",
+      "supplement-ad-manifest-urgency",
+      "supplement-before-after-imagery"
+    ],
+    "legal_verified_count": 8,
+    "legal_verified_pct": 88.9
+  },
+  "metrics": {
+    "weighted_quality_score": 0.9778,
+    "weighted_quality_pct": 97.8,
+    "decision_accuracy": 1,
+    "decision_accuracy_pct": 100,
+    "pattern_hit_rate": 1,
+    "severity_accuracy": 0.7778,
+    "action_accuracy": 1,
+    "rewrite_score": 1,
+    "false_reject_rate": 0,
+    "blocker_miss_rate": 0,
+    "passed_cases": 9,
+    "total_cases": 9
+  },
+  "module_scores": [
+    {
+      "skill_module": "Claim Review",
+      "case_count": 6,
+      "weighted_score": 0.9667,
+      "decision_accuracy": 1,
+      "pattern_hit_rate": 1
+    },
+    {
+      "skill_module": "Disclaimer Review",
+      "case_count": 2,
+      "weighted_score": 1,
+      "decision_accuracy": 1,
+      "pattern_hit_rate": 1
+    },
+    {
+      "skill_module": "Content Quality Review",
+      "case_count": 1,
+      "weighted_score": 1,
+      "decision_accuracy": 1,
+      "pattern_hit_rate": 1
+    }
+  ],
+  "eval_snapshot_path": "benchmark/baseline/eval-v3-regression-baseline.json",
+  "known_limitations": [
+    "Severity dimension is scored but not yet a pass/fail gate",
+    "Regression tier is narrow (9 cases); expansion required before T3 merge-block",
+    "1/9 regression cases lacks legal verification (supplement-before-after-imagery)",
+    "Baseline reflects evaluator + benchmark alignment post-4A.1; not a production quality ceiling"
+  ],
+  "gate_policy": {
+    "t2_report_only": true,
+    "t3_merge_block": false,
+    "t3_prerequisites": [
+      "Expand regression tier to >= 15 cases",
+      "100% legal verification on regression tier",
+      "Severity gating policy defined"
+    ]
+  }
+}

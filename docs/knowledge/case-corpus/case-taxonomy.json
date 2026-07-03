@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Case validation taxonomy — claim clusters and verification levels.",
+  "claim_clusters": [
+    { "cluster_id": "health-claim", "name": "Health claim validation" },
+    { "cluster_id": "performance-claim", "name": "Performance claim validation" },
+    { "cluster_id": "comparative-claim", "name": "Comparative claim validation" },
+    { "cluster_id": "certification-claim", "name": "Certification evidence validation" },
+    { "cluster_id": "disclosure-claim", "name": "Disclosure and localization validation" }
+  ],
+  "verification_statuses": [
+    { "status": "unverified", "rank": 0, "description": "Not yet reviewed for ground truth confidence." },
+    { "status": "human_verified", "rank": 1, "description": "Compliance or reviewer confirmed ground truth." },
+    { "status": "legal_verified", "rank": 2, "description": "Legal sign-off for high-risk or published benchmark sets." },
+    { "status": "rejected", "rank": -1, "description": "Ground truth disputed; exclude from promotion." }
+  ],
+  "case_statuses": [
+    { "status": "draft", "description": "Work in progress." },
+    { "status": "candidate", "description": "Eligible for benchmark promotion consideration." },
+    { "status": "verified", "description": "Accepted validation knowledge (requires human_verified+)." },
+    { "status": "regression", "description": "Eval failure — requires knowledge triage." },
+    { "status": "deprecated", "description": "Superseded; audit retention only." }
+  ],
+  "source_locator_convention": {
+    "source_case_id_format": "{library}:{opaque_id}",
+    "examples": ["case-library:case_example_sg_health_reject", "kos:case-record-uuid"],
+    "notes": "Locator only — no payload import in 5D."
+  }
+}

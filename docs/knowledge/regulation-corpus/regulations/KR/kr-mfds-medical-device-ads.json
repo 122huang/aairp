@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:kr-mfds-medical-device-ads",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-mfds-medical-device-ads",
+  "country": "KR",
+  "authority": "MFDS",
+  "regulation_name": "Medical Devices Act (Advertising)",
+  "citation": "Medical Devices Act — Article 37",
+  "effective_date": "2003-05-20",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device advertising must align with MFDS-permitted intended use and approved promotional content.",
+  "review_guidance": "TRIGGER: Clinical benefit or expanded indication for devices. ACTION: REWRITE — stay within approved intended use. CHECK: MFDS license, device class, and ad review status. ESCALATE IF: Off-label or unapproved device advertising.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

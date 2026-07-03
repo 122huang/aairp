@@ -1,0 +1,33 @@
+{
+  "knowledge_id": "regulation:id-bpom-performance-claims",
+  "corpus_type": "regulation",
+  "regulation_id": "id-bpom-performance-claims",
+  "country": "ID",
+  "authority": "BPOM",
+  "regulation_name": "Consumer Protection Law (Product claims alignment)",
+  "citation": "Law No. 8/1999 on Consumer Protection — Article 8",
+  "effective_date": "1999-04-20",
+  "category": "Performance Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Product efficacy and performance claims must be truthful and must not mislead about quality or results.",
+  "review_guidance": "TRIGGER: Efficacy percentages, guaranteed results, or performance stats. ACTION: WARN — require substantiation or qualify claim. CHECK: Test method, sample, and applicable product variant. ESCALATE IF: Absolute guarantee or fabricated test results.",
+  "related_rule_ids": [
+    "demo-apac-sa-performance-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:performance-claim-substantiation"
+  ],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "performance"
+  ],
+  "jurisdiction_scope": [
+    "consumer.goods"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

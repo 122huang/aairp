@@ -1,0 +1,76 @@
+{
+  "knowledge_id": "evidence:health-implication-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "health-implication-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "health-implication",
+  "evidence_purpose": "Substantiation for implied health benefits on non-health or misclassified product categories.",
+  "summary": "Implied health benefits on general products require substantiation or claim removal per health implication rules.",
+  "review_guidance": "TRIGGER: Healthier, lower sugar, or wellness outcome on non-supplement product. ACTION: Assess product category fit. CHECK: Nutritional substantiation, comparative basis. ESCALATE IF: Implies medicinal effect.",
+  "evidence_purpose_tags": [
+    "health-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "health-claim"
+    ],
+    "categories": [
+      "sa.*"
+    ],
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hpa-s7-prohibited-claims",
+      "regulation:au-tga-complementary-medicines"
+    ],
+    "rules": [
+      "demo-sg-health-forbidden-claim",
+      "demo-apac-sa-health-implication"
+    ],
+    "skills": [
+      "skill:health-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:remove-health-claim"
+    ]
+  },
+  "benchmark_refs": [
+    "PC-008"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Confirm product category allows implied health framing",
+      "Verify nutritional comparison substantiation if used",
+      "Check no disease or cure language"
+    ],
+    "reject_if": [
+      "Health implication on prohibited product class"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "health"
+  ]
+}

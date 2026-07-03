@@ -1,0 +1,70 @@
+{
+  "knowledge_id": "evidence:capacity-test-method-evidence",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "capacity-test-method-evidence",
+  "evidence_type_key": "test_method",
+  "requirement_scope": "capacity-test-method",
+  "evidence_purpose": "Require documented test method for capacity and fill-level performance claims.",
+  "summary": "Capacity claims must reference a documented test method aligned with on-pack specifications.",
+  "review_guidance": "TRIGGER: Capacity, volume, or fill-level claim. ACTION: Request test method document. CHECK: Method standard, fill conditions, tolerance. ESCALATE IF: Method differs from on-pack specification.",
+  "evidence_purpose_tags": [
+    "capacity-test-method"
+  ],
+  "resolves_expected_evidence_types": [
+    "test_method"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "performance-claim"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "recommended",
+  "linkage": {
+    "regulations": [
+      "regulation:th-tisi-performance-claims"
+    ],
+    "rules": [
+      "demo-apac-sa-capacity-claim"
+    ],
+    "skills": [
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-performance"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-005"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Confirm test method standard is cited",
+      "Match capacity unit to on-pack label",
+      "Verify fill-level conditions stated in ad or on-pack"
+    ],
+    "reject_if": [
+      "No test method on file"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:recommended",
+    "performance"
+  ]
+}

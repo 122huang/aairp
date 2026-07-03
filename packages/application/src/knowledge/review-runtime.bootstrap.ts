@@ -13,12 +13,14 @@ import { CaseFindingGeneratorService } from '../case/case-finding-generator.serv
 import { CaseRetrievalService } from '../case/case-retrieval.service.js';
 import { DeterministicHashEmbeddingProvider } from '../case/deterministic-hash-embedding.provider.js';
 import { ContextBuilderService, DEMO_KNOWLEDGE_VERSIONS } from '../review/context-builder.service.js';
+import { ContextualRewriteService } from '../review/contextual-rewrite.service.js';
 import { DecisionEngineService } from '../review/decision-engine.service.js';
 import { OpenRiskDiscoveryService } from '../review/open-risk-discovery.service.js';
 import { PlaybookEngineService } from '../review/playbook-engine.service.js';
 import { ReviewPipelineService } from '../review/review-pipeline.service.js';
 import { ReviewReportService } from '../review/review-report.service.js';
 import { RuleEngineService } from '../review/rule-engine.service.js';
+import { VisionComplianceService } from '../review/vision-compliance.service.js';
 import { createKnowledgeGateway } from './knowledge-gateway.factory.js';
 import { createReviewEnginesFromSnapshot } from './review-runtime.factory.js';
 
@@ -38,6 +40,7 @@ export type BootstrapReviewRuntimeResult = {
   decisionEngineService: DecisionEngineService;
   reviewReportService: ReviewReportService;
   reviewPipelineService: ReviewPipelineService;
+  visionComplianceService: VisionComplianceService;
   knowledgeSnapshot?: RuntimeKnowledgeSnapshot;
   caseRetrievalService?: CaseRetrievalService;
 };
@@ -75,10 +78,15 @@ export async function bootstrapReviewRuntime(
     ? new CaseFindingGeneratorService()
     : undefined;
 
+  const visionComplianceService = new VisionComplianceService();
+  const contextualRewriteService = new ContextualRewriteService();
+
   const reviewPipelineService = new ReviewPipelineService({
     ...engines,
     decisionEngineService,
     reviewReportService,
+    visionComplianceService,
+    contextualRewriteService,
     caseRetrievalService,
     caseContextAssembler,
     caseFindingGeneratorService,
@@ -90,6 +98,7 @@ export async function bootstrapReviewRuntime(
     decisionEngineService,
     reviewReportService,
     reviewPipelineService,
+    visionComplianceService,
     knowledgeSnapshot,
     caseRetrievalService,
   };

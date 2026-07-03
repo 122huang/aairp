@@ -22,6 +22,7 @@ import type {
   KosDemoImportResult,
 } from './demo-knowledge.types.js';
 import type { KosPublishService } from './kos-publish.service.js';
+import { resolveRegulationOwnershipLifecycle, resolveRuleOwnershipLifecycle } from './kos-ownership-lifecycle.js';
 
 export type KosDemoImportDeps = {
   ruleRepository: IRuleRepository;
@@ -97,6 +98,7 @@ export class KosDemoImportService {
         continue;
       }
 
+      const regulationLifecycle = resolveRegulationOwnershipLifecycle(seed.regulationKey);
       const draft = await this.deps.regulationRepository.createVersion({
         regulationId: regulation.regulationId,
         lawName: seed.lawName,
@@ -104,6 +106,13 @@ export class KosDemoImportService {
         bodyText: seed.bodyText,
         tags: seed.tags ?? ['demo', 'imported'],
         searchText: [seed.lawName, seed.article, seed.bodyText].filter(Boolean).join(' '),
+        effectiveDate: seed.effectiveDate,
+        mandatory: seed.mandatory,
+        riskLevel: seed.riskLevel,
+        owner: regulationLifecycle.owner,
+        ownerType: regulationLifecycle.owner_type,
+        lastReviewedAt: regulationLifecycle.last_reviewed_at,
+        freshnessStatus: regulationLifecycle.freshness_status,
       });
 
       const published = await this.deps.publishService.publish(
@@ -202,6 +211,7 @@ export class KosDemoImportService {
         continue;
       }
 
+      const lifecycle = resolveRuleOwnershipLifecycle(entry.rule_id);
       const draft = await this.deps.ruleRepository.createVersion({
         ruleId: rule.ruleId,
         severity: entry.severity,
@@ -212,6 +222,10 @@ export class KosDemoImportService {
           categories: entry.scopes.categories,
         },
         payload: buildRulePayload(entry),
+        owner: lifecycle.owner,
+        ownerType: lifecycle.owner_type,
+        lastReviewedAt: lifecycle.last_reviewed_at,
+        freshnessStatus: lifecycle.freshness_status,
         tags: ['demo', 'imported'],
       });
 

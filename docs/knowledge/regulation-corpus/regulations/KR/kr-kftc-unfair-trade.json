@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:kr-kftc-unfair-trade",
+  "corpus_type": "regulation",
+  "regulation_id": "kr-kftc-unfair-trade",
+  "country": "KR",
+  "authority": "KFTC",
+  "regulation_name": "Act on Fair Labeling and Advertising",
+  "citation": "Act on Fair Labeling and Advertising — Article 7",
+  "effective_date": "2007-01-01",
+  "category": "Consumer Protection",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "False or exaggerated labeling and advertising that deceives consumers is prohibited.",
+  "review_guidance": "TRIGGER: False product description, deceptive offer, or misrepresented benefit. ACTION: REJECT — correct misleading representation. CHECK: Material terms, specs, and offer conditions. ESCALATE IF: Repeat violation or KFTC investigation risk.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "consumer-protection"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

@@ -1,0 +1,31 @@
+{
+  "knowledge_id": "regulation:sg-hsa-medical-device-intended-use",
+  "corpus_type": "regulation",
+  "regulation_id": "sg-hsa-medical-device-intended-use",
+  "country": "SG",
+  "authority": "HSA",
+  "regulation_name": "Health Products (Medical Devices) Regulations",
+  "citation": "Health Products (Medical Devices) Regulations — Regulation 17",
+  "effective_date": "2010-06-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "HIGH",
+  "summary": "Medical device advertising must stay within registered intended use and must not imply unregistered clinical outcomes.",
+  "review_guidance": "TRIGGER: Clinical outcome, diagnosis, or treatment claims for medical devices. ACTION: REJECT or REWRITE to registered intended use only. CHECK: Device class, UDI references, and clinical benefit statements. ESCALATE IF: Claim exceeds registered intended purpose or targets serious conditions.",
+  "related_rule_ids": [
+    "demo-sg-health-forbidden-claim"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "medical-device"
+  ],
+  "jurisdiction_scope": [
+    "health.device"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

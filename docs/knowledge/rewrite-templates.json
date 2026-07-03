@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "templates": [
+    {
+      "template_id": "qualify-performance",
+      "strategy": "qualify",
+      "description": "Replace absolute performance wording with qualified typical-results language.",
+      "must_remove_terms": ["perfect", "every time", "always works", "flawless", "never fails"],
+      "must_include_concepts": ["typical", "conditions"]
+    },
+    {
+      "template_id": "qualify-efficacy",
+      "strategy": "qualify",
+      "description": "Qualify efficacy or testimonial claims with substantiation framing.",
+      "must_remove_terms": ["clinically proven", "guaranteed", "100%"],
+      "must_include_concepts": []
+    },
+    {
+      "template_id": "qualify-comparative",
+      "strategy": "qualify",
+      "description": "Add comparison baseline and test conditions to comparative claims.",
+      "must_remove_terms": ["number one", "goes beyond"],
+      "must_include_concepts": ["compared", "test"]
+    },
+    {
+      "template_id": "remove-health-claim",
+      "strategy": "remove",
+      "description": "Remove implied health or nutrition benefit wording.",
+      "must_remove_terms": ["healthier", "lower sugar", "health benefits"],
+      "must_include_concepts": []
+    },
+    {
+      "template_id": "cite-evidence",
+      "strategy": "cite_evidence",
+      "description": "Require substantiation or certification reference for evidence claims.",
+      "must_remove_terms": [],
+      "must_include_concepts": ["substantiation", "certification", "evidence"]
+    },
+    {
+      "template_id": "disclose-localization",
+      "strategy": "disclose",
+      "description": "Clarify market-appropriate localization of assets.",
+      "must_remove_terms": ["chinese product image", "chinese manual"],
+      "must_include_concepts": ["local", "english"]
+    },
+    {
+      "template_id": "disclose-ai",
+      "strategy": "disclose",
+      "description": "Add AI-rendered or illustration disclaimer.",
+      "must_remove_terms": [],
+      "must_include_concepts": ["illustration", "purposes only"]
+    },
+    {
+      "template_id": "disclose-urgency",
+      "strategy": "disclose",
+      "description": "Add offer validity or remove urgency pressure language.",
+      "must_remove_terms": ["limited time", "act now", "hurry"],
+      "must_include_concepts": ["validity", "offer"]
+    },
+    {
+      "template_id": "disclose-transformation",
+      "strategy": "disclose",
+      "description": "Add disclaimer for before/after or transformation imagery.",
+      "must_remove_terms": [],
+      "must_include_concepts": ["disclaimer", "outcomes"]
+    }
+  ]
+}

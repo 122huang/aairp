@@ -1,0 +1,39 @@
+{
+  "knowledge_id": "rewrite:disclose-urgency",
+  "corpus_type": "rewrite",
+  "rewrite_id": "disclose-urgency",
+  "legacy_template_id": "disclose-urgency",
+  "rewrite_purpose": "Guide reviewers to add offer validity context or remove misleading urgency pressure language from advertising copy.",
+  "rewrite_status": "production",
+  "rewrite_version": "1.0.0",
+  "rewrite_strategy_type": "disclose",
+  "summary": "Add offer validity terms or remove limited-time pressure language that may mislead consumers about availability or pricing.",
+  "rewrite_guidance": "TRIGGER: Limited time, act now, hurry, or countdown urgency language. ACTION: Add clear offer validity dates and terms or remove pressure wording. CHECK: Price history, promotion end date, and stock claims. ESCALATE IF: Fake urgency or inflated reference pricing suspected.",
+  "review_guidance": "ESCALATE IF: Urgency CTA conflicts with actual offer terms on landing page or checkout.",
+  "measurable_criteria": {
+    "must_remove_terms": ["limited time", "act now", "hurry"],
+    "must_include_concepts": ["validity", "offer"],
+    "scoring_notes": "must_remove_terms on ad text; must_include_concepts on rewrite guidance text."
+  },
+  "benchmark_refs": ["sg-health-playbook-urgency", "supplement-ad-manifest-urgency"],
+  "case_refs": [],
+  "applicability": {
+    "countries": ["SG", "MY", "TH"],
+    "modalities": ["text", "image"],
+    "claim_types": ["disclosure-urgency"]
+  },
+  "linkage": {
+    "regulations": ["regulation:sg-scap-disclosure", "regulation:my-kpdnhep-pricing-representation"],
+    "rules": ["demo-sg-sponsored-disclosure"]
+  },
+  "rewrite_linkage_scope": "independent",
+  "rewrite_independence_rationale": "Standalone urgency/disclosure rewrite guidance; not tied to a claim-class Skill Corpus entry.",
+  "expected_evidence_type": "none",
+  "evidence_requirement": "none",
+  "confidence_level": "high",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:none", "disclosure", "urgency"]
+}

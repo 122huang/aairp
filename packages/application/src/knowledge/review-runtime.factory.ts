@@ -1,5 +1,6 @@
 import type { RuntimeKnowledgeSnapshot } from '@aairp/shared-kernel';
 import { OpenRiskDiscoveryService } from '../review/open-risk-discovery.service.js';
+import { createDefaultOpenRiskLlmGateway } from '../review/open-risk-llm.gateway.js';
 import { PlaybookEngineService } from '../review/playbook-engine.service.js';
 import { RuleEngineService } from '../review/rule-engine.service.js';
 
@@ -20,6 +21,7 @@ export function createReviewEnginesFromSnapshot(
     openRiskDiscoveryService: new OpenRiskDiscoveryService({
       promptTemplate: snapshot.openRiskPrompt.content,
       promptPackVersion: snapshot.openRiskPrompt.pack_version,
+      llmGateway: createDefaultOpenRiskLlmGateway(),
     }),
   };
 }

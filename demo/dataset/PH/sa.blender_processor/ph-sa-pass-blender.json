@@ -1,0 +1,24 @@
+{
+  "case_id": "ph-sa-pass-blender",
+  "country_id": "PH",
+  "category_id": "sa.blender_processor",
+  "platform_id": "META",
+  "intent": "PASS",
+  "verification": "auto",
+  "notes": "6B-2f PH sa.* PASS — blender convenience. Not legal advice.",
+  "tags": ["6b-2f", "locale-expansion", "demo"],
+  "upload": {
+    "country_id": "PH",
+    "platform_id": "META",
+    "category_id": "sa.blender_processor",
+    "content": {
+      "text": "All-in-one blender for your kitchen — compact design, easy cleanup. #ad"
+    },
+    "tags": ["pilot:ph-sa-pass"]
+  },
+  "ground_truth": {
+    "expected_decision": "PASS",
+    "expected_findings": [],
+    "open_risk_skipped": false
+  }
+}

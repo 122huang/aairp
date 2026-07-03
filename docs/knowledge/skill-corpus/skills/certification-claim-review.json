@@ -1,0 +1,67 @@
+{
+  "knowledge_id": "skill:certification-claim-review",
+  "corpus_type": "skill",
+  "skill_id": "certification-claim-review",
+  "skill_purpose": "Review certification, patent, award, and laboratory evidence references for authenticity, scope, and readability.",
+  "skill_status": "production",
+  "skill_version": "1.0.0",
+  "summary": "Detects certification and evidence claims in advertising; guides reviewers to verify document authenticity, applicable scope, and on-ad readability before publication.",
+  "review_guidance": "TRIGGER: Certification marks, patent numbers, awards, or laboratory test references in ad copy or imagery. ACTION: Confirm evidence document exists and covers the advertised product scope. CHECK: Mark legibility, expiry dates, and whether claim exceeds certificate scope. ESCALATE IF: Certification cannot be verified or appears misleading — route to Rule Corpus for binding decision.",
+  "input_definition": {
+    "modalities": ["text", "image"],
+    "countries": ["SG", "MY", "TH"],
+    "categories": ["sa.*", "electronics"],
+    "claim_types": ["certification-claim"],
+    "required_context": ["ad_copy", "evidence_document_ref"]
+  },
+  "detection_patterns": [
+    {
+      "pattern_id": "certification-evidence",
+      "description": "Certification, patent, award, or laboratory evidence requiring verification.",
+      "signal_terms": ["certified", "patent", "ISO", "lab tested", "award winning"],
+      "signal_concepts": ["third-party certification", "test report reference"],
+      "playbook_pattern_id": "sa-certification-evidence",
+      "rewrite_template_id": "cite-evidence"
+    }
+  ],
+  "skill_behavior": {
+    "rewrite_strategy": "cite_evidence",
+    "checkpoint_actions": [
+      "Verify certification or test document authenticity",
+      "Confirm certificate scope covers advertised product and market",
+      "Check mark or badge is legible at published resolution"
+    ],
+    "escalation_hints": [
+      "Escalate when certification mark is expired or scope-limited",
+      "Escalate when patent or award claim cannot be substantiated"
+    ]
+  },
+  "output_schema": {
+    "fields": ["matched_patterns", "matched_rules", "rationale", "rewrite_guidance_ref", "evidence_refs"],
+    "rewrite_linkage": ["rewrite:cite-evidence"]
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-hsa-certification-marks",
+      "regulation:my-sirim-certification-marks"
+    ],
+    "rules": ["demo-apac-sa-certification-evidence", "demo-apac-sa-patent-claim"],
+    "evidence": [
+      "evidence:certification-mark-substantiation",
+      "evidence:product-certification-scope-verification",
+      "evidence:certification-expiry-validation",
+      "evidence:third-party-certification-body"
+    ],
+    "rewrites": ["rewrite:cite-evidence"],
+    "benchmarks": ["AF-009", "AF-010", "RC18-004"]
+  },
+  "legacy_skill_module": "Evidence Review",
+  "legacy_pattern_ids": ["sa-certification-evidence"],
+  "confidence_level": "high",
+  "evidence_requirement": "required",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "advertising", "certification"]
+}

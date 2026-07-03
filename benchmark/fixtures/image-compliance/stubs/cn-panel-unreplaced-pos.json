@@ -1,0 +1,23 @@
+{
+  "prompt_pack_version": "demo-vision-1.0.0",
+  "extracted_text": ["开始", "煮饭"],
+  "findings": [
+    {
+      "risk_type": "localisation-error",
+      "description": "Chinese-only control panel visible on SG listing image; local English panel replacement required.",
+      "severity": "MEDIUM",
+      "suggested_action": "WARN",
+      "confidence": 0.91,
+      "scan_dimension": "panel_language",
+      "evidence_spans": [
+        {
+          "field": "image",
+          "slice_index": 0,
+          "region_description": "centre product control panel",
+          "text": "开始"
+        }
+      ],
+      "related_modules_checked": ["sa-localization"]
+    }
+  ]
+}

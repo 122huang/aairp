@@ -1,0 +1,87 @@
+{
+  "knowledge_id": "skill:superlative-claim-review",
+  "corpus_type": "skill",
+  "skill_id": "superlative-claim-review",
+  "skill_purpose": "Review absolute, omnibus, and unsubstantiated superlative efficacy claims for qualification and substantiation requirements.",
+  "skill_status": "production",
+  "skill_version": "1.0.0",
+  "summary": "Detects superlative, absolute, and testimonial efficacy claims; guides reviewers to verify substantiation exists before publication and to qualify omnibus wording.",
+  "review_guidance": "TRIGGER: Absolute efficacy, cure-style, or omnibus superiority language in headlines or body copy. ACTION: Identify whether substantiation is referenced or available on file. CHECK: Testimonials, before/after claims, and unqualified superlatives. ESCALATE IF: Claim is absolute with no substantiation trace — route to Rule Corpus for binding decision.",
+  "input_definition": {
+    "modalities": ["text", "image"],
+    "countries": ["SG", "MY", "TH"],
+    "categories": ["health.supplement", "sa.*", "electronics"],
+    "claim_types": ["superlative-claim"],
+    "required_context": ["ad_copy", "substantiation_status"]
+  },
+  "detection_patterns": [
+    {
+      "pattern_id": "unsubstantiated-testimonial",
+      "description": "Efficacy or testimonial claims that require substantiation or qualification.",
+      "signal_terms": ["clinically proven", "guaranteed", "100%", "miracle"],
+      "signal_concepts": ["testimonial efficacy", "absolute outcome"],
+      "playbook_pattern_id": "unsubstantiated-testimonial",
+      "rewrite_template_id": "qualify-efficacy"
+    },
+    {
+      "pattern_id": "absolute-performance",
+      "description": "Absolute or omnibus performance claims without conditions or substantiation.",
+      "signal_terms": ["perfect", "every time", "always works", "flawless"],
+      "signal_concepts": ["omnibus performance", "absolute result"],
+      "playbook_pattern_id": "sa-absolute-performance",
+      "rewrite_template_id": "qualify-performance"
+    },
+    {
+      "pattern_id": "comparative-superiority",
+      "description": "Superiority or beyond-standard comparative claims requiring benchmark disclosure.",
+      "signal_terms": ["number one", "goes beyond", "best in class"],
+      "signal_concepts": ["superiority claim", "market leadership"],
+      "playbook_pattern_id": "sa-comparative-superiority",
+      "rewrite_template_id": "qualify-comparative"
+    }
+  ],
+  "skill_behavior": {
+    "rewrite_strategy": "qualify",
+    "checkpoint_actions": [
+      "Verify substantiation file exists for superlative claims",
+      "Check whether testimonial is attributed and verifiable",
+      "Qualify omnibus wording with typical-results framing"
+    ],
+    "escalation_hints": [
+      "Escalate when absolute cure or miracle language appears on health products",
+      "Escalate when comparative superiority lacks named benchmark"
+    ]
+  },
+  "output_schema": {
+    "fields": ["matched_patterns", "matched_rules", "rationale", "rewrite_guidance_ref"],
+    "rewrite_linkage": ["rewrite:qualify-efficacy", "rewrite:qualify-performance", "rewrite:qualify-comparative"]
+  },
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asasa-substantiation",
+      "regulation:sg-asas-comparative-claims",
+      "regulation:sg-hpa-s7-prohibited-claims"
+    ],
+    "rules": [
+      "demo-sg-health-superlative",
+      "demo-apac-sa-absolute-claim",
+      "demo-apac-sa-absolute-claim-soft"
+    ],
+    "evidence": [
+      "evidence:efficacy-superlative-substantiation",
+      "evidence:absolute-performance-substantiation",
+      "evidence:general-advertising-substantiation"
+    ],
+    "rewrites": ["rewrite:qualify-efficacy", "rewrite:qualify-performance", "rewrite:qualify-comparative"],
+    "benchmarks": ["AF-002", "AF-006", "sg-health-reject-cure", "sg-health-warn-superlative"]
+  },
+  "legacy_skill_module": "Claim Review",
+  "legacy_pattern_ids": ["unsubstantiated-testimonial", "sa-absolute-performance", "sa-comparative-superiority"],
+  "confidence_level": "high",
+  "evidence_requirement": "required",
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "tags": ["confidence:high", "evidence:required", "advertising", "superlative"]
+}

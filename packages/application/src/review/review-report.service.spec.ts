@@ -87,6 +87,74 @@ describe('ReviewReportService', () => {
     expect(result.reportHtml).toContain('(High)');
   });
 
+  it('renders rewrite suggestions under each WARN finding detail', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+
+    const result = service.render({
+      context: baseContext,
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'WARN',
+        confidence: 0.82,
+        rationale: 'Health implication warning.',
+        findingCounts: { rule: 1, playbook: 0, llm: 0, case: 0, vision: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [
+        {
+          module: 'RULE',
+          findingId: 'rf_health',
+          severity: 'MEDIUM',
+          decision: 'WARN',
+          refType: 'RULE',
+          refId: 'demo-apac-sa-health-implication',
+          refVersionId: 'demo-apac-sa-health-implication-v7',
+          summary: 'Health implication detected',
+          confidence: 1,
+          evaluationDetail: {
+            matchedSpans: [{ field: 'text', start: 0, end: 4, text: '更轻盈' }],
+          },
+        },
+      ],
+      playbookFindings: [],
+      openRiskResult: {
+        skipped: false,
+        findings: [],
+      },
+      contextualRewrites: {
+        mode: 'stub',
+        rewriteMs: 3,
+        results: [
+          {
+            reviewId: 'rev_test',
+            findingId: 'rf_health',
+            riskType: 'health-implication',
+            skipped: false,
+            suggestion: {
+              suggestionId: 'rs_test',
+              findingId: 'rf_health',
+              riskType: 'health-implication',
+              rewriteTemplateId: 'remove-health-claim',
+              originalSpan: { field: 'text', start: 0, end: 4, text: '更轻盈' },
+              suggestedText: ['热风循环技术，无需预热，即放即炸。'],
+              rationale: '以功能描述替代健康联想措辞。',
+              confidence: 0.82,
+            },
+          },
+        ],
+      },
+    });
+
+    expect(result.summary.findings[0]?.rewriteSuggestions).toHaveLength(1);
+    expect(result.reportHtml).toContain('finding-detail');
+    expect(result.reportHtml).toContain('修改建议');
+    expect(result.reportHtml).toContain('热风循环技术，无需预热，即放即炸。');
+    expect(result.reportHtml.indexOf('demo-apac-sa-health-implication')).toBeLessThan(
+      result.reportHtml.indexOf('修改建议'),
+    );
+    expect(result.reportHtml).not.toContain('<h2>修改建议</h2>');
+  });
+
   it('escapes HTML in advertisement text and finding summaries', () => {
     const service = new ReviewReportService({ now: () => fixedDate });
 

@@ -1,0 +1,29 @@
+{
+  "knowledge_id": "regulation:th-fda-drug-advertising",
+  "corpus_type": "regulation",
+  "regulation_id": "th-fda-drug-advertising",
+  "country": "TH",
+  "authority": "FDA",
+  "regulation_name": "Drug Act B.E. 2510 (Advertising)",
+  "citation": "Drug Act B.E. 2510 — Section 88",
+  "effective_date": "1967-01-01",
+  "category": "Medical Claims",
+  "mandatory": true,
+  "risk_level": "CRITICAL",
+  "summary": "Drug advertising to the public is restricted; prohibited claims include cure guarantees and unapproved indications.",
+  "review_guidance": "TRIGGER: Drug cure, treatment guarantee, or OTC drug promotion with Rx-only claims. ACTION: REJECT — remove prohibited drug advertising. CHECK: Thai FDA registration, ad approval status, and indication text. ESCALATE IF: Unapproved drug ad or serious disease cure claim.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "medicine"
+  ],
+  "jurisdiction_scope": [
+    "health.medicine"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

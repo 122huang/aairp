@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "platform_version": "1.0.0",
+  "corpus_type": "skill",
+  "generated_at": "2026-07-01T02:27:39.694Z",
+  "corpus_root": "C:\\Users\\ShujieHuang\\aairp\\docs\\knowledge\\skill-corpus",
+  "fingerprint": "8b4c576e3e17c957",
+  "entry_count": 5,
+  "knowledge_quality_score": 100,
+  "freshness": {
+    "green": 5,
+    "yellow": 0,
+    "red": 0,
+    "green_pct": 100,
+    "yellow_pct": 0,
+    "red_pct": 0
+  },
+  "knowledge_ids": [
+    "skill:certification-claim-review",
+    "skill:comparative-claim-review",
+    "skill:health-claim-review",
+    "skill:performance-claim-review",
+    "skill:superlative-claim-review"
+  ],
+  "dimensions": {
+    "by_claim_type": {
+      "health-claim": 1,
+      "superlative-claim": 1,
+      "comparative-claim": 1,
+      "certification-claim": 1,
+      "performance-claim": 1
+    },
+    "by_status": {
+      "production": 5
+    }
+  },
+  "manifest_filename": "skill-corpus.manifest.json",
+  "metadata": {
+    "claim_types": [
+      "health-claim",
+      "superlative-claim",
+      "comparative-claim",
+      "certification-claim",
+      "performance-claim"
+    ]
+  }
+}

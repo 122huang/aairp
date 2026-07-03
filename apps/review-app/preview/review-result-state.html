@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ad Compliance Hub</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #F7F7F5; color: #0E2841; font-size: 14px; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    header { border-bottom: 1px solid #E5E7EB; background: #fff; }
+    .header-inner { max-width: 1152px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { display: flex; gap: 12px; align-items: center; }
+    .logo-mark { width: 36px; height: 36px; border-radius: 6px; background: #E07828; color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .logo h1 { margin: 0; font-size: 16px; font-weight: 600; }
+    .logo p { margin: 0; font-size: 9.6px; color: #6B7280; }
+    .toggle { display: inline-flex; border: 1px solid #E5E7EB; border-radius: 6px; padding: 2px; background: #F7F7F5; }
+    .toggle span { padding: 6px 12px; font-size: 12px; border-radius: 4px; color: #6B7280; }
+    .toggle .on { background: #0E2841; color: #fff; font-weight: 500; }
+    main { max-width: 1152px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 2fr 3fr; gap: 32px; flex: 1; width: 100%; }
+    .card { background: #fff; border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; }
+    .card h3 { margin: 0 0 16px; font-size: 14px; font-weight: 600; }
+    label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+    textarea { width: 100%; min-height: 120px; border: 1px solid #E5E7EB; border-radius: 6px; padding: 10px 12px; font: inherit; resize: vertical; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    select { width: 100%; border: 1px solid #E5E7EB; border-radius: 6px; padding: 8px 10px; background: #fff; }
+    .upload { margin-top: 16px; border: 1px solid #E5E7EB; background: #fff; border-radius: 6px; padding: 8px 12px; font-size: 14px; color: #0E2841; }
+    .btn { display: block; width: 100%; margin-top: 16px; padding: 10px; background: #E07828; color: #fff; border: none; border-radius: 6px; font-weight: 500; }
+    .banner { border: 1px solid #E5E7EB; border-left: 4px solid #D97706; border-radius: 8px; background: #FFFBEB; padding: 16px 20px; margin-bottom: 20px; }
+    .banner-top { display: flex; gap: 12px; align-items: center; }
+    .banner h2 { margin: 0; font-size: 20px; font-weight: 600; color: #D97706; }
+    .conf { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #FEF3C7; color: #D97706; font-weight: 500; }
+    .banner p { margin: 8px 0 0; font-size: 14px; color: rgba(14,40,65,.8); }
+    .detail { margin-top: 8px; font-size: 12px; color: #6B7280; }
+    .section-title { font-size: 14px; font-weight: 600; margin: 0 0 12px; }
+    .section-title span { margin-left: 6px; font-size: 12px; font-weight: 400; color: #6B7280; }
+    .finding { border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: #fff; }
+    .row1 { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; }
+    .badge { font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+    .badge-gray { font-family: ui-monospace, monospace; background: #F3F4F6; }
+    .badge-mod { border: 1px solid #E5E7EB; font-weight: 500; }
+    .badge-sev { background: #FEF3C7; color: #D97706; font-weight: 500; }
+    .summary { flex: 1; min-width: 200px; }
+    .trigger { margin-top: 10px; font-family: ui-monospace, monospace; font-size: 12px; }
+    .trigger span { background: #FEF3C7; padding: 2px 6px; border-radius: 4px; }
+    .rewrite-toggle { margin-top: 10px; font-size: 12px; color: #6B7280; }
+    .rewrite { margin-top: 8px; background: #F0FDF4; border-left: 2px solid #16A34A; border-radius: 6px; padding: 10px 12px; }
+    .rat { margin-top: 4px; font-size: 12px; color: #9CA3AF; }
+    .source { border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #fff; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-mark">ACH</div>
+        <div>
+          <h1>Ad Compliance Hub</h1>
+          <p>广告合规宝</p>
+        </div>
+      </div>
+      <div class="toggle">
+        <span class="on">法务视图</span>
+        <span>业务视图</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h3>审查内容</h3>
+      <label>文案内容</label>
+      <textarea>少油烹饪，让您吃得更轻盈无负担。</textarea>
+      <div class="row">
+        <div><label>国家</label><select><option>SG · 新加坡</option></select></div>
+        <div><label>品类</label><select><option>空气炸锅</option></select></div>
+      </div>
+      <div style="margin-top:16px"><label>图片（可选）</label><div class="upload">↑ 上传图片</div></div>
+      <button class="btn" type="button">提交审查</button>
+    </div>
+
+    <div>
+      <div class="banner">
+        <div class="banner-top">
+          <h2>WARN</h2>
+          <span class="conf">Confidence 90%</span>
+        </div>
+        <p>Warning issued based on: RULE/demo-apac-sa-health-implication (MEDIUM); PLAYBOOK/sa-health-implication (MEDIUM); PLAYBOOK/sa-diet-oil-wellness (MEDIUM).</p>
+        <div class="detail">▾ 查看详情</div>
+      </div>
+
+      <p class="section-title">审查发现 (1)<span>Findings</span></p>
+      <div class="finding">
+        <div class="row1">
+          <span class="badge badge-gray">health-implication</span>
+          <span class="badge badge-mod">RULE</span>
+          <span class="badge badge-mod">PLAYBOOK</span>
+          <span class="badge badge-sev">MEDIUM</span>
+          <span class="summary">Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — qualify context or attach data (WARN)</span>
+        </div>
+        <div class="trigger"><span>吃得更轻盈</span></div>
+        <div class="rewrite-toggle">▾ 改写建议 (2)</div>
+        <div class="rewrite">
+          空气炸锅煎炸模式，让日常备餐更省事。
+          <div class="rat">删除对身体状态有益的隐性联想，保留使用体验描述。</div>
+        </div>
+      </div>
+
+      <div class="source">
+        <p class="section-title" style="margin-bottom:12px">原始文案</p>
+        少油烹饪，让您<span style="background:#FEF3C7;padding:0 2px;border-radius:2px">吃得更轻盈</span>无负担。
+      </div>
+    </div>
+  </main>
+
+  <footer style="border-top:1px solid #E5E7EB;background:#fff;padding:16px;text-align:center;font-size:12px;color:#6B7280;margin-top:auto">
+    Ad Compliance Hub · JS Legal
+  </footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{
+  "knowledge_id": "evidence:absolute-performance-substantiation",
+  "corpus_type": "evidence",
+  "evidence_status": "production",
+  "evidence_version": "1.0.0",
+  "owner": "compliance-apac@aairp",
+  "owner_type": "compliance",
+  "last_reviewed": "2026-07-01T00:00:00.000Z",
+  "review_status": "legal_reviewed",
+  "confidence_level": "high",
+  "case_refs": [],
+  "evidence_id": "absolute-performance-substantiation",
+  "evidence_type_key": "substantiation_general",
+  "requirement_scope": "absolute-performance",
+  "evidence_purpose": "Substantiation for absolute or omnibus performance claims requiring qualification or removal.",
+  "summary": "Absolute performance claims require substantiation demonstrating the stated outcome under defined conditions.",
+  "review_guidance": "TRIGGER: Absolute words like perfect, always, guaranteed in performance context. ACTION: Review substantiation strength. CHECK: Omnibus wording, testimonial basis. ESCALATE IF: No substantiation for absolute claim.",
+  "evidence_purpose_tags": [
+    "performance-substantiation",
+    "efficacy-substantiation"
+  ],
+  "resolves_expected_evidence_types": [
+    "substantiation_general"
+  ],
+  "applicability": {
+    "countries": [
+      "SG",
+      "MY",
+      "TH"
+    ],
+    "claim_types": [
+      "performance-claim",
+      "superlative-claim"
+    ],
+    "modalities": [
+      "text"
+    ]
+  },
+  "requirement_level": "required",
+  "linkage": {
+    "regulations": [
+      "regulation:sg-asasa-substantiation"
+    ],
+    "rules": [
+      "demo-apac-sa-absolute-claim",
+      "demo-apac-sa-absolute-claim-soft"
+    ],
+    "skills": [
+      "skill:superlative-claim-review",
+      "skill:performance-claim-review"
+    ],
+    "rewrites": [
+      "rewrite:qualify-performance",
+      "rewrite:qualify-efficacy"
+    ]
+  },
+  "benchmark_refs": [
+    "AF-002",
+    "AF-006"
+  ],
+  "validation_criteria": {
+    "checks": [
+      "Assess whether substantiation supports absolute wording",
+      "Require qualification if only typical results available",
+      "Verify testimonial traceability if used"
+    ],
+    "reject_if": [
+      "Absolute claim with no substantiation"
+    ]
+  },
+  "tags": [
+    "confidence:high",
+    "evidence:required",
+    "superlative"
+  ]
+}

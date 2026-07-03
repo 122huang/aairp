@@ -1,0 +1,28 @@
+{
+  "knowledge_id": "regulation:ph-asc-sponsored-disclosure",
+  "corpus_type": "regulation",
+  "regulation_id": "ph-asc-sponsored-disclosure",
+  "country": "PH",
+  "authority": "ASC",
+  "regulation_name": "ASC Code of Ethics",
+  "citation": "ASC Code of Ethics — Article II (Identification of advertising and sponsored content)",
+  "effective_date": "2010-01-01",
+  "category": "Mandatory Disclaimers",
+  "mandatory": true,
+  "risk_level": "LOW",
+  "summary": "Sponsored content, endorsements, and influencer advertising must be clearly identifiable as paid commercial communications.",
+  "review_guidance": "TRIGGER: Influencer posts, brand partnerships, or native advertising without clear sponsorship identification. ACTION: REWRITE — add conspicuous ad disclosure. CHECK: #ad, paid partnership labels, and platform-native disclosure. ESCALATE IF: Deceptive omission of material sponsorship.",
+  "related_rule_ids": [
+    "demo-sg-sponsored-disclosure"
+  ],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:high",
+    "evidence:none",
+    "disclosure"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

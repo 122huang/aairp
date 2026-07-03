@@ -1,0 +1,26 @@
+{
+  "knowledge_id": "regulation:id-kpdkn-pricing-promotions",
+  "corpus_type": "regulation",
+  "regulation_id": "id-kpdkn-pricing-promotions",
+  "country": "ID",
+  "authority": "KPI",
+  "regulation_name": "Trade Competition Law (Promotional pricing)",
+  "citation": "Law No. 5/1999 on Prohibition of Monopolistic Practices — Article 15",
+  "effective_date": "1999-03-05",
+  "category": "Pricing",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Promotional pricing and discount claims must not deceive consumers about actual savings or price history.",
+  "review_guidance": "TRIGGER: Diskon, promo, or strikethrough price claims. ACTION: WARN — verify reference price and promotion terms. CHECK: Prior selling price period and exclusions. ESCALATE IF: Misleading discount from inflated baseline price.",
+  "related_rule_ids": [],
+  "related_evidence_ids": [],
+  "tags": [
+    "confidence:medium",
+    "evidence:recommended",
+    "pricing"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

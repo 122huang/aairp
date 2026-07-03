@@ -1,0 +1,1662 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Sprint 5A E2 frequency-prioritized authoring batch",
+  "distribution": {
+    "SG": 13,
+    "MY": 10,
+    "TH": 10,
+    "ID": 10,
+    "JP": 10,
+    "KR": 10,
+    "AU": 9
+  },
+  "entries": [
+    {
+      "regulation_id": "sg-hsa-therapeutic-claims",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Health Products (Advertisement of Therapeutic Products) Regulations",
+      "citation": "Health Products (Advertisement of Therapeutic Products) Regulations — Regulation 4",
+      "effective_date": "2016-11-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Therapeutic product ads must not claim to treat, prevent, or cure diseases unless HSA-approved indications are reflected.",
+      "review_guidance": "TRIGGER: Disease treatment, prevention, cure, or prescription-only medicine positioning. ACTION: REJECT — remove unapproved therapeutic claims. CHECK: Headlines, pack shots, testimonials, and disease names in copy. ESCALATE IF: Scheduled medicine, serious disease, or Rx-only product referenced.",
+      "related_rule_ids": [
+        "demo-sg-health-forbidden-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "health",
+        "therapeutic"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine"
+      ],
+      "source_url": "https://www.hsa.gov.sg/health-products/regulations/overview"
+    },
+    {
+      "regulation_id": "sg-hsa-medical-device-intended-use",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Health Products (Medical Devices) Regulations",
+      "citation": "Health Products (Medical Devices) Regulations — Regulation 17",
+      "effective_date": "2010-06-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device advertising must stay within registered intended use and must not imply unregistered clinical outcomes.",
+      "review_guidance": "TRIGGER: Clinical outcome, diagnosis, or treatment claims for medical devices. ACTION: REJECT or REWRITE to registered intended use only. CHECK: Device class, UDI references, and clinical benefit statements. ESCALATE IF: Claim exceeds registered intended purpose or targets serious conditions.",
+      "related_rule_ids": [
+        "demo-sg-health-forbidden-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "sg-hsa-supplement-health-claims",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Health Products Act (Singapore)",
+      "citation": "Health Products Act — Section 8 (Health claims)",
+      "effective_date": "2020-01-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Health supplement ads may only use permitted general health claims aligned with product classification and substantiation.",
+      "review_guidance": "TRIGGER: Nutritional, wellness, or general health benefit claims for supplements. ACTION: WARN — require substantiation or qualify wording. CHECK: Ingredient lists, dosage claims, and before/after wellness outcomes. ESCALATE IF: Claim implies disease modification or medicinal effect.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "sg-hsa-traditional-medicine-claims",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Traditional Medicines Guidelines (HSA)",
+      "citation": "Traditional Medicines Guidelines — Section 3.2 (Permitted claims)",
+      "effective_date": "2019-04-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Traditional medicine advertising is limited to culturally accepted health maintenance claims without modern disease-treatment wording.",
+      "review_guidance": "TRIGGER: TCM, traditional remedy, or herbal product health benefit claims. ACTION: REWRITE — use permitted traditional health maintenance language. CHECK: Herb names, efficacy timelines, and disease references. ESCALATE IF: Modern biomedical cure or anti-disease language appears.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "traditional-medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement",
+        "health.traditional"
+      ]
+    },
+    {
+      "regulation_id": "sg-asas-comparative-claims",
+      "country": "SG",
+      "authority": "ASAS",
+      "regulation_name": "Singapore Code of Advertising Practice",
+      "citation": "Singapore Code of Advertising Practice — Rule 3 (Comparisons)",
+      "effective_date": "2019-06-01",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative and superiority claims must be fair, identifiable, and substantiated before publication.",
+      "review_guidance": "TRIGGER: Versus, better-than, leading, or ranked superiority claims. ACTION: WARN — require substantiation file or soften claim. CHECK: Named competitors, test methods, and sample sizes cited. ESCALATE IF: Unidentifiable competitor or unsubstantiated head-to-head data.",
+      "related_rule_ids": [
+        "demo-sg-health-superlative",
+        "demo-apac-sa-comparative-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "sg-asas-influencer-disclosure",
+      "country": "SG",
+      "authority": "ASAS",
+      "regulation_name": "Singapore Code of Advertising Practice",
+      "citation": "Singapore Code of Advertising Practice — Rule 2.4 (Influencer content)",
+      "effective_date": "2021-03-15",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Paid influencer and branded content must be clearly disclosed as advertising across all formats.",
+      "review_guidance": "TRIGGER: Influencer posts, gifted product reviews, or affiliate promotions. ACTION: REWRITE — add clear sponsorship disclosure. CHECK: Hashtags, captions, video overlays, and platform-native ad labels. ESCALATE IF: Covert promotion without #ad, Paid Partnership, or equivalent.",
+      "related_rule_ids": [
+        "demo-sg-sponsored-disclosure",
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure",
+        "influencer"
+      ]
+    },
+    {
+      "regulation_id": "sg-hsa-efficacy-performance",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Health Products (Advertisement of Health Products) Regulations",
+      "citation": "Health Products (Advertisement of Health Products) Regulations — Regulation 6",
+      "effective_date": "2016-11-01",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Quantified efficacy, speed, or results claims for health products require valid substantiation and must not be absolute.",
+      "review_guidance": "TRIGGER: Percentage improvement, time-bound results, or guaranteed outcomes. ACTION: WARN — require test evidence or qualify with typical results. CHECK: Study citations, sample size, and measurement methodology. ESCALATE IF: 100% efficacy, miracle results, or unsupported statistics.",
+      "related_rule_ids": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement",
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "sg-hsa-certification-marks",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Health Products Act (Singapore)",
+      "citation": "Health Products Act — Section 12 (Misleading use of certification)",
+      "effective_date": "2020-01-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Ads must not misuse HSA registration, GMP, or quality marks to imply unapproved benefits.",
+      "review_guidance": "TRIGGER: HSA logo, GMP badge, ISO mark, or quality seal in creative. ACTION: WARN — verify mark scope matches claim. CHECK: Registration number, certificate scope, and expiry. ESCALATE IF: Mark implies therapeutic approval beyond registration class.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    },
+    {
+      "regulation_id": "sg-asas-awards-testimonials",
+      "country": "SG",
+      "authority": "ASAS",
+      "regulation_name": "Singapore Code of Advertising Practice",
+      "citation": "Singapore Code of Advertising Practice — Rule 5 (Testimonials and awards)",
+      "effective_date": "2019-06-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Awards, seals, and testimonials must be genuine, current, and representative; fabricated endorsements are prohibited.",
+      "review_guidance": "TRIGGER: Award badges, expert endorsements, or consumer testimonial quotes. ACTION: WARN — verify authenticity and typicality. CHECK: Award issuer, date, and whether testimonial is paid. ESCALATE IF: Fabricated review, outdated award, or atypical result presented as norm.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "testimonial"
+      ]
+    },
+    {
+      "regulation_id": "sg-nea-green-claims",
+      "country": "SG",
+      "authority": "IMDA",
+      "regulation_name": "Environmental Claims Guidance (NEA-aligned)",
+      "citation": "Environmental Claims Guidance — Section 2 (Substantiation)",
+      "effective_date": "2022-01-01",
+      "category": "Environmental Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Green, recyclable, and carbon-neutral claims must be specific, substantiated, and not overstate environmental benefit.",
+      "review_guidance": "TRIGGER: Eco-friendly, sustainable, carbon-neutral, or recyclable claims. ACTION: WARN — require lifecycle evidence or narrow claim scope. CHECK: Certification body, scope boundary, and disposal instructions. ESCALATE IF: Vague greenwash without measurable basis.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "environmental"
+      ]
+    },
+    {
+      "regulation_id": "sg-imda-ai-disclosure",
+      "country": "SG",
+      "authority": "IMDA",
+      "regulation_name": "IMDA Model AI Governance Framework (Advertising)",
+      "citation": "Model AI Governance Framework — Principle 4 (Transparency)",
+      "effective_date": "2024-06-01",
+      "category": "AI-generated Content",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Synthetic or AI-generated people, scenes, or voice in ads should be disclosed where consumers could be misled.",
+      "review_guidance": "TRIGGER: AI-generated models, deepfake-style imagery, or synthetic voiceover. ACTION: REWRITE — add AI/synthetic media disclosure. CHECK: Visual realism, likeness rights, and disclosure placement. ESCALATE IF: Synthetic human likeness mimicking real person without consent.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:none",
+        "ai",
+        "synthetic-media"
+      ]
+    },
+    {
+      "regulation_id": "sg-asas-before-after-imagery",
+      "country": "SG",
+      "authority": "ASAS",
+      "regulation_name": "Singapore Code of Advertising Practice",
+      "citation": "Singapore Code of Advertising Practice — Rule 4.2 (Before/after imagery)",
+      "effective_date": "2019-06-01",
+      "category": "Image Usage",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Before/after and transformation images must reflect typical results and must not be misleading through staging or editing.",
+      "review_guidance": "TRIGGER: Before/after photos, split-screen transformations, or retouched results. ACTION: WARN — require typicality disclaimer or substantiation. CHECK: Lighting, makeup, time interval, and digital editing. ESCALATE IF: Dramatic atypical result shown without qualification.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:recommended",
+        "imagery"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic",
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "sg-hsa-product-safety-claims",
+      "country": "SG",
+      "authority": "HSA",
+      "regulation_name": "Health Products (Safety Requirements) Regulations",
+      "citation": "Health Products (Safety Requirements) Regulations — Regulation 9",
+      "effective_date": "2016-11-01",
+      "category": "Safety Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Safety claims such as non-toxic, child-safe, or side-effect-free must not contradict known product risks or label warnings.",
+      "review_guidance": "TRIGGER: Non-toxic, side-effect-free, child-safe, or zero-risk safety claims. ACTION: REJECT — align with label warnings and known risks. CHECK: Contraindications, age restrictions, and hazard pictograms. ESCALATE IF: Claim contradicts HSA label or pharmacovigilance data.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "safety"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement",
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "my-npra-medicinal-claims",
+      "country": "MY",
+      "authority": "NPRA",
+      "regulation_name": "Medicines (Advertisement and Sale) Act 1956",
+      "citation": "Medicines (Advertisement and Sale) Act 1956 — Section 4",
+      "effective_date": "1956-01-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Medicine ads must not promote unregistered products or make prohibited therapeutic claims without NPRA approval.",
+      "review_guidance": "TRIGGER: Cure, treat, prevent disease, or Rx medicine promotion in consumer ads. ACTION: REJECT — remove prohibited medicinal claims. CHECK: MAL registration number, product category, and indication wording. ESCALATE IF: Unregistered product or serious disease claim without approval.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine"
+      ]
+    },
+    {
+      "regulation_id": "my-npra-device-claims",
+      "country": "MY",
+      "authority": "NPRA",
+      "regulation_name": "Medical Device Act 2012 (Advertising)",
+      "citation": "Medical Device Act 2012 — Section 34",
+      "effective_date": "2012-07-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device advertising must not claim unregistered intended purposes or clinical outcomes beyond approval.",
+      "review_guidance": "TRIGGER: Clinical benefit or diagnostic claims for medical devices. ACTION: REWRITE — limit to registered intended use. CHECK: MDA registration status and device class. ESCALATE IF: Unregistered device or expanded clinical claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "my-npra-supplement-health",
+      "country": "MY",
+      "authority": "NPRA",
+      "regulation_name": "Guidelines on Advertisement of Health Supplements",
+      "citation": "Guidelines on Advertisement of Health Supplements — Clause 5",
+      "effective_date": "2018-03-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Health supplement ads are restricted to general health maintenance claims and must not imply medicinal effects.",
+      "review_guidance": "TRIGGER: Vitamin, herbal, or nutritional health benefit claims. ACTION: WARN — verify against permitted claim list. CHECK: Product notification status and ingredient claims. ESCALATE IF: Disease treatment or pharmacological effect implied.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "my-npra-cosmetic-claims",
+      "country": "MY",
+      "authority": "NPRA",
+      "regulation_name": "Control of Drugs and Cosmetics Regulations",
+      "citation": "Control of Drugs and Cosmetics Regulations — Regulation 18A",
+      "effective_date": "2020-01-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Cosmetic ads may describe appearance effects but must not claim therapeutic or disease-related benefits.",
+      "review_guidance": "TRIGGER: Skin healing, anti-disease, or medicinal cosmetic claims. ACTION: REJECT — reclassify as cosmetic appearance claim only. CHECK: Product notification (NOT) number and claim type. ESCALATE IF: Therapeutic or NPRA drug-like claim on cosmetic.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "cosmetic"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "my-masa-comparative-advertising",
+      "country": "MY",
+      "authority": "MASA",
+      "regulation_name": "Malaysian Code of Advertising Practice",
+      "citation": "Malaysian Code of Advertising Practice — Appendix C (Comparisons)",
+      "effective_date": "2018-01-01",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative claims must be truthful, verifiable, and not denigrate competitors unfairly.",
+      "review_guidance": "TRIGGER: Brand versus brand, market leader, or superiority comparisons. ACTION: WARN — require substantiation on file. CHECK: Named competitor, test protocol, and date of comparison. ESCALATE IF: False denigration or unverifiable head-to-head claim.",
+      "related_rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "my-masa-sponsorship-disclosure",
+      "country": "MY",
+      "authority": "MASA",
+      "regulation_name": "Malaysian Code of Advertising Practice",
+      "citation": "Malaysian Code of Advertising Practice — Rule 2 (Identification)",
+      "effective_date": "2018-01-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Advertorial and sponsored social content must be clearly identified as paid advertising.",
+      "review_guidance": "TRIGGER: KOL posts, paid reviews, or branded editorial content. ACTION: REWRITE — add sponsorship identification. CHECK: Platform ad tools, #ad labels, and Bahasa/English disclosure. ESCALATE IF: Undisclosed paid promotion presented as organic opinion.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure"
+      ]
+    },
+    {
+      "regulation_id": "my-sirim-performance-claims",
+      "country": "MY",
+      "authority": "KPDNHEP",
+      "regulation_name": "Consumer Protection Act 1999 (Performance representations)",
+      "citation": "Consumer Protection Act 1999 — Section 12",
+      "effective_date": "1999-11-15",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Performance and results claims for consumer goods must be accurate and supported by adequate testing.",
+      "review_guidance": "TRIGGER: Speed, durability, energy saving, or efficacy statistics. ACTION: WARN — require test report or qualify claim. CHECK: Test standard, sample size, and measurement conditions. ESCALATE IF: Absolute or exaggerated performance without basis.",
+      "related_rule_ids": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "consumer.goods"
+      ]
+    },
+    {
+      "regulation_id": "my-kpdnhep-misleading-conduct",
+      "country": "MY",
+      "authority": "KPDNHEP",
+      "regulation_name": "Consumer Protection Act 1999",
+      "citation": "Consumer Protection Act 1999 — Part III (Misleading conduct)",
+      "effective_date": "1999-11-15",
+      "category": "Consumer Protection",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Misleading or deceptive conduct in trade including false product representations is prohibited.",
+      "review_guidance": "TRIGGER: False origin, fake discounts, or deceptive product descriptions. ACTION: REJECT — correct material misrepresentation. CHECK: Price history, stock availability, and product specs. ESCALATE IF: Systematic consumer deception or regulatory notice received.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "consumer-protection"
+      ]
+    },
+    {
+      "regulation_id": "my-kpdnhep-pricing-representation",
+      "country": "MY",
+      "authority": "KPDNHEP",
+      "regulation_name": "Price Control and Anti-Profiteering Act 2011",
+      "citation": "Price Control and Anti-Profiteering Act 2011 — Section 10",
+      "effective_date": "2011-04-01",
+      "category": "Pricing",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Promotional pricing must reflect genuine savings; strikethrough and limited-time offers must not mislead consumers.",
+      "review_guidance": "TRIGGER: Was/now pricing, percentage off, or limited-time discount claims. ACTION: WARN — verify price history and offer terms. CHECK: Reference price period, currency, and exclusions. ESCALATE IF: Inflated reference price or fake urgency.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:recommended",
+        "pricing"
+      ]
+    },
+    {
+      "regulation_id": "my-sirim-certification-marks",
+      "country": "MY",
+      "authority": "KPDNHEP",
+      "regulation_name": "Consumer Protection (Certification and Standards Marks) Regulations 2010",
+      "citation": "Consumer Protection (Certification and Standards Marks) Regulations 2010 — Regulation 5",
+      "effective_date": "2010-07-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "SIRIM, MS, and other certification marks may only be used for certified product scopes and valid periods.",
+      "review_guidance": "TRIGGER: SIRIM, MS ISO, or halal/certification logo in ad creative. ACTION: WARN — verify certificate scope and validity. CHECK: Certificate number, product SKU scope, and expiry. ESCALATE IF: Expired certification or mark used beyond scope.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    },
+    {
+      "regulation_id": "th-fda-drug-advertising",
+      "country": "TH",
+      "authority": "FDA",
+      "regulation_name": "Drug Act B.E. 2510 (Advertising)",
+      "citation": "Drug Act B.E. 2510 — Section 88",
+      "effective_date": "1967-01-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Drug advertising to the public is restricted; prohibited claims include cure guarantees and unapproved indications.",
+      "review_guidance": "TRIGGER: Drug cure, treatment guarantee, or OTC drug promotion with Rx-only claims. ACTION: REJECT — remove prohibited drug advertising. CHECK: Thai FDA registration, ad approval status, and indication text. ESCALATE IF: Unapproved drug ad or serious disease cure claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine"
+      ]
+    },
+    {
+      "regulation_id": "th-fda-medical-device-ads",
+      "country": "TH",
+      "authority": "FDA",
+      "regulation_name": "Medical Device Act B.E. 2551",
+      "citation": "Medical Device Act B.E. 2551 — Section 27",
+      "effective_date": "2008-01-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device ads must align with Thai FDA registered intended use and approved advertising content.",
+      "review_guidance": "TRIGGER: Clinical outcome or diagnostic claims for medical devices. ACTION: REWRITE — match registered intended use only. CHECK: TFDA license number and device classification. ESCALATE IF: Unregistered device or off-label clinical claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "th-fda-supplement-claims",
+      "country": "TH",
+      "authority": "FDA",
+      "regulation_name": "Notification of Food Supplements (Advertising)",
+      "citation": "Notification of Food Supplements — Announcement Clause 4",
+      "effective_date": "2019-01-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Food supplement ads must use permitted health claims and must not imply medicinal or disease-treatment effects.",
+      "review_guidance": "TRIGGER: Vitamin, herbal, or functional food health benefit claims. ACTION: WARN — check against permitted claim list. CHECK: FDA notification number and Thai label claims. ESCALATE IF: Disease prevention or treatment language used.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "th-fda-cosmetic-claims",
+      "country": "TH",
+      "authority": "FDA",
+      "regulation_name": "Cosmetics Act B.E. 2558",
+      "citation": "Cosmetics Act B.E. 2558 — Section 32",
+      "effective_date": "2015-09-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Cosmetic advertising may claim appearance benefits but must not assert therapeutic or drug-like effects.",
+      "review_guidance": "TRIGGER: Skin disease treatment, healing, or medicinal cosmetic claims. ACTION: REJECT — limit to cosmetic appearance effects. CHECK: Cosmetic notification and ingredient restrictions. ESCALATE IF: Drug-like efficacy claim on cosmetic product.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "cosmetic"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "th-ocpb-comparative-ads",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "Consumer Protection Act B.E. 2522",
+      "citation": "Consumer Protection Act B.E. 2522 — Section 42 (Comparative advertising)",
+      "effective_date": "1979-01-01",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative advertising must be truthful, not misleading, and must not unfairly disparage competitors.",
+      "review_guidance": "TRIGGER: Competitor comparison, market share, or superiority claims. ACTION: WARN — require objective substantiation. CHECK: Identifiable competitor, test date, and methodology. ESCALATE IF: False comparison or unfair denigration.",
+      "related_rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "th-ocpb-ad-identification",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "Guidelines on Identification of Advertisements",
+      "citation": "Guidelines on Identification of Advertisements — Article 3",
+      "effective_date": "2020-06-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Sponsored online and social media content must be clearly labeled as advertising to consumers.",
+      "review_guidance": "TRIGGER: Influencer, live commerce, or paid social posts. ACTION: REWRITE — add clear ad identification in Thai. CHECK: Caption labels, on-screen text, and platform ad tags. ESCALATE IF: Covert sponsorship without ad marker.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure"
+      ]
+    },
+    {
+      "regulation_id": "th-tisi-performance-claims",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "Consumer Protection Act B.E. 2522 (Product performance)",
+      "citation": "Consumer Protection Act B.E. 2522 — Section 40",
+      "effective_date": "1979-01-01",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Product performance claims must not deceive consumers about quality, durability, or efficacy.",
+      "review_guidance": "TRIGGER: Durability, efficiency, or results statistics for consumer products. ACTION: WARN — require supporting test data. CHECK: TIS standard references and test conditions. ESCALATE IF: Exaggerated or unverifiable performance claim.",
+      "related_rule_ids": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "consumer.goods"
+      ]
+    },
+    {
+      "regulation_id": "th-ocpb-unfair-trade",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "Consumer Protection Act B.E. 2522",
+      "citation": "Consumer Protection Act B.E. 2522 — Section 57",
+      "effective_date": "1979-01-01",
+      "category": "Consumer Protection",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Unfair trade practices including false descriptions of goods or services are prohibited.",
+      "review_guidance": "TRIGGER: False product origin, quality, or benefit descriptions. ACTION: REJECT — correct misleading representation. CHECK: Material terms, warranties, and conditions. ESCALATE IF: Pattern of deceptive trade practice.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "consumer-protection"
+      ]
+    },
+    {
+      "regulation_id": "th-ocpb-pricing-promotions",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "Guidelines on Promotional Pricing",
+      "citation": "Guidelines on Promotional Pricing — Clause 2",
+      "effective_date": "2021-01-01",
+      "category": "Pricing",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Promotional and discount pricing must reflect genuine price reductions without inflated reference prices.",
+      "review_guidance": "TRIGGER: Discount percentage, flash sale, or strikethrough pricing. ACTION: WARN — verify prior selling price. CHECK: Reference price period and promotion duration. ESCALATE IF: Fake discount from inflated reference price.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:recommended",
+        "pricing"
+      ]
+    },
+    {
+      "regulation_id": "th-tisi-certification-mark",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "TIS Product Certification Mark Requirements",
+      "citation": "TIS Product Certification Mark Requirements — Section 5",
+      "effective_date": "2017-01-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "TIS and other standard marks may only appear on products and ads for valid certified models.",
+      "review_guidance": "TRIGGER: TIS mark, Q mark, or standards logo in advertising. ACTION: WARN — verify certification covers advertised SKU. CHECK: Certificate ID, product model, and validity. ESCALATE IF: Mark used on non-certified variant.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    },
+    {
+      "regulation_id": "id-bpom-drug-advertising",
+      "country": "ID",
+      "authority": "BPOM",
+      "regulation_name": "Government Regulation on Drug and Food Control (Advertising)",
+      "citation": "Government Regulation No. 72/1998 — Article 17",
+      "effective_date": "1998-01-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Drug advertising to consumers is heavily restricted; cure and unapproved therapeutic claims are prohibited.",
+      "review_guidance": "TRIGGER: Drug cure, Rx promotion, or disease treatment guarantees. ACTION: REJECT — remove prohibited drug claims. CHECK: BPOM registration (NA/ML), ad approval, and indication. ESCALATE IF: Unregistered drug or public Rx ad without approval.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine"
+      ]
+    },
+    {
+      "regulation_id": "id-bpom-medical-device-ads",
+      "country": "ID",
+      "authority": "BPOM",
+      "regulation_name": "Regulation of Medical Device Advertising (BPOM)",
+      "citation": "BPOM Regulation on Medical Device Advertising — Article 8",
+      "effective_date": "2019-01-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device ads must stay within BPOM-registered intended use and approved promotional materials.",
+      "review_guidance": "TRIGGER: Clinical outcome or expanded indication claims for devices. ACTION: REWRITE — align with registered intended use. CHECK: Device registration number and risk class. ESCALATE IF: Off-label or unregistered device promotion.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "id-bpom-supplement-claims",
+      "country": "ID",
+      "authority": "BPOM",
+      "regulation_name": "BPOM Regulation on Health Supplement Claims",
+      "citation": "BPOM Regulation on Health Supplement Claims — Article 12",
+      "effective_date": "2020-01-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Health supplement ads must use BPOM-permitted claims and must not imply disease treatment or prevention.",
+      "review_guidance": "TRIGGER: Nutraceutical, herbal, or vitamin health benefit claims. ACTION: WARN — verify against BPOM permitted claim list. CHECK: ML registration, label claims, and dosage. ESCALATE IF: Disease treatment or medicinal effect implied.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "id-bpom-cosmetic-claims",
+      "country": "ID",
+      "authority": "BPOM",
+      "regulation_name": "Cosmetic Advertising Guidelines (BPOM)",
+      "citation": "Cosmetic Advertising Guidelines — Section 4",
+      "effective_date": "2018-06-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Cosmetic advertising is limited to appearance and hygiene benefits without therapeutic or drug claims.",
+      "review_guidance": "TRIGGER: Healing, anti-disease, or medicinal skin claims on cosmetics. ACTION: REJECT — restrict to cosmetic benefit language. CHECK: Cosmetic notification and prohibited ingredients. ESCALATE IF: Drug-like therapeutic claim on cosmetic.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "cosmetic"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "id-kpi-comparative-advertising",
+      "country": "ID",
+      "authority": "KPI",
+      "regulation_name": "Indonesian Broadcasting Code (Comparative ads)",
+      "citation": "Indonesian Broadcasting Code — Article 11",
+      "effective_date": "2012-01-01",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative advertising must be honest, substantiated, and must not unfairly harm competitor reputation.",
+      "review_guidance": "TRIGGER: Brand comparison, best-in-class, or superiority claims. ACTION: WARN — require substantiation documentation. CHECK: Named competitor, evidence date, and claim scope. ESCALATE IF: Unsubstantiated superiority or unfair disparagement.",
+      "related_rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "id-kpi-ad-labeling",
+      "country": "ID",
+      "authority": "KPI",
+      "regulation_name": "Indonesian Advertising Ethics Code",
+      "citation": "Indonesian Advertising Ethics Code — Article 4",
+      "effective_date": "2015-01-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Advertisements including digital and influencer content must be clearly identifiable as commercial messages.",
+      "review_guidance": "TRIGGER: Sponsored posts, endorsements, or native advertising. ACTION: REWRITE — add clear ad identification. CHECK: Bahasa Indonesia disclosure, #iklan, and platform labels. ESCALATE IF: Hidden commercial content without identification.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure"
+      ]
+    },
+    {
+      "regulation_id": "id-bpom-performance-claims",
+      "country": "ID",
+      "authority": "BPOM",
+      "regulation_name": "Consumer Protection Law (Product claims alignment)",
+      "citation": "Law No. 8/1999 on Consumer Protection — Article 8",
+      "effective_date": "1999-04-20",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Product efficacy and performance claims must be truthful and must not mislead about quality or results.",
+      "review_guidance": "TRIGGER: Efficacy percentages, guaranteed results, or performance stats. ACTION: WARN — require substantiation or qualify claim. CHECK: Test method, sample, and applicable product variant. ESCALATE IF: Absolute guarantee or fabricated test results.",
+      "related_rule_ids": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "consumer.goods"
+      ]
+    },
+    {
+      "regulation_id": "id-kpdkn-misleading-conduct",
+      "country": "ID",
+      "authority": "KPI",
+      "regulation_name": "Consumer Protection Law",
+      "citation": "Law No. 8/1999 on Consumer Protection — Article 18",
+      "effective_date": "1999-04-20",
+      "category": "Consumer Protection",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Business actors must not provide false or misleading information about goods or services.",
+      "review_guidance": "TRIGGER: False specs, deceptive offers, or misrepresented product benefits. ACTION: REJECT — correct material misrepresentation. CHECK: Offer terms, warranties, and product attributes. ESCALATE IF: Widespread consumer harm or regulatory inquiry.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "consumer-protection"
+      ]
+    },
+    {
+      "regulation_id": "id-kpdkn-pricing-promotions",
+      "country": "ID",
+      "authority": "KPI",
+      "regulation_name": "Trade Competition Law (Promotional pricing)",
+      "citation": "Law No. 5/1999 on Prohibition of Monopolistic Practices — Article 15",
+      "effective_date": "1999-03-05",
+      "category": "Pricing",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Promotional pricing and discount claims must not deceive consumers about actual savings or price history.",
+      "review_guidance": "TRIGGER: Diskon, promo, or strikethrough price claims. ACTION: WARN — verify reference price and promotion terms. CHECK: Prior selling price period and exclusions. ESCALATE IF: Misleading discount from inflated baseline price.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:recommended",
+        "pricing"
+      ]
+    },
+    {
+      "regulation_id": "id-sni-certification-mark",
+      "country": "ID",
+      "authority": "BPOM",
+      "regulation_name": "SNI Mark Usage Requirements",
+      "citation": "SNI Mark Usage Requirements — Section 6",
+      "effective_date": "2016-01-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "SNI and halal certification marks may only be used where valid certification covers the advertised product.",
+      "review_guidance": "TRIGGER: SNI logo, halal mark, or quality certification in ads. ACTION: WARN — verify certificate applies to SKU. CHECK: Certificate number, scope, and validity date. ESCALATE IF: Expired or scope-mismatched certification mark.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    },
+    {
+      "regulation_id": "jp-pmda-pharma-advertising",
+      "country": "JP",
+      "authority": "PMDA",
+      "regulation_name": "Pharmaceutical Affairs Act (Advertising)",
+      "citation": "Pharmaceutical Affairs Act — Article 68",
+      "effective_date": "1960-08-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Prescription drug advertising to the general public is prohibited; OTC drug ads must comply with approved labeling.",
+      "review_guidance": "TRIGGER: Rx drug promotion, cure claims, or unapproved drug indications. ACTION: REJECT — remove prohibited pharmaceutical advertising. CHECK: YJ code, OTC classification, and approved labeling text. ESCALATE IF: Rx ad to public or unapproved efficacy claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine"
+      ]
+    },
+    {
+      "regulation_id": "jp-pmda-medical-device-ads",
+      "country": "JP",
+      "authority": "PMDA",
+      "regulation_name": "Pharmaceutical Affairs Act (Medical Devices)",
+      "citation": "Pharmaceutical Affairs Act — Article 68-2",
+      "effective_date": "2014-11-25",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device advertising must reflect approved indications and must not expand beyond PMDA clearance.",
+      "review_guidance": "TRIGGER: Clinical outcome or unapproved indication for medical devices. ACTION: REWRITE — limit to approved intended use. CHECK: Approval number, risk class, and labeling. ESCALATE IF: Off-label or unapproved device promotion.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "jp-caa-health-foods",
+      "country": "JP",
+      "authority": "CAA",
+      "regulation_name": "Health Promotion Act (Foods with Function Claims)",
+      "citation": "Health Promotion Act — FFC Notification Requirements",
+      "effective_date": "2015-04-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Foods with Function Claims must use only notified claim wording; other health foods must avoid disease-related claims.",
+      "review_guidance": "TRIGGER: FFC, nutraceutical, or general food health benefit claims. ACTION: WARN — match notified claim text exactly. CHECK: Consumer Affairs Agency notification number and claim scope. ESCALATE IF: Disease treatment or unnotified function claim.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "jp-caa-cosmetic-claims",
+      "country": "JP",
+      "authority": "CAA",
+      "regulation_name": "Pharmaceutical Affairs Act (Quasi-drugs and Cosmetics)",
+      "citation": "Pharmaceutical Affairs Act — Article 66",
+      "effective_date": "1960-08-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Cosmetics and quasi-drugs may claim approved cosmetic effects but must not make unapproved medicinal claims.",
+      "review_guidance": "TRIGGER: Skin disease treatment or medicinal effect on cosmetics. ACTION: REJECT — use approved cosmetic effect language only. CHECK: Product category (cosmetic vs quasi-drug) and approved claims. ESCALATE IF: Medicinal claim on standard cosmetic product.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "cosmetic"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "jp-jftc-comparative-ads",
+      "country": "JP",
+      "authority": "JFTC",
+      "regulation_name": "Act against Unjustifiable Premiums and Misleading Representations",
+      "citation": "Act against Unjustifiable Premiums — Section 5 (Comparative representations)",
+      "effective_date": "1962-09-15",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative and superiority representations must be substantiated and must not mislead consumers.",
+      "review_guidance": "TRIGGER: No.1, best, versus competitor, or superiority claims. ACTION: WARN — require objective evidence. CHECK: Survey methodology, sample, and comparison date. ESCALATE IF: Unsubstantiated No.1 or misleading comparison.",
+      "related_rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "jp-caa-sponsored-disclosure",
+      "country": "JP",
+      "authority": "CAA",
+      "regulation_name": "Stealth Marketing Guidelines (Consumer Affairs Agency)",
+      "citation": "Stealth Marketing Guidelines — Section 3",
+      "effective_date": "2023-10-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Stealth marketing and undisclosed paid endorsements are prohibited; sponsored content must be clearly identified.",
+      "review_guidance": "TRIGGER: Influencer posts, paid reviews, or undisclosed brand partnerships. ACTION: REWRITE — add clear paid promotion disclosure. CHECK: Japanese disclosure labels, #PR, and platform ad settings. ESCALATE IF: Covert paid promotion presented as organic content.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure",
+        "stealth-marketing"
+      ]
+    },
+    {
+      "regulation_id": "jp-jftc-performance-representations",
+      "country": "JP",
+      "authority": "JFTC",
+      "regulation_name": "Act against Unjustifiable Premiums and Misleading Representations",
+      "citation": "Act against Unjustifiable Premiums — Section 5 (Performance)",
+      "effective_date": "1962-09-15",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Performance and efficacy representations must be based on fact and must not exaggerate beyond substantiation.",
+      "review_guidance": "TRIGGER: Performance stats, energy savings, or guaranteed results. ACTION: WARN — require test evidence or qualify wording. CHECK: Test standard (JIS), conditions, and typical results. ESCALATE IF: Exaggerated or absolute performance without basis.",
+      "related_rule_ids": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "consumer.goods"
+      ]
+    },
+    {
+      "regulation_id": "jp-caa-misleading-representations",
+      "country": "JP",
+      "authority": "CAA",
+      "regulation_name": "Consumer Contract Act (Misleading representations)",
+      "citation": "Consumer Contract Act — Article 10",
+      "effective_date": "2000-06-01",
+      "category": "Consumer Protection",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Misleading representations about goods or services that affect consumer decisions are restricted.",
+      "review_guidance": "TRIGGER: False quality, origin, or benefit representations. ACTION: REJECT — correct misleading material claims. CHECK: Contract terms, product specs, and offer conditions. ESCALATE IF: Systemic misleading practice or JFTC inquiry risk.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "consumer-protection"
+      ]
+    },
+    {
+      "regulation_id": "jp-jftc-pricing-representations",
+      "country": "JP",
+      "authority": "JFTC",
+      "regulation_name": "Act against Unjustifiable Premiums and Misleading Representations",
+      "citation": "Act against Unjustifiable Premiums — Section 5 (Price)",
+      "effective_date": "1962-09-15",
+      "category": "Pricing",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Double pricing and misleading discount representations are prohibited under fair representation rules.",
+      "review_guidance": "TRIGGER: Two-price display, percentage off, or limited-time sale claims. ACTION: WARN — verify reference price compliance. CHECK: Reference price period and actual selling history. ESCALATE IF: Fake reference price or misleading two-price tactic.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:recommended",
+        "pricing"
+      ]
+    },
+    {
+      "regulation_id": "jp-jis-certification-mark",
+      "country": "JP",
+      "authority": "CAA",
+      "regulation_name": "JIS Mark Certification Requirements",
+      "citation": "JIS Mark Certification Requirements — Article 7",
+      "effective_date": "2018-01-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "JIS and other certification marks may only be displayed for products within valid certified scope.",
+      "review_guidance": "TRIGGER: JIS mark, JQA logo, or quality certification in ads. ACTION: WARN — verify certification covers product model. CHECK: Certificate number, scope, and validity. ESCALATE IF: Mark on non-certified product or expired cert.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    },
+    {
+      "regulation_id": "kr-mfds-pharma-advertising",
+      "country": "KR",
+      "authority": "MFDS",
+      "regulation_name": "Pharmaceutical Affairs Act (Advertising)",
+      "citation": "Pharmaceutical Affairs Act — Article 68",
+      "effective_date": "1963-12-16",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Drug advertising is restricted; Rx drugs must not be promoted to consumers and claims must match MFDS approval.",
+      "review_guidance": "TRIGGER: Drug cure, Rx promotion, or unapproved drug efficacy claims. ACTION: REJECT — remove prohibited pharmaceutical ads. CHECK: MFDS approval, OTC/Rx status, and permitted labeling. ESCALATE IF: Public Rx ad or unapproved indication claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine"
+      ]
+    },
+    {
+      "regulation_id": "kr-mfds-medical-device-ads",
+      "country": "KR",
+      "authority": "MFDS",
+      "regulation_name": "Medical Devices Act (Advertising)",
+      "citation": "Medical Devices Act — Article 37",
+      "effective_date": "2003-05-20",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device advertising must align with MFDS-permitted intended use and approved promotional content.",
+      "review_guidance": "TRIGGER: Clinical benefit or expanded indication for devices. ACTION: REWRITE — stay within approved intended use. CHECK: MFDS license, device class, and ad review status. ESCALATE IF: Off-label or unapproved device advertising.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "kr-mfds-health-functional-foods",
+      "country": "KR",
+      "authority": "MFDS",
+      "regulation_name": "Health Functional Food Act",
+      "citation": "Health Functional Food Act — Article 14",
+      "effective_date": "2003-07-24",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Health functional foods may only use MFDS-approved function claims; disease treatment claims are prohibited.",
+      "review_guidance": "TRIGGER: HFF, vitamin, or functional food health benefit claims. ACTION: WARN — match approved function claim text. CHECK: MFDS approval number and permitted claim wording. ESCALATE IF: Disease treatment or unapproved function claim.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "kr-mfds-cosmetic-claims",
+      "country": "KR",
+      "authority": "MFDS",
+      "regulation_name": "Cosmetics Act (Advertising)",
+      "citation": "Cosmetics Act — Article 14",
+      "effective_date": "2000-01-12",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Cosmetic ads may describe appearance effects but must not claim disease treatment or drug-like efficacy.",
+      "review_guidance": "TRIGGER: Skin disease, healing, or medicinal cosmetic claims. ACTION: REJECT — limit to permitted cosmetic effect claims. CHECK: Cosmetic report number and functional cosmetic status. ESCALATE IF: Drug-like therapeutic claim on cosmetic.",
+      "related_rule_ids": [
+        "demo-apac-sa-health-claim-blocker"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "cosmetic"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "kr-kftc-comparative-ads",
+      "country": "KR",
+      "authority": "KFTC",
+      "regulation_name": "Monopoly Regulation and Fair Trade Act",
+      "citation": "Monopoly Regulation and Fair Trade Act — Article 23",
+      "effective_date": "1980-12-31",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative advertising must be objective, substantiated, and must not unfairly disparage competitors.",
+      "review_guidance": "TRIGGER: Versus competitor, market leader, or superiority claims. ACTION: WARN — require substantiation on file. CHECK: Identifiable competitor, evidence date, and methodology. ESCALATE IF: False or unfair comparative claim.",
+      "related_rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "kr-kftc-ad-disclosure",
+      "country": "KR",
+      "authority": "KFTC",
+      "regulation_name": "Guidelines on Labeling and Advertising",
+      "citation": "Guidelines on Labeling and Advertising — Article 5",
+      "effective_date": "2018-01-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Advertisements including influencer and native content must be clearly distinguishable as commercial messages.",
+      "review_guidance": "TRIGGER: Paid influencer, review, or native ad content. ACTION: REWRITE — add clear ad/sponsorship disclosure. CHECK: Korean disclosure text, #광고, and platform ad labels. ESCALATE IF: Undisclosed paid promotion.",
+      "related_rule_ids": [
+        "demo-apac-sa-ai-image-disclaimer"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure"
+      ]
+    },
+    {
+      "regulation_id": "kr-kftc-performance-claims",
+      "country": "KR",
+      "authority": "KFTC",
+      "regulation_name": "Act on Fair Labeling and Advertising",
+      "citation": "Act on Fair Labeling and Advertising — Article 3",
+      "effective_date": "2007-01-01",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Performance and efficacy claims must be truthful and supported by adequate evidence under fair labeling rules.",
+      "review_guidance": "TRIGGER: Performance statistics, guaranteed results, or efficacy percentages. ACTION: WARN — require substantiation or qualify claim. CHECK: Test method, KS standard, and typical results. ESCALATE IF: Absolute or unsubstantiated performance claim.",
+      "related_rule_ids": [
+        "demo-apac-sa-performance-claim"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "consumer.goods"
+      ]
+    },
+    {
+      "regulation_id": "kr-kftc-unfair-trade",
+      "country": "KR",
+      "authority": "KFTC",
+      "regulation_name": "Act on Fair Labeling and Advertising",
+      "citation": "Act on Fair Labeling and Advertising — Article 7",
+      "effective_date": "2007-01-01",
+      "category": "Consumer Protection",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "False or exaggerated labeling and advertising that deceives consumers is prohibited.",
+      "review_guidance": "TRIGGER: False product description, deceptive offer, or misrepresented benefit. ACTION: REJECT — correct misleading representation. CHECK: Material terms, specs, and offer conditions. ESCALATE IF: Repeat violation or KFTC investigation risk.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "consumer-protection"
+      ]
+    },
+    {
+      "regulation_id": "kr-kftc-pricing-representations",
+      "country": "KR",
+      "authority": "KFTC",
+      "regulation_name": "Act on Fair Labeling and Advertising (Pricing)",
+      "citation": "Act on Fair Labeling and Advertising — Article 4",
+      "effective_date": "2007-01-01",
+      "category": "Pricing",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Misleading price comparisons and false discount representations are restricted under fair advertising rules.",
+      "review_guidance": "TRIGGER: Discount rate, sale price, or reference price claims. ACTION: WARN — verify prior price and promotion terms. CHECK: Reference price period and exclusions. ESCALATE IF: Inflated reference price or fake discount.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:recommended",
+        "pricing"
+      ]
+    },
+    {
+      "regulation_id": "kr-ks-certification-mark",
+      "country": "KR",
+      "authority": "KFTC",
+      "regulation_name": "KS Mark and Quality Certification Requirements",
+      "citation": "KS Mark Requirements — Article 9",
+      "effective_date": "2016-01-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "KS and KC certification marks may only be used on products within valid certified scope and period.",
+      "review_guidance": "TRIGGER: KS, KC, or quality certification logo in advertising. ACTION: WARN — verify certification covers advertised model. CHECK: Certificate ID, product scope, and expiry. ESCALATE IF: Expired or scope-mismatched certification mark.",
+      "related_rule_ids": [
+        "demo-apac-sa-certification-evidence"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    },
+    {
+      "regulation_id": "au-tga-therapeutic-goods-ads",
+      "country": "AU",
+      "authority": "TGA",
+      "regulation_name": "Therapeutic Goods Act 1989",
+      "citation": "Therapeutic Goods Act 1989 — Section 42DL (Advertising)",
+      "effective_date": "1989-09-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "CRITICAL",
+      "summary": "Therapeutic goods advertising must comply with the Therapeutic Goods Advertising Code; prohibited claims include unapproved indications.",
+      "review_guidance": "TRIGGER: Disease treatment, cure, or unapproved therapeutic claims. ACTION: REJECT — remove non-compliant therapeutic advertising. CHECK: AUST R/L number, permitted indications, and required statements. ESCALATE IF: Serious disease claim or unapproved indication.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "medicine"
+      ],
+      "jurisdiction_scope": [
+        "health.medicine",
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "au-tga-medical-device-ads",
+      "country": "AU",
+      "authority": "TGA",
+      "regulation_name": "Therapeutic Goods (Medical Devices) Regulations",
+      "citation": "Therapeutic Goods (Medical Devices) Regulations — Regulation 10.3",
+      "effective_date": "2002-10-01",
+      "category": "Medical Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Medical device advertising must not claim benefits beyond ARTG inclusion and intended purpose.",
+      "review_guidance": "TRIGGER: Clinical outcome or unapproved indication for devices. ACTION: REWRITE — align with ARTG intended purpose. CHECK: ARTG number, device class, and instructions for use. ESCALATE IF: Off-label or unregistered device claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "medical-device"
+      ],
+      "jurisdiction_scope": [
+        "health.device"
+      ]
+    },
+    {
+      "regulation_id": "au-tga-complementary-medicines",
+      "country": "AU",
+      "authority": "TGA",
+      "regulation_name": "Therapeutic Goods Advertising Code (Complementary medicines)",
+      "citation": "Therapeutic Goods Advertising Code — Section 4",
+      "effective_date": "2021-01-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Complementary medicine ads must use permitted indications and mandatory warnings; disease claims require TGA approval.",
+      "review_guidance": "TRIGGER: Vitamin, herbal, or complementary health benefit claims. ACTION: WARN — verify permitted indication and warnings. CHECK: AUST L number, indication list, and mandatory statements. ESCALATE IF: Unapproved health claim or missing mandatory warning.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "supplement"
+      ],
+      "jurisdiction_scope": [
+        "health.supplement"
+      ]
+    },
+    {
+      "regulation_id": "au-tga-cosmetic-therapeutic-border",
+      "country": "AU",
+      "authority": "TGA",
+      "regulation_name": "Therapeutic Goods Act 1989 (Cosmetic vs therapeutic)",
+      "citation": "Therapeutic Goods Act 1989 — Section 3 (Definition)",
+      "effective_date": "1989-09-01",
+      "category": "Health Claims",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Products making therapeutic skin claims may be regulated as therapeutic goods; cosmetic ads must not cross into therapeutic claims.",
+      "review_guidance": "TRIGGER: Skin disease treatment or medicinal effect on skincare ads. ACTION: REJECT or ESCALATE — determine TGA vs cosmetic classification. CHECK: Primary purpose, ingredients, and claim wording. ESCALATE IF: Therapeutic claim on product not on ARTG.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:medium",
+        "evidence:required",
+        "cosmetic"
+      ],
+      "jurisdiction_scope": [
+        "health.cosmetic"
+      ]
+    },
+    {
+      "regulation_id": "au-accc-comparative-advertising",
+      "country": "AU",
+      "authority": "ACCC",
+      "regulation_name": "Competition and Consumer Act 2010",
+      "citation": "Competition and Consumer Act 2010 — Schedule 2, s 29 (Comparative claims)",
+      "effective_date": "2010-01-01",
+      "category": "Comparative Advertising",
+      "mandatory": true,
+      "risk_level": "MEDIUM",
+      "summary": "Comparative claims must be accurate and substantiated; false comparisons may breach the Australian Consumer Law.",
+      "review_guidance": "TRIGGER: Versus, better-than, or market leadership comparisons. ACTION: WARN — require substantiation before publication. CHECK: Named competitor, test method, and comparison date. ESCALATE IF: False or misleading comparative claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "comparative"
+      ]
+    },
+    {
+      "regulation_id": "au-ad-standards-disclosure",
+      "country": "AU",
+      "authority": "Ad Standards",
+      "regulation_name": "AANA Code of Ethics (Identifying advertising)",
+      "citation": "AANA Code of Ethics — Section 2.7",
+      "effective_date": "2021-02-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Influencer and native advertising must be clearly identifiable as marketing communication.",
+      "review_guidance": "TRIGGER: Influencer, gifted, or affiliate promotional content. ACTION: REWRITE — add clear ad identification (#ad, Ad, Paid). CHECK: Caption, overlay, and platform-native ad disclosure. ESCALATE IF: Undisclosed paid promotion.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure"
+      ]
+    },
+    {
+      "regulation_id": "au-accc-performance-representations",
+      "country": "AU",
+      "authority": "ACCC",
+      "regulation_name": "Australian Consumer Law",
+      "citation": "Australian Consumer Law — Schedule 2, s 18 (Performance)",
+      "effective_date": "2010-01-01",
+      "category": "Performance Claims",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Performance representations must not mislead; businesses must have reasonable grounds for quantified claims.",
+      "review_guidance": "TRIGGER: Performance stats, savings claims, or guaranteed outcomes. ACTION: WARN — require reasonable substantiation. CHECK: Test standard (AS/NZS), conditions, and typical results. ESCALATE IF: Misleading or unsubstantiated performance claim.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "performance"
+      ],
+      "jurisdiction_scope": [
+        "consumer.goods"
+      ]
+    },
+    {
+      "regulation_id": "au-accc-misleading-conduct",
+      "country": "AU",
+      "authority": "ACCC",
+      "regulation_name": "Australian Consumer Law",
+      "citation": "Australian Consumer Law — Schedule 2, s 18",
+      "effective_date": "2010-01-01",
+      "category": "Consumer Protection",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "Misleading or deceptive conduct in trade or commerce is prohibited under the Australian Consumer Law.",
+      "review_guidance": "TRIGGER: False product claims, bait advertising, or deceptive offers. ACTION: REJECT — correct misleading conduct. CHECK: Material terms, pricing, and product attributes. ESCALATE IF: Systemic ACL breach or ACCC investigation risk.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "consumer-protection"
+      ]
+    },
+    {
+      "regulation_id": "au-accc-certification-schemes",
+      "country": "AU",
+      "authority": "ACCC",
+      "regulation_name": "Australian Consumer Law (Certification and approval claims)",
+      "citation": "Australian Consumer Law — Schedule 2, s 29 (False certifications)",
+      "effective_date": "2010-01-01",
+      "category": "Certification",
+      "mandatory": true,
+      "risk_level": "HIGH",
+      "summary": "False or misleading representations about approvals, certifications, or quality marks are prohibited.",
+      "review_guidance": "TRIGGER: Certification logo, award, or approval badge in creative. ACTION: WARN — verify certification validity and scope. CHECK: Certifying body, product scope, and expiry. ESCALATE IF: False certification or mark beyond scope.",
+      "related_rule_ids": [],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:required",
+        "certification"
+      ]
+    }
+  ]
+}

@@ -10,15 +10,31 @@ export type TermMatch = {
   start: number;
   end: number;
   text: string;
+  term?: string;
 };
 
-function isWordChar(character: string): boolean {
+function isAsciiWordChar(character: string): boolean {
   return /[a-zA-Z0-9_]/.test(character);
 }
 
-function hasValidTermBoundaries(text: string, start: number, length: number): boolean {
-  const beforeOk = start === 0 || !isWordChar(text[start - 1]!);
-  const afterOk = start + length >= text.length || !isWordChar(text[start + length]!);
+function termHasCjk(term: string): boolean {
+  return /\p{Script=Han}/u.test(term);
+}
+
+function hasValidTermBoundaries(
+  text: string,
+  start: number,
+  length: number,
+  term: string,
+): boolean {
+  const beforeOk = start === 0 || !isAsciiWordChar(text[start - 1]!);
+
+  if (termHasCjk(term)) {
+    // CJK keywords are matched by substring; only reject when embedded inside ASCII tokens.
+    return beforeOk;
+  }
+
+  const afterOk = start + length >= text.length || !isAsciiWordChar(text[start + length]!);
   return beforeOk && afterOk;
 }
 
@@ -33,7 +49,7 @@ function findTermIndex(text: string, term: string): number {
       return -1;
     }
 
-    if (hasValidTermBoundaries(text, index, lowerTerm.length)) {
+    if (hasValidTermBoundaries(text, index, lowerTerm.length, term)) {
       return index;
     }
 
@@ -63,6 +79,7 @@ export function findTermMatch(fields: SearchableField[], terms: string[]): TermM
           start: index,
           end: index + term.length,
           text: value.slice(index, index + term.length),
+          term,
         };
       }
     }

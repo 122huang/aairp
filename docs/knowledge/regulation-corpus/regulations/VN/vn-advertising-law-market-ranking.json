@@ -1,0 +1,36 @@
+{
+  "knowledge_id": "regulation:vn-advertising-law-market-ranking",
+  "corpus_type": "regulation",
+  "regulation_id": "vn-advertising-law-market-ranking",
+  "country": "VN",
+  "authority": "MOIT",
+  "regulation_name": "Law on Advertising 2012",
+  "citation": "Law on Advertising No. 16/2012/QH13 — Article 9 (Comparative and ranking claims)",
+  "effective_date": "2013-01-01",
+  "category": "Comparative Advertising",
+  "mandatory": true,
+  "risk_level": "MEDIUM",
+  "summary": "Market share, sales ranking, and comparative superiority claims must be objective, current, and verifiable.",
+  "review_guidance": "TRIGGER: No.1, best-selling, market leader, or ranking claims in Vietnamese or English. ACTION: WARN for VN scope — request ranking methodology and period. CHECK: Data source, geography, and category definition. ESCALATE IF: False competitor comparison or fabricated ranking.",
+  "related_rule_ids": [
+    "demo-th-sa-market-claim",
+    "demo-my-sa-market-claim"
+  ],
+  "related_evidence_ids": [
+    "evidence:comparative-superiority-substantiation",
+    "evidence:general-advertising-substantiation"
+  ],
+  "tags": [
+    "confidence:medium",
+    "evidence:required",
+    "ranking",
+    "vn-warn-tier"
+  ],
+  "jurisdiction_scope": [
+    "sa.*"
+  ],
+  "owner": "legal-apac@aairp",
+  "owner_type": "legal",
+  "last_reviewed": "2026-06-29T00:00:00.000Z",
+  "review_status": "legal_reviewed"
+}

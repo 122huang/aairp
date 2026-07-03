@@ -9,7 +9,7 @@ CREATE TABLE infra.migration_history (
     execution_time_ms INTEGER     NOT NULL,
     success         BOOLEAN       NOT NULL DEFAULT TRUE,
 
-    CONSTRAINT pk_migration_history PRIMARY KEY (version),
+    CONSTRAINT pk_migration_history PRIMARY KEY (version, name),
     CONSTRAINT ck_migration_history_version_format
         CHECK (version ~ '^[0-9]+\.[0-9]+\.[0-9]+(__[a-z0-9_]+)?$'),
     CONSTRAINT ck_migration_history_checksum_hex

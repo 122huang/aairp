@@ -204,7 +204,7 @@ describe('CaseRetrievalService', () => {
           }),
         },
         {},
-        { embeddingRepository, embeddingProvider },
+        { embeddingRepository, embeddingProvider: provider },
       );
 
       const result = await service.retrieve(
