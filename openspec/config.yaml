@@ -1,0 +1,35 @@
+schema: spec-driven
+
+context: |
+  本项目的 OpenSpec 文档统一使用简体中文编写。
+  技术标识符、API 路径、环境变量、代码符号及 OpenSpec 规范关键字可保留英文。
+
+rules:
+  proposal:
+    - 使用简体中文编写所有说明性内容
+  design:
+    - 使用简体中文编写所有说明性内容
+  specs:
+    - 使用简体中文编写需求名称、描述和场景内容
+    - 保留 SHALL/MUST 以及 WHEN/THEN 关键字以满足规范格式
+  tasks:
+    - 使用简体中文编写任务标题和任务描述
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours

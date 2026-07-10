@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="_sg_verify">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/scripts/_sg_verify.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
