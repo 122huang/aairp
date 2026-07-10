@@ -29,6 +29,12 @@ if (-not [string]::IsNullOrWhiteSpace($env:DEEPSEEK_API_KEY)) {
   Write-Host "OCR stage 2 LLM: not configured — set DEEPSEEK_API_KEY (recommended)" -ForegroundColor Yellow
 }
 Write-Host ""
+Write-Host "Review pipeline modes:"
+Write-Host "  OPEN_RISK:  $(if ($env:AAIRP_OPEN_RISK_MODE) { $env:AAIRP_OPEN_RISK_MODE } else { 'stub (default)' })"
+Write-Host "  REWRITE:    $(if ($env:AAIRP_REWRITE_MODE) { $env:AAIRP_REWRITE_MODE } else { 'off (default)' })"
+Write-Host "  VISION:     $(if ($env:AAIRP_VISION_MODE) { $env:AAIRP_VISION_MODE } else { 'off/stub (default)' })"
+Write-Host "  CASE_SAVE:  $(if ($env:AAIRP_CASE_STORAGE) { $env:AAIRP_CASE_STORAGE } else { 'json (default)' })"
+Write-Host ""
 
 Write-Host "[1/5] Fix Neon migration PK (if needed)..."
 node "$PSScriptRoot\fix-neon-db.mjs"

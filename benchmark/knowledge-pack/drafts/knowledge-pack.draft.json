@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0.0",
-  "knowledge_pack_id": "kp-2026.07.18",
-  "knowledge_pack_version": "kp-2026.07.18",
+  "knowledge_pack_id": "kp-2026.07.19",
+  "knowledge_pack_version": "kp-2026.07.19",
   "platform_version": "1.0.0",
   "generated_at": "2026-07-01T12:00:00.000Z",
   "release_status": "released",
@@ -99,7 +99,7 @@
   },
   "runtime_components": {
     "rules": {
-      "version": "demo-rule-1.7.1",
+      "version": "demo-rule-1.7.3",
       "count": 39,
       "source": "demo/rules.demo.json"
     },
@@ -184,7 +184,7 @@
     "freshness_yellow": 0,
     "freshness_red": 0
   },
-  "knowledge_pack_fingerprint": "ab8bfd1c70147cbc28656013e69fb7a2c9da8dffc963925a6ad652d9a394c01e",
+  "knowledge_pack_fingerprint": "9e485a390b4c5bfeb229a0d749eb76f5731e2b2de09e4cd6bc6f39e716a203be",
   "released_at": "2026-07-01T12:00:00.000Z",
   "released_by": "test@aairp"
 }

@@ -43,14 +43,60 @@
 
         <section class="sidebar-block custom-case">
           <h3>自定义文案</h3>
-          <p class="sidebar-hint">粘贴真实广告英文/中文文案进行试跑</p>
-          <label class="field-label" for="custom-text">广告文案</label>
-          <textarea
-            id="custom-text"
-            class="custom-text"
-            rows="4"
-            placeholder="粘贴广告正文…"
-          ></textarea>
+          <p class="sidebar-hint">粘贴或上传文案试跑；多条时可切换分条方式</p>
+
+          <div class="input-method-tabs" role="tablist">
+            <button type="button" class="input-method-btn active" data-input-method="paste">粘贴文本</button>
+            <button type="button" class="input-method-btn" data-input-method="file">上传 .txt</button>
+          </div>
+
+          <div id="input-paste-panel">
+            <label class="field-label" for="custom-text">广告文案</label>
+            <textarea
+              id="custom-text"
+              class="custom-text"
+              rows="4"
+              placeholder="单条：直接粘贴全文&#10;多条：每行一条，或切换分条方式…"
+            ></textarea>
+          </div>
+
+          <div id="input-file-panel" hidden>
+            <label class="field-label">文本文件（一行一条）</label>
+            <div id="file-drop-zone" class="file-drop-zone">
+              <p>拖拽 .txt 到此处，或点击选择</p>
+              <p class="muted file-drop-hint">UTF-8 编码 · 每行一条文案</p>
+              <input id="batch-file-input" type="file" accept=".txt,text/plain" hidden />
+            </div>
+            <p id="file-upload-name" class="muted file-upload-name" hidden></p>
+          </div>
+
+          <div class="custom-row">
+            <label class="field-label" for="split-mode">分条方式</label>
+            <select id="split-mode" class="custom-select">
+              <option value="single">整段作为一条</option>
+              <option value="line">每行一条</option>
+              <option value="delimiter">字符分隔</option>
+              <option value="blank">空行分隔</option>
+            </select>
+          </div>
+          <div id="delimiter-row" class="custom-row" hidden>
+            <label class="field-label" for="delimiter-preset">分隔符</label>
+            <select id="delimiter-preset" class="custom-select">
+              <option value=";">英文分号 ;</option>
+              <option value="；">中文分号 ；</option>
+              <option value="|">竖线 |</option>
+              <option value="__custom__">自定义…</option>
+            </select>
+            <input
+              id="delimiter-custom"
+              class="custom-text custom-delimiter-input"
+              type="text"
+              placeholder="输入自定义分隔符"
+              hidden
+            />
+          </div>
+          <div id="split-preview" class="batch-preview muted" hidden></div>
+
           <div class="custom-row">
             <label class="field-label" for="custom-country">国家</label>
             <select id="custom-country" class="custom-select">
@@ -71,10 +117,17 @@
               <option value="cosmetic">cosmetic</option>
               <option value="food">food</option>
               <option value="electronics">electronics</option>
+              <option value="sa.rice_cooker">sa.rice_cooker</option>
             </select>
           </div>
-          <button type="button" id="btn-use-custom" class="btn secondary block">使用此文案</button>
-          <button type="button" id="btn-run-custom" class="btn primary block">使用并运行审核</button>
+          <div class="custom-row">
+            <label class="field-label" for="batch-name">批次名称（可选）</label>
+            <input id="batch-name" class="custom-text batch-name-input" type="text" placeholder="例如：SG 小家电 5月批次" />
+          </div>
+          <p id="rule-pack-info" class="rule-pack-info muted">规则集：加载中…</p>
+
+          <button type="button" id="btn-use-custom" class="btn secondary block">载入预览</button>
+          <button type="button" id="btn-run-custom" class="btn primary block">运行审核</button>
         </section>
 
         <section class="sidebar-block">
@@ -93,6 +146,7 @@
         <nav class="tabs" role="tablist">
           <button class="tab active" data-tab="review" role="tab">审核流程</button>
           <button class="tab" data-tab="report" role="tab">审核报告</button>
+          <button class="tab" data-tab="batch" role="tab" id="tab-batch">批量审核</button>
           <button class="tab" data-tab="trace" role="tab">知识链路</button>
           <button class="tab" data-tab="cases" role="tab">案例库</button>
         </nav>
@@ -113,6 +167,62 @@
           <div id="pipeline-stepper" class="stepper"></div>
 
           <div id="pipeline-log" class="pipeline-log"></div>
+        </section>
+
+        <section id="panel-batch" class="panel" role="tabpanel" hidden>
+          <div class="batch-page-header">
+            <div>
+              <h2>批量审核</h2>
+              <p id="batch-summary" class="muted">选择分条方式并运行审核后，汇总将显示在此处</p>
+            </div>
+          </div>
+
+          <div id="batch-progress-panel" class="batch-progress-panel" hidden>
+            <div class="batch-progress-head">
+              <h3>批次进度</h3>
+              <button type="button" id="btn-cancel-batch" class="btn secondary btn-sm">取消批次</button>
+            </div>
+            <div class="batch-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+              <div id="batch-progress-fill" class="batch-progress-fill"></div>
+            </div>
+            <p id="batch-progress-label" class="batch-progress-label muted">0%</p>
+            <div id="batch-stat-row" class="batch-stat-row"></div>
+          </div>
+
+          <div class="batch-toolbar">
+            <div class="batch-filters">
+              <input id="batch-search" class="batch-search" type="search" placeholder="搜索文案…" />
+              <select id="batch-decision-filter" class="custom-select batch-filter-select">
+                <option value="all">全部决策</option>
+                <option value="REJECT">仅 REJECT</option>
+                <option value="WARN">仅 WARN</option>
+                <option value="PASS">仅 PASS</option>
+                <option value="ERROR">仅 错误</option>
+              </select>
+            </div>
+            <button type="button" id="btn-export-batch-csv" class="btn secondary" disabled>导出 CSV</button>
+          </div>
+
+          <div id="batch-results-empty" class="empty-state">
+            <p>批量审核完成后，结果汇总将显示在此处。</p>
+          </div>
+          <div id="batch-results-wrap" class="batch-results-wrap" hidden>
+            <table class="batch-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>文案</th>
+                  <th>决策</th>
+                  <th>风险</th>
+                  <th>置信度</th>
+                  <th>主要问题</th>
+                  <th>状态</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="batch-results-body"></tbody>
+            </table>
+          </div>
         </section>
 
         <section id="panel-report" class="panel" role="tabpanel" hidden>
@@ -144,6 +254,15 @@
         </section>
       </main>
     </div>
+
+    <div id="batch-drawer-backdrop" class="batch-drawer-backdrop" hidden></div>
+    <aside id="batch-detail-drawer" class="batch-detail-drawer" hidden aria-label="批量审核详情">
+      <div class="batch-drawer-head">
+        <h3 id="batch-drawer-title">文案详情</h3>
+        <button type="button" id="btn-close-batch-drawer" class="btn secondary btn-sm" aria-label="关闭">关闭</button>
+      </div>
+      <div id="batch-drawer-body" class="batch-drawer-body"></div>
+    </aside>
 
     <footer class="footer">
       <span>法务内测版 · Stub LLM · SG 演示规则 · 详见 docs/legal-pilot/内测说明.md</span>

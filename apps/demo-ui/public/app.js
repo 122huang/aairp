@@ -8,6 +8,13 @@ const state = {
   trace: [],
   lastReviewId: null,
   caseFilter: 'all',
+  batchResults: [],
+  batchSplitItems: [],
+  batchFilter: 'all',
+  batchSearch: '',
+  batchCancelled: false,
+  batchProgress: null,
+  rulePackVersion: null,
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -113,6 +120,521 @@ function renderDemoCases() {
   }
 }
 
+function truncate(s, max = 80) {
+  if (s.length <= max) return s;
+  return `${s.slice(0, max)}…`;
+}
+
+function splitBatchText(raw, mode, delimiter) {
+  const text = raw.trim();
+  if (!text) return [];
+
+  if (mode === 'line') {
+    return text.split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+  }
+  if (mode === 'blank') {
+    return text.split(/\r?\n\s*\r?\n+/).map((s) => s.trim()).filter(Boolean);
+  }
+  if (mode === 'delimiter') {
+    const sep = delimiter === '\\t' ? '\t' : delimiter;
+    if (!sep) return [];
+    const escaped = sep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.split(new RegExp(escaped)).map((s) => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+function getSplitMode() {
+  return $('#split-mode').value;
+}
+
+function isBatchSplitMode() {
+  return getSplitMode() !== 'single';
+}
+
+function getBatchSplitConfig() {
+  const mode = getSplitMode();
+  let delimiter = ';';
+  if (mode === 'delimiter') {
+    const preset = $('#delimiter-preset').value;
+    delimiter = preset === '__custom__' ? $('#delimiter-custom').value : preset;
+  }
+  return { mode, delimiter };
+}
+
+function getBatchSplitItems() {
+  const raw = $('#custom-text').value;
+  if (!isBatchSplitMode()) return [];
+  const { mode, delimiter } = getBatchSplitConfig();
+  if (mode === 'delimiter' && !delimiter.trim()) return [];
+  return splitBatchText(raw, mode, delimiter);
+}
+
+function getActionableFindings(result) {
+  if (result.error) return [];
+  const findings = result.summary?.findings ?? [];
+  return findings.filter(
+    (f) => f.decision === 'WARN' || f.decision === 'REJECT' || f.decision === 'FAIL',
+  );
+}
+
+function formatBatchFindings(result) {
+  const actionable = getActionableFindings(result);
+  if (result.error) return result.error;
+  if (!actionable.length) return '—';
+  return actionable.map((f) => f.ref_id ?? f.summary).join(' · ');
+}
+
+function getMainIssue(result) {
+  if (result.error) return result.error.slice(0, 120);
+  const actionable = getActionableFindings(result);
+  if (!actionable.length) return '—';
+  return actionable[0].summary ?? actionable[0].ref_id ?? '—';
+}
+
+function decisionToRisk(decision) {
+  if (decision === 'REJECT') return { label: 'HIGH', class: 'risk-high' };
+  if (decision === 'WARN') return { label: 'MEDIUM', class: 'risk-medium' };
+  if (decision === 'PASS') return { label: 'LOW', class: 'risk-low' };
+  return { label: '—', class: 'risk-none' };
+}
+
+function formatConfidence(result) {
+  if (result.error || result.confidence == null) return '—';
+  return `${Math.round(result.confidence * 100)}%`;
+}
+
+function getRowStatus(row, processingIndex) {
+  if (row.error) return { label: '失败', class: 'status-failed' };
+  if (row.status === 'processing') return { label: '处理中', class: 'status-processing' };
+  if (row.status === 'pending') return { label: '等待', class: 'status-pending' };
+  return { label: '完成', class: 'status-done' };
+}
+
+function countBatchDecisions(results) {
+  const counts = { PASS: 0, WARN: 0, REJECT: 0, ERROR: 0 };
+  for (const row of results) {
+    if (row.status === 'pending' || row.status === 'processing') continue;
+    const key = row.error ? 'ERROR' : row.final_decision ?? 'ERROR';
+    counts[key] = (counts[key] ?? 0) + 1;
+  }
+  return counts;
+}
+
+function getFilteredBatchResults() {
+  const q = state.batchSearch.trim().toLowerCase();
+  return state.batchResults.filter((row) => {
+    if (state.batchFilter !== 'all') {
+      const d = row.error ? 'ERROR' : row.final_decision;
+      if (d !== state.batchFilter) return false;
+    }
+    if (q && !row.text.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function renderBatchProgress() {
+  const panel = $('#batch-progress-panel');
+  const p = state.batchProgress;
+  if (!p || !state.running) {
+    panel.hidden = true;
+    return;
+  }
+  panel.hidden = false;
+  const pct = p.total ? Math.round((p.completed / p.total) * 100) : 0;
+  $('#batch-progress-fill').style.width = `${pct}%`;
+  $('#batch-progress-label').textContent = `${pct}% · 已完成 ${p.completed} / ${p.total}${p.processing ? ` · 正在处理 #${p.processing}` : ''}`;
+  $('#batch-stat-row').innerHTML = `
+    <span class="batch-stat">共 <strong>${p.total}</strong></span>
+    <span class="batch-stat">PASS <strong class="stat-pass">${p.pass}</strong></span>
+    <span class="batch-stat">WARN <strong class="stat-warn">${p.warn}</strong></span>
+    <span class="batch-stat">REJECT <strong class="stat-reject">${p.reject}</strong></span>
+    <span class="batch-stat">失败 <strong>${p.failed}</strong></span>`;
+}
+
+function renderRulePackInfo() {
+  const el = $('#rule-pack-info');
+  const country = $('#custom-country')?.value ?? 'SG';
+  const category = $('#custom-category')?.value ?? '';
+  const ver = state.rulePackVersion ?? state.knowledge?.rule_pack?.pack_version ?? '—';
+  el.textContent = `规则集：${country} · ${category} · ${ver}`;
+}
+
+function setInputMethod(method) {
+  $$('.input-method-btn').forEach((btn) =>
+    btn.classList.toggle('active', btn.dataset.inputMethod === method),
+  );
+  $('#input-paste-panel').hidden = method !== 'paste';
+  $('#input-file-panel').hidden = method !== 'file';
+}
+
+async function loadTxtFile(file) {
+  if (!file.name.toLowerCase().endsWith('.txt')) {
+    alert('请上传 .txt 文件');
+    return;
+  }
+  const text = await file.text();
+  $('#custom-text').value = text;
+  $('#split-mode').value = 'line';
+  updateSplitModeUi();
+  setInputMethod('paste');
+  $('#file-upload-name').hidden = false;
+  $('#file-upload-name').textContent = `已载入：${file.name}（${text.split(/\r?\n/).filter((l) => l.trim()).length} 行）`;
+  renderSplitPreview();
+}
+
+function openBatchDetailDrawer(index) {
+  const row = state.batchResults.find((r) => r.index === index);
+  if (!row) return;
+  const backdrop = $('#batch-drawer-backdrop');
+  const drawer = $('#batch-detail-drawer');
+  $('#batch-drawer-title').textContent = `文案 #${row.index} 详情`;
+
+  if (row.error) {
+    $('#batch-drawer-body').innerHTML = `
+      <section class="drawer-section">
+        <h4>原文</h4>
+        <p class="drawer-text">${escapeHtml(row.text)}</p>
+      </section>
+      <section class="drawer-section">
+        <p class="decision-ERROR case-card-decision">ERROR</p>
+        <p class="muted">${escapeHtml(row.error)}</p>
+      </section>`;
+  } else {
+    const risk = decisionToRisk(row.final_decision);
+    const findings = getActionableFindings(row);
+    const findingsHtml = findings.length
+      ? findings
+          .map(
+            (f) => `
+        <div class="drawer-finding">
+          <div class="drawer-finding-head">
+            <span class="module-tag module-${(f.module ?? 'rule').toLowerCase()}">${escapeHtml((f.module ?? 'RULE').toUpperCase())}</span>
+            <span class="severity-tag">${escapeHtml(f.severity ?? '')}</span>
+          </div>
+          <p class="drawer-finding-id">${escapeHtml(f.ref_id ?? '')}</p>
+          <p>${escapeHtml(f.summary ?? '')}</p>
+        </div>`,
+          )
+          .join('')
+      : '<p class="muted">无 WARN / REJECT 级别命中</p>';
+
+    $('#batch-drawer-body').innerHTML = `
+      <section class="drawer-section">
+        <h4>原文</h4>
+        <p class="drawer-text">${escapeHtml(row.text)}</p>
+      </section>
+      <section class="drawer-section drawer-summary">
+        <span class="case-card-decision decision-${row.final_decision}">${row.final_decision}</span>
+        <span class="risk-pill ${risk.class}">${risk.label}</span>
+        <span class="muted">置信度 ${formatConfidence(row)}</span>
+      </section>
+      <section class="drawer-section">
+        <h4>决策理由</h4>
+        <p>${escapeHtml(row.rationale ?? '—')}</p>
+      </section>
+      <section class="drawer-section">
+        <h4>触发规则 / Playbook</h4>
+        ${findingsHtml}
+      </section>
+      ${
+        row.report_html
+          ? `<section class="drawer-section"><button type="button" class="btn secondary btn-sm" id="btn-drawer-full-report">查看完整 HTML 报告</button></section>`
+          : ''
+      }
+      <p class="muted drawer-meta">review_id: ${escapeHtml(row.review_id ?? '—')}</p>`;
+
+    const reportBtn = $('#btn-drawer-full-report');
+    if (reportBtn) {
+      reportBtn.addEventListener('click', () => {
+        showReport(row.report_html, row.final_decision);
+        closeBatchDetailDrawer();
+        switchTab('report');
+      });
+    }
+  }
+
+  backdrop.hidden = false;
+  drawer.hidden = false;
+}
+
+function closeBatchDetailDrawer() {
+  $('#batch-drawer-backdrop').hidden = true;
+  $('#batch-detail-drawer').hidden = true;
+}
+
+function updateSplitModeUi() {
+  const mode = getSplitMode();
+  const preview = $('#split-preview');
+  $('#delimiter-row').hidden = mode !== 'delimiter';
+  if (mode === 'delimiter') {
+    updateDelimiterUi();
+  }
+  if (mode === 'single') {
+    preview.hidden = true;
+    return;
+  }
+  preview.hidden = false;
+  renderSplitPreview();
+}
+
+function updateDelimiterUi() {
+  const isCustom = $('#delimiter-preset').value === '__custom__';
+  $('#delimiter-custom').hidden = !isCustom;
+}
+
+function renderSplitPreview() {
+  const preview = $('#split-preview');
+  if (!isBatchSplitMode()) {
+    preview.hidden = true;
+    return;
+  }
+  preview.hidden = false;
+
+  const items = getBatchSplitItems();
+  state.batchSplitItems = items;
+
+  if (!items.length) {
+    preview.innerHTML =
+      '<span class="batch-preview-empty">未识别到有效文案，请检查输入与分条方式</span>';
+    return;
+  }
+
+  const modeLabel = {
+    line: '每行一条',
+    delimiter: '字符分隔',
+    blank: '空行分隔',
+  }[getSplitMode()];
+
+  const samples = items
+    .slice(0, 3)
+    .map(
+      (t, i) =>
+        `<li><span class="batch-preview-idx">${i + 1}.</span> ${escapeHtml(truncate(t, 60))}</li>`,
+    )
+    .join('');
+  const more = items.length > 3 ? `<li class="muted">… 还有 ${items.length - 3} 条</li>` : '';
+
+  preview.innerHTML = `
+    <p class="batch-preview-count"><strong>识别 ${items.length} 条</strong> · ${modeLabel}</p>
+    <ol class="batch-preview-list">${samples}${more}</ol>`;
+}
+
+function renderBatchResults() {
+  const empty = $('#batch-results-empty');
+  const wrap = $('#batch-results-wrap');
+  const body = $('#batch-results-body');
+  const summary = $('#batch-summary');
+  const exportBtn = $('#btn-export-batch-csv');
+
+  renderBatchProgress();
+
+  if (!state.batchResults.length) {
+    empty.hidden = false;
+    wrap.hidden = true;
+    exportBtn.disabled = true;
+    summary.textContent = '选择分条方式并运行审核后，汇总将显示在此处';
+    return;
+  }
+
+  const finished = state.batchResults.filter((r) => r.status === 'done' || r.error);
+  const counts = countBatchDecisions(finished);
+  const batchLabel = $('#batch-name').value.trim();
+  summary.textContent = `${batchLabel ? `${batchLabel} · ` : ''}共 ${state.batchResults.length} 条 · PASS ${counts.PASS} · WARN ${counts.WARN} · REJECT ${counts.REJECT}${counts.ERROR ? ` · 错误 ${counts.ERROR}` : ''}${state.running ? ' · 进行中…' : ''}`;
+
+  const visible = getFilteredBatchResults();
+  if (!visible.length && finished.length) {
+    empty.hidden = false;
+    empty.querySelector('p').textContent = '当前筛选条件下无结果，请调整筛选或搜索词。';
+    wrap.hidden = true;
+    exportBtn.disabled = !finished.length;
+    return;
+  }
+
+  empty.hidden = true;
+  wrap.hidden = false;
+  exportBtn.disabled = !finished.length;
+
+  body.innerHTML = visible
+    .map((row) => {
+      const decision = row.error ? 'ERROR' : row.final_decision ?? '…';
+      const decisionClass = row.error ? 'decision-ERROR' : `decision-${row.final_decision ?? 'PASS'}`;
+      const risk = row.error ? { label: '—', class: 'risk-none' } : decisionToRisk(row.final_decision);
+      const status = getRowStatus(row);
+      return `
+        <tr data-batch-index="${row.index}">
+          <td>${row.index}</td>
+          <td class="batch-text-cell" title="${escapeHtml(row.text)}">${escapeHtml(truncate(row.text, 100))}</td>
+          <td><span class="case-card-decision ${decisionClass}">${decision}</span></td>
+          <td><span class="risk-pill ${risk.class}">${risk.label}</span></td>
+          <td>${formatConfidence(row)}</td>
+          <td class="batch-findings-cell">${escapeHtml(truncate(getMainIssue(row), 80))}</td>
+          <td><span class="status-pill ${status.class}">${status.label}</span></td>
+          <td>${
+            row.status === 'done' || row.error
+              ? `<button type="button" class="btn-link batch-detail-btn" data-index="${row.index}">详情</button>`
+              : ''
+          }</td>
+        </tr>`;
+    })
+    .join('');
+
+  body.querySelectorAll('.batch-detail-btn').forEach((btn) => {
+    btn.addEventListener('click', () => openBatchDetailDrawer(Number(btn.dataset.index)));
+  });
+}
+
+function cancelBatchReview() {
+  state.batchCancelled = true;
+}
+
+function downloadTextFile(filename, content, mime = 'text/plain;charset=utf-8') {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportBatchCsv() {
+  const rows = state.batchResults.filter((r) => r.status === 'done' || r.error);
+  if (!rows.length) return;
+  const csvRows = [
+    ['序号', '文案', '决策', '风险', '置信度', '主要问题', '命中要点', '理由', 'review_id'],
+  ];
+  for (const row of rows) {
+    const risk = row.error ? '—' : decisionToRisk(row.final_decision).label;
+    csvRows.push([
+      row.index,
+      row.text,
+      row.error ? 'ERROR' : row.final_decision,
+      risk,
+      row.error ? '' : formatConfidence(row).replace('%', ''),
+      getMainIssue(row),
+      formatBatchFindings(row),
+      row.error ?? row.rationale ?? '',
+      row.review_id ?? '',
+    ]);
+  }
+  const csv =
+    '\uFEFF' +
+    csvRows
+      .map((cells) =>
+        cells.map((cell) => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','),
+      )
+      .join('\r\n');
+  const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  const name = $('#batch-name').value.trim();
+  const prefix = name ? name.replace(/[^\w\u4e00-\u9fff-]+/g, '_') : 'batch-review';
+  downloadTextFile(`${prefix}-${stamp}.csv`, csv, 'text/csv;charset=utf-8');
+}
+
+async function runBatchReview() {
+  if (state.running) return;
+  const items = getBatchSplitItems();
+  if (!items.length) {
+    alert('未识别到有效文案，请先粘贴内容或上传 .txt');
+    return;
+  }
+
+  const country = $('#custom-country').value;
+  const category = $('#custom-category').value;
+  const uploadBase = {
+    country_id: country,
+    platform_id: 'META',
+    category_id: category,
+    tags: ['legal-pilot:batch'],
+  };
+
+  state.running = true;
+  state.batchCancelled = false;
+  state.batchResults = items.map((text, i) => ({
+    index: i + 1,
+    text,
+    status: 'pending',
+  }));
+  state.batchProgress = {
+    total: items.length,
+    completed: 0,
+    processing: null,
+    pass: 0,
+    warn: 0,
+    reject: 0,
+    failed: 0,
+  };
+
+  renderBatchResults();
+  $('#btn-run-custom').disabled = true;
+  $('#btn-cancel-batch').disabled = false;
+  switchTab('batch');
+
+  for (let i = 0; i < items.length; i += 1) {
+    if (state.batchCancelled) break;
+
+    const text = items[i];
+    const row = state.batchResults[i];
+    row.status = 'processing';
+    state.batchProgress.processing = i + 1;
+    renderBatchResults();
+
+    try {
+      const full = await api('/demo/review', {
+        ...uploadBase,
+        content: { text },
+      });
+      Object.assign(row, {
+        status: 'done',
+        final_decision: full.final_decision,
+        confidence: full.confidence,
+        rationale: full.rationale,
+        summary: full.summary,
+        review_id: full.review_id,
+        report_html: full.report_html,
+      });
+      const d = full.final_decision;
+      if (d === 'PASS') state.batchProgress.pass += 1;
+      else if (d === 'WARN') state.batchProgress.warn += 1;
+      else if (d === 'REJECT') state.batchProgress.reject += 1;
+    } catch (err) {
+      row.status = 'done';
+      row.error = err.message;
+      state.batchProgress.failed += 1;
+    }
+
+    state.batchProgress.completed += 1;
+    state.batchProgress.processing = null;
+    renderBatchResults();
+  }
+
+  for (const row of state.batchResults) {
+    if (row.status === 'pending' || row.status === 'processing') {
+      row.status = 'done';
+      if (!row.error && !row.final_decision) {
+        row.error = '已取消';
+        state.batchProgress.failed += 1;
+      }
+    }
+  }
+
+  state.batchProgress.processing = null;
+  state.running = false;
+  $('#btn-run-custom').disabled = false;
+  $('#btn-cancel-batch').disabled = true;
+  renderBatchResults();
+  await loadCaseLibrary();
+}
+
+function runCustomReview() {
+  if (state.running) return;
+  if (isBatchSplitMode()) {
+    runBatchReview();
+    return;
+  }
+  useCustomCase(true);
+}
+
 function setCaseFilter(filter) {
   state.caseFilter = filter;
   $$('.filter-btn').forEach((btn) => btn.classList.toggle('active', btn.dataset.filter === filter));
@@ -123,6 +645,10 @@ function useCustomCase(andRun = false) {
   const text = $('#custom-text').value.trim();
   if (!text) {
     alert('请先粘贴广告文案');
+    return;
+  }
+  if (isBatchSplitMode()) {
+    alert('当前为批量分条模式，请直接点击「运行审核」');
     return;
   }
   const country = $('#custom-country').value;
@@ -451,9 +977,56 @@ async function init() {
     btn.addEventListener('click', () => setCaseFilter(btn.dataset.filter));
   });
   $('#btn-use-custom').addEventListener('click', () => useCustomCase(false));
-  $('#btn-run-custom').addEventListener('click', () => useCustomCase(true));
+  $('#btn-run-custom').addEventListener('click', runCustomReview);
   $('#btn-run-review').addEventListener('click', runReview);
   $('#btn-refresh-cases').addEventListener('click', loadCaseLibrary);
+
+  $('#split-mode').addEventListener('change', updateSplitModeUi);
+  $('#delimiter-preset').addEventListener('change', () => {
+    updateDelimiterUi();
+    renderSplitPreview();
+  });
+  $('#delimiter-custom').addEventListener('input', renderSplitPreview);
+  $('#custom-text').addEventListener('input', () => {
+    if (isBatchSplitMode()) renderSplitPreview();
+  });
+  $('#btn-export-batch-csv').addEventListener('click', exportBatchCsv);
+  $('#btn-cancel-batch').addEventListener('click', cancelBatchReview);
+  $('#btn-close-batch-drawer').addEventListener('click', closeBatchDetailDrawer);
+  $('#batch-drawer-backdrop').addEventListener('click', closeBatchDetailDrawer);
+  $('#batch-decision-filter').addEventListener('change', (e) => {
+    state.batchFilter = e.target.value;
+    renderBatchResults();
+  });
+  $('#batch-search').addEventListener('input', (e) => {
+    state.batchSearch = e.target.value;
+    renderBatchResults();
+  });
+  $('#custom-country').addEventListener('change', renderRulePackInfo);
+  $('#custom-category').addEventListener('change', renderRulePackInfo);
+
+  $$('.input-method-btn').forEach((btn) => {
+    btn.addEventListener('click', () => setInputMethod(btn.dataset.inputMethod));
+  });
+  const dropZone = $('#file-drop-zone');
+  const fileInput = $('#batch-file-input');
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files?.[0];
+    if (file) loadTxtFile(file);
+    fileInput.value = '';
+  });
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer?.files?.[0];
+    if (file) loadTxtFile(file);
+  });
 
   const [casesRes, knowledgeRes] = await Promise.all([
     fetch('/demo-ui/demo-cases.json').then((r) => r.json()),
@@ -461,10 +1034,15 @@ async function init() {
   ]);
   state.demoCases = casesRes.cases;
   state.knowledge = knowledgeRes;
+  state.rulePackVersion = knowledgeRes.rule_pack?.pack_version ?? null;
 
   renderStepper();
   renderDemoCases();
   renderTrace();
+  renderBatchResults();
+  updateSplitModeUi();
+  renderRulePackInfo();
+  $('#btn-cancel-batch').disabled = true;
   await checkApi();
 
   selectCase('demo-01-reject-cure');
