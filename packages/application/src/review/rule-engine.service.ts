@@ -36,6 +36,13 @@ function isRuleLevelCountryOverride(
   return 'decision' in override || 'severity' in override;
 }
 
+function normalizeRuleDecision(decision: string): RuleFinding['decision'] {
+  if (decision === 'MANUAL_REVIEW') {
+    return 'REVIEW';
+  }
+  return decision as RuleFinding['decision'];
+}
+
 function resolveRuleDecision(
   rule: RuntimeRuleDefinition,
   countryId: string,
@@ -45,14 +52,14 @@ function resolveRuleDecision(
   if (!override) {
     return {
       severity: rule.severity as RuleFinding['severity'],
-      decision: rule.decision as RuleFinding['decision'],
+      decision: normalizeRuleDecision(rule.decision),
     };
   }
 
   if (isRuleLevelCountryOverride(override)) {
     return {
       severity: (override.severity ?? rule.severity) as RuleFinding['severity'],
-      decision: (override.decision ?? rule.decision) as RuleFinding['decision'],
+      decision: normalizeRuleDecision(override.decision ?? rule.decision),
     };
   }
 
@@ -66,14 +73,14 @@ function resolveRuleDecision(
     if (termOverride && (termOverride.decision || termOverride.severity)) {
       return {
         severity: (termOverride.severity ?? rule.severity) as RuleFinding['severity'],
-        decision: (termOverride.decision ?? rule.decision) as RuleFinding['decision'],
+        decision: normalizeRuleDecision(termOverride.decision ?? rule.decision),
       };
     }
   }
 
   return {
     severity: rule.severity as RuleFinding['severity'],
-    decision: rule.decision as RuleFinding['decision'],
+    decision: normalizeRuleDecision(rule.decision),
   };
 }
 

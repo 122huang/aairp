@@ -5,7 +5,7 @@
   "platform_id": "META",
   "intent": "EDGE",
   "verification": "auto",
-  "notes": "Edge case — 'secure' must not false-trigger health 'cure' rule when mis-scoped.",
+  "notes": "Edge case — 'secure' must not false-trigger health 'cure' rule when mis-scoped. CPSR prerequisite still routes electronics ads to REVIEW for registration confirmation.",
   "tags": ["demo", "verified", "false-positive-guard"],
   "upload": {
     "country_id": "SG",
@@ -17,8 +17,10 @@
     "tags": ["pilot:edge-secure"]
   },
   "ground_truth": {
-    "expected_decision": "PASS",
-    "expected_findings": [],
+    "expected_decision": "REVIEW",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-sg-cpsr-registration-prerequisite" }
+    ],
     "must_not_include_refs": ["demo-sg-health-forbidden-claim"]
   }
 }

@@ -50,6 +50,7 @@
     "knowledge:coverage-gap-report": "pnpm --filter @aairp/application knowledge:coverage-gap-report",
     "knowledge:pack-manifest": "pnpm --filter @aairp/application knowledge:pack-manifest",
     "eval:benchmark-v3": "pnpm --filter @aairp/application eval:benchmark-v3",
+    "eval:gray-copy": "pnpm --filter @aairp/application eval:gray-copy",
     "eval:rewrite-quality": "pnpm --filter @aairp/application eval:rewrite-quality",
     "eval:module-dashboard": "pnpm --filter @aairp/application eval:module-dashboard",
     "dev:api": "pnpm --filter @aairp/api dev",

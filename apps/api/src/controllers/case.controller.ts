@@ -86,14 +86,38 @@ export async function registerCaseController(
     },
   );
 
-  app.post<{ Params: { caseId: string } }>(
+  app.post<{ Params: { caseId: string }; Body: Record<string, unknown> }>(
     '/cases/:caseId/confirm',
     async (request, reply) => {
       try {
-        const updated = await deps.caseKosAdminService.confirmCase(
-          request.params.caseId,
-          adminCtx(request),
-        );
+        const body = (request.body ?? {}) as Record<string, unknown>;
+        const feedback =
+          body.human_feedback && typeof body.human_feedback === 'object'
+            ? (body.human_feedback as {
+                decision?: string;
+                reviewer_id?: string;
+                comment?: string;
+                agreement_with_ai?: 'AGREE' | 'DISAGREE';
+              })
+            : undefined;
+        const updated = await deps.caseKosAdminService.confirmCase(request.params.caseId, {
+          ...adminCtx(request),
+          ...(feedback
+            ? {
+                humanFeedback: {
+                  decision: feedback.decision as
+                    | 'PASS'
+                    | 'WARN'
+                    | 'REVIEW'
+                    | 'REJECT'
+                    | undefined,
+                  reviewer_id: feedback.reviewer_id,
+                  comment: feedback.comment,
+                  agreement_with_ai: feedback.agreement_with_ai,
+                },
+              }
+            : {}),
+        });
         sendJson(reply, 200, updated);
       } catch (error) {
         if (error instanceof Error && error.message.startsWith('case not found')) {

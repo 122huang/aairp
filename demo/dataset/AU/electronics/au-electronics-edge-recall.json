@@ -4,9 +4,12 @@
   "category_id": "electronics",
   "platform_id": "META",
   "intent": "EDGE",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for AU electronics. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "Demo-only pilot sample for AU electronics. Not legal advice. Verified auto against demo-rule-1.8.2 engine (2026-07-15).",
+  "tags": [
+    "demo",
+    "draft"
+  ],
   "upload": {
     "country_id": "AU",
     "platform_id": "META",
@@ -14,7 +17,9 @@
     "content": {
       "text": "Updated model — previous batch recalled for battery issue, now fully compliant with ACCC safety standards. #ad"
     },
-    "tags": ["pilot:edge-recall"]
+    "tags": [
+      "pilot:edge-recall"
+    ]
   },
   "ground_truth": {
     "expected_decision": "PASS",

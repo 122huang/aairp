@@ -34,21 +34,54 @@ export class CaseKosAdminService {
     return this.caseKosRepository.exportAllLatest();
   }
 
-  async confirmCase(caseId: string, ctx?: AdminContext) {
+  async confirmCase(
+    caseId: string,
+    ctx?: AdminContext & {
+      humanFeedback?: {
+        decision?: CaseRecord['decision']['final_decision'];
+        reviewer_id?: string;
+        comment?: string;
+        agreement_with_ai?: 'AGREE' | 'DISAGREE';
+      };
+    },
+  ) {
     const latest = await this.requireLatest(caseId);
-    const updated = await this.caseKosRepository.updateLifecycle(
+    const now = new Date().toISOString();
+    let updated = await this.caseKosRepository.updateLifecycle(
       caseId,
       latest.case_version,
       'CONFIRMED',
-      new Date().toISOString(),
+      now,
     );
+
+    if (ctx?.humanFeedback) {
+      const current = await this.requireLatest(caseId);
+      const withFeedback: CaseRecord = {
+        ...current,
+        human_feedback: {
+          decision: ctx.humanFeedback.decision ?? current.decision.final_decision,
+          reviewer_id: ctx.humanFeedback.reviewer_id,
+          comment: ctx.humanFeedback.comment,
+          agreement_with_ai: ctx.humanFeedback.agreement_with_ai,
+          submitted_at: now,
+        },
+        updated_at: now,
+      };
+      await this.caseKosRepository.saveVersion(withFeedback);
+      updated = (await this.caseKosRepository.findByCaseId(caseId)) ?? withFeedback;
+    }
+
     await this.auditLogService.record({
       actor: ctx?.actor,
       traceId: ctx?.traceId,
       action: 'PUBLISH',
       resourceType: 'case_record',
       resourceId: caseId,
-      payload: { case_version: latest.case_version, lifecycle_status: 'CONFIRMED' },
+      payload: {
+        case_version: latest.case_version,
+        lifecycle_status: 'CONFIRMED',
+        human_feedback_written: Boolean(ctx?.humanFeedback),
+      },
     });
     return updated;
   }

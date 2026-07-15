@@ -214,10 +214,10 @@ export class ReviewPipelineService {
       context,
       ruleResult,
     );
-    const playbookOptions =
-      isCaseInPlaybookEnabled() && caseReviewContext
-        ? { caseReviewContext }
-        : undefined;
+    const playbookOptions = {
+      ...(isCaseInPlaybookEnabled() && caseReviewContext ? { caseReviewContext } : {}),
+      priorRuleFindings: ruleResult.findings,
+    };
     const { result: playbookResult, durationMs: playbookMs } = await measureStage(() =>
       this.deps.playbookEngineService.evaluate(context, playbookOptions),
     );

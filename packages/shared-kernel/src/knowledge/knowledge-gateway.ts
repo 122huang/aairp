@@ -15,6 +15,18 @@ export type RuleWhenCondition = {
   certification_image_unreadable?: boolean;
   /** Pipeline flag: AI-rendered image has visible quality defects */
   ai_image_quality_issue?: boolean;
+  /**
+   * Singapore CPSR: category is an appliance class that must complete SAFETY Mark
+   * registration before advertising. Used with empty term matchers + scopes.
+   */
+  category_requires_cpsr?: boolean;
+  /**
+   * Malaysia EECA: category is an energy-using product that must complete COE
+   * before advertising. Used with empty term matchers + scopes.
+   */
+  category_requires_coe?: boolean;
+  /** Audience targeting includes children (AANA / similar code routes). */
+  audience_includes_children?: boolean;
 };
 
 export type RuntimeRuleCountryDecisionOverride = {

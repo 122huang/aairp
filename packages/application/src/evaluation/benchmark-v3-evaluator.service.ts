@@ -128,7 +128,9 @@ function deriveActionFromDecision(decision: string): string {
   if (decision === 'REJECT') return 'REJECT';
   if (decision === 'PASS') return 'PASS';
   if (decision === 'WARN') return 'REWRITE';
-  return deriveExpectedAction('REVIEW') === 'ESCALATE' ? 'ESCALATE' : 'REVIEW';
+  // Final REVIEW always escalates to human / product-compliance (Claim Review policy).
+  if (decision === 'REVIEW') return 'ESCALATE';
+  return deriveExpectedAction(decision);
 }
 
 function formatV3Markdown(result: BenchmarkV3EvalResult): string {

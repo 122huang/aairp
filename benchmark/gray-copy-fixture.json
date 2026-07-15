@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_id": "aairp-gray-copy-open-risk",
+  "description": "Gray-copy semantic probe for Open Risk. Texts avoid known Rule/Playbook trigger keywords. Success = Open Risk module fires an acceptable risk_type — NOT final_decision alone (incidental disclosure/CPSR/COE rules must not count as capability).",
+  "incidental_rule_refs_default": [
+    "demo-cn-internet-ad-identifiable-tag",
+    "demo-sg-sponsored-disclosure",
+    "demo-sg-cpsr-registration-prerequisite",
+    "demo-my-eeca-coe-prerequisite",
+    "demo-id-sponsored-disclosure",
+    "demo-ph-sponsored-disclosure"
+  ],
+  "countries": ["CN", "SG", "MY", "TH"],
+  "cases": [
+    {
+      "copy_id": 1,
+      "category_id": "sa.air_fryer",
+      "gray_class": "implied-health",
+      "text": "全家饭桌上多一台空气炸锅，孩子挑食的毛病自己就改了，脸色也红润了不少。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": ["health-implication", "medical-claim"]
+    },
+    {
+      "copy_id": 2,
+      "category_id": "health.supplement",
+      "gray_class": "implied-medical",
+      "text": "每天早上一杯温水，喝出来的不只是好气色，连老毛病都悄悄退了场。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": ["medical-claim", "health-implication"]
+    },
+    {
+      "copy_id": 3,
+      "category_id": "sa.vacuum_floor",
+      "gray_class": "implied-comparative-analogy",
+      "text": "别人家的吸尘器还在\"吸\"，我们家这台已经在\"搬家\"了——地板缝里的灰尘都得搬家挪窝。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": [
+        "unsupported-comparative-claim",
+        "analogical-claim",
+        "absolute-claim-soft"
+      ],
+      "notes": "Prior leak: CN final WARN only via internet-ad disclosure rule; Open Risk llm=0. Few-shot target."
+    },
+    {
+      "copy_id": 4,
+      "category_id": "sa.blender_processor",
+      "gray_class": "implied-comparative-denigration",
+      "text": "隔壁老王换了三次搅拌机才发现，真正安静的机器长这样。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": [
+        "unsupported-comparative-claim",
+        "absolute-claim-soft",
+        "analogical-claim"
+      ],
+      "notes": "Prior leak: CN PASS with Open Risk ran but empty findings. Few-shot target."
+    },
+    {
+      "copy_id": 5,
+      "category_id": "sa.steam_mop",
+      "gray_class": "implied-environmental",
+      "text": "用水就能把家里洗干净，地球也谢谢你这个选择。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": ["environmental-claim", "absolute-claim-soft"]
+    },
+    {
+      "copy_id": 6,
+      "category_id": "sa.rice_cooker",
+      "gray_class": "implied-endorsement-absolute",
+      "text": "这款内胆的用料，连质检的老师傅都忍不住多看了两眼，说这才是能放心用一辈子的锅。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": [
+        "absolute-claim-soft",
+        "certification-evidence",
+        "false-certification-government-endorsement",
+        "unsubstantiated-quantitative-claim"
+      ]
+    },
+    {
+      "copy_id": 7,
+      "category_id": "sa.coffee_espresso",
+      "gray_class": "implied-sponsored",
+      "text": "谢谢品牌送的这台咖啡机，这几天真的爱不释手，忍不住天天安利给姐妹们。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": ["sponsored-disclosure"]
+    },
+    {
+      "copy_id": 8,
+      "category_id": "sa.other",
+      "gray_class": "implied-scarcity-urgency",
+      "text": "这批做完，工厂说要停产升级了，喜欢的朋友这次真的别再犹豫。",
+      "open_risk_must_fire": true,
+      "acceptable_risk_types": ["scarcity-urgency-claim", "absolute-claim-soft"],
+      "notes": "Prior leak: CN PASS. Few-shot target for scarcity/FOMO without banned urgency keywords."
+    }
+  ]
+}

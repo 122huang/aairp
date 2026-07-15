@@ -1,68 +1,369 @@
 {
   "schema_version": "1.0.0",
   "dataset_id": "aairp-demo-dataset",
-  "description": "Sprint 1.5 demo advertisement dataset — 9 countries; 6B-2f adds ID/VN/PH sa.* smoke cases",
-  "countries": ["SG", "MY", "TH", "ID", "VN", "JP", "KR", "AU", "PH"],
-  "categories": ["health.supplement", "cosmetic", "food", "electronics"],
-  "intents": ["PASS", "WARN", "REJECT", "EDGE"],
+  "description": "Sprint 1.5 demo dataset — 10 countries; rules pack demo-rule-1.8.2; verification mostly auto",
+  "countries": [
+    "AU",
+    "CN",
+    "ID",
+    "JP",
+    "KR",
+    "MY",
+    "PH",
+    "SG",
+    "TH",
+    "VN"
+  ],
+  "categories": [
+    "health.supplement",
+    "cosmetic",
+    "food",
+    "electronics"
+  ],
+  "intents": [
+    "PASS",
+    "WARN",
+    "REJECT",
+    "EDGE"
+  ],
   "verification_levels": {
     "auto": "Ground truth validated by benchmark/regression against current engine",
     "manual": "Intent label for pilot review; engine may not yet enforce country/category rules"
   },
   "case_file_schema": {
-    "required": ["case_id", "country_id", "category_id", "platform_id", "intent", "verification", "upload"],
-    "optional": ["notes", "ground_truth", "tags"]
+    "required": [
+      "case_id",
+      "country_id",
+      "category_id",
+      "platform_id",
+      "intent",
+      "verification",
+      "upload"
+    ],
+    "optional": [
+      "notes",
+      "ground_truth",
+      "tags"
+    ]
   },
   "cases": [
-    { "case_id": "sg-health-reject-cure", "path": "SG/health.supplement/sg-health-reject-cure.json", "intent": "REJECT", "verification": "auto" },
-    { "case_id": "sg-cosmetic-warn-claims", "path": "SG/cosmetic/sg-cosmetic-warn-claims.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "sg-food-pass-disclosed", "path": "SG/food/sg-food-pass-disclosed.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "sg-electronics-edge-secure", "path": "SG/electronics/sg-electronics-edge-secure.json", "intent": "EDGE", "verification": "auto" },
-    { "case_id": "my-health-pass-wellness", "path": "MY/health.supplement/my-health-pass-wellness.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "my-cosmetic-warn-claims", "path": "MY/cosmetic/my-cosmetic-warn-claims.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "my-food-pass-snacks", "path": "MY/food/my-food-pass-snacks.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "my-electronics-edge-battery", "path": "MY/electronics/my-electronics-edge-battery.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "th-health-pass-herbal", "path": "TH/health.supplement/th-health-pass-herbal.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "th-cosmetic-warn-whitening", "path": "TH/cosmetic/th-cosmetic-warn-whitening.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "th-food-pass-snacks", "path": "TH/food/th-food-pass-snacks.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "th-electronics-edge-warranty", "path": "TH/electronics/th-electronics-edge-warranty.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "id-health-pass-vitamins", "path": "ID/health.supplement/id-health-pass-vitamins.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "id-cosmetic-warn-fairness", "path": "ID/cosmetic/id-cosmetic-warn-fairness.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "id-food-pass-instant", "path": "ID/food/id-food-pass-instant.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "id-electronics-edge-charger", "path": "ID/electronics/id-electronics-edge-charger.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "jp-health-pass-supplement", "path": "JP/health.supplement/jp-health-pass-supplement.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "jp-cosmetic-warn-antiaging", "path": "JP/cosmetic/jp-cosmetic-warn-antiaging.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "jp-food-pass-tea", "path": "JP/food/jp-food-pass-tea.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "jp-electronics-edge-specs", "path": "JP/electronics/jp-electronics-edge-specs.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "kr-health-pass-ginseng", "path": "KR/health.supplement/kr-health-pass-ginseng.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "kr-cosmetic-warn-spf", "path": "KR/cosmetic/kr-cosmetic-warn-spf.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "kr-food-pass-kimchi", "path": "KR/food/kr-food-pass-kimchi.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "kr-electronics-edge-noise", "path": "KR/electronics/kr-electronics-edge-noise.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "au-health-pass-wellness", "path": "AU/health.supplement/au-health-pass-wellness.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "au-cosmetic-warn-sunscreen", "path": "AU/cosmetic/au-cosmetic-warn-sunscreen.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "au-food-pass-muesli", "path": "AU/food/au-food-pass-muesli.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "au-electronics-edge-recall", "path": "AU/electronics/au-electronics-edge-recall.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "ph-health-pass-multivitamin", "path": "PH/health.supplement/ph-health-pass-multivitamin.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "ph-cosmetic-warn-brightening", "path": "PH/cosmetic/ph-cosmetic-warn-brightening.json", "intent": "WARN", "verification": "manual" },
-    { "case_id": "ph-food-pass-coconut", "path": "PH/food/ph-food-pass-coconut.json", "intent": "PASS", "verification": "manual" },
-    { "case_id": "ph-electronics-edge-delivery", "path": "PH/electronics/ph-electronics-edge-delivery.json", "intent": "EDGE", "verification": "manual" },
-    { "case_id": "id-sa-pass-rice-cooker", "path": "ID/sa.rice_cooker/id-sa-pass-rice-cooker.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "id-sa-pass-blender", "path": "ID/sa.blender_processor/id-sa-pass-blender.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "id-sa-pass-air-fryer", "path": "ID/sa.air_fryer/id-sa-pass-air-fryer.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "id-sa-warn-category-boundary", "path": "ID/sa.air_fryer/id-sa-warn-category-boundary.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "id-sa-warn-market-ranking", "path": "ID/sa.blender_processor/id-sa-warn-market-ranking.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "id-sa-warn-sponsored-disclosure", "path": "ID/sa.air_fryer/id-sa-warn-sponsored-disclosure.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "vn-sa-pass-air-fryer", "path": "VN/sa.air_fryer/vn-sa-pass-air-fryer.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "vn-sa-pass-blender", "path": "VN/sa.blender_processor/vn-sa-pass-blender.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "vn-sa-pass-rice-cooker", "path": "VN/sa.rice_cooker/vn-sa-pass-rice-cooker.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "vn-sa-warn-absolute-claim", "path": "VN/sa.air_fryer/vn-sa-warn-absolute-claim.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "vn-sa-warn-market-ranking", "path": "VN/sa.blender_processor/vn-sa-warn-market-ranking.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "vn-sa-review-foreign-brand", "path": "VN/sa.air_fryer/vn-sa-review-foreign-brand.json", "intent": "EDGE", "verification": "auto" },
-    { "case_id": "ph-sa-pass-air-fryer", "path": "PH/sa.air_fryer/ph-sa-pass-air-fryer.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "ph-sa-pass-blender", "path": "PH/sa.blender_processor/ph-sa-pass-blender.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "ph-sa-pass-rice-cooker", "path": "PH/sa.rice_cooker/ph-sa-pass-rice-cooker.json", "intent": "PASS", "verification": "auto" },
-    { "case_id": "ph-sa-warn-health-implication", "path": "PH/sa.air_fryer/ph-sa-warn-health-implication.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "ph-sa-warn-market-ranking", "path": "PH/sa.blender_processor/ph-sa-warn-market-ranking.json", "intent": "WARN", "verification": "auto" },
-    { "case_id": "ph-sa-warn-sponsored-disclosure", "path": "PH/sa.air_fryer/ph-sa-warn-sponsored-disclosure.json", "intent": "WARN", "verification": "auto" }
+    {
+      "case_id": "sg-health-reject-cure",
+      "path": "SG/health.supplement/sg-health-reject-cure.json",
+      "intent": "REJECT",
+      "verification": "auto"
+    },
+    {
+      "case_id": "sg-cosmetic-warn-claims",
+      "path": "SG/cosmetic/sg-cosmetic-warn-claims.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "sg-food-pass-disclosed",
+      "path": "SG/food/sg-food-pass-disclosed.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "sg-electronics-edge-secure",
+      "path": "SG/electronics/sg-electronics-edge-secure.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "my-health-pass-wellness",
+      "path": "MY/health.supplement/my-health-pass-wellness.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "my-cosmetic-warn-claims",
+      "path": "MY/cosmetic/my-cosmetic-warn-claims.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "my-food-pass-snacks",
+      "path": "MY/food/my-food-pass-snacks.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "my-electronics-edge-battery",
+      "path": "MY/electronics/my-electronics-edge-battery.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "th-health-pass-herbal",
+      "path": "TH/health.supplement/th-health-pass-herbal.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "th-cosmetic-warn-whitening",
+      "path": "TH/cosmetic/th-cosmetic-warn-whitening.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "th-food-pass-snacks",
+      "path": "TH/food/th-food-pass-snacks.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "th-electronics-edge-warranty",
+      "path": "TH/electronics/th-electronics-edge-warranty.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-health-pass-vitamins",
+      "path": "ID/health.supplement/id-health-pass-vitamins.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-cosmetic-warn-fairness",
+      "path": "ID/cosmetic/id-cosmetic-warn-fairness.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-food-pass-instant",
+      "path": "ID/food/id-food-pass-instant.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-electronics-edge-charger",
+      "path": "ID/electronics/id-electronics-edge-charger.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "jp-health-pass-supplement",
+      "path": "JP/health.supplement/jp-health-pass-supplement.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "jp-cosmetic-warn-antiaging",
+      "path": "JP/cosmetic/jp-cosmetic-warn-antiaging.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "jp-food-pass-tea",
+      "path": "JP/food/jp-food-pass-tea.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "jp-electronics-edge-specs",
+      "path": "JP/electronics/jp-electronics-edge-specs.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "kr-health-pass-ginseng",
+      "path": "KR/health.supplement/kr-health-pass-ginseng.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "kr-cosmetic-warn-spf",
+      "path": "KR/cosmetic/kr-cosmetic-warn-spf.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "kr-food-pass-kimchi",
+      "path": "KR/food/kr-food-pass-kimchi.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "kr-electronics-edge-noise",
+      "path": "KR/electronics/kr-electronics-edge-noise.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "au-health-pass-wellness",
+      "path": "AU/health.supplement/au-health-pass-wellness.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "au-cosmetic-warn-sunscreen",
+      "path": "AU/cosmetic/au-cosmetic-warn-sunscreen.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "au-food-pass-muesli",
+      "path": "AU/food/au-food-pass-muesli.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "au-electronics-edge-recall",
+      "path": "AU/electronics/au-electronics-edge-recall.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-health-pass-multivitamin",
+      "path": "PH/health.supplement/ph-health-pass-multivitamin.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-cosmetic-warn-brightening",
+      "path": "PH/cosmetic/ph-cosmetic-warn-brightening.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-food-pass-coconut",
+      "path": "PH/food/ph-food-pass-coconut.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-electronics-edge-delivery",
+      "path": "PH/electronics/ph-electronics-edge-delivery.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-sa-pass-rice-cooker",
+      "path": "ID/sa.rice_cooker/id-sa-pass-rice-cooker.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-sa-pass-blender",
+      "path": "ID/sa.blender_processor/id-sa-pass-blender.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-sa-pass-air-fryer",
+      "path": "ID/sa.air_fryer/id-sa-pass-air-fryer.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-sa-warn-category-boundary",
+      "path": "ID/sa.air_fryer/id-sa-warn-category-boundary.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-sa-warn-market-ranking",
+      "path": "ID/sa.blender_processor/id-sa-warn-market-ranking.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "id-sa-warn-sponsored-disclosure",
+      "path": "ID/sa.air_fryer/id-sa-warn-sponsored-disclosure.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "vn-sa-pass-air-fryer",
+      "path": "VN/sa.air_fryer/vn-sa-pass-air-fryer.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "vn-sa-pass-blender",
+      "path": "VN/sa.blender_processor/vn-sa-pass-blender.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "vn-sa-pass-rice-cooker",
+      "path": "VN/sa.rice_cooker/vn-sa-pass-rice-cooker.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "vn-sa-warn-absolute-claim",
+      "path": "VN/sa.air_fryer/vn-sa-warn-absolute-claim.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "vn-sa-warn-market-ranking",
+      "path": "VN/sa.blender_processor/vn-sa-warn-market-ranking.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "vn-sa-review-foreign-brand",
+      "path": "VN/sa.air_fryer/vn-sa-review-foreign-brand.json",
+      "intent": "EDGE",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-sa-pass-air-fryer",
+      "path": "PH/sa.air_fryer/ph-sa-pass-air-fryer.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-sa-pass-blender",
+      "path": "PH/sa.blender_processor/ph-sa-pass-blender.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-sa-pass-rice-cooker",
+      "path": "PH/sa.rice_cooker/ph-sa-pass-rice-cooker.json",
+      "intent": "PASS",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-sa-warn-health-implication",
+      "path": "PH/sa.air_fryer/ph-sa-warn-health-implication.json",
+      "intent": "REVIEW",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-sa-warn-market-ranking",
+      "path": "PH/sa.blender_processor/ph-sa-warn-market-ranking.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "ph-sa-warn-sponsored-disclosure",
+      "path": "PH/sa.air_fryer/ph-sa-warn-sponsored-disclosure.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "cn-sa-reject-absolute-terms",
+      "path": "CN/sa.air_fryer/cn-sa-reject-absolute-terms.json",
+      "intent": "REJECT",
+      "verification": "auto"
+    },
+    {
+      "case_id": "cn-sa-warn-performance-data-history",
+      "path": "CN/sa.air_fryer/cn-sa-warn-performance-data-history.json",
+      "intent": "WARN",
+      "verification": "auto"
+    },
+    {
+      "case_id": "jp-cosmetic-warn-ranking",
+      "path": "JP/cosmetic/jp-cosmetic-warn-ranking.json",
+      "intent": "WARN",
+      "verification": "auto"
+    }
   ]
 }

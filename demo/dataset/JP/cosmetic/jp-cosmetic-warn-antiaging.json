@@ -4,17 +4,22 @@
   "category_id": "cosmetic",
   "platform_id": "META",
   "intent": "WARN",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for JP cosmetic. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "Demo-only pilot sample for JP cosmetic. Not legal advice. Verified auto against demo-rule-1.8.1 engine (2026-07-15).",
+  "tags": [
+    "demo",
+    "draft"
+  ],
   "upload": {
     "country_id": "JP",
     "platform_id": "META",
     "category_id": "cosmetic",
     "content": {
-      "text": "Completely reverses aging — guaranteed to make you look 10 years younger in one week. Japan's #1 anti-aging serum. #ad"
+      "text": "Completely reverses aging — guaranteed to make you look 10 years younger in one week. Japan's #1 anti-aging serum. #PR"
     },
-    "tags": ["pilot:cosmetic-warn"]
+    "tags": [
+      "pilot:cosmetic-warn"
+    ]
   },
   "ground_truth": {
     "expected_decision": "PASS",

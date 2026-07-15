@@ -737,6 +737,11 @@ body {
   color: var(--reject);
 }
 
+.decision-REVIEW {
+  background: #3b82f633;
+  color: #2563eb;
+}
+
 .decision-WARN {
   background: #f59e0b33;
   color: var(--warn);

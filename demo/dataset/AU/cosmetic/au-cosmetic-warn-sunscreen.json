@@ -4,9 +4,12 @@
   "category_id": "cosmetic",
   "platform_id": "META",
   "intent": "WARN",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for AU cosmetic. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "Demo-only pilot sample for AU cosmetic. Not legal advice. Verified auto against demo-rule-1.8.2 engine (2026-07-15).",
+  "tags": [
+    "demo",
+    "draft"
+  ],
   "upload": {
     "country_id": "AU",
     "platform_id": "META",
@@ -14,7 +17,9 @@
     "content": {
       "text": "Completely prevents sunburn and skin cancer — guaranteed all-day protection with zero reapplication needed. #ad"
     },
-    "tags": ["pilot:cosmetic-warn"]
+    "tags": [
+      "pilot:cosmetic-warn"
+    ]
   },
   "ground_truth": {
     "expected_decision": "PASS",

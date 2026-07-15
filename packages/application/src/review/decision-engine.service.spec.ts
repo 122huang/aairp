@@ -134,7 +134,7 @@ describe('DecisionEngineService', () => {
     expect(result.confidence).toBe(0.9);
   });
 
-  it('returns WARN with lower confidence for playbook-only findings', () => {
+  it('returns REVIEW for playbook findings with decision REVIEW', () => {
     const service = createService();
 
     const result = service.fuseFromFindings({
@@ -145,11 +145,74 @@ describe('DecisionEngineService', () => {
       llmFindings: [],
     });
 
+    expect(result.finalDecision).toBe('REVIEW');
+    expect(result.confidence).toBe(0.78);
+    expect(result.rationale).toContain('Manual review required');
+  });
+
+  it('returns REVIEW for rule-only REVIEW findings (must not collapse to PASS or WARN)', () => {
+    const service = createService();
+    const ruleReviewFinding: RuleFinding = {
+      module: 'RULE',
+      findingId: 'rf_review',
+      severity: 'HIGH',
+      decision: 'REVIEW',
+      refType: 'RULE',
+      refId: 'demo-sg-cpsr-registration-prerequisite',
+      refVersionId: 'demo-sg-cpsr-registration-prerequisite-v1',
+      summary: 'CPSR registration prerequisite',
+      confidence: 0.9,
+    };
+
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [ruleReviewFinding],
+      playbookFindings: [],
+      llmFindings: [],
+    });
+
+    expect(result.finalDecision).toBe('REVIEW');
+    expect(result.confidence).toBe(0.78);
+  });
+
+  it('returns WARN for playbook CONDITIONAL findings (not REVIEW)', () => {
+    const service = createService();
+    const conditionalFinding: PlaybookFinding = {
+      ...playbookReviewFinding,
+      findingId: 'pf_conditional',
+      decision: 'CONDITIONAL',
+      refId: 'before-after-imagery',
+      refVersionId: 'before-after-imagery-v1',
+    };
+
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [],
+      playbookFindings: [conditionalFinding],
+      llmFindings: [],
+    });
+
     expect(result.finalDecision).toBe('WARN');
     expect(result.confidence).toBe(0.78);
   });
 
-  it('returns WARN for llm-only findings', () => {
+  it('prefers REVIEW over WARN when both soft findings and review signals are present', () => {
+    const service = createService();
+
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [ruleWarnFinding],
+      playbookFindings: [playbookReviewFinding],
+      llmFindings: [],
+    });
+
+    expect(result.finalDecision).toBe('REVIEW');
+  });
+
+  it('returns WARN for llm-only soft findings', () => {
     const service = createService();
 
     const result = service.fuseFromFindings({
@@ -162,6 +225,26 @@ describe('DecisionEngineService', () => {
 
     expect(result.finalDecision).toBe('WARN');
     expect(result.confidence).toBe(0.75);
+  });
+
+  it('returns REVIEW for llm MANUAL_REVIEW suggestedAction', () => {
+    const service = createService();
+
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [],
+      playbookFindings: [],
+      llmFindings: [
+        {
+          ...llmWarnFinding,
+          decision: 'REVIEW',
+          evaluationDetail: { suggestedAction: 'MANUAL_REVIEW' },
+        },
+      ],
+    });
+
+    expect(result.finalDecision).toBe('REVIEW');
   });
 
   it('returns PASS when no findings exist', () => {
@@ -210,12 +293,22 @@ describe('DecisionEngineService', () => {
     expect(result.rationale).toContain('demo-sg-health-forbidden-claim');
   });
 
-  it('buildDecisionFusionInput detects manual review signals', () => {
-    const input = buildDecisionFusionInput({
+  it('buildDecisionFusionInput separates REVIEW from CONDITIONAL playbook signals', () => {
+    const conditionalOnly = buildDecisionFusionInput({
       reviewId: 'rev_test',
       hasBlocker: false,
       ruleFindings: [],
       playbookFindings: [{ ...playbookReviewFinding, decision: 'CONDITIONAL' }],
+      llmFindings: [],
+    });
+    expect(conditionalOnly.hasPlaybookReviewSignal).toBe(false);
+    expect(conditionalOnly.hasPlaybookConditionalSignal).toBe(true);
+
+    const reviewAndLlm = buildDecisionFusionInput({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [],
+      playbookFindings: [playbookReviewFinding],
       llmFindings: [
         {
           ...llmWarnFinding,
@@ -225,8 +318,9 @@ describe('DecisionEngineService', () => {
       ],
     });
 
-    expect(input.hasPlaybookReviewSignal).toBe(true);
-    expect(input.hasLlmManualReviewSignal).toBe(true);
+    expect(reviewAndLlm.hasPlaybookReviewSignal).toBe(true);
+    expect(reviewAndLlm.hasPlaybookConditionalSignal).toBe(false);
+    expect(reviewAndLlm.hasLlmManualReviewSignal).toBe(true);
   });
 
   it('returns WARN with case-confirmed signal confidence when case findings are present', () => {

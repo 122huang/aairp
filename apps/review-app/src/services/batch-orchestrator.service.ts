@@ -122,11 +122,13 @@ export function computeBatchProgress(items: BatchReviewItem[]): {
   pass: number;
   warn: number;
   reject: number;
+  review: number;
   failed: number;
 } {
   let pass = 0;
   let warn = 0;
   let reject = 0;
+  let review = 0;
   let failed = 0;
   let running = 0;
   let completed = 0;
@@ -145,6 +147,7 @@ export function computeBatchProgress(items: BatchReviewItem[]): {
       if (item.result.final_decision === 'PASS') pass += 1;
       else if (item.result.final_decision === 'WARN') warn += 1;
       else if (item.result.final_decision === 'REJECT') reject += 1;
+      else if (item.result.final_decision === 'REVIEW') review += 1;
     }
   }
 
@@ -155,6 +158,7 @@ export function computeBatchProgress(items: BatchReviewItem[]): {
     pass,
     warn,
     reject,
+    review,
     failed,
   };
 }

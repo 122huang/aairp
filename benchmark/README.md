@@ -2,6 +2,20 @@
 
 Sprint 1.5 Epic 3 evaluation manifest for the AAIRP demo pipeline.
 
+| `gray-copy-fixture.json` | Open Risk gray-copy semantic probe (32 cases: 8×CN/SG/MY/TH). Capability = LLM risk_type hit, not final_decision alone. |
+
+## Gray-copy Open Risk eval
+
+Deliberately avoids Rule/Playbook keywords. Score by **module attribution**:
+
+```powershell
+pnpm eval:gray-copy
+pnpm eval:gray-copy -- --countries=CN
+pnpm eval:gray-copy -- --countries=CN --copyIds=3,4,8
+```
+
+Reports: `reports/eval-gray-copy-*.json|.md`. Incidental disclosure/CPSR/COE hits are labeled and do **not** count as Open Risk capability.
+
 ## Files
 
 | File | Purpose |

@@ -7,6 +7,25 @@ const MODEL_TOKEN_PATTERN =
 
 const CJK_PATTERN = /[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/;
 
+/**
+ * Appliance / electronics categories under SG CPSR or MY EECA advertising prerequisites.
+ * Static category membership only (not live SAFETY Mark / COE lookup).
+ * Product decision 2026-07-15: keep always-on REVIEW for now; long-term SKU allowlist
+ * via advertisementContext.cpsrRegistered / coeRegistered (compliance-maintained list).
+ */
+const APPLIANCE_COMPLIANCE_CATEGORIES = new Set([
+  'electronics',
+  'sa.vacuum_floor',
+  'sa.steam_mop',
+  'sa.air_fryer',
+  'sa.blender_processor',
+  'sa.rice_cooker',
+  'sa.soy_milk',
+  'sa.coffee_espresso',
+  'sa.kettle_cooker',
+  'sa.other',
+]);
+
 export function fieldsContainCjk(fields: SearchableField[]): boolean {
   return fields.some((field) => CJK_PATTERN.test(field.value));
 }
@@ -47,6 +66,34 @@ export function matchesRuleWhen(
   if (when.ai_image_quality_issue !== undefined) {
     const qualityIssue = context.advertisementContext.aiImageQualityIssue === true;
     if (when.ai_image_quality_issue !== qualityIssue) {
+      return false;
+    }
+  }
+
+  if (when.category_requires_cpsr !== undefined) {
+    const inScope = APPLIANCE_COMPLIANCE_CATEGORIES.has(
+      context.dimensions.categoryId.toLowerCase(),
+    );
+    if (when.category_requires_cpsr !== inScope) {
+      return false;
+    }
+  }
+
+  if (when.category_requires_coe !== undefined) {
+    const inScope = APPLIANCE_COMPLIANCE_CATEGORIES.has(
+      context.dimensions.categoryId.toLowerCase(),
+    );
+    if (when.category_requires_coe !== inScope) {
+      return false;
+    }
+  }
+
+  if (when.audience_includes_children !== undefined) {
+    const audience = (context.advertisementContext.targetAudience ?? '').toLowerCase();
+    const includesChildren =
+      /\b(kids?|children|child|儿童|小朋友)\b/i.test(audience) ||
+      /\b(kids?|children|儿童|小朋友)\b/i.test(context.normalizedContent.text ?? '');
+    if (when.audience_includes_children !== includesChildren) {
       return false;
     }
   }

@@ -41,16 +41,29 @@ function candidateJsonStrings(content: string): string[] {
 export function parseOpenRiskResponseContent(content: string): OpenRiskResponsePayload {
   for (const candidate of candidateJsonStrings(content)) {
     try {
-      const parsed = JSON.parse(candidate) as OpenRiskResponsePayload;
-      if (parsed && Array.isArray(parsed.findings)) {
-        return parsed;
+      const parsed = JSON.parse(candidate) as unknown;
+      if (Array.isArray(parsed)) {
+        return { findings: parsed as OpenRiskFindingPayload[] };
+      }
+      if (parsed && typeof parsed === 'object') {
+        const obj = parsed as Record<string, unknown>;
+        if (Array.isArray(obj.findings)) {
+          return obj as OpenRiskResponsePayload;
+        }
+        // Some providers return a single finding object; wrap it.
+        if (typeof obj.risk_type === 'string') {
+          return { findings: [obj as OpenRiskFindingPayload] };
+        }
       }
     } catch {
       // try next candidate
     }
   }
 
-  throw new Error('invalid open risk LLM response: findings array required');
+  const preview = content.trim().replace(/\s+/g, ' ').slice(0, 240);
+  throw new Error(
+    `invalid open risk LLM response: findings array required (preview: ${preview || '(empty)'})`,
+  );
 }
 
 /** @deprecated Use parseOpenRiskResponseContent */

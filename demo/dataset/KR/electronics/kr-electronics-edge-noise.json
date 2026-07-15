@@ -4,17 +4,22 @@
   "category_id": "electronics",
   "platform_id": "META",
   "intent": "EDGE",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for KR electronics. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "Demo-only pilot sample for KR electronics. Not legal advice. Verified auto against demo-rule-1.8.1 engine (2026-07-15).",
+  "tags": [
+    "demo",
+    "draft"
+  ],
   "upload": {
     "country_id": "KR",
     "platform_id": "META",
     "category_id": "electronics",
     "content": {
-      "text": "Wireless earbuds with active noise cancellation — reduces ambient noise up to 95% in lab testing. Results may vary outdoors. #ad"
+      "text": "Wireless earbuds with active noise cancellation — reduces ambient noise up to 95% in lab testing. Results may vary outdoors. 광고 #ad"
     },
-    "tags": ["pilot:edge-noise"]
+    "tags": [
+      "pilot:edge-noise"
+    ]
   },
   "ground_truth": {
     "expected_decision": "PASS",

@@ -230,7 +230,7 @@ describe('OpenRiskDiscoveryService', () => {
 
     expect(gateway.complete).toHaveBeenCalledTimes(1);
     expect(result.skipped).toBe(false);
-    expect(result.promptPackVersion).toBe('demo-open-risk-1.4.0');
+    expect(result.promptPackVersion).toBe('demo-open-risk-1.5.0');
     expect(result.findings).toHaveLength(1);
     expect(result.findings[0]).toMatchObject({
       module: 'LLM',
@@ -332,7 +332,7 @@ describe('OpenRiskDiscoveryService', () => {
 
   it('aligns with demo/open-risk.stub.json reference asset', () => {
     const asset = parseOpenRiskStubResponse(readFileSync(demoStubPath, 'utf8'));
-    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.4.0');
+    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.5.0');
     expect(asset.findings[0]?.risk_type).toBe('combined-misleading-claim');
   });
 

@@ -105,6 +105,10 @@ function showDetail(record) {
       <div><dt>结论</dt><dd><span class="decision decision-${escapeHtml(record.decision?.final_decision)}">${escapeHtml(record.decision?.final_decision)}</span></dd></div>
       <div><dt>提交时间</dt><dd>${escapeHtml(formatTime(record.created_at))}</dd></div>
       <div><dt>状态</dt><dd>${escapeHtml(record.lifecycle_status)}</dd></div>
+      <div><dt>Pipeline</dt><dd>${escapeHtml(record.metadata?.pipeline_version || '—')}</dd></div>
+      <div><dt>Rule pack</dt><dd>${escapeHtml(record.context_builder_output?.resolved_knowledge_versions?.rulePackVersion || '—')}</dd></div>
+      <div><dt>Playbook pack</dt><dd>${escapeHtml(record.context_builder_output?.resolved_knowledge_versions?.playbookPackVersion || '—')}</dd></div>
+      <div><dt>Open Risk prompt</dt><dd>${escapeHtml(record.llm_analysis?.prompt_pack_version || '—')}</dd></div>
     </dl>
     <section class="detail-section">
       <h3>测试文案</h3>
@@ -118,6 +122,14 @@ function showDetail(record) {
     <section class="detail-section">
       <h3>结论说明</h3>
       <div class="text-block">${escapeHtml(record.decision?.rationale || '—')}</div>
+    </section>
+    <section class="detail-section">
+      <h3>人工反馈</h3>
+      ${
+        record.human_feedback
+          ? `<div class="text-block">${escapeHtml(record.human_feedback.agreement_with_ai || '—')} · ${escapeHtml(record.human_feedback.decision || '—')}<br/>${escapeHtml(record.human_feedback.comment || '（无备注）')}<br/><span class="muted">${escapeHtml(formatTime(record.human_feedback.submitted_at))}</span></div>`
+          : '<p class="muted">尚未写入 human_feedback（confirm 时可提交）。Vision finding / 真实模型名仍待 CaseRecord 字段补齐。</p>'
+      }
     </section>
     <section class="detail-section">
       <h3>风险项 (${findingItems.length})</h3>

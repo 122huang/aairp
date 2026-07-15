@@ -3,9 +3,9 @@
   "country_id": "PH",
   "category_id": "sa.air_fryer",
   "platform_id": "META",
-  "intent": "WARN",
+  "intent": "REVIEW",
   "verification": "auto",
-  "notes": "6B-2f PH stricter health-implication — Tagalog wellness language. Not legal advice.",
+  "notes": "6B-2f PH health-implication — Tagalog wellness language. Hybrid policy (11.3): health-implication fuses to REVIEW (evidence boundary). Not legal advice.",
   "tags": ["6b-2f", "locale-expansion", "demo"],
   "upload": {
     "country_id": "PH",
@@ -14,10 +14,10 @@
     "content": {
       "text": "Air fryer para sa kalusugan — less oil cooking for your family. #ad"
     },
-    "tags": ["pilot:ph-sa-warn"]
+    "tags": ["pilot:ph-sa-review"]
   },
   "ground_truth": {
-    "expected_decision": "WARN",
+    "expected_decision": "REVIEW",
     "expected_findings": [
       { "module": "RULE", "ref_id": "demo-apac-sa-health-implication" }
     ],

@@ -4,9 +4,12 @@
   "category_id": "food",
   "platform_id": "META",
   "intent": "PASS",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for ID food. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "Demo-only pilot sample for ID food. Not legal advice. Verified auto against demo-rule-1.8.2 engine (2026-07-15).",
+  "tags": [
+    "demo",
+    "draft"
+  ],
   "upload": {
     "country_id": "ID",
     "platform_id": "META",
@@ -14,7 +17,9 @@
     "content": {
       "text": "Instant noodles with authentic Indonesian flavours — quick and convenient for busy days. #ad"
     },
-    "tags": ["pilot:food-pass"]
+    "tags": [
+      "pilot:food-pass"
+    ]
   },
   "ground_truth": {
     "expected_decision": "PASS",

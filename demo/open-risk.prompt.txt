@@ -32,6 +32,7 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 - grammar-quality: spelling, grammar, or formatting errors in published copy
 - market-ranking-claim: local #1 / sales champion claims or implied authority endorsement (SG/MY/TH)
 - sponsored-disclosure: promotional/KOL content missing #ad, sponsored, or 广告 disclosure if ad wording is paraphrased but equivalent to a taxonomy class above, report it even when exact keywords did not match rules.
+- scarcity-urgency-claim: implied limited stock, discontinuation, last chance, or FOMO pressure without a verifiable quantity, end date, or offer scope (soft pressure still counts when the sentence steers purchase via scarcity theater)
 
 ## Advertisement
 - Text: {ad_text}
@@ -51,6 +52,41 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 
 ## Shared rule refs from current review + precedents
 {shared_rule_refs}
+
+## Gray-copy few-shots (implicit risks WITHOUT banned keywords)
+
+These examples intentionally avoid Rule/Playbook trigger terms. When the live ad uses the same *semantic pattern*, you MUST still report a finding with an appropriate taxonomy `risk_type`.
+
+### Few-shot A — implied comparative / analogy denigration → unsupported-comparative-claim or analogical-claim
+Ad: 别人家的吸尘器还在"吸"，我们家这台已经在"搬家"了——地板缝里的灰尘都得搬家挪窝。
+Correct finding:
+- risk_type: unsupported-comparative-claim (or analogical-claim)
+- suggested_action: WARN
+- Why: metaphor contrasts "others only suck" vs "ours makes dust move house" — soft superiority without baseline/test method; do NOT return empty findings just because no "better than"/"more than" keyword appears.
+
+### Few-shot B — implied comparative denigration via third-party anecdote → unsupported-comparative-claim
+Ad: 隔壁老王换了三次搅拌机才发现，真正安静的机器长这样。
+Correct finding:
+- risk_type: unsupported-comparative-claim
+- suggested_action: WARN
+- Why: "换了三次才发现真正安静" implies other/prior products were inferiorly noisy and this one is the quiet benchmark — comparative without named baseline or measurement.
+
+### Few-shot C — implied scarcity / FOMO without urgency keywords → scarcity-urgency-claim
+Ad: 这批做完，工厂说要停产升级了，喜欢的朋友这次真的别再犹豫。
+Correct finding:
+- risk_type: scarcity-urgency-claim
+- suggested_action: WARN
+- Why: discontinuation + "别再犹豫" pressures purchase via scarce/last-chance framing without verifiable production-end date or remaining stock; not excused merely because "buy now"/"limited time" strings are absent.
+
+### Few-shot D — unsubstantiated quantitative performance (history: CN kitchen SA enforcement) → unsubstantiated-quantitative-claim
+Ad: 这台炸锅比传统煎锅用油量减少一大截，耗电也少很多，天天用都省一笔。
+Correct finding:
+- risk_type: unsubstantiated-quantitative-claim
+- suggested_action: WARN
+- Why: oil/power-savings implication without baseline, method, or period — same risk class as handbook §8.3 public kitchen-appliance mismatch fine; map to `demo-cn-performance-data-mismatch-risk` when in CN even if exact percent keywords differ.
+
+### Few-shot anti-pattern
+Do NOT miss A–D by classifying them as lifestyle puffery. Empty findings on those patterns is incorrect.
 
 ## SG / MY / TH small-appliance semantic guidance
 
@@ -108,7 +144,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 
 ## Output format (JSON only, no markdown)
 {
-  "prompt_pack_version": "demo-open-risk-1.4.0",
+  "prompt_pack_version": "demo-open-risk-1.5.0",
   "findings": [
     {
       "risk_type": "kebab-case-id",

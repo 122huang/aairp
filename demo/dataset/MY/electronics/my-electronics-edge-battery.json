@@ -4,9 +4,9 @@
   "category_id": "electronics",
   "platform_id": "META",
   "intent": "EDGE",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for MY electronics. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "MY electronics — EECA/COE prerequisite routes to REVIEW for certification confirmation. Not legal advice.",
+  "tags": ["demo", "verified", "6b-coe"],
   "upload": {
     "country_id": "MY",
     "platform_id": "META",
@@ -17,7 +17,9 @@
     "tags": ["pilot:edge-battery"]
   },
   "ground_truth": {
-    "expected_decision": "PASS",
-    "expected_findings": []
+    "expected_decision": "REVIEW",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-my-eeca-coe-prerequisite" }
+    ]
   }
 }

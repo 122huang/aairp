@@ -1,0 +1,26 @@
+{
+  "case_id": "cn-sa-warn-performance-data-history",
+  "country_id": "CN",
+  "category_id": "sa.air_fryer",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "auto",
+  "notes": "Historical-pattern case inspired by handbook §8.3 public enforcement: kitchen small-appliance ads claiming oil/power reduction mismatched measured data (CN¥200k fine example). Maps to demo-cn-performance-data-mismatch-risk. Not HyperHeat PC201 (source file still pending). Not legal advice.",
+  "tags": ["historical", "cn", "appendix-e", "demo-rule-1.8.2"],
+  "upload": {
+    "country_id": "CN",
+    "platform_id": "META",
+    "category_id": "sa.air_fryer",
+    "content": {
+      "text": "新款空气炸锅用油量减少高达80%，耗电量降低一半，每晚只需一度电。广告"
+    },
+    "tags": ["pilot:cn-historical-performance"]
+  },
+  "ground_truth": {
+    "expected_decision": "WARN",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-cn-performance-data-mismatch-risk" }
+    ],
+    "open_risk_skipped": false
+  }
+}

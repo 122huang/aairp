@@ -43,6 +43,13 @@ export function decisionBannerStyle(decision: string): DecisionBannerStyle {
         verdict: 'text-warn',
         badge: 'bg-[#FEF3C7] text-warn',
       };
+    case 'REVIEW':
+      return {
+        bar: 'border-l-blue-500',
+        background: 'bg-[#EFF6FF]',
+        verdict: 'text-blue-700',
+        badge: 'bg-[#DBEAFE] text-blue-700',
+      };
     case 'REJECT':
       return {
         bar: 'border-l-reject',

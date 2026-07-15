@@ -1,0 +1,25 @@
+{
+  "case_id": "cn-sa-reject-absolute-terms",
+  "country_id": "CN",
+  "category_id": "sa.air_fryer",
+  "platform_id": "META",
+  "intent": "REJECT",
+  "verification": "auto",
+  "notes": "Smoke: CN Advertising Law Art.9 absolute terms blocker. Not legal advice.",
+  "tags": ["cn", "smoke", "demo-rule-1.8.0"],
+  "upload": {
+    "country_id": "CN",
+    "platform_id": "META",
+    "category_id": "sa.air_fryer",
+    "content": {
+      "text": "全网最低价空气炸锅，国家级品质，无效退款。广告"
+    },
+    "tags": ["pilot:cn-absolute"]
+  },
+  "ground_truth": {
+    "expected_decision": "REJECT",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-cn-absolute-terms-blocker" }
+    ]
+  }
+}

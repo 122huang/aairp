@@ -1,4 +1,4 @@
-export type FinalDecision = 'PASS' | 'WARN' | 'REJECT';
+export type FinalDecision = 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
 
 export type ReviewFindingCounts = {
   rule: number;
@@ -25,7 +25,12 @@ export type DecisionFusionInput = {
   llmFindingCount: number;
   caseFindingCount: number;
   hasRuleWarn: boolean;
+  /** Rule finding decision === REVIEW (routes to human / product-compliance). */
+  hasRuleReview: boolean;
+  /** Playbook finding decision === REVIEW only (CONDITIONAL stays soft WARN). */
   hasPlaybookReviewSignal: boolean;
+  /** Playbook CONDITIONAL patterns surface as WARN, not REVIEW. */
+  hasPlaybookConditionalSignal: boolean;
   hasLlmManualReviewSignal: boolean;
   hasCaseConfirmedSignal: boolean;
   visionFindingCount: number;

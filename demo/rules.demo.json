@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.7.3",
+  "pack_version": "demo-rule-1.8.3",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -7,10 +7,19 @@
       "severity": "BLOCKER",
       "decision": "FAIL",
       "summary": "Prohibited absolute health cure claims are not allowed",
-      "forbidden_terms": ["100% cure", "100% effective", "cure", "miracle"],
+      "forbidden_terms": [
+        "100% cure",
+        "100% effective",
+        "cure",
+        "miracle"
+      ],
       "scopes": {
-        "countries": ["SG"],
-        "categories": ["health.supplement"]
+        "countries": [
+          "SG"
+        ],
+        "categories": [
+          "health.supplement"
+        ]
       },
       "citation": {
         "law_name": "SG Health Products Act (Demo)",
@@ -23,22 +32,120 @@
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Unsubstantiated superlative or efficacy claims require substantiation",
-      "trigger_terms": ["clinically proven", "guaranteed", "100%", "instant results"],
+      "trigger_terms": [
+        "clinically proven",
+        "guaranteed",
+        "100%",
+        "instant results"
+      ],
       "scopes": {
-        "countries": ["SG"],
-        "categories": ["health.supplement"]
+        "countries": [
+          "SG"
+        ],
+        "categories": [
+          "health.supplement"
+        ]
       }
     },
     {
       "rule_id": "demo-sg-sponsored-disclosure",
-      "rule_version_id": "demo-sg-sponsored-disclosure-v1",
+      "rule_version_id": "demo-sg-sponsored-disclosure-v2",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Sponsored or promotional content should include an ad disclosure",
-      "required_any_terms": ["#ad", "sponsored", "advertisement", "广告"],
+      "required_any_terms": [
+        "#ad",
+        "sponsored",
+        "advertisement",
+        "广告"
+      ],
       "scopes": {
-        "countries": ["SG"],
-        "categories": ["health.supplement"]
+        "countries": [
+          "SG"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "ASAS / Singapore advertising disclosure practice (Demo)",
+        "article": "Sponsored content identification — cross-category"
+      }
+    },
+    {
+      "rule_id": "demo-sg-cpsr-registration-prerequisite",
+      "rule_version_id": "demo-sg-cpsr-registration-prerequisite-v1",
+      "severity": "HIGH",
+      "decision": "REVIEW",
+      "summary": "Home-appliance model advertising before CPSR SAFETY Mark registration is unlawful — product compliance must confirm registration status before publish",
+      "when": {
+        "category_requires_cpsr": true
+      },
+      "trigger_terms": [],
+      "scopes": {
+        "countries": [
+          "SG"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Consumer Protection (Safety Requirements) Regulations + CPSO registration requirement",
+        "article": "consumerproductsafety.gov.sg — model must complete SAFETY Mark registration before advertising or supply"
+      }
+    },
+    {
+      "rule_id": "demo-my-eeca-coe-prerequisite",
+      "rule_version_id": "demo-my-eeca-coe-prerequisite-v1",
+      "severity": "HIGH",
+      "decision": "REVIEW",
+      "summary": "Energy-using products under EECA must complete COE and labelling before advertising (fine up to RM50,000) — product compliance must confirm COE status before publish",
+      "when": {
+        "category_requires_coe": true
+      },
+      "trigger_terms": [],
+      "scopes": {
+        "countries": [
+          "MY"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Energy Efficiency and Conservation Act 2024 (Act 861)",
+        "article": "s.17(1) — COE energy certificate prerequisite for advertising"
       }
     },
     {
@@ -134,7 +241,11 @@
         "respiratory-sensitive"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -149,8 +260,8 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
-        "article": "Prohibited health & medical claims — small appliances"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
+        "article": "Prohibited health & medical claims — small appliances | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       }
     },
     {
@@ -187,7 +298,11 @@
         "永远最好"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -218,8 +333,8 @@
         }
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
-        "article": "Substantiation — absolute claims"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
+        "article": "Substantiation — absolute claims | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       }
     },
     {
@@ -274,7 +389,11 @@
         "99.7%"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -289,16 +408,16 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
-        "article": "Performance claims — substantiation required"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
+        "article": "Performance claims — substantiation required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       }
     },
     {
       "rule_id": "demo-apac-sa-certification-evidence",
-      "rule_version_id": "demo-apac-sa-certification-evidence-v4",
+      "rule_version_id": "demo-apac-sa-certification-evidence-v5",
       "severity": "HIGH",
-      "decision": "WARN",
-      "summary": "HEPA-class filtration: HEPA-class vs True HEPA distinction and/or air-quality health direction — document verification required (WARN)",
+      "decision": "REVIEW",
+      "summary": "HEPA-class filtration / lab / certification evidence referenced — document authenticity and scope cannot be verified by the engine; escalate for product-compliance confirmation (REVIEW)",
       "trigger_terms": [
         "national standard grade",
         "authoritative certification",
@@ -335,7 +454,11 @@
         "第三方检测"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -350,8 +473,8 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
-        "article": "Evidence & certification — verification required"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
+        "article": "Evidence & certification — verification required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       }
     },
     {
@@ -360,9 +483,15 @@
       "severity": "BLOCKER",
       "decision": "FAIL",
       "summary": "Material or product description inconsistency across ad assets must be resolved before publishing",
-      "forbidden_terms": ["inconsistency"],
+      "forbidden_terms": [
+        "inconsistency"
+      ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -377,16 +506,16 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Content consistency — conflicting claims"
       }
     },
     {
       "rule_id": "demo-apac-sa-health-implication",
-      "rule_version_id": "demo-apac-sa-health-implication-v8",
+      "rule_version_id": "demo-apac-sa-health-implication-v10",
       "severity": "MEDIUM",
-      "decision": "WARN",
-      "summary": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — qualify context or attach data (WARN)",
+      "decision": "REVIEW",
+      "summary": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — require human check that context/data are on file (REVIEW)",
       "trigger_terms": [
         "lower sugar",
         "healthier",
@@ -450,6 +579,8 @@
         "补充营养",
         "蔬菜营养",
         "每日所需",
+        "让孩子也爱上",
+        "深呼吸",
         "breathe easy",
         "whole benefits",
         "think about what they eat",
@@ -457,7 +588,11 @@
         "坐月子"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -477,13 +612,13 @@
         }
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
-        "article": "Health & nutrition implications"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
+        "article": "Health & nutrition implications | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       }
     },
     {
       "rule_id": "demo-apac-sa-comparative-claim",
-      "rule_version_id": "demo-apac-sa-comparative-claim-v7",
+      "rule_version_id": "demo-apac-sa-comparative-claim-v8",
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Unsupported comparative claim: stronger/faster/quieter without identifiable, verifiable baseline (WARN)",
@@ -528,6 +663,9 @@
         "无可超越",
         "无出其右",
         "nothing else comes close",
+        "world no.1",
+        "no.1",
+        "best in class",
         "thailand's no.1",
         "更强劲",
         "更快加热",
@@ -546,7 +684,11 @@
         "tefal"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -561,8 +703,8 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
-        "article": "Comparative advertising — baseline required"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
+        "article": "Comparative advertising — baseline required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       }
     },
     {
@@ -571,9 +713,17 @@
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Capacity or volume claims (e.g. up to X kg/bowls) require substantiation and clear test conditions",
-      "trigger_terms": ["stew up to", "up to 2kg", "up to 16 bowls"],
+      "trigger_terms": [
+        "stew up to",
+        "up to 2kg",
+        "up to 16 bowls"
+      ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -588,7 +738,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Capacity claims — substantiation required"
       }
     },
@@ -615,7 +765,11 @@
         "零故障"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -630,7 +784,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Substantiation — absolute claims"
       }
     },
@@ -650,7 +804,11 @@
         "千万家庭信赖"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -665,7 +823,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Substantiation — social proof claims"
       }
     },
@@ -675,9 +833,15 @@
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Patent claims require verification of jurisdiction, patent number, and ownership",
-      "trigger_terms": ["china patent"],
+      "trigger_terms": [
+        "china patent"
+      ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -692,7 +856,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Patent claims — verification required"
       }
     },
@@ -702,10 +866,16 @@
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Ad content appears to reference the wrong SKU or product model; verify asset-to-SKU alignment",
-      "trigger_terms": ["wrong sku"],
+      "trigger_terms": [
+        "wrong sku"
+      ],
       "sku_mismatch_check": true,
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -720,7 +890,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Content consistency — SKU alignment"
       }
     },
@@ -746,7 +916,11 @@
         "incorrect for thailand market"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -761,7 +935,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Localization — market-appropriate assets"
       }
     },
@@ -792,7 +966,11 @@
         "ai rendered image without disclaimer"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -807,7 +985,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "AI / illustration disclaimer"
       }
     },
@@ -817,9 +995,17 @@
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Grammar, spelling, or formatting errors detected; revise before publishing",
-      "trigger_terms": ["22:00pm", "what's include", "multiple presents"],
+      "trigger_terms": [
+        "22:00pm",
+        "what's include",
+        "multiple presents"
+      ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -834,7 +1020,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Content quality — language accuracy"
       }
     },
@@ -868,7 +1054,11 @@
         "海鲜食材"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -883,7 +1073,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Food safety — overnight raw-meat depiction"
       }
     },
@@ -908,7 +1098,11 @@
         "零有害物质"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -923,7 +1117,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Material safety — third-party substantiation required"
       }
     },
@@ -942,7 +1136,9 @@
         "endorsed by singapore"
       ],
       "scopes": {
-        "countries": ["SG"],
+        "countries": [
+          "SG"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -977,7 +1173,9 @@
         "certified by national health"
       ],
       "scopes": {
-        "countries": ["MY"],
+        "countries": [
+          "MY"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1010,7 +1208,9 @@
         "泰国卫生部"
       ],
       "scopes": {
-        "countries": ["TH"],
+        "countries": [
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1052,7 +1252,11 @@
         "national safety standards — certified by government"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1067,7 +1271,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "False government or authority endorsement"
       }
     },
@@ -1094,7 +1298,11 @@
         "outperforms leading brands"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1109,8 +1317,63 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Comparative advertising — competitor IP"
+      }
+    },
+    {
+      "rule_id": "demo-apac-sa-urgency-scarcity-claim",
+      "rule_version_id": "demo-apac-sa-urgency-scarcity-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Urgency or scarcity pressure without a verifiable offer end date, remaining stock quantity, or production-end fact — soft FOMO framing (WARN; qualify or remove)",
+      "trigger_terms": [
+        "buy now",
+        "act now",
+        "limited time",
+        "hurry",
+        "立即购买",
+        "only 3 left",
+        "while stocks last",
+        "别再犹豫",
+        "停产升级",
+        "工厂说要停产",
+        "last chance",
+        "running out",
+        "selling fast"
+      ],
+      "scopes": {
+        "countries": [
+          "SG",
+          "MY",
+          "TH",
+          "ID",
+          "VN",
+          "PH",
+          "JP",
+          "KR",
+          "AU",
+          "CN"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics",
+          "health.supplement",
+          "cosmetic",
+          "food"
+        ]
+      },
+      "citation": {
+        "law_name": "ASAS SCAP / ICC Code (Demo) — urgency & scarcity presentations",
+        "article": "Pressure / FOMO claims require verifiable time or quantity limits"
       }
     },
     {
@@ -1138,7 +1401,11 @@
         "checkout total includes"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1153,7 +1420,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Pricing transparency — misleading promotions"
       }
     },
@@ -1178,7 +1445,11 @@
         "delivers the texture and aroma of traditional"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1193,7 +1464,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Analogy claims — substantiation required"
       }
     },
@@ -1220,7 +1491,11 @@
         "circular economy"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1235,7 +1510,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Environmental claims — substantiation required"
       }
     },
@@ -1250,7 +1525,11 @@
         "ocr_contains_cjk": true
       },
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1265,7 +1544,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Localization — CJK in image OCR"
       }
     },
@@ -1291,7 +1570,11 @@
         "请勿对外"
       ],
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1306,7 +1589,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Internal annotations — must not appear in consumer-facing assets"
       }
     },
@@ -1321,7 +1604,11 @@
         "certification_image_unreadable": true
       },
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1336,7 +1623,7 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Evidence quality — certification legibility"
       }
     },
@@ -1351,7 +1638,11 @@
         "ai_image_quality_issue": true
       },
       "scopes": {
-        "countries": ["SG", "MY", "TH"],
+        "countries": [
+          "SG",
+          "MY",
+          "TH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1366,19 +1657,27 @@
         ]
       },
       "citation": {
-        "law_name": "APAC Advertising Standards (Demo)",
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "AI image quality — consumer-facing assets"
       }
     },
     {
       "rule_id": "demo-id-sponsored-disclosure",
-      "rule_version_id": "demo-id-sponsored-disclosure-v1",
+      "rule_version_id": "demo-id-sponsored-disclosure-v2",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Indonesia sponsored or influencer content should include Bahasa ad identification",
-      "required_any_terms": [],
+      "required_any_terms": [
+        "#iklan",
+        "berbayar",
+        "konten berbayar",
+        "#ad",
+        "sponsored"
+      ],
       "scopes": {
-        "countries": ["ID"],
+        "countries": [
+          "ID"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1394,19 +1693,28 @@
         ]
       },
       "citation": {
-        "law_name": "Indonesian Advertising Ethics Code (Demo)",
-        "article": "Article 4 — Ad identification"
+        "law_name": "Etika Pariwara Indonesia (EPI) 2020 — ID-SRO-001",
+        "article": "Ad identification / commercial relationship disclosure (endorsement & paid content)"
       }
     },
     {
       "rule_id": "demo-id-product-category-boundary",
-      "rule_version_id": "demo-id-product-category-boundary-v1",
+      "rule_version_id": "demo-id-product-category-boundary-v2",
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Small-appliance copy touching supplement or health vocabulary — confirm product category annotation before publish",
-      "trigger_terms": [],
+      "trigger_terms": [
+        "suplemen",
+        "kesehatan",
+        "khasiat",
+        "obat",
+        "menyembuhkan",
+        "mengobati"
+      ],
       "scopes": {
-        "countries": ["ID"],
+        "countries": [
+          "ID"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1421,19 +1729,30 @@
         ]
       },
       "citation": {
-        "law_name": "BPOM Health Supplement Claims (Demo)",
-        "article": "Category boundary — sa.* vs health.supplement"
+        "law_name": "BPOM category boundary + EPI 2.8.4 household health-device accuracy (Demo)",
+        "article": "sa.* appliances must not use supplement/efficacy vocabulary without category re-annotation"
       }
     },
     {
       "rule_id": "demo-id-sa-market-claim",
-      "rule_version_id": "demo-id-sa-market-claim-v1",
+      "rule_version_id": "demo-id-sa-market-claim-v2",
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Indonesia-local ranking or superiority claims require substantiation",
-      "trigger_terms": [],
+      "trigger_terms": [
+        "terbaik",
+        "nomor satu",
+        "nomor 1",
+        "terpercaya",
+        "#1 indonesia",
+        "no.1 indonesia",
+        "paling unggul",
+        "juara penjualan"
+      ],
       "scopes": {
-        "countries": ["ID"],
+        "countries": [
+          "ID"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1448,19 +1767,30 @@
         ]
       },
       "citation": {
-        "law_name": "Indonesian Advertising Ethics Code (Demo)",
-        "article": "Comparative and ranking claims"
+        "law_name": "Etika Pariwara Indonesia (EPI) 2020 — ID-SRO-001",
+        "article": "1.18 comparative advertising — methodology/source/period required for ranking claims"
       }
     },
     {
       "rule_id": "demo-vn-sa-market-claim",
-      "rule_version_id": "demo-vn-sa-market-claim-v1",
+      "rule_version_id": "demo-vn-sa-market-claim-v2",
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Vietnam-local ranking or market-leader claims require substantiation (warn-tier enforcement)",
-      "trigger_terms": [],
+      "trigger_terms": [
+        "số 1",
+        "số một",
+        "hàng đầu",
+        "tốt nhất thị trường",
+        "thị trường số 1",
+        "bán chạy nhất",
+        "#1 việt nam",
+        "no.1 việt nam"
+      ],
       "scopes": {
-        "countries": ["VN"],
+        "countries": [
+          "VN"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1476,18 +1806,28 @@
       },
       "citation": {
         "law_name": "Law on Advertising 2012 (Demo)",
-        "article": "Article 9 — Ranking claims"
+        "article": "Article 9 — Ranking / superiority claims require substantiation"
       }
     },
     {
       "rule_id": "demo-vn-foreign-brand-ad-approval",
-      "rule_version_id": "demo-vn-foreign-brand-ad-approval-v1",
+      "rule_version_id": "demo-vn-foreign-brand-ad-approval-v2",
       "severity": "MEDIUM",
       "decision": "REVIEW",
       "summary": "Cross-border or foreign-origin brand advertising targeting Vietnam may require approval — legal confirmation required",
-      "trigger_terms": [],
+      "trigger_terms": [
+        "imported from usa",
+        "from usa",
+        "globalbrand",
+        "imported from",
+        "foreign brand",
+        "thương hiệu nước ngoài",
+        "nhập khẩu từ"
+      ],
       "scopes": {
-        "countries": ["VN"],
+        "countries": [
+          "VN"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1503,18 +1843,26 @@
       },
       "citation": {
         "law_name": "Law on Advertising 2012 (Demo)",
-        "article": "Article 33 — Foreign advertising"
+        "article": "Article 33 — Foreign / cross-border advertising approval"
       }
     },
     {
       "rule_id": "demo-ph-sponsored-disclosure",
-      "rule_version_id": "demo-ph-sponsored-disclosure-v1",
+      "rule_version_id": "demo-ph-sponsored-disclosure-v2",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Philippines sponsored content should include ASC-recognised ad disclosure markers",
-      "required_any_terms": [],
+      "required_any_terms": [
+        "#ad",
+        "sponsored",
+        "advertisement",
+        "bayad na nilalaman",
+        "#paid"
+      ],
       "scopes": {
-        "countries": ["PH"],
+        "countries": [
+          "PH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1536,13 +1884,23 @@
     },
     {
       "rule_id": "demo-ph-sa-market-claim",
-      "rule_version_id": "demo-ph-sa-market-claim-v1",
+      "rule_version_id": "demo-ph-sa-market-claim-v2",
       "severity": "MEDIUM",
       "decision": "WARN",
       "summary": "Philippines-local ranking or superiority claims require substantiation",
-      "trigger_terms": [],
+      "trigger_terms": [
+        "pinakamahusay",
+        "number one",
+        "#1 sa pilipinas",
+        "#1 sa philippines",
+        "numero uno",
+        "best in the philippines",
+        "no.1 in the philippines"
+      ],
       "scopes": {
-        "countries": ["PH"],
+        "countries": [
+          "PH"
+        ],
         "categories": [
           "sa.vacuum_floor",
           "sa.steam_mop",
@@ -1557,8 +1915,1090 @@
         ]
       },
       "citation": {
-        "law_name": "Consumer Act of the Philippines (Demo)",
-        "article": "Article 50 — Misleading representations"
+        "law_name": "Consumer Act of the Philippines RA 7394 (Demo)",
+        "article": "Article 50 — Misleading representations / superiority claims"
+      }
+    },
+    {
+      "rule_id": "demo-jp-ranking-unsubstantiated",
+      "rule_version_id": "demo-jp-ranking-unsubstantiated-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "No.1/排名类宣称缺乏第三方调查依据——需注明调查机构、调查时间、样本量及方法",
+      "trigger_terms": [
+        "No.1",
+        "業界No.1",
+        "日本No.1",
+        "満足度No.1",
+        "満足度no.1",
+        "売上No.1",
+        "国内No.1",
+        "no.1",
+        "第1位",
+        "第一位",
+        "業界最高",
+        "口コミNo.1"
+      ],
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "景品表示法（不当景品類及び不当表示防止法）",
+        "article": "消費者庁《No.1表示に関する実態調査報告書》2024-09-26"
+      }
+    },
+    {
+      "rule_id": "demo-jp-yakukiho-efficacy-overclaim",
+      "rule_version_id": "demo-jp-yakukiho-efficacy-overclaim-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "化妆品/医药部外品/一般消费品功效宣称超出药机法法定范围——非医药品不得使用医疗/治疗效果表述",
+      "forbidden_terms": [
+        "治る",
+        "治療",
+        "効く",
+        "完治",
+        "病気が治る",
+        "medical effect",
+        "cures",
+        "治愈",
+        "治疗效果",
+        "根治",
+        "医薬品的効果",
+        "抗がん",
+        "がんに効く"
+      ],
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "薬機法",
+        "article": "現行版本 2024-04-01施行"
+      }
+    },
+    {
+      "rule_id": "demo-jp-stealth-marketing-disclosure",
+      "rule_version_id": "demo-jp-stealth-marketing-disclosure-v1",
+      "severity": "LOW",
+      "decision": "WARN",
+      "summary": "网红/KOL推广内容未明确标注广告关系，可能被认定为隐性营销（ステマ）",
+      "required_any_terms": [
+        "PR",
+        "広告",
+        "宣伝",
+        "提供",
+        "#PR",
+        "#広告",
+        "スポンサー"
+      ],
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "景品表示法",
+        "article": "ステルスマーケティングに関する運用基準（2023年10月施行）"
+      }
+    },
+    {
+      "rule_id": "demo-jp-unfair-competition-misrepresentation",
+      "rule_version_id": "demo-jp-unfair-competition-misrepresentation-v1",
+      "severity": "HIGH",
+      "decision": "FAIL",
+      "summary": "誤認惹起行為——就原产地、品质、内容、制造方法、用途或数量作出引人误认的表示，与景品表示法竞合规制",
+      "trigger_terms": [
+        "日本製と誤認",
+        "原産地虚偽",
+        "偽装表示",
+        "made in japan（虚偽）",
+        "製造方法虚偽",
+        "品質虚偽表示"
+      ],
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "不正競争防止法（平成五年法律第四十七号）",
+        "article": "第2条第1項第20号（誤認惹起行為）、第21条第2項第1号（罰則：5年以下懲役又は500万円以下罰金）"
+      }
+    },
+    {
+      "rule_id": "demo-jp-household-label-consistency",
+      "rule_version_id": "demo-jp-household-label-consistency-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "广告引用容量/功率参数——须与家庭用品品质标示法法定标签一致；吸尘器仅限有线适用，空气炸锅完全不在覆盖清单内，需产品合规团队确认对应品类是否负有标示义务",
+      "trigger_terms": [
+        "吸込仕事率",
+        "定格容量",
+        "質量",
+        "kpa",
+        "W（ワット）",
+        "容量"
+      ],
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker"
+        ]
+      },
+      "citation": {
+        "law_name": "家庭用品品質表示法 + 電気機械器具品質表示規程",
+        "article": "令和4年12月23日改正，2023-01-01施行"
+      }
+    },
+    {
+      "rule_id": "demo-jp-jis-voluntary-standard",
+      "rule_version_id": "demo-jp-jis-voluntary-standard-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "JIS为自愿性标准，非强制——不得宣称'依法必须符合JIS标准'或暗示国家强制认证",
+      "trigger_terms": [
+        "JIS規格に基づき義務",
+        "JIS認証必須",
+        "国家強制認証",
+        "法律により義務付け"
+      ],
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop"
+        ]
+      },
+      "citation": {
+        "law_name": "JIS C9108 / JIS C1509-1",
+        "article": "任意規格（JISC官网已核实自愿性质）"
+      }
+    },
+    {
+      "rule_id": "demo-kr-comparative-denigration",
+      "rule_version_id": "demo-kr-comparative-denigration-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "比较广告贬损竞品——须基于同类可比条件并注明来源",
+      "trigger_terms": [
+        "경쟁사보다",
+        "타사 대비 열등",
+        "타사는 별로",
+        "경쟁 제품보다 못한",
+        "다른 브랜드는",
+        "competitor is inferior",
+        "不如竞品",
+        "远超同类品牌"
+      ],
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "표시・광고의 공정화에 관한 법률",
+        "article": "2025-01-21最新修正，比较广告条款"
+      }
+    },
+    {
+      "rule_id": "demo-kr-fake-discount-pricing",
+      "rule_version_id": "demo-kr-fake-discount-pricing-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "虚假折扣——虚高原价后声称大幅折扣，事实性虚假而非措辞问题",
+      "trigger_terms": [
+        "정가 대비",
+        "할인 전 가격 허위",
+        "가짜 정가",
+        "상시 할인가",
+        "허위 정상가",
+        "虚高原价",
+        "从未以原价出售"
+      ],
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "표시・광고의 공정화에 관한 법률",
+        "article": "허위・과장 광고 조항"
+      }
+    },
+    {
+      "rule_id": "demo-kr-kol-disclosure-format",
+      "rule_version_id": "demo-kr-kol-disclosure-format-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "KOL/网红推广披露须放在标题或正文开头，用消费者易懂措辞，模糊/附条件表述视为不合格——本规则仅能检测披露词是否存在，位置与字体需人工复核",
+      "required_any_terms": [
+        "협찬받음",
+        "광고",
+        "유료광고",
+        "제공받음"
+      ],
+      "forbidden_terms": [
+        "소정의 수수료를 지급받을 수 있음",
+        "일부 협찬"
+      ],
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "추천・보증 등에 관한 표시・광고 심사지침",
+        "article": "2024年修正，2024-12-01施行"
+      }
+    },
+    {
+      "rule_id": "demo-kr-suction-superlative-unsubstantiated",
+      "rule_version_id": "demo-kr-suction-superlative-unsubstantiated-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "无实测依据的'吸力最强'类绝对化宣称——可按欺瞒性标示广告处理",
+      "trigger_terms": [
+        "흡입력 최강",
+        "업계 최강 흡입력",
+        "吸力最强",
+        "最强吸力"
+      ],
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop"
+        ]
+      },
+      "citation": {
+        "law_name": "표시・광고의 공정화에 관한 법률",
+        "article": "절대적 표현 — 미검증 성능 주장"
+      }
+    },
+    {
+      "rule_id": "demo-kr-kc-certification-labeling",
+      "rule_version_id": "demo-kr-kc-certification-labeling-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "电商产品页出现KC认证信息时，须公示安全认证编号/产品名/型号/制造进口商名，需产品合规团队确认认证状态是否与广告一致",
+      "trigger_terms": [
+        "KC인증",
+        "KC마크",
+        "KC认证",
+        "안전인증번호"
+      ],
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "전기용품 및 생활용품 안전관리법 시행규칙",
+        "article": "第9条第3/4項及び別表9"
+      }
+    },
+    {
+      "rule_id": "demo-kr-warranty-dispute-standard",
+      "rule_version_id": "demo-kr-warranty-dispute-standard-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "广告出现'品质保证/保修承诺'用语——须与消费者纠纷解决标准一致，需产品合规团队确认实际保修条款",
+      "trigger_terms": [
+        "품질보증",
+        "무상수리",
+        "보증기간",
+        "品质保证",
+        "保修承诺"
+      ],
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "소비자분쟁해결기준",
+        "article": "공정거래위원회 고시"
+      }
+    },
+    {
+      "rule_id": "demo-au-fake-discount-reference-price",
+      "rule_version_id": "demo-au-fake-discount-reference-price-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "虚高原价折扣——事实性虚假定价，非措辞问题",
+      "trigger_terms": [
+        "was never sold at",
+        "fake was-price",
+        "inflated reference price",
+        "从未以原价出售",
+        "虚高原价"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Australian Consumer Law",
+        "article": "Section 18 / 29 — Misleading or deceptive conduct"
+      }
+    },
+    {
+      "rule_id": "demo-au-subscription-disclosure",
+      "rule_version_id": "demo-au-subscription-disclosure-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "订阅/自动续费——须在付费前清晰披露收费周期、金额及取消路径",
+      "trigger_terms": [
+        "auto-renew",
+        "automatically renews",
+        "subscription",
+        "recurring billing",
+        "自动续费",
+        "订阅服务"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "electronics",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Australian Consumer Law",
+        "article": "ACCC subscription traps guidance"
+      }
+    },
+    {
+      "rule_id": "demo-au-fake-consumer-reviews",
+      "rule_version_id": "demo-au-fake-consumer-reviews-v1",
+      "severity": "HIGH",
+      "decision": "FAIL",
+      "summary": "虚假或购买的消费者评价——须真实且可核验来源",
+      "trigger_terms": [
+        "purchased reviews",
+        "fake testimonials",
+        "incentivised reviews without disclosure",
+        "虚假好评",
+        "刷单评价"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Australian Consumer Law",
+        "article": "Section 18 — Misleading conduct (fake reviews)"
+      }
+    },
+    {
+      "rule_id": "demo-au-greenwashing-claim",
+      "rule_version_id": "demo-au-greenwashing-claim-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "环保/可持续/碳中和宣称缺乏具体量化依据——2024年ACCC诉Clorox漂绿案确立'配色/意象暗示也构成误导'先例",
+      "trigger_terms": [
+        "eco-friendly",
+        "sustainable materials",
+        "carbon neutral",
+        "green packaging",
+        "environmentally friendly",
+        "环保设计",
+        "可持续材质",
+        "碳中和"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Australian Consumer Law",
+        "article": "ACCC v Clorox (2024) — greenwashing precedent"
+      }
+    },
+    {
+      "rule_id": "demo-au-warranty-consumer-guarantee-disclosure",
+      "rule_version_id": "demo-au-warranty-consumer-guarantee-disclosure-v2",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "广告/保修文件使用'warranty'措辞——须同时声明不影响消费者在ACL下的其他权利，否则构成误导（引擎仅在出现 warranty/保修词时命中；ACL 披露齐全与否需人工核对）",
+      "trigger_terms": [
+        "warranty",
+        "guarantee period",
+        "保修",
+        "质保"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Australian Consumer Law",
+        "article": "Consumer Guarantees — mandatory disclosure"
+      }
+    },
+    {
+      "rule_id": "demo-au-rcm-gems-certification-claim",
+      "rule_version_id": "demo-au-rcm-gems-certification-claim-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "广告出现RCM标志或'符合澳洲强制能效认证'宣称——吸尘器/搅拌机/空气炸锅现阶段不在GEMS强制清单内，需产品合规团队确认认证范围与广告一致",
+      "trigger_terms": [
+        "RCM certified",
+        "meets australian energy rating",
+        "GEMS registered",
+        "符合澳洲强制认证",
+        "官方能效认证"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "AS/NZS 4417 (RCM) / GEMS Regulated Products",
+        "article": "EESS/ACMA + energyrating.gov.au"
+      }
+    },
+    {
+      "rule_id": "demo-au-children-code-review",
+      "rule_version_id": "demo-au-children-code-review-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "广告出现儿童受众元素——AANA儿童广告准则（15岁以下）7条正文需人工逐条比对，非关键词可判定事项",
+      "when": {
+        "audience_includes_children": true
+      },
+      "trigger_terms": [
+        "kids",
+        "children",
+        "儿童",
+        "小朋友"
+      ],
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "AANA Children's Advertising Code",
+        "article": "2023-12版，儿童定义15岁以下"
+      }
+    },
+    {
+      "rule_id": "demo-cn-absolute-terms-blocker",
+      "rule_version_id": "demo-cn-absolute-terms-blocker-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "广告法第九条明文禁止使用'国家级''最高级''最佳'等绝对化用语于一般商品广告，不是需要补证据就能过关的事项",
+      "forbidden_terms": [
+        "国家级",
+        "最高级",
+        "最佳",
+        "全网最低",
+        "全网销量第一",
+        "绝对",
+        "百分百",
+        "无效退款",
+        "遥遥领先",
+        "全网第一",
+        "销量遥遥领先",
+        "唯一",
+        "首创"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "中华人民共和国广告法（2021年4月29日第三次修正）",
+        "article": "第九条 — 绝对化用语禁止性规定"
+      }
+    },
+    {
+      "rule_id": "demo-cn-data-citation-unsourced",
+      "rule_version_id": "demo-cn-data-citation-unsourced-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "广告引用实验结论、检验检测数据、排名/榜单须注明出处、适用范围和有效期，否则依广告法第三十四条/第六十条查处",
+      "trigger_terms": [
+        "实验室数据显示",
+        "检测报告显示",
+        "榜单第一",
+        "排名领先",
+        "权威认证",
+        "第三方检测",
+        "据统计",
+        "数据显示",
+        "行业报告"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "《广告引证内容执法指南》（市场监管总局2026年第20号公告）",
+        "article": "引证内容须注明出处、适用范围、有效期"
+      }
+    },
+    {
+      "rule_id": "demo-cn-internet-ad-identifiable-tag",
+      "rule_version_id": "demo-cn-internet-ad-identifiable-tag-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "互联网广告须显著标明'广告'字样，直播/短视频广告需符合主播资质及商品信息披露要求",
+      "required_any_terms": [
+        "广告",
+        "推广",
+        "赞助"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "《互联网广告管理办法》（市场监管总局第72号令）",
+        "article": "互联网广告可识别性要求"
+      }
+    },
+    {
+      "rule_id": "demo-cn-performance-data-mismatch-risk",
+      "rule_version_id": "demo-cn-performance-data-mismatch-risk-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "耗油量/耗电量/容量等量化性能宣称需与实测数据一致——已有厨房小家电企业因此类宣称与实测不符被处20万元罚款的公开案例",
+      "trigger_terms": [
+        "减少耗油量",
+        "节能高达",
+        "耗电量降低",
+        "省电",
+        "用油量减少",
+        "减少高达",
+        "节省高达"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "中华人民共和国广告法",
+        "article": "第三十四条/第六十条 — 引证内容与实际不符的处罚"
+      }
+    },
+    {
+      "rule_id": "demo-cn-false-official-endorsement",
+      "rule_version_id": "demo-cn-false-official-endorsement-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "无依据的政府/官方关系背书宣称，属高风险绝对化/虚假宣称",
+      "forbidden_terms": [
+        "国家认证",
+        "政府推荐",
+        "官方认证",
+        "国家权威机构认证",
+        "政府背书"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "中华人民共和国广告法",
+        "article": "虚假宣传及冒用官方关系条款"
+      }
+    },
+    {
+      "rule_id": "demo-cn-ccc-energy-label-review",
+      "rule_version_id": "demo-cn-ccc-energy-label-review-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "吸尘器/破壁机等CCC强制认证目录产品，广告使用认证标志需与证书一致，能效标识需完成备案方可标注，需产品合规团队确认",
+      "trigger_terms": [
+        "CCC认证",
+        "3C认证",
+        "能效等级",
+        "一级能效",
+        "能效标识"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.blender_processor",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "《节约能源法》",
+        "article": "第七十三条 — 伪造或冒用能效标识的处罚"
+      }
+    },
+    {
+      "rule_id": "demo-cn-capacity-metrology-review",
+      "rule_version_id": "demo-cn-capacity-metrology-review-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "容量/净含量类宣称需与法定计量单位标注一致，需产品合规团队确认",
+      "trigger_terms": [
+        "大容量",
+        "升杯体",
+        "L容量",
+        "净含量"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker"
+        ]
+      },
+      "citation": {
+        "law_name": "《定量包装商品计量监督管理办法》（市场监管总局第70号令）",
+        "article": "CN-RULE-004"
+      }
+    },
+    {
+      "rule_id": "demo-cn-warranty-sanbao-review",
+      "rule_version_id": "demo-cn-warranty-sanbao-review-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "保修/售后类宣称不得超出三包规定的法定期限和范围，需产品合规团队确认",
+      "trigger_terms": [
+        "终身保修",
+        "全国联保",
+        "无理由包退",
+        "免费保修"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "《部分商品修理更换退货责任规定》（三包规定）",
+        "article": "CN-RULE-005"
+      }
+    },
+    {
+      "rule_id": "demo-cn-environmental-recycling-review",
+      "rule_version_id": "demo-cn-environmental-recycling-review-v1",
+      "severity": "LOW",
+      "decision": "REVIEW",
+      "summary": "环保/回收类宣称需与生产者回收责任表述一致，需产品合规团队确认",
+      "trigger_terms": [
+        "环保回收",
+        "以旧换新符合国家规定",
+        "生产者回收责任"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "《废弃电器电子产品回收处理管理条例》（国务院令第551号）",
+        "article": "CN-RULE-006"
+      }
+    },
+    {
+      "rule_id": "demo-cn-sensitive-content-manual-review",
+      "rule_version_id": "demo-cn-sensitive-content-manual-review-v1",
+      "severity": "HIGH",
+      "decision": "REVIEW",
+      "summary": "涉及政治历史、民族、宗教、国旗国徽等国家象征、疫情/灾害等公共事件的营销素材——非关键词可判定事项，需人工逐条把关",
+      "trigger_terms": [
+        "国旗",
+        "国徽",
+        "疫情",
+        "灾害"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "文化、宗教与社会敏感点（手册8.3节）",
+        "article": "非成文法条款，属人工审慎判断范畴"
+      }
+    },
+    {
+      "rule_id": "demo-th-tisi-mandatory-voluntary-check",
+      "rule_version_id": "demo-th-tisi-mandatory-voluntary-check-v1",
+      "severity": "MEDIUM",
+      "decision": "REVIEW",
+      "summary": "广告出现TISI/มอก.认证标志或'符合国家标准'宣称——吸尘器目前为自愿标准，电饭煲/电风扇/电熨斗为强制标准，需产品合规团队确认该SKU的实际分类，不应对自愿类目暗示强制认证",
+      "trigger_terms": [
+        "มอก",
+        "tisi certified",
+        "符合国家标准认证",
+        "泰国国标认证",
+        "TISI"
+      ],
+      "scopes": {
+        "countries": [
+          "TH"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.rice_cooker",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "TISI（มอก.）标准分类",
+        "article": "TISI官网已核实吸尘器为自愿性标准（มาตรฐานทั่วไป）"
       }
     }
   ]

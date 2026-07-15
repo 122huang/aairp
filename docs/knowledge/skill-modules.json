@@ -719,9 +719,7 @@
   ],
   "pattern_rule_links": {
     "urgency-cta": [
-      "demo-sg-sponsored-disclosure",
-      "demo-id-sponsored-disclosure",
-      "demo-ph-sponsored-disclosure"
+      "demo-apac-sa-urgency-scarcity-claim"
     ],
     "unsubstantiated-testimonial": [
       "demo-sg-health-forbidden-claim",
@@ -800,17 +798,17 @@
     },
     "Health Claim": {
       "skill_module": "Claim Review",
-      "pattern_id": "sa-health-implication",
+      "pattern_id": "sa-medical-claim",
       "expected_rule": "demo-apac-sa-health-claim-blocker"
     },
     "Medical / Health Claim": {
       "skill_module": "Claim Review",
-      "pattern_id": "sa-health-implication",
+      "pattern_id": "sa-medical-claim",
       "expected_rule": "demo-apac-sa-health-claim-blocker"
     },
     "Medical Claim": {
       "skill_module": "Claim Review",
-      "pattern_id": "sa-health-implication",
+      "pattern_id": "sa-medical-claim",
       "expected_rule": "demo-apac-sa-health-claim-blocker"
     },
     "Technical Specification": {

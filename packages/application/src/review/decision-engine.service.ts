@@ -68,6 +68,18 @@ export function buildDecisionRationale(
     return `Rejected due to blocking finding: ${blockerLabel}.`;
   }
 
+  const hasReviewSignal =
+    input.hasRuleReview ||
+    input.hasPlaybookReviewSignal ||
+    input.hasLlmManualReviewSignal ||
+    input.hasVisionManualReviewSignal;
+
+  if (hasReviewSignal) {
+    const summary =
+      topFindings.length > 0 ? topFindings.join('; ') : 'manual-review signals detected';
+    return `Manual review required based on: ${summary}. Route to product compliance / legal before publishing.`;
+  }
+
   const hasAnyFinding =
     input.ruleFindingCount > 0 ||
     input.playbookFindingCount > 0 ||
@@ -99,8 +111,12 @@ export function buildDecisionFusionInput(sources: DecisionFusionSources): Decisi
     hasRuleWarn: sources.ruleFindings.some(
       (finding) => finding.decision === 'WARN' || finding.decision === 'FAIL',
     ),
+    hasRuleReview: sources.ruleFindings.some((finding) => finding.decision === 'REVIEW'),
     hasPlaybookReviewSignal: sources.playbookFindings.some(
-      (finding) => finding.decision === 'REVIEW' || finding.decision === 'CONDITIONAL',
+      (finding) => finding.decision === 'REVIEW',
+    ),
+    hasPlaybookConditionalSignal: sources.playbookFindings.some(
+      (finding) => finding.decision === 'CONDITIONAL',
     ),
     hasLlmManualReviewSignal: sources.llmFindings.some(
       (finding) =>
@@ -179,6 +195,25 @@ export class DecisionEngineService {
       };
     }
 
+    const hasReviewSignal =
+      input.hasRuleReview ||
+      input.hasPlaybookReviewSignal ||
+      input.hasLlmManualReviewSignal ||
+      input.hasVisionManualReviewSignal;
+
+    // Precedence: PASS < WARN < REVIEW < REJECT. Review-route findings must not collapse to WARN.
+    if (hasReviewSignal) {
+      const confidence = applyCountryConfidenceModifier(0.78, rationaleSources.countryId ?? '');
+      return {
+        reviewId: input.reviewId,
+        finalDecision: 'REVIEW',
+        confidence,
+        rationale: buildDecisionRationale(input, rationaleSources),
+        findingCounts,
+        decidedAt,
+      };
+    }
+
     const hasAnyFinding =
       input.ruleFindingCount > 0 ||
       input.playbookFindingCount > 0 ||
@@ -192,19 +227,13 @@ export class DecisionEngineService {
         confidence = 0.9;
       } else if (input.hasCaseConfirmedSignal) {
         confidence = 0.82;
-      } else if (
-        input.hasPlaybookReviewSignal ||
-        input.hasLlmManualReviewSignal ||
-        input.hasVisionManualReviewSignal
-      ) {
+      } else if (input.hasPlaybookConditionalSignal) {
         confidence = 0.78;
       }
 
       const hasWarnSignal =
         input.hasRuleWarn ||
-        input.hasPlaybookReviewSignal ||
-        input.hasLlmManualReviewSignal ||
-        input.hasVisionManualReviewSignal ||
+        input.hasPlaybookConditionalSignal ||
         input.hasCaseConfirmedSignal ||
         input.playbookFindingCount > 0 ||
         input.llmFindingCount > 0 ||
@@ -212,6 +241,7 @@ export class DecisionEngineService {
         input.visionFindingCount > 0;
 
       if (!hasWarnSignal) {
+        // Rule findings with decision PASS / unmarked should not invent WARN.
         return {
           reviewId: input.reviewId,
           finalDecision: 'PASS',

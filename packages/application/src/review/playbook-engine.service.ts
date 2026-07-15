@@ -24,6 +24,8 @@ export type PlaybookEngineConfig = {
 type ParsedPlaybookItem = {
   patternId: string;
   triggerKeywords: string[];
+  linkedRules: string[];
+  matchMode: 'terms' | 'link';
   severityHint: PlaybookSeverityHint;
   playbookDecision: PlaybookDecision;
   guidance: string;
@@ -42,6 +44,17 @@ type ParsedPlaybook = {
   playbookId: string;
   items: ParsedPlaybookItem[];
 };
+
+const PLAYBOOK_DECISIONS = new Set<PlaybookDecision>(['WARN', 'REVIEW', 'CONDITIONAL']);
+
+function parsePlaybookDecision(raw: string | undefined): PlaybookDecision {
+  const value = (raw ?? 'WARN').trim().toUpperCase();
+  if (PLAYBOOK_DECISIONS.has(value as PlaybookDecision)) {
+    return value as PlaybookDecision;
+  }
+  // Dirty data historically used FAIL; never let illegal values flow into findings.
+  return 'WARN';
+}
 
 const defaultPlaybookPath = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -80,14 +93,27 @@ export function parsePlaybookMarkdown(content: string): ParsedPlaybook {
       const patternId = lines[0]?.trim() ?? '';
       const fields = parseFieldMap(lines.slice(1).join('\n'));
 
+      const triggerKeywords = (fields.trigger_keywords ?? '')
+        .split(',')
+        .map((keyword) => keyword.trim())
+        .filter((keyword) => keyword.length > 0);
+      const linkedRules = (fields.linked_rules ?? '')
+        .split(',')
+        .map((value) => value.trim())
+        .filter((value) => value.length > 0);
+      const matchModeRaw = (fields.match_mode ?? '').trim().toLowerCase();
+      const matchMode: 'terms' | 'link' =
+        matchModeRaw === 'link' || (triggerKeywords.length === 0 && linkedRules.length > 0)
+          ? 'link'
+          : 'terms';
+
       return {
         patternId,
-        triggerKeywords: (fields.trigger_keywords ?? '')
-          .split(',')
-          .map((keyword) => keyword.trim())
-          .filter((keyword) => keyword.length > 0),
+        triggerKeywords,
+        linkedRules,
+        matchMode,
         severityHint: (fields.severity_hint ?? 'MEDIUM') as PlaybookSeverityHint,
-        playbookDecision: (fields.decision ?? 'WARN') as PlaybookDecision,
+        playbookDecision: parsePlaybookDecision(fields.decision),
         guidance: fields.guidance ?? '',
         typicalDecision: (fields.typical_decision ?? 'REVIEW') as PlaybookTypicalDecision,
         scopeCountries: fields.scope_countries
@@ -104,7 +130,11 @@ export function parsePlaybookMarkdown(content: string): ParsedPlaybook {
         expectedSeverity: fields.expected_severity,
       };
     })
-    .filter((item) => item.patternId.length > 0 && item.triggerKeywords.length > 0);
+    .filter(
+      (item) =>
+        item.patternId.length > 0 &&
+        (item.triggerKeywords.length > 0 || item.linkedRules.length > 0),
+    );
 
   return { packVersion, playbookId, items };
 }
@@ -122,6 +152,8 @@ function mapSeverityHint(severityHint: PlaybookSeverityHint): PlaybookFinding['s
 
 export type PlaybookEvaluationOptions = {
   caseReviewContext?: CaseReviewContext;
+  /** When set, match_mode:link patterns fire from Rule hits instead of duplicate keywords. */
+  priorRuleFindings?: Array<{ refId: string; evaluationDetail?: { matchedSpans?: Array<{ field: string; start: number; end: number; text: string }> } }>;
 };
 
 function augmentFindingWithCasePrecedent(
@@ -203,15 +235,34 @@ export class PlaybookEngineService {
     const playbook = this.loadPlaybook();
     const fields = searchableFields(context);
     const findings: PlaybookFinding[] = [];
+    const hitRuleIds = new Set((options?.priorRuleFindings ?? []).map((finding) => finding.refId));
 
     for (const item of playbook.items) {
       if (!matchesPlaybookScope(context, item)) {
         continue;
       }
 
-      const matchedSpan = findTermMatch(fields, item.triggerKeywords);
-      if (!matchedSpan) {
-        continue;
+      let matchedSpan: { field: string; start: number; end: number; text: string } | null = null;
+
+      if (item.matchMode === 'link') {
+        const linkedHit = (options?.priorRuleFindings ?? []).find((finding) =>
+          item.linkedRules.includes(finding.refId),
+        );
+        if (!linkedHit && !item.linkedRules.some((ruleId) => hitRuleIds.has(ruleId))) {
+          continue;
+        }
+        const ruleSpan = linkedHit?.evaluationDetail?.matchedSpans?.[0];
+        matchedSpan = ruleSpan ?? {
+          field: 'text',
+          start: 0,
+          end: 0,
+          text: item.linkedRules[0] ?? item.patternId,
+        };
+      } else {
+        matchedSpan = findTermMatch(fields, item.triggerKeywords);
+        if (!matchedSpan) {
+          continue;
+        }
       }
 
       let finding = createPlaybookFinding(this.config, playbook, item, matchedSpan);

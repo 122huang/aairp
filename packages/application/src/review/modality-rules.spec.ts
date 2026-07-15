@@ -51,21 +51,38 @@ describe('modality-rules', () => {
     expect(fieldsContainCjk([{ field: 'text', value: 'English only' }])).toBe(false);
   });
 
-  it('matchesRuleWhen checks certification and AI quality flags', () => {
-    const ctx: ReviewContext = {
-      ...baseContext,
-      advertisementContext: {
-        certificationImageUnreadable: true,
-        aiImageQualityIssue: true,
-      },
-    };
+  it('matchesRuleWhen checks CPSR/COE category prerequisites', () => {
+    expect(matchesRuleWhen(baseContext, { category_requires_cpsr: true })).toBe(true);
     expect(
-      matchesRuleWhen(ctx, { certification_image_unreadable: true }, [
-        { field: 'text', value: 'x' },
-      ]),
-    ).toBe(true);
+      matchesRuleWhen(
+        {
+          ...baseContext,
+          dimensions: { ...baseContext.dimensions, categoryId: 'health.supplement' },
+        },
+        { category_requires_cpsr: true },
+      ),
+    ).toBe(false);
     expect(
-      matchesRuleWhen(ctx, { ai_image_quality_issue: true }, [{ field: 'text', value: 'x' }]),
+      matchesRuleWhen(
+        {
+          ...baseContext,
+          dimensions: { ...baseContext.dimensions, countryId: 'MY', categoryId: 'sa.air_fryer' },
+        },
+        { category_requires_coe: true },
+      ),
     ).toBe(true);
+  });
+
+  it('matchesRuleWhen checks audience_includes_children', () => {
+    expect(
+      matchesRuleWhen(
+        {
+          ...baseContext,
+          normalizedContent: { text: 'Fun for kids', imageUrls: [] },
+        },
+        { audience_includes_children: true },
+      ),
+    ).toBe(true);
+    expect(matchesRuleWhen(baseContext, { audience_includes_children: true })).toBe(false);
   });
 });

@@ -731,7 +731,7 @@ function showReport(html, decision) {
   empty.hidden = true;
   frame.hidden = false;
   frame.srcdoc = html;
-  badge.classList.remove('hidden', 'decision-REJECT', 'decision-WARN', 'decision-PASS');
+  badge.classList.remove('hidden', 'decision-REJECT', 'decision-WARN', 'decision-PASS', 'decision-REVIEW');
   badge.classList.add(`decision-${decision}`);
   badge.textContent = decision;
 }

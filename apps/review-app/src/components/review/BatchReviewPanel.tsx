@@ -225,7 +225,8 @@ export function BatchReviewPanel({
                 />
               </div>
               <p className="text-xs text-muted-foreground">
-                PASS {progress.pass} · WARN {progress.warn} · REJECT {progress.reject}
+                PASS {progress.pass} · WARN {progress.warn} · REVIEW {progress.review} · REJECT{' '}
+                {progress.reject}
                 {progress.failed > 0 ? ` · 失败 ${progress.failed}` : ''}
               </p>
             </CardContent>

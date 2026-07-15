@@ -1,0 +1,25 @@
+{
+  "case_id": "jp-cosmetic-warn-ranking",
+  "country_id": "JP",
+  "category_id": "cosmetic",
+  "platform_id": "META",
+  "intent": "WARN",
+  "verification": "auto",
+  "notes": "Smoke: JP No.1 ranking unsubstantiated (景品表示法). Includes PR disclosure. Not legal advice.",
+  "tags": ["jp", "smoke", "demo-rule-1.8.0"],
+  "upload": {
+    "country_id": "JP",
+    "platform_id": "META",
+    "category_id": "cosmetic",
+    "content": {
+      "text": "満足度No.1美容液。PR"
+    },
+    "tags": ["pilot:jp-ranking"]
+  },
+  "ground_truth": {
+    "expected_decision": "WARN",
+    "expected_findings": [
+      { "module": "RULE", "ref_id": "demo-jp-ranking-unsubstantiated" }
+    ]
+  }
+}

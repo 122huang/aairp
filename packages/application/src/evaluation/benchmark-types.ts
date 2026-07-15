@@ -6,7 +6,7 @@ export type BenchmarkFindingRef = {
 };
 
 export type BenchmarkGroundTruth = {
-  expected_decision: 'PASS' | 'WARN' | 'REJECT';
+  expected_decision: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
   expected_findings?: BenchmarkFindingRef[];
   must_not_include_refs?: string[];
   open_risk_skipped?: boolean;
@@ -29,7 +29,7 @@ export type BenchmarkManifest = {
 };
 
 export type EvalCaseActual = {
-  final_decision: 'PASS' | 'WARN' | 'REJECT';
+  final_decision: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
   finding_refs: BenchmarkFindingRef[];
   open_risk_skipped: boolean;
   rationale: string;

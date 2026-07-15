@@ -284,7 +284,7 @@ export class OpenRiskDiscoveryService {
     }
     const stubPayload = parseOpenRiskResponseContent(completion.content);
     const promptPackVersion =
-      stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.4.0';
+      stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.0';
 
     const findings = applyOpenRiskGuardrails(
       stubPayload.findings.map((finding) =>

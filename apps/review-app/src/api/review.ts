@@ -49,7 +49,7 @@ export type ReviewFindingDto = {
 export type DemoReviewResponse = {
   review_id: string;
   advertisement_id: string;
-  final_decision: 'PASS' | 'WARN' | 'REJECT';
+  final_decision: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
   confidence: number;
   rationale: string;
   finding_counts: {

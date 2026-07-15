@@ -184,6 +184,11 @@ a {
   color: var(--warn);
 }
 
+.decision-REVIEW {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
 .decision-REJECT {
   background: #fee2e2;
   color: var(--reject);

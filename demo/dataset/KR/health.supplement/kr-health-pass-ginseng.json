@@ -4,17 +4,22 @@
   "category_id": "health.supplement",
   "platform_id": "META",
   "intent": "PASS",
-  "verification": "manual",
-  "notes": "Demo-only pilot sample for KR health.supplement. Not legal advice.",
-  "tags": ["demo", "draft"],
+  "verification": "auto",
+  "notes": "Demo-only pilot sample for KR health.supplement. Not legal advice. Verified auto against demo-rule-1.8.1 engine (2026-07-15).",
+  "tags": [
+    "demo",
+    "draft"
+  ],
   "upload": {
     "country_id": "KR",
     "platform_id": "META",
     "category_id": "health.supplement",
     "content": {
-      "text": "Korean red ginseng extract for daily wellness support. General health supplement — not a drug or treatment. #ad"
+      "text": "Korean red ginseng extract for daily wellness support. General health supplement — not a drug or treatment. 광고 #ad"
     },
-    "tags": ["pilot:health-pass"]
+    "tags": [
+      "pilot:health-pass"
+    ]
   },
   "ground_truth": {
     "expected_decision": "PASS",

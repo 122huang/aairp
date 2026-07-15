@@ -22,13 +22,19 @@ describe('playbook markdown export', () => {
         patternId: 'ignored',
         playbookVersionId: 'ignored',
         refId: item.patternId,
-        matchType: 'terms',
-        terms: item.triggerKeywords,
+        matchType: item.matchMode === 'link' ? 'link' : 'terms',
+        terms: item.triggerKeywords.length > 0 ? item.triggerKeywords : item.linkedRules,
         guidance: item.guidance,
         markdownBody: [
           `severity_hint: ${item.severityHint}`,
           `decision: ${item.playbookDecision}`,
           `typical_decision: ${item.typicalDecision}`,
+          ...(item.matchMode === 'link'
+            ? [`match_mode: link`, `linked_rules: ${item.linkedRules.join(', ')}`]
+            : []),
+          ...(item.triggerKeywords.length > 0
+            ? [`trigger_keywords: ${item.triggerKeywords.join(', ')}`]
+            : []),
         ].join('\n'),
         createdAt: '2026-06-26T10:00:00.000Z',
         updatedAt: '2026-06-26T10:00:00.000Z',
@@ -42,5 +48,37 @@ describe('playbook markdown export', () => {
     expect(roundTrip.items.map((item) => item.patternId)).toEqual(
       parsed.items.map((item) => item.patternId),
     );
+  });
+
+  it('coerces illegal playbook decision FAIL to WARN', () => {
+    const parsed = parsePlaybookMarkdown(`# T
+pack_version: t
+playbook_id: t
+
+## sample
+trigger_keywords: foo
+decision: FAIL
+guidance: g
+typical_decision: REJECT
+`);
+    expect(parsed.items[0]!.playbookDecision).toBe('WARN');
+  });
+
+  it('keeps link-mode patterns without trigger keywords', () => {
+    const parsed = parsePlaybookMarkdown(`# T
+pack_version: t
+playbook_id: t
+
+## linked-only
+match_mode: link
+linked_rules: demo-apac-sa-social-proof-claim
+decision: WARN
+guidance: attach when rule hits
+typical_decision: REVIEW
+`);
+    expect(parsed.items).toHaveLength(1);
+    expect(parsed.items[0]!.matchMode).toBe('link');
+    expect(parsed.items[0]!.linkedRules).toEqual(['demo-apac-sa-social-proof-claim']);
+    expect(parsed.items[0]!.triggerKeywords).toEqual([]);
   });
 });

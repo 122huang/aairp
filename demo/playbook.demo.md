@@ -1,19 +1,21 @@
 # Health Supplement Review Playbook (Demo)
 
-pack_version: demo-playbook-1.6.1
+pack_version: demo-playbook-1.7.0
 playbook_id: demo-health-supplement-playbook
 
 ## urgency-cta
 
-trigger_keywords: buy now, act now, limited time, hurry, 立即购买
+trigger_keywords: buy now, act now, limited time, hurry, 立即购买, only 3 left, while stocks last, 别再犹豫, 停产升级, 工厂说要停产, last chance, running out
 severity_hint: MEDIUM
 decision: WARN
-guidance: Urgency call-to-action detected. Add offer validity dates or remove pressure language that may mislead consumers.
+guidance: Urgency/scarcity CTA detected (ASAS/ICC soft guidance: pressure language needs a verifiable offer end date or quantity — otherwise remove FOMO framing).
 typical_decision: REVIEW
 skill_module: Disclaimer Review
 purpose: Detect urgency or pressure language that may mislead consumers.
-suggested_rewrite: Add offer validity dates or remove pressure language.
+suggested_rewrite: Add offer validity dates / remaining stock facts, or remove pressure language.
 expected_severity: MEDIUM
+linked_rules: demo-apac-sa-urgency-scarcity-claim
+match_mode: terms
 ## unsubstantiated-testimonial
 
 trigger_keywords: clinically proven, doctor recommended, users love
@@ -53,7 +55,9 @@ expected_severity: MEDIUM
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: thousands of households, millions of users, loved by home cooks across, trusted by thousands, หลายพันครัวเรือน, 数千家庭, 千万家庭信赖
+match_mode: link
+linked_rules: demo-apac-sa-social-proof-claim
+trigger_keywords:
 severity_hint: MEDIUM
 decision: WARN
 guidance: Social proof or popularity claim detected (household counts, user totals, broad trust wording). Provide verifiable substantiation or qualify the claim before publishing.
@@ -66,10 +70,10 @@ expected_severity: MEDIUM
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: lower sugar, healthier, health benefits, healthy choices, healthy, natural goodness, natural enzymes, natural enzymes preserved, natural vitamins, daily nutrition, nutrition, improved indoor air quality, indoor air quality, 室内空气品质, cleaner indoor air, 营养成分, 天然营养, 天然营养成分, 保留果蔬, 减少营养流失, 冷萃设计, 少油烹饪, 少油, 更少油脂, 吃得更轻盈, 更轻盈, 更清爽, 吃得更清爽, 每天吃得更清爽, 饮食轻松, 轻松无负担, 无负担的美食体验, wholesome meals, goodness locked in, lighter cooking, lighter living, 除螨, 螨虫, 过敏源, 每天喝得更健康, 活力满满, 留住食材天然, cleaner eating, feel the difference, guilt-free, guilt free, wellness, wellness ritual, daily wellness, better you, step towards a better you, 补充营养, 蔬菜营养, 每日所需, breathe easy, whole benefits, think about what they eat, deserves better, 坐月子
+trigger_keywords: lower sugar, healthier, health benefits, healthy choices, healthy, natural goodness, natural enzymes, natural enzymes preserved, natural vitamins, daily nutrition, nutrition, improved indoor air quality, indoor air quality, 室内空气品质, cleaner indoor air, 营养成分, 天然营养, 天然营养成分, 保留果蔬, 减少营养流失, 冷萃设计, 少油烹饪, 少油, 更少油脂, 吃得更轻盈, 更轻盈, 更清爽, 吃得更清爽, 每天吃得更清爽, 饮食轻松, 轻松无负担, 无负担的美食体验, wholesome meals, goodness locked in, lighter cooking, lighter living, 除螨, 螨虫, 过敏源, 每天喝得更健康, 活力满满, 留住食材天然, cleaner eating, feel the difference, guilt-free, guilt free, wellness, wellness ritual, daily wellness, better you, step towards a better you, 补充营养, 蔬菜营养, 每日所需, 让孩子也爱上, 深呼吸, eaten well, breathe easy, whole benefits, think about what they eat, deserves better, 坐月子
 severity_hint: MEDIUM
-decision: WARN
-guidance: 分界：健康暗示（Health Implication）说的是感受与体验；医疗宣称说的是疾病与器官功能。本条为健康暗示 — 须语境限定或软化，必要时附数据；少油/营养保留类须持有对比或测试数据。
+decision: REVIEW
+guidance: 分界：健康暗示（Health Implication）说的是感受与体验；医疗宣称说的是疾病与器官功能。本条为健康暗示 — 须语境限定或软化，必要时附数据；少油/营养保留类须持有对比或测试数据。命中后路由人工确认外部证据/数据是否到位。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Detect diet-wellness or nutrient-retention implications without specific disease or organ-function claims.
@@ -79,9 +83,9 @@ expected_severity: MEDIUM
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: 肠胃消化, 免疫力, 心血管疾病, 糖尿病, 控糖, 临床验证, 临床认证, 肺部健康, 排毒, 净体, 改善体内环境, clinically proven, doctor-recommended, doctor recommended, nutrient absorption, blood sugar, high cholesterol, allergy symptoms, 过敏症状, 儿科医生, 儿科医生推荐, pediatrician, pediatrician recommended, cardiologist, your cardiologist, cardiologist would, would probably approve, pharmaceutical-grade, pharmaceutical grade, medically endorsed, heart disease, detox, cleanses your liver, boosts immunity
+trigger_keywords: 肠胃消化, 免疫力, 心血管疾病, 糖尿病, 控糖, 临床验证, 临床认证, 肺部健康, 排毒, 净体, 改善体内环境, clinically proven, doctor-recommended, doctor recommended, nutrient absorption, blood sugar, high cholesterol, allergy symptoms, 过敏症状, 儿科医生, 儿科医生推荐, pediatrician, pediatrician recommended, cardiologist, your cardiologist, cardiologist would, would probably approve, pharmaceutical-grade, pharmaceutical grade, medically endorsed, heart disease, detox, cleanses your liver, boosts immunity, easy to digest, sterilize, sterilise, low-sugar, low sugar, medical-grade, medical grade, fat-reducing, fat reducing, less fat
 severity_hint: HIGH
-decision: FAIL
+decision: WARN
 guidance: 医疗宣称（Medical Claim）：指向疾病、器官功能、临床指标或医疗背书；小家电无权作医疗声明，补证据不能解决越权，须删除越线表述。
 typical_decision: REJECT
 skill_module: Claim Review
@@ -120,8 +124,8 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: national standard grade, authoritative certification, third-party laboratory, standard lab conditions, lab conditions, 标准实验室, restaurant-quality, patented, if award, hepa-class, hepa class, hepa级, hepa滤网, medical-grade filter, captures 99%, 医用级过滤, มอก, 权威机构认证, 权威机构, PM2.5, pm2.5, TÜV, TÜV SÜD, tuv, tuv sud, certified by, 第三方检测
 severity_hint: HIGH
-decision: WARN
-guidance: Certification, patent, award, or laboratory evidence referenced. HEPA-class is not equivalent to True HEPA; มอก/TISI marks require scope verification — confirm document authenticity, scope, and readability before publishing.
+decision: REVIEW
+guidance: Certification, patent, award, or laboratory evidence referenced. HEPA-class is not equivalent to True HEPA; มอก/TISI marks require scope verification — confirm document authenticity, scope, and readability before publishing. Tool cannot verify certificate validity; escalate for product-compliance check.
 typical_decision: REVIEW
 skill_module: Evidence Review
 purpose: Verify certification, patent, award, or laboratory evidence authenticity and scope.
@@ -144,7 +148,9 @@ expected_severity: HIGH
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: stew up to, up to 2kg, up to 16 bowls
+match_mode: link
+linked_rules: demo-apac-sa-capacity-claim
+trigger_keywords:
 severity_hint: MEDIUM
 decision: WARN
 guidance: Capacity or volume claim detected. Confirm test method, fill level, and on-pack specifications.
@@ -172,8 +178,8 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: 除螨, 螨虫, 过敏源
 severity_hint: HIGH
-decision: WARN
-guidance: 除螨、减少过敏源等宣称须持有有效的第三方测试报告（机构、样品、测试条件与结论）后方可发布。
+decision: REVIEW
+guidance: 除螨、减少过敏源等宣称须持有有效的第三方测试报告（机构、样品、测试条件与结论）后方可发布。命中后路由人工确认报告是否在档。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Mite removal or indoor allergen reduction claims requiring laboratory test reports.
@@ -185,8 +191,8 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: 少油烹饪, 少油, 饮食轻松, 饮食更加轻松, 轻松无负担
 severity_hint: MEDIUM
-decision: WARN
-guidance: 「少油」「饮食轻松」等饮食健康暗示须持有证据支持（烹调用油对比数据或合规营养表述依据）后方可发布。
+decision: REVIEW
+guidance: 「少油」「饮食轻松」等饮食健康暗示须持有证据支持（烹调用油对比数据或合规营养表述依据）后方可发布。命中后路由人工确认证据是否到位。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Less-oil or diet-ease wellness implications requiring substantiation evidence.
@@ -222,7 +228,9 @@ expected_severity: LOW
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: 22:00pm, what's include, multiple presents
+match_mode: link
+linked_rules: demo-apac-sa-grammar-quality
+trigger_keywords:
 severity_hint: LOW
 decision: WARN
 guidance: Grammar, spelling, or time-format error detected. Correct before publishing.
@@ -237,7 +245,7 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: raw chicken before bed, load raw chicken, prep raw fish and marinated chicken before bed, load raw pork, raw pork before bed, raw pork and marinated fish, 放入鸡肉, 生鸡肉, 放入牛腩, 将猪肉, 晚上放入, 隔夜慢炖
 severity_hint: HIGH
-decision: FAIL
+decision: WARN
 guidance: 食品安全场景（Food Safety Hazard）：描绘生肉/海鲜/蛋类等易腐食材在无冷藏条件下长时间放置后烹饪。东南亚常温下存在真实细菌繁殖风险，文案本身可作为产品责任证据；改表述不能消除风险，必须删除该场景。
 typical_decision: REJECT
 skill_module: Claim Review
@@ -341,7 +349,7 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: 卫生部临床认证, 卫生部推荐, 国家权威机构认证, 国家强制安全认证, ministry of health, ministry of public health, national health authorities, government quality bodies, endorsed by national
 severity_hint: HIGH
-decision: FAIL
+decision: WARN
 guidance: 虚假或无法核验的政府/部委/国家级机构健康背书不得使用。删除部委、政府、国家级认证表述；可保留可出示的第三方检测报告描述。
 typical_decision: REJECT
 skill_module: Evidence Review
@@ -354,7 +362,7 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: dyson logo, midea logo, philips product image, competitor trademarks visible, 竞品商标, than dyson, than philips, 比midea, 比飞利浦, outperforms leading brands
 severity_hint: HIGH
-decision: FAIL
+decision: WARN
 guidance: 对比图、场景图或文案中未经授权的竞品商标/产品图不得出现。须遮挡商标、取得授权或改为不指名对比。
 typical_decision: REJECT
 skill_module: Brand/IP Review
@@ -367,7 +375,7 @@ scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
 trigger_keywords: 划线价, 限时48小时, 即将涨价, 出厂价直销, strikethrough price, never sold at, flash sale, price increases tomorrow, closing-down sale, mandatory service fee not shown
 severity_hint: HIGH
-decision: FAIL
+decision: WARN
 guidance: 虚假划线价、常态化「限时」促销、隐藏必选费用等误导性定价不得使用。须展示真实参考价依据、促销期限及含税/含配件总价。
 typical_decision: REJECT
 skill_module: Claim Review
@@ -399,4 +407,46 @@ typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Detect environmental or sustainability claims requiring substantiation.
 suggested_rewrite: 限定具体环保属性（如可回收部件比例）并附证据，或改为中性产品特性描述。
+expected_severity: MEDIUM
+
+## sg-asas-substantiation-guidance
+
+scope_countries: SG
+scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics, health.supplement, cosmetic, food
+trigger_keywords: according to research, survey shows, according to a study, 调研显示, 数据显示
+severity_hint: MEDIUM
+decision: WARN
+guidance: ASAS SCAP（1b）：事实性描述、宣称与比较均须可举证；独立调研引用须经调研方确认呈现准确。请附调查机构、方法、时间与样本说明，否则改写为无第三方背书的定性表述。
+typical_decision: REVIEW
+skill_module: Claim Review
+purpose: ASAS substantiation / survey-citation hygiene for Singapore ads.
+suggested_rewrite: 注明调研机构、时间、样本与方法；未经调研方确认勿引用具体结论。
+expected_severity: MEDIUM
+
+## id-epi-comparative-honesty
+
+scope_countries: ID
+scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
+trigger_keywords: mengungguli, kalahkan merek, jauh lebih baik dari, inferior competitor, jelek dibanding
+severity_hint: MEDIUM
+decision: WARN
+guidance: EPI（1b）比较广告：仅可在完全相同标准下比较技术方面；须公开方法论/来源/时间；禁止贬低竞品（1.20）。改用可核验的同维对比，并附来源。
+typical_decision: REVIEW
+skill_module: Claim Review
+purpose: EPI comparative advertising honesty for Indonesia.
+suggested_rewrite: 删除贬低竞品措辞；改为同维可核验技术对比并披露方法与来源。
+expected_severity: MEDIUM
+
+## jp-jaro-ranking-method-guidance
+
+scope_countries: JP
+scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics, cosmetic, health.supplement, food
+trigger_keywords: 満足度調査, 調査によると, 口コミ調査, according to our survey
+severity_hint: MEDIUM
+decision: WARN
+guidance: 景品表示法 / JARO实务（1b）：排名类宣称须注明调查机构、时间、样本量与方法（消费者厅No.1表示报告要求）。未披露方法的调查结论视为高风险。
+typical_decision: REVIEW
+skill_module: Claim Review
+purpose: JP ranking/survey method disclosure guidance aligned with JARO practice notes.
+suggested_rewrite: 改为「根据[机构][年月]对[样本]的调查，在[范围]中…」并确保可出证明。
 expected_severity: MEDIUM

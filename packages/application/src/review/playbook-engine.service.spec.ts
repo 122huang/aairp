@@ -53,4 +53,46 @@ describe('PlaybookEngineService case augmentation', () => {
     expect(augmented.findings[0]!.confidence).toBeGreaterThan(baseline.findings[0]!.confidence);
     expect(augmented.findings[0]!.evaluationDetail?.casePrecedentHint).toContain('CONFIRMED');
   });
+
+  it('fires match_mode:link patterns from prior rule findings without duplicate keywords', () => {
+    const service = new PlaybookEngineService({
+      playbookMarkdown: `# T
+pack_version: t
+playbook_id: t
+
+## sa-social-proof-claim
+match_mode: link
+linked_rules: demo-apac-sa-social-proof-claim
+decision: WARN
+guidance: Social proof guidance only
+typical_decision: REVIEW
+scope_countries: SG
+scope_categories: electronics
+`,
+      createFindingId: () => '22222222-2222-2222-2222-222222222222',
+    });
+
+    const context: ReviewContext = {
+      ...baseContext,
+      dimensions: { ...baseContext.dimensions, categoryId: 'electronics' },
+      normalizedContent: { text: 'Trusted by thousands of households this year.', imageUrls: [] },
+    };
+
+    const withoutPrior = service.evaluate(context);
+    expect(withoutPrior.findings).toHaveLength(0);
+
+    const withPrior = service.evaluate(context, {
+      priorRuleFindings: [
+        {
+          refId: 'demo-apac-sa-social-proof-claim',
+          evaluationDetail: {
+            matchedSpans: [{ field: 'text', start: 0, end: 20, text: 'Trusted by thousands' }],
+          },
+        },
+      ],
+    });
+    expect(withPrior.findings).toHaveLength(1);
+    expect(withPrior.findings[0]!.refId).toBe('sa-social-proof-claim');
+    expect(withPrior.findings[0]!.summary).toContain('Social proof');
+  });
 });
