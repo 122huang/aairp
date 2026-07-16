@@ -53,7 +53,7 @@ function summarizeRuleFindings(
   if (findings.length === 0) {
     return 'none';
   }
-  return findings.map((finding) => `${finding.refId}:${finding.decision}`).join('; ');
+  return findings.map((finding) => `${finding.refId}:${finding.decision}:${finding.summary}`).join('; ');
 }
 
 function summarizePlaybookFindings(
@@ -62,7 +62,7 @@ function summarizePlaybookFindings(
   if (findings.length === 0) {
     return 'none';
   }
-  return findings.map((finding) => `${finding.refId}:${finding.decision}`).join('; ');
+  return findings.map((finding) => `${finding.refId}:${finding.decision}:${finding.summary}`).join('; ');
 }
 
 export function renderOpenRiskPrompt(
@@ -83,7 +83,19 @@ export function renderOpenRiskPrompt(
     .replaceAll('{shared_rule_refs}', caseContext?.sharedRuleRefs.join(', ') || 'none');
 }
 
-function mapSuggestedAction(action: StubFindingPayload['suggested_action']): LlmSuggestedAction {
+/** Recall-only risk types: must never soft-pass as WARN. */
+const RECALL_ONLY_RISK_TYPES = new Set([
+  'aana-children-code-risk',
+  'sensitive-content-flag',
+]);
+
+function mapSuggestedAction(
+  action: StubFindingPayload['suggested_action'],
+  riskType?: string,
+): LlmSuggestedAction {
+  if (riskType && RECALL_ONLY_RISK_TYPES.has(riskType)) {
+    return 'MANUAL_REVIEW';
+  }
   if (action === 'REJECT') {
     return 'MANUAL_REVIEW';
   }
@@ -106,7 +118,7 @@ function createLlmFinding(
   promptPackVersion: string,
   payload: StubFindingPayload,
 ): LlmFinding {
-  const suggestedAction = mapSuggestedAction(payload.suggested_action);
+  const suggestedAction = mapSuggestedAction(payload.suggested_action, payload.risk_type);
   const findingId = `lf_${(config.createFindingId ?? randomUUID)()}`;
 
   return {
@@ -284,7 +296,7 @@ export class OpenRiskDiscoveryService {
     }
     const stubPayload = parseOpenRiskResponseContent(completion.content);
     const promptPackVersion =
-      stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.0';
+      stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.3';
 
     const findings = applyOpenRiskGuardrails(
       stubPayload.findings.map((finding) =>

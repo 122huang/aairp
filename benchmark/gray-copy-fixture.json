@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "fixture_id": "aairp-gray-copy-open-risk",
-  "description": "Gray-copy semantic probe for Open Risk. Texts avoid known Rule/Playbook trigger keywords. Success = Open Risk module fires an acceptable risk_type — NOT final_decision alone (incidental disclosure/CPSR/COE rules must not count as capability).",
+  "description": "Gray-copy semantic probe for Open Risk. Texts avoid known Rule/Playbook trigger keywords. Capability PASS = LLM hits acceptable_risk_types OR a Rule/Playbook finding maps to the same risk class (rule_covered_same_risk). Unrelated incidental rules alone (CPSR/COE/wrong-risk disclosure) that lift final_decision while LLM misses = masked_by_unrelated (FAIL). Do not treat all coincidence as FAIL.",
   "incidental_rule_refs_default": [
     "demo-cn-internet-ad-identifiable-tag",
     "demo-sg-sponsored-disclosure",
@@ -87,10 +87,10 @@
       "copy_id": 8,
       "category_id": "sa.other",
       "gray_class": "implied-scarcity-urgency",
-      "text": "这批做完，工厂说要停产升级了，喜欢的朋友这次真的别再犹豫。",
+      "text": "仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。",
       "open_risk_must_fire": true,
       "acceptable_risk_types": ["scarcity-urgency-claim", "absolute-claim-soft"],
-      "notes": "Prior leak: CN PASS. Few-shot target for scarcity/FOMO without banned urgency keywords."
+      "notes": "Rewritten 2026-07-16 to avoid Rule/Playbook urgency keywords (别再犹豫/停产升级/工厂说要停产 etc.) so capability measures Open Risk semantics, not keyword coincidence."
     }
   ]
 }

@@ -22,7 +22,9 @@ type DemoRulesFileEntry = {
   forbidden_terms?: string[];
   trigger_terms?: string[];
   required_any_terms?: string[];
-  when?: { has_images?: boolean; ai_rendered_image?: boolean };
+  activation_terms?: string[];
+  required_any_mode?: 'always' | 'influencer_or_activation';
+  when?: RuntimeRuleDefinition['when'];
   sku_mismatch_check?: boolean;
   citation?: { law_name: string; article?: string };
   country_decision_overrides?: Record<string, DemoRulesCountryOverride>;
@@ -44,6 +46,8 @@ function normalizeRule(entry: DemoRulesFileEntry): RuntimeRuleDefinition {
     forbidden_terms: entry.forbidden_terms,
     trigger_terms: entry.trigger_terms,
     required_any_terms: entry.required_any_terms,
+    activation_terms: entry.activation_terms,
+    required_any_mode: entry.required_any_mode,
     when: entry.when,
     sku_mismatch_check: entry.sku_mismatch_check,
     citation: entry.citation

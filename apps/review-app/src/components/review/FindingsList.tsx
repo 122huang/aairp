@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { ChevronDown, Copy, Check } from 'lucide-react';
-import type { ViewMode } from '@/hooks/use-view-mode';
 import type { MergedFinding } from '@/lib/finding-merge';
-import { businessSeverityStyle, resolveBusinessSummary, resolveLegalSummaryZh } from '@/lib/business-copy';
-import { severityBadgeClass, shouldExpandByDefault } from '@/lib/review-ui';
+import { resolveLegalSummaryZh } from '@/lib/legal-copy';
+import { findingDecisionBadgeClass, severityBadgeClass, shouldExpandByDefault } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -45,43 +44,43 @@ function ModuleBadges({ modules }: { modules: string[] }) {
   );
 }
 
-function FindingItem({ finding, viewMode }: { finding: MergedFinding; viewMode: ViewMode }) {
+function FindingItem({ finding }: { finding: MergedFinding }) {
   const [open, setOpen] = useState(shouldExpandByDefault(finding.severity));
   const rewrites = finding.rewriteSuggestions;
   const showRewrites = finding.decision === 'WARN' && rewrites.length > 0;
   const trigger = triggerSnippet(finding);
-  const isLegal = viewMode === 'legal';
-  const severity = isLegal
-    ? { label: finding.severity, className: severityBadgeClass(finding.severity) }
-    : businessSeverityStyle(finding.severity);
-  const businessSummary = resolveBusinessSummary(finding);
   const legalSummaryZh = resolveLegalSummaryZh(finding);
+  const showInfoBadge = finding.decision === 'INFO';
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4">
       <div className="space-y-3">
         <div className="flex flex-wrap items-start gap-2">
-          {isLegal && (
-            <span className="rounded-md bg-gray-100 px-2 py-0.5 font-mono text-xs text-ink">
-              {finding.riskType}
+          <span className="rounded-md bg-gray-100 px-2 py-0.5 font-mono text-xs text-ink">
+            {finding.riskType}
+          </span>
+          <ModuleBadges modules={finding.modules} />
+          {showInfoBadge && (
+            <span
+              className={cn(
+                'rounded-md px-2 py-0.5 text-xs font-medium',
+                findingDecisionBadgeClass(finding.decision),
+              )}
+            >
+              INFO
             </span>
           )}
-          {isLegal && <ModuleBadges modules={finding.modules} />}
-          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', severity.className)}>
-            {severity.label}
+          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', severityBadgeClass(finding.severity))}>
+            {finding.severity}
           </span>
-          {isLegal ? (
-            <div className="min-w-0 flex-1">
-              <p className="text-sm leading-relaxed text-ink">{legalSummaryZh}</p>
-              <p className="mt-0.5 text-xs text-gray-400">{finding.summary}</p>
-            </div>
-          ) : (
-            <p className="min-w-0 flex-1 text-sm leading-relaxed text-ink">{businessSummary}</p>
-          )}
+          <div className="min-w-0 flex-1">
+            <p className="text-sm leading-relaxed text-ink">{legalSummaryZh}</p>
+            <p className="mt-0.5 text-xs text-gray-400">{finding.summary}</p>
+          </div>
         </div>
 
         {trigger && (
-          <div className={cn(isLegal && 'font-mono text-xs')}>
+          <div className="font-mono text-xs">
             <span className="rounded bg-highlight px-1.5 py-0.5 text-ink">{trigger}</span>
           </div>
         )}
@@ -101,9 +100,7 @@ function FindingItem({ finding, viewMode }: { finding: MergedFinding; viewMode: 
                   >
                     <div className="min-w-0 flex-1">
                       <p className="text-sm leading-relaxed text-ink">{suggestion}</p>
-                      {isLegal && (
-                        <p className="mt-1 text-xs text-gray-400">{rewrite.rationale}</p>
-                      )}
+                      <p className="mt-1 text-xs text-gray-400">{rewrite.rationale}</p>
                     </div>
                     <CopyButton text={suggestion} />
                   </div>
@@ -118,11 +115,10 @@ function FindingItem({ finding, viewMode }: { finding: MergedFinding; viewMode: 
 }
 
 type FindingsListProps = {
-  viewMode: ViewMode;
   findings: MergedFinding[];
 };
 
-export function FindingsList({ viewMode, findings }: FindingsListProps) {
+export function FindingsList({ findings }: FindingsListProps) {
   if (findings.length === 0) {
     return <p className="text-sm text-muted-foreground">未发现风险项</p>;
   }
@@ -130,7 +126,7 @@ export function FindingsList({ viewMode, findings }: FindingsListProps) {
   return (
     <div className="space-y-3">
       {findings.map((finding) => (
-        <FindingItem key={finding.riskType} finding={finding} viewMode={viewMode} />
+        <FindingItem key={finding.riskType} finding={finding} />
       ))}
     </div>
   );

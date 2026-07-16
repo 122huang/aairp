@@ -13,14 +13,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import type { ViewMode } from '@/hooks/use-view-mode';
 import { mergeFindingsByRiskType, extractEvidenceSpans } from '@/lib/finding-merge';
 import { collectHighlightSpans, filesToBase64, severityRank } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
 import { Loader2, Upload, X } from 'lucide-react';
 
 type SingleReviewPanelProps = {
-  viewMode: ViewMode;
   countryId: DemoReviewCountryId | '';
   categoryId: DemoSaCategoryId;
   onCountryChange: (value: DemoReviewCountryId) => void;
@@ -30,7 +28,6 @@ type SingleReviewPanelProps = {
 };
 
 export function SingleReviewPanel({
-  viewMode,
   countryId,
   categoryId,
   onCountryChange,
@@ -39,6 +36,7 @@ export function SingleReviewPanel({
   countryShake,
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
+  const [adType, setAdType] = useState<'' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC'>('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -107,6 +105,7 @@ export function SingleReviewPanel({
           text: trimmed,
           ...(imageDataUrls.length > 0 ? { images: imageDataUrls } : {}),
         },
+        ...(adType ? { context: { ad_type: adType } } : {}),
         tags: ['review-app:6u-1', `market:${countryId}`],
       });
       setResult(response);
@@ -151,6 +150,25 @@ export function SingleReviewPanel({
               disabled={loading}
               countryShake={countryShake}
             />
+
+            <div className="space-y-2">
+              <Label htmlFor="ad-type" className="font-medium text-ink">
+                内容类型（可选）
+              </Label>
+              <select
+                id="ad-type"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                value={adType}
+                disabled={loading}
+                onChange={(event) =>
+                  setAdType(event.target.value as '' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC')
+                }
+              >
+                <option value="">未标注（有赠送/合作等信号时才查披露）</option>
+                <option value="BRAND_PRODUCT">品牌产品文案（不强制披露）</option>
+                <option value="INFLUENCER_UGC">网红/合作内容（缺 #ad 等则 WARN）</option>
+              </select>
+            </div>
 
             <div className="space-y-2">
               <Label className="font-medium text-ink">图片（可选）</Label>
@@ -232,9 +250,6 @@ export function SingleReviewPanel({
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 输入广告文案并选择目标市场后提交，系统将返回投放建议、风险项明细与改写建议。
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                右上角可切换法务视图与业务视图。
-              </p>
             </div>
           </div>
         )}
@@ -249,7 +264,6 @@ export function SingleReviewPanel({
         {result && !loading && (
           <>
             <DecisionBanner
-              viewMode={viewMode}
               decision={result.final_decision}
               confidence={result.confidence}
               rationale={result.rationale}
@@ -260,11 +274,9 @@ export function SingleReviewPanel({
             <section>
               <h2 className="mb-3 text-sm font-semibold text-ink">
                 审查发现 ({findingsCount})
-                {viewMode === 'legal' && (
-                  <span className="ml-1.5 text-xs font-normal text-muted-foreground">Findings</span>
-                )}
+                <span className="ml-1.5 text-xs font-normal text-muted-foreground">Findings</span>
               </h2>
-              <FindingsList viewMode={viewMode} findings={mergedFindings} />
+              <FindingsList findings={mergedFindings} />
             </section>
 
             <SourceMaterial text={text} highlightSpans={highlightSpans} imagePreviews={imagePreviews} />

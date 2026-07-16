@@ -16,6 +16,7 @@ export type AdvertisementUploadResponseDto = {
   context: {
     campaign_type?: string;
     ad_format?: string;
+    ad_type?: string;
     target_audience?: string;
     product_sku?: string;
     ai_rendered_image?: boolean;
@@ -54,6 +55,9 @@ export function toAdvertisementUploadResponseDto(
         : {}),
       ...(advertisement.context.adFormat
         ? { ad_format: advertisement.context.adFormat }
+        : {}),
+      ...(advertisement.context.adType
+        ? { ad_type: advertisement.context.adType }
         : {}),
       ...(advertisement.context.targetAudience
         ? { target_audience: advertisement.context.targetAudience }

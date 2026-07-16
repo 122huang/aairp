@@ -24,7 +24,6 @@ try {
   await categoryTrigger.click();
   await page.getByRole('option', { name: '空气炸锅' }).click();
 
-  await page.getByRole('button', { name: '法务视图' }).click();
   await page.getByRole('button', { name: '提交审查' }).click();
   await page.waitForSelector('text=审查发现', { timeout: 45000 });
   await page.waitForTimeout(500);

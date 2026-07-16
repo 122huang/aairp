@@ -23,11 +23,20 @@ export type MergedFinding = {
 
 const MODULE_ORDER = ['RULE', 'PLAYBOOK', 'CASE', 'LLM', 'VISION', 'POLICY'];
 
+/** UI-only merge map for MANUAL_REVIEW rules (not in risk-rewrite-routes — no rewrite generation). */
+const MANUAL_REVIEW_RULE_TO_RISK: Record<string, string> = {
+  'demo-au-children-code-review': 'aana-children-code-risk',
+  'demo-cn-sensitive-content-manual-review': 'sensitive-content-flag',
+};
+
 const ruleIdToRiskType = new Map<string, string>();
 for (const route of routesDoc.routes) {
   for (const ruleId of route.rule_ids ?? []) {
     ruleIdToRiskType.set(ruleId, route.risk_type);
   }
+}
+for (const [ruleId, riskType] of Object.entries(MANUAL_REVIEW_RULE_TO_RISK)) {
+  ruleIdToRiskType.set(ruleId, riskType);
 }
 
 const patternIdToRiskType = new Map<string, string>();
@@ -83,7 +92,7 @@ function pickSummary(findings: ReviewFindingDto[]): string {
 }
 
 function pickDecision(findings: ReviewFindingDto[]): string {
-  const priority = ['FAIL', 'REJECT', 'WARN', 'REVIEW', 'CONDITIONAL', 'PASS'];
+  const priority = ['FAIL', 'REJECT', 'WARN', 'REVIEW', 'CONDITIONAL', 'PASS', 'INFO'];
   for (const decision of priority) {
     if (findings.some((f) => f.decision === decision)) return decision;
   }

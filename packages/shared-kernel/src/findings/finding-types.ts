@@ -2,7 +2,14 @@ export type FindingModule = 'RULE' | 'POLICY' | 'PLAYBOOK' | 'CASE' | 'LLM' | 'V
 
 export type FindingSeverity = 'BLOCKER' | 'HIGH' | 'MEDIUM' | 'LOW';
 
-export type FindingDecision = 'FAIL' | 'WARN' | 'PASS' | 'REVIEW' | 'CONDITIONAL';
+/** Finding-level decision. INFO is display-only and must not participate in fusion. */
+export type FindingDecision =
+  | 'FAIL'
+  | 'WARN'
+  | 'PASS'
+  | 'REVIEW'
+  | 'CONDITIONAL'
+  | 'INFO';
 
 export type MatchedSpan = {
   field: string;

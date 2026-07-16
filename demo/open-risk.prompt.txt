@@ -34,15 +34,24 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 - sponsored-disclosure: promotional/KOL content missing #ad, sponsored, or 广告 disclosure if ad wording is paraphrased but equivalent to a taxonomy class above, report it even when exact keywords did not match rules.
 - scarcity-urgency-claim: implied limited stock, discontinuation, last chance, or FOMO pressure without a verifiable quantity, end date, or offer scope (soft pressure still counts when the sentence steers purchase via scarcity theater)
 
+### MANUAL_REVIEW — recall / semantic pre-screen only (ALWAYS suggested_action MANUAL_REVIEW; NEVER WARN; NEVER "safe to pass")
+- aana-children-code-risk: AU ads directed at / featuring children (under 15) that may touch AANA Children's Advertising Code body provisions — semantic pre-screen for human confirmation. Cite the suspected provision in description (e.g. 2.1 unsafe practices; 2.2 misleading about product/safety/nutrition; 2.3 sexualisation; 2.4 undermine parents; 2.5 pester power / urge children to ask parents to buy; 2.6 inappropriate use of popular personalities/characters with children; 2.7 food/beverage nutrition pressure). Does NOT replace human judgement. Cite `demo-au-children-code-review` in related_modules_checked / cited_rule_refs when applicable. Empty findings only when no child-directed or child-code cue is present.
+- sensitive-content-flag: CN marketing that may involve politics/history, ethnicity, religion, national symbols (beyond literal 国旗/国徽), or public emergencies/disasters (beyond literal 疫情/灾害) — recall-only flag for human confirmation. ALWAYS MANUAL_REVIEW. NEVER WARN. NEVER conclude the copy is clear to publish. Description must say the topic is suspected and needs human confirmation. Cite `demo-cn-sensitive-content-manual-review` when applicable. Empty findings only when no sensitive-topic cue is present.
+
 ## Advertisement
 - Text: {ad_text}
 - Country: {country_id}
 - Platform: {platform_id}
 - Category: {category_id}
 
-## Prior findings (already reported — do NOT repeat)
+## Prior findings (already reported — do NOT restate the SAME risk_type)
 - Rule findings: {rule_findings_summary}
 - Playbook findings: {playbook_findings_summary}
+
+Dedup scope (critical):
+- Skip ONLY a taxonomy `risk_type` that prior findings already fully cover (same issue / same risk class).
+- Unrelated prior findings (e.g. CPSR registration, EECA/COE certificate, energy label, internet-ad tag when the open risk is comparative/health/scarcity) must NOT suppress other taxonomy risks.
+- Do NOT return `"findings": []` merely because the prior list is non-empty.
 
 ## Similar case precedents (ground your analysis in these when applicable)
 {case_precedents_summary}
@@ -72,11 +81,11 @@ Correct finding:
 - Why: "换了三次才发现真正安静" implies other/prior products were inferiorly noisy and this one is the quiet benchmark — comparative without named baseline or measurement.
 
 ### Few-shot C — implied scarcity / FOMO without urgency keywords → scarcity-urgency-claim
-Ad: 这批做完，工厂说要停产升级了，喜欢的朋友这次真的别再犹豫。
+Ad: 产线换模前这一批做完会空档一阵，想入手的朋友这几天更关键。
 Correct finding:
 - risk_type: scarcity-urgency-claim
 - suggested_action: WARN
-- Why: discontinuation + "别再犹豫" pressures purchase via scarce/last-chance framing without verifiable production-end date or remaining stock; not excused merely because "buy now"/"limited time" strings are absent.
+- Why: production gap + "这几天更关键" pressures purchase via scarce/time-window framing without verifiable restock date or remaining stock; not excused merely because "buy now"/"limited time"/"别再犹豫" strings are absent.
 
 ### Few-shot D — unsubstantiated quantitative performance (history: CN kitchen SA enforcement) → unsubstantiated-quantitative-claim
 Ad: 这台炸锅比传统煎锅用油量减少一大截，耗电也少很多，天天用都省一笔。
@@ -87,6 +96,20 @@ Correct finding:
 
 ### Few-shot anti-pattern
 Do NOT miss A–D by classifying them as lifestyle puffery. Empty findings on those patterns is incorrect.
+
+### Few-shot E — AU child pester / urge-to-buy cue → aana-children-code-risk (MANUAL_REVIEW only)
+Ad (AU): Tell mum you need this air fryer so snack time is always ready after school.
+Correct finding:
+- risk_type: aana-children-code-risk
+- suggested_action: MANUAL_REVIEW
+- Why: child-directed urge-to-ask-parent / pester-power cue (AANA ~2.5). Pre-screen only — never WARN, never clear to pass. Cite demo-au-children-code-review when listing related modules.
+
+### Few-shot F — CN sensitive topic without the four keyword triggers → sensitive-content-flag (MANUAL_REVIEW only)
+Ad (CN): 红色年代同款复古破壁机，致敬峥嵘岁月，民族团结共创美好生活。
+Correct finding:
+- risk_type: sensitive-content-flag
+- suggested_action: MANUAL_REVIEW
+- Why: political-history / ethnicity framing without 国旗/国徽/疫情/灾害 keywords. Recall-only — never WARN, never conclude safe to publish.
 
 ## SG / MY / TH small-appliance semantic guidance
 
@@ -105,9 +128,22 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Combination risks: absolute-sounding headline + fine-print disclaimer that does not qualify the headline.
 
 ### Do NOT flag
-- Phrases already fully covered by prior rule/playbook findings (return `"findings": []`).
+- A risk_type already fully covered by prior rule/playbook findings (omit that risk_type only — still report other uncovered risks).
 - Single-word marketing tone ("premium", "smart", "effortless") unless the full sentence asserts guaranteed or comparative performance.
 - Convenience claims that only describe user experience time/effort, not product efficacy vs competitors.
+
+## AU / CN guidance (MANUAL_REVIEW recall types)
+
+### AU — AANA Children's Advertising Code (aana-children-code-risk)
+- Apply when country_id is AU and copy is directed at children under 15, features child audiences, or uses kids/children framing in ways that may touch Code body provisions — not merely because the word "children" appears in a neutral adult context.
+- Always suggested_action MANUAL_REVIEW. Never WARN. Never state the ad complies or is clear to publish.
+- In description, name the suspected provision (2.1–2.7) and the evidence cue so humans verify rather than re-scan from scratch.
+- Keyword rule `demo-au-children-code-review` may already have fired; still emit open-risk when you can add a more precise provision hypothesis, unless prior findings already fully cover the same provision-level issue.
+
+### CN — sensitive content recall (sensitive-content-flag)
+- Apply when country_id is CN and copy may involve politics/history, ethnicity, religion, national symbols, or public emergencies beyond the four literal rule triggers (国旗/国徽/疫情/灾害).
+- Role is recall only: output "疑似涉及敏感话题，建议人工确认" style descriptions. ALWAYS MANUAL_REVIEW. NEVER WARN. NEVER conclude "没问题可以放行".
+- Empty findings only when no such cue is present. Do not invent political readings from ordinary product claims.
 
 ## ID / VN / PH guidance
 
@@ -132,11 +168,11 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Do not flag language mixing itself as a finding unless localisation-error rule applies
 
 ## Instructions
-1. Only report NEW risks not fully captured by prior findings above.
-2. If prior findings already cover the issue, return `"findings": []`.
+1. Only report NEW taxonomy risks not already captured by prior findings of the SAME risk class.
+2. If prior findings already cover risk_type X, omit X — but still report Y/Z when those remain uncovered. Return `"findings": []` ONLY when no uncovered NEW risk remains (not merely because prior findings exist).
 3. Every finding MUST include `evidence_spans` copied verbatim from the ad text (field, start, end, text).
 4. Do NOT invent evidence spans or quote text that is not in the advertisement.
-5. Open-risk findings must NOT trigger rejection alone — use suggested_action WARN or MANUAL_REVIEW only.
+5. Open-risk findings must NOT trigger rejection alone — use suggested_action WARN or MANUAL_REVIEW only. For aana-children-code-risk and sensitive-content-flag, ALWAYS MANUAL_REVIEW (never WARN, never clear-to-pass).
 6. Prefer fewer, higher-quality findings over speculative risks.
 7. When precedents are listed above (not "none"), every finding MUST also include `cited_case_ids` and/or `cited_rule_refs` from the precedent or shared rule lists.
 8. If no precedent applies to the remaining open risk, you may still return a finding for clear semantic omnibus/comparative gaps listed above; otherwise return `"findings": []` rather than speculative risks.
@@ -144,7 +180,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 
 ## Output format (JSON only, no markdown)
 {
-  "prompt_pack_version": "demo-open-risk-1.5.0",
+  "prompt_pack_version": "demo-open-risk-1.5.3",
   "findings": [
     {
       "risk_type": "kebab-case-id",
@@ -162,4 +198,4 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
   ]
 }
 
-Return `"findings": []` when no additional open risks remain after considering prior findings, precedents, and the semantic guidance above.
+Return `"findings": []` when no additional uncovered open risks remain after considering prior findings (same-risk dedupe only), precedents, and the semantic guidance above.

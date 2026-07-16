@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.3",
+  "pack_version": "demo-rule-1.8.5",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -49,7 +49,7 @@
     },
     {
       "rule_id": "demo-sg-sponsored-disclosure",
-      "rule_version_id": "demo-sg-sponsored-disclosure-v2",
+      "rule_version_id": "demo-sg-sponsored-disclosure-v3",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Sponsored or promotional content should include an ad disclosure",
@@ -59,6 +59,31 @@
         "advertisement",
         "广告"
       ],
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
       "scopes": {
         "countries": [
           "SG"
@@ -88,8 +113,8 @@
       "rule_id": "demo-sg-cpsr-registration-prerequisite",
       "rule_version_id": "demo-sg-cpsr-registration-prerequisite-v1",
       "severity": "HIGH",
-      "decision": "REVIEW",
-      "summary": "Home-appliance model advertising before CPSR SAFETY Mark registration is unlawful — product compliance must confirm registration status before publish",
+      "decision": "INFO",
+      "summary": "Home-appliance model advertising — CPSR SAFETY Mark registration is a category prerequisite; confirm registration status offline (tool cannot verify SKU status). Non-blocking reminder.",
       "when": {
         "category_requires_cpsr": true
       },
@@ -120,8 +145,8 @@
       "rule_id": "demo-my-eeca-coe-prerequisite",
       "rule_version_id": "demo-my-eeca-coe-prerequisite-v1",
       "severity": "HIGH",
-      "decision": "REVIEW",
-      "summary": "Energy-using products under EECA must complete COE and labelling before advertising (fine up to RM50,000) — product compliance must confirm COE status before publish",
+      "decision": "INFO",
+      "summary": "Energy-using products under EECA typically need COE and labelling before advertising; confirm COE status offline (tool cannot verify SKU status). Non-blocking reminder.",
       "when": {
         "category_requires_coe": true
       },
@@ -1663,7 +1688,7 @@
     },
     {
       "rule_id": "demo-id-sponsored-disclosure",
-      "rule_version_id": "demo-id-sponsored-disclosure-v2",
+      "rule_version_id": "demo-id-sponsored-disclosure-v3",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Indonesia sponsored or influencer content should include Bahasa ad identification",
@@ -1674,6 +1699,26 @@
         "#ad",
         "sponsored"
       ],
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "brand kirim",
+        "dikirim brand",
+        "kerja sama",
+        "endorsement",
+        "gifted",
+        "#gifted",
+        "sponsored by",
+        "paid partnership",
+        "品牌送的",
+        "赠送",
+        "合作提供"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
       "scopes": {
         "countries": [
           "ID"
@@ -1848,7 +1893,7 @@
     },
     {
       "rule_id": "demo-ph-sponsored-disclosure",
-      "rule_version_id": "demo-ph-sponsored-disclosure-v2",
+      "rule_version_id": "demo-ph-sponsored-disclosure-v3",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Philippines sponsored content should include ASC-recognised ad disclosure markers",
@@ -1859,6 +1904,24 @@
         "bayad na nilalaman",
         "#paid"
       ],
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "gifted",
+        "#gifted",
+        "sent by the brand",
+        "sponsored by",
+        "paid partnership",
+        "in partnership with",
+        "品牌送的",
+        "赠送",
+        "合作提供"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
       "scopes": {
         "countries": [
           "PH"
@@ -2093,8 +2156,8 @@
       "rule_id": "demo-jp-household-label-consistency",
       "rule_version_id": "demo-jp-household-label-consistency-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "广告引用容量/功率参数——须与家庭用品品质标示法法定标签一致；吸尘器仅限有线适用，空气炸锅完全不在覆盖清单内，需产品合规团队确认对应品类是否负有标示义务",
+      "decision": "INFO",
+      "summary": "广告引用容量/功率参数——提醒核对是否与家庭用品品质标示法法定标签一致；吸尘器仅限有线适用，空气炸锅完全不在覆盖清单内。工具无法核验SKU标示义务，非阻塞提醒。",
       "trigger_terms": [
         "吸込仕事率",
         "定格容量",
@@ -2300,8 +2363,8 @@
       "rule_id": "demo-kr-kc-certification-labeling",
       "rule_version_id": "demo-kr-kc-certification-labeling-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "电商产品页出现KC认证信息时，须公示安全认证编号/产品名/型号/制造进口商名，需产品合规团队确认认证状态是否与广告一致",
+      "decision": "INFO",
+      "summary": "电商产品页出现KC认证信息时，提醒公示安全认证编号/产品名/型号/制造进口商名，并核对认证状态与广告一致。工具无法核验真实认证状态，非阻塞提醒。",
       "trigger_terms": [
         "KC인증",
         "KC마크",
@@ -2334,8 +2397,8 @@
       "rule_id": "demo-kr-warranty-dispute-standard",
       "rule_version_id": "demo-kr-warranty-dispute-standard-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "广告出现'品质保证/保修承诺'用语——须与消费者纠纷解决标准一致，需产品合规团队确认实际保修条款",
+      "decision": "INFO",
+      "summary": "广告出现品质保证/保修承诺用语——提醒与消费者纠纷解决标准及实际保修条款核对。工具无法核验条款状态，非阻塞提醒。",
       "trigger_terms": [
         "품질보증",
         "무상수리",
@@ -2546,8 +2609,8 @@
       "rule_id": "demo-au-rcm-gems-certification-claim",
       "rule_version_id": "demo-au-rcm-gems-certification-claim-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "广告出现RCM标志或'符合澳洲强制能效认证'宣称——吸尘器/搅拌机/空气炸锅现阶段不在GEMS强制清单内，需产品合规团队确认认证范围与广告一致",
+      "decision": "INFO",
+      "summary": "广告出现RCM标志或符合澳洲强制能效认证宣称——吸尘器/搅拌机/空气炸锅现阶段不在GEMS强制清单内，提醒核对认证范围与广告一致。工具无法核验SKU认证状态，非阻塞提醒。",
       "trigger_terms": [
         "RCM certified",
         "meets australian energy rating",
@@ -2816,8 +2879,8 @@
       "rule_id": "demo-cn-ccc-energy-label-review",
       "rule_version_id": "demo-cn-ccc-energy-label-review-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "吸尘器/破壁机等CCC强制认证目录产品，广告使用认证标志需与证书一致，能效标识需完成备案方可标注，需产品合规团队确认",
+      "decision": "INFO",
+      "summary": "吸尘器/破壁机等CCC强制认证目录产品，广告使用认证标志或能效标识时，提醒与证书/备案状态核对。工具无法核验真实认证状态，非阻塞提醒。",
       "trigger_terms": [
         "CCC认证",
         "3C认证",
@@ -2844,8 +2907,8 @@
       "rule_id": "demo-cn-capacity-metrology-review",
       "rule_version_id": "demo-cn-capacity-metrology-review-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "容量/净含量类宣称需与法定计量单位标注一致，需产品合规团队确认",
+      "decision": "INFO",
+      "summary": "容量/净含量类宣称提醒与法定计量单位标注一致；工具无法核验计量备案状态，非阻塞提醒。",
       "trigger_terms": [
         "大容量",
         "升杯体",
@@ -2873,8 +2936,8 @@
       "rule_id": "demo-cn-warranty-sanbao-review",
       "rule_version_id": "demo-cn-warranty-sanbao-review-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "保修/售后类宣称不得超出三包规定的法定期限和范围，需产品合规团队确认",
+      "decision": "INFO",
+      "summary": "保修/售后类宣称提醒不得超出三包规定的法定期限和范围；工具无法核验实际保修条款，非阻塞提醒。",
       "trigger_terms": [
         "终身保修",
         "全国联保",
@@ -2906,8 +2969,8 @@
       "rule_id": "demo-cn-environmental-recycling-review",
       "rule_version_id": "demo-cn-environmental-recycling-review-v1",
       "severity": "LOW",
-      "decision": "REVIEW",
-      "summary": "环保/回收类宣称需与生产者回收责任表述一致，需产品合规团队确认",
+      "decision": "INFO",
+      "summary": "环保/回收类宣称提醒与生产者回收责任表述一致；工具无法核验回收义务履行状态，非阻塞提醒。",
       "trigger_terms": [
         "环保回收",
         "以旧换新符合国家规定",
@@ -2975,8 +3038,8 @@
       "rule_id": "demo-th-tisi-mandatory-voluntary-check",
       "rule_version_id": "demo-th-tisi-mandatory-voluntary-check-v1",
       "severity": "MEDIUM",
-      "decision": "REVIEW",
-      "summary": "广告出现TISI/มอก.认证标志或'符合国家标准'宣称——吸尘器目前为自愿标准，电饭煲/电风扇/电熨斗为强制标准，需产品合规团队确认该SKU的实际分类，不应对自愿类目暗示强制认证",
+      "decision": "INFO",
+      "summary": "广告出现TISI/มอก.认证标志或符合国家标准宣称——吸尘器目前为自愿标准，电饭煲/电风扇/电熨斗为强制标准，提醒核对该SKU实际分类，勿对自愿类目暗示强制认证。工具无法核验SKU分类，非阻塞提醒。",
       "trigger_terms": [
         "มอก",
         "tisi certified",

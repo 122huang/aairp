@@ -5,7 +5,7 @@
   "platform_id": "META",
   "intent": "EDGE",
   "verification": "auto",
-  "notes": "MY electronics — EECA/COE prerequisite routes to REVIEW for certification confirmation. Not legal advice.",
+  "notes": "MY electronics — EECA/COE prerequisite is an INFO reminder (non-blocking). Not legal advice.",
   "tags": ["demo", "verified", "6b-coe"],
   "upload": {
     "country_id": "MY",
@@ -17,7 +17,7 @@
     "tags": ["pilot:edge-battery"]
   },
   "ground_truth": {
-    "expected_decision": "REVIEW",
+    "expected_decision": "PASS",
     "expected_findings": [
       { "module": "RULE", "ref_id": "demo-my-eeca-coe-prerequisite" }
     ]

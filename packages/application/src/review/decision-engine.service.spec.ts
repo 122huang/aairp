@@ -155,12 +155,12 @@ describe('DecisionEngineService', () => {
     const ruleReviewFinding: RuleFinding = {
       module: 'RULE',
       findingId: 'rf_review',
-      severity: 'HIGH',
+      severity: 'MEDIUM',
       decision: 'REVIEW',
       refType: 'RULE',
-      refId: 'demo-sg-cpsr-registration-prerequisite',
-      refVersionId: 'demo-sg-cpsr-registration-prerequisite-v1',
-      summary: 'CPSR registration prerequisite',
+      refId: 'demo-au-children-code-review',
+      refVersionId: 'demo-au-children-code-review-v1',
+      summary: 'AANA children advertising code requires human review',
       confidence: 0.9,
     };
 
@@ -174,6 +174,35 @@ describe('DecisionEngineService', () => {
 
     expect(result.finalDecision).toBe('REVIEW');
     expect(result.confidence).toBe(0.78);
+  });
+
+  it('returns PASS for rule-only INFO findings (informational, non-blocking)', () => {
+    const service = createService();
+    const ruleInfoFinding: RuleFinding = {
+      module: 'RULE',
+      findingId: 'rf_info',
+      severity: 'HIGH',
+      decision: 'INFO',
+      refType: 'RULE',
+      refId: 'demo-sg-cpsr-registration-prerequisite',
+      refVersionId: 'demo-sg-cpsr-registration-prerequisite-v1',
+      summary: 'CPSR registration prerequisite reminder',
+      confidence: 0.9,
+    };
+
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [ruleInfoFinding],
+      playbookFindings: [],
+      llmFindings: [],
+    });
+
+    expect(result.finalDecision).toBe('PASS');
+    expect(result.confidence).toBe(0.95);
+    expect(result.rationale).toContain('informational notices');
+    expect(result.rationale).not.toContain('Warning issued');
+    expect(result.rationale).not.toContain('Manual review required');
   });
 
   it('returns WARN for playbook CONDITIONAL findings (not REVIEW)', () => {

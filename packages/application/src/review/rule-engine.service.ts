@@ -119,6 +119,28 @@ function createRuleFinding(
   };
 }
 
+function shouldEmitRequiredAnyFinding(
+  rule: RuntimeRuleDefinition,
+  context: ReviewContext,
+  fields: ReturnType<typeof searchableFields>,
+): boolean {
+  const mode = rule.required_any_mode ?? 'always';
+  if (mode === 'always') {
+    return true;
+  }
+
+  const adType = (context.advertisementContext.adType ?? '').trim().toUpperCase();
+  if (adType === 'INFLUENCER_UGC') {
+    return true;
+  }
+
+  if (rule.activation_terms?.length) {
+    return Boolean(findTermMatch(fields, rule.activation_terms));
+  }
+
+  return false;
+}
+
 function evaluateRuleDefinition(
   config: RuleEngineConfig,
   context: ReviewContext,
@@ -182,7 +204,8 @@ function evaluateRuleDefinition(
   const { severity, decision } = resolveRuleDecision(rule, context.dimensions.countryId);
 
   if (rule.required_any_terms?.length) {
-    if (!hasAnyTerm(fields, rule.required_any_terms)) {
+    const missingRequired = !hasAnyTerm(fields, rule.required_any_terms);
+    if (missingRequired && shouldEmitRequiredAnyFinding(rule, context, fields)) {
       findings.push(
         createRuleFinding(config, {
           ruleId: rule.rule_id,
@@ -225,6 +248,7 @@ function evaluateRuleDefinition(
     Boolean(rule.forbidden_terms?.length) ||
     Boolean(rule.trigger_terms?.length) ||
     Boolean(rule.required_any_terms?.length) ||
+    Boolean(rule.activation_terms?.length) ||
     Boolean(rule.sku_mismatch_check);
 
   if (

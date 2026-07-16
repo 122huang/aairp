@@ -60,7 +60,7 @@ function BatchDetailPanel({ item, onClose }: { item: BatchReviewItem; onClose: (
               <div className={cn('rounded-md border-l-4 px-3 py-2', banner.bar, banner.background)}>
                 <span className={cn('font-semibold', banner.verdict)}>{item.result.final_decision}</span>
                 <span className="ml-2 text-muted-foreground">
-                  置信度 {(item.result.confidence * 100).toFixed(0)}%
+                  决策档位基准 {(item.result.confidence * 100).toFixed(0)}%
                 </span>
               </div>
               <p className="mt-2 text-muted-foreground">{item.result.rationale}</p>

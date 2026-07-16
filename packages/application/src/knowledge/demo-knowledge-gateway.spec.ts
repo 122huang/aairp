@@ -22,7 +22,7 @@ describe('DemoKnowledgeGateway', () => {
 
     expect(snapshot.source).toBe('demo');
     expect(snapshot.versions.rulePackVersion).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(snapshot.rulePack.rules).toHaveLength(39);
+    expect(snapshot.rulePack.rules).toHaveLength(72);
     expect(snapshot.playbook.markdown).toContain('playbook_id:');
     expect(snapshot.openRiskPrompt.content.length).toBeGreaterThan(100);
   });

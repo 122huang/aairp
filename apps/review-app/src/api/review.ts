@@ -9,6 +9,9 @@ export type ReviewUploadPayload = {
     text: string;
     images?: string[];
   };
+  context?: {
+    ad_type?: 'BRAND_PRODUCT' | 'INFLUENCER_UGC';
+  };
   tags?: string[];
 };
 

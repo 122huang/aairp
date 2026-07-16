@@ -24,6 +24,7 @@ export type AdvertisementUploadPayload = {
   context?: {
     campaign_type?: string;
     ad_format?: string;
+    ad_type?: string;
     target_audience?: string;
     product_sku?: string;
     ai_rendered_image?: boolean;
@@ -151,6 +152,7 @@ function normalizeContext(
       ? { campaignType: raw.campaign_type.trim() }
       : {}),
     ...(isNonEmptyString(raw.ad_format) ? { adFormat: raw.ad_format.trim() } : {}),
+    ...(isNonEmptyString(raw.ad_type) ? { adType: raw.ad_type.trim().toUpperCase() } : {}),
     ...(isNonEmptyString(raw.target_audience)
       ? { targetAudience: raw.target_audience.trim() }
       : {}),

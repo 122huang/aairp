@@ -37,21 +37,40 @@ function formatFindingLabel(
   return `${finding.module}/${finding.refId} (${finding.severity})`;
 }
 
+function isInformationalRuleDecision(decision: RuleFinding['decision']): boolean {
+  return decision === 'INFO' || decision === 'PASS';
+}
+
 function summarizeTopFindings(sources: DecisionFusionSources, limit = 3): string[] {
   const caseFindings = sources.caseFindings ?? [];
   const visionFindings = sources.visionFindings ?? [];
   const ranked = [
     ...sources.ruleFindings.filter((finding) => finding.severity === 'BLOCKER'),
     ...visionFindings.filter((finding) => finding.severity === 'BLOCKER'),
-    ...sources.ruleFindings.filter((finding) => finding.severity !== 'BLOCKER'),
+    ...sources.ruleFindings.filter(
+      (finding) => finding.severity !== 'BLOCKER' && !isInformationalRuleDecision(finding.decision),
+    ),
     ...caseFindings.filter((finding) => finding.decision === 'WARN'),
     ...sources.playbookFindings,
     ...sources.llmFindings,
     ...visionFindings.filter((finding) => finding.severity !== 'BLOCKER'),
     ...caseFindings.filter((finding) => finding.decision === 'PASS'),
+    ...sources.ruleFindings.filter((finding) => isInformationalRuleDecision(finding.decision)),
   ];
 
   return ranked.slice(0, limit).map(formatFindingLabel);
+}
+
+function hasElevatingWarnSignal(input: DecisionFusionInput): boolean {
+  return (
+    input.hasRuleWarn ||
+    input.hasPlaybookConditionalSignal ||
+    input.hasCaseConfirmedSignal ||
+    input.playbookFindingCount > 0 ||
+    input.llmFindingCount > 0 ||
+    input.caseFindingCount > 0 ||
+    input.visionFindingCount > 0
+  );
 }
 
 export function buildDecisionRationale(
@@ -80,17 +99,16 @@ export function buildDecisionRationale(
     return `Manual review required based on: ${summary}. Route to product compliance / legal before publishing.`;
   }
 
-  const hasAnyFinding =
-    input.ruleFindingCount > 0 ||
-    input.playbookFindingCount > 0 ||
-    input.llmFindingCount > 0 ||
-    input.caseFindingCount > 0 ||
-    input.visionFindingCount > 0;
-
-  if (hasAnyFinding) {
+  if (hasElevatingWarnSignal(input)) {
     const summary =
       topFindings.length > 0 ? topFindings.join('; ') : 'non-blocking findings detected';
     return `Warning issued based on: ${summary}. Manual follow-up recommended before publishing.`;
+  }
+
+  const infoFindings = sources.ruleFindings.filter((finding) => finding.decision === 'INFO');
+  if (infoFindings.length > 0) {
+    const summary = infoFindings.slice(0, 3).map(formatFindingLabel).join('; ');
+    return `Passed with informational notices: ${summary}. These do not block publish; confirm registration/certification or related obligations offline where noted.`;
   }
 
   return 'No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.';
@@ -231,17 +249,8 @@ export class DecisionEngineService {
         confidence = 0.78;
       }
 
-      const hasWarnSignal =
-        input.hasRuleWarn ||
-        input.hasPlaybookConditionalSignal ||
-        input.hasCaseConfirmedSignal ||
-        input.playbookFindingCount > 0 ||
-        input.llmFindingCount > 0 ||
-        input.caseFindingCount > 0 ||
-        input.visionFindingCount > 0;
-
-      if (!hasWarnSignal) {
-        // Rule findings with decision PASS / unmarked should not invent WARN.
+      if (!hasElevatingWarnSignal(input)) {
+        // Rule findings with decision PASS / INFO should not invent WARN.
         return {
           reviewId: input.reviewId,
           finalDecision: 'PASS',

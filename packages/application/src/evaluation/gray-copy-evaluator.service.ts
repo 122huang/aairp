@@ -16,6 +16,10 @@ import {
   resolveGrayCopyFixturePath,
   type GrayCopyEvalCase,
 } from './load-gray-copy-fixture.js';
+import {
+  scoreGrayCopyCapability,
+  type CoincidenceKind,
+} from './gray-copy-scoring.js';
 
 export type HitSourceFinding = {
   module: 'RULE' | 'PLAYBOOK' | 'LLM' | 'VISION';
@@ -44,7 +48,11 @@ export type GrayCopyCaseResult = {
   hit_sources: HitSourceFinding[];
   llm_risk_types: string[];
   open_risk_capability_pass: boolean;
+  /** Same-risk Rule cover (PASS) vs unrelated incidental mask (FAIL). null = neither. */
+  coincidence_kind: CoincidenceKind | null;
+  /** Legacy alias: true only when coincidence_kind === 'masked_by_unrelated'. */
   coincidence_only: boolean;
+  same_risk_rule_refs: string[];
   failures: string[];
 };
 
@@ -58,15 +66,29 @@ export type GrayCopyEvalResult = {
     open_risk_capability_passed: number;
     open_risk_capability_rate: number;
     coincidence_only_count: number;
+    rule_covered_same_risk_count: number;
+    masked_by_unrelated_count: number;
     must_fire_total: number;
     must_fire_caught: number;
     by_gray_class: Record<
       string,
-      { total: number; capability_passed: number; coincidence_only: number }
+      {
+        total: number;
+        capability_passed: number;
+        coincidence_only: number;
+        rule_covered_same_risk: number;
+        masked_by_unrelated: number;
+      }
     >;
     by_country: Record<
       string,
-      { total: number; capability_passed: number; coincidence_only: number }
+      {
+        total: number;
+        capability_passed: number;
+        coincidence_only: number;
+        rule_covered_same_risk: number;
+        masked_by_unrelated: number;
+      }
     >;
   };
   failed_case_ids: string[];
@@ -109,10 +131,6 @@ function buildContext(testCase: GrayCopyEvalCase): ReviewContext {
     tags: ['gray-copy-eval', `gray-class:${testCase.gray_class}`],
     builtAt: new Date().toISOString(),
   };
-}
-
-function normalizeRiskType(refId: string): string {
-  return refId.trim().toLowerCase();
 }
 
 function scoreCase(
@@ -163,45 +181,34 @@ function scoreCase(
     });
   }
 
-  const llm_risk_types = hit_sources
-    .filter((h) => h.module === 'LLM')
-    .map((h) => normalizeRiskType(h.ref_id));
-
-  const acceptable = new Set(
-    testCase.acceptable_risk_types.map((t) => normalizeRiskType(t)),
-  );
-  const llmMatched = llm_risk_types.some((t) => acceptable.has(t));
+  const scored = scoreGrayCopyCapability({
+    open_risk_must_fire: testCase.open_risk_must_fire,
+    acceptable_risk_types: testCase.acceptable_risk_types,
+    hit_sources,
+    final_decision: pipeline.decision.finalDecision,
+  });
 
   const open_risk_skipped = pipeline.openRiskResult.skipped;
   const open_risk_ran = !open_risk_skipped;
-  const open_risk_capability_pass = testCase.open_risk_must_fire
-    ? llmMatched
-    : true;
-
   const nonIncidentalHits = hit_sources.filter((h) => !h.incidental);
-  const onlyIncidentalRules =
-    hit_sources.length > 0 &&
-    hit_sources.every((h) => h.module === 'RULE' && h.incidental) &&
-    llm_risk_types.length === 0;
-
-  const coincidence_only =
-    testCase.open_risk_must_fire &&
-    !llmMatched &&
-    onlyIncidentalRules &&
-    pipeline.decision.finalDecision !== 'PASS';
 
   const failures: string[] = [];
   if (testCase.open_risk_must_fire && !open_risk_ran) {
     failures.push('open_risk_did_not_run');
   }
-  if (testCase.open_risk_must_fire && !llmMatched) {
+  if (testCase.open_risk_must_fire && !scored.llm_matched && !scored.rule_covered_same_risk) {
     failures.push(
-      `open_risk_miss: expected one of [${testCase.acceptable_risk_types.join(', ')}], got [${llm_risk_types.join(', ') || 'none'}]`,
+      `open_risk_miss: expected one of [${testCase.acceptable_risk_types.join(', ')}], got [${scored.llm_risk_types.join(', ') || 'none'}]`,
     );
   }
-  if (coincidence_only) {
+  if (scored.coincidence_kind === 'rule_covered_same_risk') {
     failures.push(
-      `coincidence_only: final=${pipeline.decision.finalDecision} from incidental rules only (${hit_sources.map((h) => h.ref_id).join(', ')})`,
+      `rule_covered_same_risk: LLM empty OK — Rule/Playbook already covers acceptable risk via [${scored.same_risk_rule_refs.join(', ')}]`,
+    );
+  }
+  if (scored.coincidence_kind === 'masked_by_unrelated') {
+    failures.push(
+      `masked_by_unrelated: final=${pipeline.decision.finalDecision} from unrelated incidental rules only (${hit_sources.map((h) => h.ref_id).join(', ')})`,
     );
   }
   if (nonIncidentalHits.some((h) => h.module === 'PLAYBOOK')) {
@@ -230,15 +237,23 @@ function scoreCase(
       vision: pipeline.decision.findingCounts.vision ?? 0,
     },
     hit_sources,
-    llm_risk_types,
-    open_risk_capability_pass,
-    coincidence_only,
+    llm_risk_types: scored.llm_risk_types,
+    open_risk_capability_pass: scored.open_risk_capability_pass,
+    coincidence_kind: scored.coincidence_kind,
+    coincidence_only: scored.coincidence_only,
+    same_risk_rule_refs: scored.same_risk_rule_refs,
     failures,
   };
 }
 
 function emptyBucket() {
-  return { total: 0, capability_passed: 0, coincidence_only: 0 };
+  return {
+    total: 0,
+    capability_passed: 0,
+    coincidence_only: 0,
+    rule_covered_same_risk: 0,
+    masked_by_unrelated: 0,
+  };
 }
 
 function defaultReportsDir(): string {
@@ -253,22 +268,23 @@ function formatMarkdown(result: GrayCopyEvalResult): string {
     `**Evaluated at:** ${result.evaluated_at}`,
     `**Open Risk mode:** ${result.open_risk_mode}`,
     '',
-    '## Metrics (capability = Open Risk hit acceptable risk_type; NOT final_decision alone)',
+    '## Metrics (capability = LLM hit OR same-risk Rule cover; NOT final_decision alone)',
     '',
     `| Metric | Value |`,
     `|--------|------:|`,
     `| Capability pass | ${result.metrics.open_risk_capability_passed}/${result.metrics.total_cases} (${(result.metrics.open_risk_capability_rate * 100).toFixed(1)}%) |`,
     `| Must-fire caught | ${result.metrics.must_fire_caught}/${result.metrics.must_fire_total} |`,
-    `| Coincidence-only (decision from incidental rules, LLM miss) | ${result.metrics.coincidence_only_count} |`,
+    `| rule_covered_same_risk (PASS) | ${result.metrics.rule_covered_same_risk_count} |`,
+    `| masked_by_unrelated (FAIL; legacy coincidence_only) | ${result.metrics.masked_by_unrelated_count} |`,
     '',
     '## By gray class',
     '',
-    '| Class | Pass | Coincidences |',
-    '|-------|-----:|-------------:|',
+    '| Class | Pass | Same-risk cover | Masked unrelated |',
+    '|-------|-----:|----------------:|-----------------:|',
   ];
   for (const [klass, b] of Object.entries(result.metrics.by_gray_class).sort()) {
     lines.push(
-      `| ${klass} | ${b.capability_passed}/${b.total} | ${b.coincidence_only} |`,
+      `| ${klass} | ${b.capability_passed}/${b.total} | ${b.rule_covered_same_risk} | ${b.masked_by_unrelated} |`,
     );
   }
   lines.push('', '## Cases', '');
@@ -279,8 +295,14 @@ function formatMarkdown(result: GrayCopyEvalResult): string {
           `${h.module}/${h.ref_id}${h.incidental ? '(incidental)' : ''}`,
       )
       .join('; ');
+    const kind =
+      c.coincidence_kind === 'rule_covered_same_risk'
+        ? ' | RULE_COVERED'
+        : c.coincidence_kind === 'masked_by_unrelated'
+          ? ' | MASKED_UNRELATED'
+          : '';
     lines.push(
-      `- **${c.case_id}** ${c.open_risk_capability_pass ? 'PASS' : 'FAIL'} | decision=${c.final_decision} | llm=[${c.llm_risk_types.join(',') || '-'}] | hits: ${hit || 'none'}${c.coincidence_only ? ' | COINCIDENCE' : ''}`,
+      `- **${c.case_id}** ${c.open_risk_capability_pass ? 'PASS' : 'FAIL'} | decision=${c.final_decision} | llm=[${c.llm_risk_types.join(',') || '-'}] | hits: ${hit || 'none'}${kind}`,
     );
     if (c.failures.length) {
       lines.push(`  - ${c.failures.join(' | ')}`);
@@ -330,7 +352,9 @@ export async function runGrayCopyEval(
         hit_sources: [],
         llm_risk_types: [],
         open_risk_capability_pass: false,
+        coincidence_kind: null,
         coincidence_only: false,
+        same_risk_rule_refs: [],
         failures: [`pipeline_error: ${message}`],
       });
     }
@@ -340,12 +364,16 @@ export async function runGrayCopyEval(
   const by_country: GrayCopyEvalResult['metrics']['by_country'] = {};
   let capability = 0;
   let coincidence = 0;
+  let ruleCovered = 0;
+  let masked = 0;
   let mustTotal = 0;
   let mustCaught = 0;
 
   for (const c of case_results) {
     if (c.open_risk_capability_pass) capability += 1;
     if (c.coincidence_only) coincidence += 1;
+    if (c.coincidence_kind === 'rule_covered_same_risk') ruleCovered += 1;
+    if (c.coincidence_kind === 'masked_by_unrelated') masked += 1;
     const tpl = fixture.cases.find((x) => x.copy_id === c.copy_id);
     if (tpl?.open_risk_must_fire) {
       mustTotal += 1;
@@ -355,10 +383,18 @@ export async function runGrayCopyEval(
     g.total += 1;
     if (c.open_risk_capability_pass) g.capability_passed += 1;
     if (c.coincidence_only) g.coincidence_only += 1;
+    if (c.coincidence_kind === 'rule_covered_same_risk') g.rule_covered_same_risk += 1;
+    if (c.coincidence_kind === 'masked_by_unrelated') g.masked_by_unrelated += 1;
     const country = (by_country[c.country_id] ??= emptyBucket());
     country.total += 1;
     if (c.open_risk_capability_pass) country.capability_passed += 1;
     if (c.coincidence_only) country.coincidence_only += 1;
+    if (c.coincidence_kind === 'rule_covered_same_risk') {
+      country.rule_covered_same_risk += 1;
+    }
+    if (c.coincidence_kind === 'masked_by_unrelated') {
+      country.masked_by_unrelated += 1;
+    }
   }
 
   const evalResult: GrayCopyEvalResult = {
@@ -372,6 +408,8 @@ export async function runGrayCopyEval(
       open_risk_capability_rate:
         case_results.length === 0 ? 0 : capability / case_results.length,
       coincidence_only_count: coincidence,
+      rule_covered_same_risk_count: ruleCovered,
+      masked_by_unrelated_count: masked,
       must_fire_total: mustTotal,
       must_fire_caught: mustCaught,
       by_gray_class,

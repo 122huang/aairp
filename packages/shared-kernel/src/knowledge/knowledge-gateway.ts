@@ -27,6 +27,13 @@ export type RuleWhenCondition = {
   category_requires_coe?: boolean;
   /** Audience targeting includes children (AANA / similar code routes). */
   audience_includes_children?: boolean;
+  /**
+   * Advertisement content class must be one of these values (e.g. INFLUENCER_UGC).
+   * Combined with or_missing_ad_type for disclosure fallback when unset.
+   */
+  ad_type_in?: string[];
+  /** When true, when-clause also passes if adType is missing/empty/UNKNOWN. */
+  or_missing_ad_type?: boolean;
 };
 
 export type RuntimeRuleCountryDecisionOverride = {
@@ -48,6 +55,17 @@ export type RuntimeRuleDefinition = {
   forbidden_terms?: string[];
   trigger_terms?: string[];
   required_any_terms?: string[];
+  /**
+   * Soft signals (gifted/KOL language) that activate required_any checks when
+   * ad_type is unset. Unlike trigger_terms, these do not emit findings alone.
+   */
+  activation_terms?: string[];
+  /**
+   * - always (default): missing required_any → finding whenever when passes
+   * - influencer_or_activation: missing required_any → finding only if
+   *   adType===INFLUENCER_UGC OR an activation_term matched
+   */
+  required_any_mode?: 'always' | 'influencer_or_activation';
   when?: RuleWhenCondition;
   sku_mismatch_check?: boolean;
   citation?: FindingCitation;

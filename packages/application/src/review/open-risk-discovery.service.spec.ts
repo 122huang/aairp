@@ -70,8 +70,8 @@ describe('OpenRiskDiscoveryService', () => {
 
     expect(prompt).toContain(baseContext.normalizedContent.text);
     expect(prompt).toContain('SG');
-    expect(prompt).toContain('demo-sg-health-superlative:WARN');
-    expect(prompt).toContain('do NOT repeat');
+    expect(prompt).toContain('demo-sg-health-superlative:WARN:Superlative claim');
+    expect(prompt).toContain('do NOT restate the SAME risk_type');
     expect(prompt).toContain('evidence_spans');
     expect(prompt).not.toContain('{case_precedents_summary}');
     expect(prompt).toContain('none');
@@ -230,7 +230,7 @@ describe('OpenRiskDiscoveryService', () => {
 
     expect(gateway.complete).toHaveBeenCalledTimes(1);
     expect(result.skipped).toBe(false);
-    expect(result.promptPackVersion).toBe('demo-open-risk-1.5.0');
+    expect(result.promptPackVersion).toBe('demo-open-risk-1.5.3');
     expect(result.findings).toHaveLength(1);
     expect(result.findings[0]).toMatchObject({
       module: 'LLM',
@@ -332,8 +332,49 @@ describe('OpenRiskDiscoveryService', () => {
 
   it('aligns with demo/open-risk.stub.json reference asset', () => {
     const asset = parseOpenRiskStubResponse(readFileSync(demoStubPath, 'utf8'));
-    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.5.0');
+    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.5.3');
     expect(asset.findings[0]?.risk_type).toBe('combined-misleading-claim');
+  });
+
+  it('forces MANUAL_REVIEW for recall-only risk types even when LLM suggests WARN', async () => {
+    const adText = baseContext.normalizedContent.text;
+    const service = new OpenRiskDiscoveryService({
+      promptPath: demoPromptPath,
+      llmGateway: {
+        complete: vi.fn().mockResolvedValue({
+          content: JSON.stringify({
+            findings: [
+              {
+                risk_type: 'sensitive-content-flag',
+                description: '疑似涉及敏感话题，建议人工确认',
+                severity: 'HIGH',
+                suggested_action: 'WARN',
+                confidence: 0.8,
+                evidence_spans: [{ field: 'text', start: 0, end: adText.length, text: adText }],
+                related_modules_checked: ['demo-cn-sensitive-content-manual-review'],
+              },
+              {
+                risk_type: 'aana-children-code-risk',
+                description: 'Suspected AANA 2.5 pester-power cue — human confirmation required',
+                severity: 'MEDIUM',
+                suggested_action: 'WARN',
+                confidence: 0.7,
+                evidence_spans: [{ field: 'text', start: 0, end: adText.length, text: adText }],
+                related_modules_checked: ['demo-au-children-code-review'],
+              },
+            ],
+          }),
+        }),
+      },
+    });
+
+    const result = await service.discover(baseContext, priorWithoutBlocker);
+
+    expect(result.findings).toHaveLength(2);
+    for (const finding of result.findings) {
+      expect(finding.decision).toBe('REVIEW');
+      expect(finding.evaluationDetail?.suggestedAction).toBe('MANUAL_REVIEW');
+    }
   });
 
   it('renders ID/VN/PH mixed-language guidance in the prompt template', () => {
@@ -348,5 +389,15 @@ describe('OpenRiskDiscoveryService', () => {
     expect(prompt).toContain('vn-warn-tier');
     expect(prompt).toContain('do not inflate confidence to compensate');
     expect(prompt).toContain('Never translate evidence_spans');
+  });
+
+  it('includes AU/CN MANUAL_REVIEW recall taxonomy in the prompt template', () => {
+    const prompt = readFileSync(demoPromptPath, 'utf8');
+
+    expect(prompt).toContain('aana-children-code-risk');
+    expect(prompt).toContain('sensitive-content-flag');
+    expect(prompt).toContain('## AU / CN guidance');
+    expect(prompt).toContain('demo-open-risk-1.5.3');
+    expect(prompt).toContain('NEVER WARN');
   });
 });

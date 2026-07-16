@@ -6,14 +6,12 @@ import { BatchReviewPanel } from '@/components/review/BatchReviewPanel';
 import { ReviewModeTabs, type ReviewMode } from '@/components/review/ReviewModeTabs';
 import { SingleReviewPanel } from '@/components/review/SingleReviewPanel';
 import { useBatchReview } from '@/hooks/use-batch-review';
-import { useViewMode } from '@/hooks/use-view-mode';
 
 type ReviewHubPageProps = {
   initialMode?: ReviewMode;
 };
 
 export function ReviewHubPage({ initialMode = 'single' }: ReviewHubPageProps) {
-  const [viewMode, setViewMode] = useViewMode();
   const [mode, setMode] = useState<ReviewMode>(initialMode);
   const [countryId, setCountryId] = useState<DemoReviewCountryId | ''>('');
   const [categoryId, setCategoryId] = useState<DemoSaCategoryId>('sa.other');
@@ -37,7 +35,7 @@ export function ReviewHubPage({ initialMode = 'single' }: ReviewHubPageProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-surface">
-      <AppHeader viewMode={viewMode} onViewModeChange={setViewMode} />
+      <AppHeader />
 
       <div className="border-b border-gray-200 bg-white px-6 py-3">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
@@ -55,7 +53,6 @@ export function ReviewHubPage({ initialMode = 'single' }: ReviewHubPageProps) {
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-8">
         {mode === 'single' ? (
           <SingleReviewPanel
-            viewMode={viewMode}
             countryId={countryId}
             categoryId={categoryId}
             onCountryChange={setCountryId}

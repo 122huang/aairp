@@ -19,6 +19,11 @@ export type ReviewContext = {
   advertisementContext: {
     campaignType?: string;
     adFormat?: string;
+    /**
+     * INFLUENCER_UGC | BRAND_PRODUCT | unset.
+     * Disclosure rules use this for when-gating (see RuleWhenCondition.ad_type_in).
+     */
+    adType?: string;
     targetAudience?: string;
     productSku?: string;
     aiRenderedImage?: boolean;

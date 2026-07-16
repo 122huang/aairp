@@ -8,6 +8,13 @@ export type AdvertisementContent = {
 export type AdvertisementContext = {
   campaignType?: string;
   adFormat?: string;
+  /**
+   * Content class for disclosure gating.
+   * - INFLUENCER_UGC: paid/gifted/KOL-style content — disclosure rules apply
+   * - BRAND_PRODUCT: brand-owned product copy — disclosure rules do not apply
+   * - unset/UNKNOWN: fall back to activation_terms (gifted/KOL signals) only
+   */
+  adType?: string;
   targetAudience?: string;
   /** Expected product SKU / model for asset alignment checks */
   productSku?: string;

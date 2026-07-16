@@ -82,6 +82,13 @@ export function severityBadgeClass(severity: string): string {
   }
 }
 
+export function findingDecisionBadgeClass(decision: string): string {
+  if (decision === 'INFO') {
+    return 'bg-slate-100 text-slate-600';
+  }
+  return 'bg-gray-100 text-gray-600';
+}
+
 export function collectHighlightSpans(
   sourceText: string,
   spans: Array<{ text: string; start?: number; end?: number }>,

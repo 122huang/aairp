@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import type { ReviewContext } from '@aairp/shared-kernel';
+import { loadDemoRulePackSync } from '../knowledge/load-demo-rule-pack.js';
 import { DEMO_KNOWLEDGE_VERSIONS } from './context-builder.service.js';
 import { RuleEngineService } from './rule-engine.service.js';
 
@@ -10,6 +11,15 @@ const demoRulesAssetPath = join(
   dirname(fileURLToPath(import.meta.url)),
   '../../../../demo/rules.demo.json',
 );
+
+const INCIDENTAL_APPLIANCE_COMPLIANCE = new Set([
+  'demo-sg-cpsr-registration-prerequisite',
+  'demo-my-eeca-coe-prerequisite',
+]);
+
+function contentFindings(result: { findings: Array<{ refId: string }> }) {
+  return result.findings.filter((f) => !INCIDENTAL_APPLIANCE_COMPLIANCE.has(f.refId));
+}
 
 const baseContext: ReviewContext = {
   reviewId: 'rev_test',
@@ -44,7 +54,7 @@ describe('RuleEngineService', () => {
     const result = service.evaluate(baseContext);
 
     expect(result.hasBlocker).toBe(true);
-    expect(result.rulePackVersion).toBe('demo-rule-1.7.3');
+    expect(result.rulePackVersion).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
     expect(result.evaluatedAt).toBe('2026-06-26T10:06:00.000Z');
 
     const blocker = result.findings.find(
@@ -99,7 +109,7 @@ describe('RuleEngineService', () => {
     );
   });
 
-  it('returns WARN findings for superlative claims and missing disclosure', () => {
+  it('returns WARN findings for superlative claims but not brand-copy disclosure misses', () => {
     const service = new RuleEngineService();
 
     const result = service.evaluate(baseContext);
@@ -107,14 +117,55 @@ describe('RuleEngineService', () => {
     expect(result.findings.some((finding) => finding.refId === 'demo-sg-health-superlative')).toBe(
       true,
     );
+    // Brand / unlabeled copy without gifted/KOL activation signals must not trip disclosure.
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
+    ).toBe(false);
+  });
+
+  it('fires sponsored disclosure for INFLUENCER_UGC when #ad is missing', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      normalizedContent: {
+        text: 'Daily vitamins for general wellness support.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
     expect(
       result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
     ).toBe(true);
+  });
 
-    const disclosure = result.findings.find(
-      (finding) => finding.refId === 'demo-sg-sponsored-disclosure',
-    );
-    expect(disclosure?.evaluationDetail).toBeUndefined();
+  it('fires sponsored disclosure via activation_terms fallback when ad_type unset', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      normalizedContent: {
+        text: '谢谢品牌送的这台产品，这几天真的爱不释手。',
+        imageUrls: [],
+      },
+      advertisementContext: {},
+    });
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
+    ).toBe(true);
+  });
+
+  it('does not fire sponsored disclosure for BRAND_PRODUCT even without #ad', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      normalizedContent: {
+        text: 'Daily vitamins for general wellness support.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'BRAND_PRODUCT' },
+    });
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
+    ).toBe(false);
   });
 
   it('returns no findings for out-of-scope dimensions', () => {
@@ -181,7 +232,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(39);
+    expect(asset.rules).toHaveLength(72);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {
@@ -235,6 +286,7 @@ describe('RuleEngineService', () => {
     const missingDisclosureResult = service.evaluate({
       ...scopeContext,
       normalizedContent: { text: 'Buy wellness supplements today', imageUrls: [] },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
     });
     expect(missingDisclosureResult.findings).toContainEqual(
       expect.objectContaining({
@@ -252,6 +304,7 @@ describe('RuleEngineService', () => {
         text: `Buy wellness supplements today ${disclosureRule.required_any_terms![0]!}`,
         imageUrls: [],
       },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
     });
     expect(
       disclosedResult.findings.some((finding) => finding.refId === disclosureRule.rule_id),
@@ -259,42 +312,10 @@ describe('RuleEngineService', () => {
   });
 
   it('evaluates injected rulePack identically to default demo JSON path', () => {
-    const asset = JSON.parse(readFileSync(demoRulesAssetPath, 'utf8')) as {
-      pack_version: string;
-      rules: Array<{
-        rule_id: string;
-        rule_version_id: string;
-        severity: string;
-        decision: string;
-        summary: string;
-        forbidden_terms?: string[];
-        trigger_terms?: string[];
-        required_any_terms?: string[];
-        scopes: { countries: string[]; categories: string[] };
-        citation?: { law_name: string; article?: string };
-      }>;
-    };
+    const pack = loadDemoRulePackSync();
 
     const defaultPath = new RuleEngineService().evaluate(baseContext);
-    const fromPack = new RuleEngineService({
-      rulePack: {
-        pack_version: asset.pack_version,
-        rules: asset.rules.map((rule) => ({
-          rule_id: rule.rule_id,
-          rule_version_id: rule.rule_version_id,
-          severity: rule.severity,
-          decision: rule.decision,
-          summary: rule.summary,
-          scopes: rule.scopes,
-          forbidden_terms: rule.forbidden_terms,
-          trigger_terms: rule.trigger_terms,
-          required_any_terms: rule.required_any_terms,
-          citation: rule.citation
-            ? { lawName: rule.citation.law_name, article: rule.citation.article }
-            : undefined,
-        })),
-      },
-    }).evaluate(baseContext);
+    const fromPack = new RuleEngineService({ rulePack: pack }).evaluate(baseContext);
 
     expect(fromPack.hasBlocker).toBe(defaultPath.hasBlocker);
     expect(fromPack.findings.map((f) => f.refId).sort()).toEqual(
@@ -373,7 +394,8 @@ describe('RuleEngineService', () => {
       );
 
       expect(result.hasBlocker).toBe(false);
-      expect(result.findings).toHaveLength(0);
+      // CPSR/COE may still fire for appliance categories; content claim layer must be clean.
+      expect(contentFindings(result)).toHaveLength(0);
     });
 
     it('WARN on better rice comparative implication (batch #10)', () => {
@@ -444,7 +466,7 @@ describe('RuleEngineService', () => {
         expect(result.findings.some((f) => f.refId === ruleId)).toBe(true);
       } else {
         expect(result.hasBlocker).toBe(false);
-        expect(result.findings).toHaveLength(0);
+        expect(contentFindings(result)).toHaveLength(0);
       }
     });
 
@@ -483,7 +505,7 @@ describe('RuleEngineService', () => {
         const result = service.evaluate(sgCase(categoryId, text));
 
         expect(result.hasBlocker).toBe(false);
-        expect(result.findings).toHaveLength(0);
+        expect(contentFindings(result)).toHaveLength(0);
       });
 
       it.each([
@@ -1222,7 +1244,7 @@ describe('RuleEngineService', () => {
 
       const finding = result.findings.find((f) => f.refId === 'demo-apac-sa-health-implication');
       expect(finding?.severity).toBe('HIGH');
-      expect(finding?.decision).toBe('WARN');
+      expect(finding?.decision).toBe('REVIEW');
     });
   });
 });

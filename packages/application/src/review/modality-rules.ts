@@ -98,6 +98,17 @@ export function matchesRuleWhen(
     }
   }
 
+  if (when.ad_type_in?.length || when.or_missing_ad_type) {
+    const raw = context.advertisementContext.adType?.trim() ?? '';
+    const normalized = raw.toUpperCase();
+    const missing = !normalized || normalized === 'UNKNOWN';
+    const inList = when.ad_type_in?.some((value) => value.toUpperCase() === normalized) ?? false;
+    const ok = inList || (when.or_missing_ad_type === true && missing);
+    if (!ok) {
+      return false;
+    }
+  }
+
   return true;
 }
 

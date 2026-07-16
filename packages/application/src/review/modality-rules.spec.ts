@@ -85,4 +85,25 @@ describe('modality-rules', () => {
     ).toBe(true);
     expect(matchesRuleWhen(baseContext, { audience_includes_children: true })).toBe(false);
   });
+
+  it('matchesRuleWhen checks ad_type_in and or_missing_ad_type', () => {
+    expect(
+      matchesRuleWhen(
+        { ...baseContext, advertisementContext: { adType: 'INFLUENCER_UGC' } },
+        { ad_type_in: ['INFLUENCER_UGC'], or_missing_ad_type: true },
+      ),
+    ).toBe(true);
+    expect(
+      matchesRuleWhen(
+        { ...baseContext, advertisementContext: {} },
+        { ad_type_in: ['INFLUENCER_UGC'], or_missing_ad_type: true },
+      ),
+    ).toBe(true);
+    expect(
+      matchesRuleWhen(
+        { ...baseContext, advertisementContext: { adType: 'BRAND_PRODUCT' } },
+        { ad_type_in: ['INFLUENCER_UGC'], or_missing_ad_type: true },
+      ),
+    ).toBe(false);
+  });
 });

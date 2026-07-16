@@ -20,7 +20,7 @@ export type CaseBuilderConfig = {
 
 function resolveAdType(snapshot: ReviewCaseSnapshot): string {
   const ctx = snapshot.context.advertisementContext;
-  return ctx.adFormat ?? ctx.campaignType ?? 'UNKNOWN';
+  return ctx.adType ?? ctx.adFormat ?? ctx.campaignType ?? 'UNKNOWN';
 }
 
 function mapFinding(finding: ModuleFinding): CaseMatchedFinding {
