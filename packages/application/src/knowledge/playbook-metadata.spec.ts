@@ -16,7 +16,7 @@ describe('Playbook Skill metadata (E2)', () => {
   const moduleByPattern = patternIdToModule(taxonomy);
 
   it('parses skill_module on every pattern after backfill', () => {
-    expect(parsed.packVersion).toBe('demo-playbook-1.6.1');
+    expect(parsed.packVersion).toBe('demo-playbook-1.7.1');
     for (const item of parsed.items) {
       expect(item.skillModule, `${item.patternId} missing skill_module`).toBeTruthy();
       expect(item.purpose, `${item.patternId} missing purpose`).toBeTruthy();
@@ -27,7 +27,7 @@ describe('Playbook Skill metadata (E2)', () => {
   });
 
   it('does not change pattern count or trigger keywords', () => {
-    expect(parsed.items).toHaveLength(31);
+    expect(parsed.items).toHaveLength(34);
     const urgency = parsed.items.find((item) => item.patternId === 'urgency-cta');
     expect(urgency?.triggerKeywords).toContain('buy now');
   });

@@ -68,6 +68,8 @@ export function buildPatternRuleLinks(
 export type PlaybookItemForTermSync = {
   patternId: string;
   triggerKeywords: string[];
+  /** link-mode patterns piggyback on the linked Rule's own finding and own no independent keyword set. */
+  matchMode?: 'terms' | 'link';
 };
 
 export function validateRulePlaybookTermSync(input: {
@@ -82,6 +84,12 @@ export function validateRulePlaybookTermSync(input: {
   const issues: RulePlaybookTermSyncIssue[] = [];
 
   for (const item of input.playbook.items) {
+    // link-mode patterns fire off the linked Rule's own match, not their own trigger_keywords —
+    // there is no independent playbook keyword set to sync against the rule's terms.
+    if (item.matchMode === 'link') {
+      continue;
+    }
+
     const linkedRuleIds = input.patternRuleLinks.get(item.patternId) ?? [];
     if (linkedRuleIds.length === 0) {
       continue;

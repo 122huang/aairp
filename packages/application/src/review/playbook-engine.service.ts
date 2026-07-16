@@ -12,6 +12,7 @@ import type {
   ReviewContext,
 } from '@aairp/shared-kernel';
 import { findTermMatch, searchableFields } from './content-matching.js';
+import { detectReviewCopyLocale, pickLocalizedCopy } from './content-locale.js';
 
 export type PlaybookEngineConfig = {
   playbookPath?: string;
@@ -29,6 +30,8 @@ type ParsedPlaybookItem = {
   severityHint: PlaybookSeverityHint;
   playbookDecision: PlaybookDecision;
   guidance: string;
+  guidanceEn?: string;
+  guidanceZh?: string;
   typicalDecision: PlaybookTypicalDecision;
   scopeCountries?: string[];
   scopeCategories?: string[];
@@ -115,6 +118,8 @@ export function parsePlaybookMarkdown(content: string): ParsedPlaybook {
         severityHint: (fields.severity_hint ?? 'MEDIUM') as PlaybookSeverityHint,
         playbookDecision: parsePlaybookDecision(fields.decision),
         guidance: fields.guidance ?? '',
+        guidanceEn: fields.guidance_en,
+        guidanceZh: fields.guidance_zh,
         typicalDecision: (fields.typical_decision ?? 'REVIEW') as PlaybookTypicalDecision,
         scopeCountries: fields.scope_countries
           ?.split(',')
@@ -180,13 +185,23 @@ function augmentFindingWithCasePrecedent(
   };
 }
 
+function resolvePlaybookGuidance(item: ParsedPlaybookItem, adText: string): string {
+  return pickLocalizedCopy(detectReviewCopyLocale(adText), {
+    en: item.guidanceEn,
+    zh: item.guidanceZh,
+    fallback: item.guidance,
+  });
+}
+
 function createPlaybookFinding(
   config: PlaybookEngineConfig,
   playbook: ParsedPlaybook,
   item: ParsedPlaybookItem,
   matchedSpan: { field: string; start: number; end: number; text: string },
+  adText: string,
 ): PlaybookFinding {
   const findingId = `pf_${(config.createFindingId ?? randomUUID)()}`;
+  const guidance = resolvePlaybookGuidance(item, adText);
 
   return {
     module: 'PLAYBOOK',
@@ -196,12 +211,12 @@ function createPlaybookFinding(
     refType: 'PLAYBOOK_PATTERN',
     refId: item.patternId,
     refVersionId: `${playbook.playbookId}-${item.patternId}-v1`,
-    summary: item.guidance,
+    summary: guidance,
     confidence: 0.85,
     evaluationDetail: {
       patternId: item.patternId,
       checklistIds: [],
-      guidance: item.guidance,
+      guidance,
       severityHint: item.severityHint,
       playbookDecision: item.playbookDecision,
       typicalDecision: item.typicalDecision,
@@ -265,7 +280,13 @@ export class PlaybookEngineService {
         }
       }
 
-      let finding = createPlaybookFinding(this.config, playbook, item, matchedSpan);
+      let finding = createPlaybookFinding(
+        this.config,
+        playbook,
+        item,
+        matchedSpan,
+        context.normalizedContent.text ?? '',
+      );
       if (options?.caseReviewContext && !options.caseReviewContext.coldStart) {
         finding = augmentFindingWithCasePrecedent(finding, options.caseReviewContext);
       }
