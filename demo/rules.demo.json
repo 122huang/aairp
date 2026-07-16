@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.5",
+  "pack_version": "demo-rule-1.8.6",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -51,14 +51,8 @@
       "rule_id": "demo-sg-sponsored-disclosure",
       "rule_version_id": "demo-sg-sponsored-disclosure-v3",
       "severity": "LOW",
-      "decision": "WARN",
-      "summary": "Sponsored or promotional content should include an ad disclosure",
-      "required_any_terms": [
-        "#ad",
-        "sponsored",
-        "advertisement",
-        "广告"
-      ],
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm advertising disclosure labels (#ad / sponsored) are added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
       "required_any_mode": "influencer_or_activation",
       "activation_terms": [
         "品牌送的",
@@ -107,7 +101,8 @@
       "citation": {
         "law_name": "ASAS / Singapore advertising disclosure practice (Demo)",
         "article": "Sponsored content identification — cross-category"
-      }
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm advertising disclosure labels (#ad / sponsored) are added before publish. Non-blocking reminder (copy review does not verify disclosure tags)."
     },
     {
       "rule_id": "demo-sg-cpsr-registration-prerequisite",
@@ -139,7 +134,8 @@
       "citation": {
         "law_name": "Consumer Protection (Safety Requirements) Regulations + CPSO registration requirement",
         "article": "consumerproductsafety.gov.sg — model must complete SAFETY Mark registration before advertising or supply"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION"
     },
     {
       "rule_id": "demo-my-eeca-coe-prerequisite",
@@ -171,7 +167,8 @@
       "citation": {
         "law_name": "Energy Efficiency and Conservation Act 2024 (Act 861)",
         "article": "s.17(1) — COE energy certificate prerequisite for advertising"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION"
     },
     {
       "rule_id": "demo-apac-sa-health-claim-blocker",
@@ -1695,15 +1692,8 @@
       "rule_id": "demo-id-sponsored-disclosure",
       "rule_version_id": "demo-id-sponsored-disclosure-v3",
       "severity": "LOW",
-      "decision": "WARN",
-      "summary": "Indonesia sponsored or influencer content should include Bahasa ad identification",
-      "required_any_terms": [
-        "#iklan",
-        "berbayar",
-        "konten berbayar",
-        "#ad",
-        "sponsored"
-      ],
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm Bahasa advertising disclosure (#iklan / berbayar) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
       "required_any_mode": "influencer_or_activation",
       "activation_terms": [
         "brand kirim",
@@ -1745,7 +1735,8 @@
       "citation": {
         "law_name": "Etika Pariwara Indonesia (EPI) 2020 — ID-SRO-001",
         "article": "Ad identification / commercial relationship disclosure (endorsement & paid content)"
-      }
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm Bahasa advertising disclosure (#iklan / berbayar) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags)."
     },
     {
       "rule_id": "demo-id-product-category-boundary",
@@ -1900,15 +1891,8 @@
       "rule_id": "demo-ph-sponsored-disclosure",
       "rule_version_id": "demo-ph-sponsored-disclosure-v3",
       "severity": "LOW",
-      "decision": "WARN",
-      "summary": "Philippines sponsored content should include ASC-recognised ad disclosure markers",
-      "required_any_terms": [
-        "#ad",
-        "sponsored",
-        "advertisement",
-        "bayad na nilalaman",
-        "#paid"
-      ],
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm ASC-recognised advertising disclosure (#ad / sponsored) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
       "required_any_mode": "influencer_or_activation",
       "activation_terms": [
         "gifted",
@@ -1948,7 +1932,8 @@
       "citation": {
         "law_name": "ASC Code of Ethics (Demo)",
         "article": "Article II — Sponsored content identification"
-      }
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm ASC-recognised advertising disclosure (#ad / sponsored) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags)."
     },
     {
       "rule_id": "demo-ph-sa-market-claim",
@@ -2162,7 +2147,7 @@
       "rule_version_id": "demo-jp-household-label-consistency-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "广告引用容量/功率参数——提醒核对是否与家庭用品品质标示法法定标签一致；吸尘器仅限有线适用，空气炸锅完全不在覆盖清单内。工具无法核验SKU标示义务，非阻塞提醒。",
+      "summary": "Ad references capacity/wattage figures — reminder to verify consistency with statutory labelling under the Household Goods Quality Labelling Act; vacuum cleaners apply only to corded models, air fryers are entirely outside the coverage list. Tool cannot verify SKU labelling obligations. Non-blocking reminder.",
       "trigger_terms": [
         "吸込仕事率",
         "定格容量",
@@ -2188,7 +2173,9 @@
       "citation": {
         "law_name": "家庭用品品質表示法 + 電気機械器具品質表示規程",
         "article": "令和4年12月23日改正，2023-01-01施行"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Ad references capacity/wattage figures — reminder to verify consistency with statutory labelling under the Household Goods Quality Labelling Act; vacuum cleaners apply only to corded models, air fryers are entirely outside the coverage list. Tool cannot verify SKU labelling obligations. Non-blocking reminder."
     },
     {
       "rule_id": "demo-jp-jis-voluntary-standard",
@@ -2369,7 +2356,7 @@
       "rule_version_id": "demo-kr-kc-certification-labeling-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "电商产品页出现KC认证信息时，提醒公示安全认证编号/产品名/型号/制造进口商名，并核对认证状态与广告一致。工具无法核验真实认证状态，非阻塞提醒。",
+      "summary": "When KC certification information appears on an e-commerce product page, reminder to disclose the safety certification number/product name/model/manufacturer-importer name and to verify that certification status matches the ad. Tool cannot verify actual certification status. Non-blocking reminder.",
       "trigger_terms": [
         "KC인증",
         "KC마크",
@@ -2396,14 +2383,16 @@
       "citation": {
         "law_name": "전기용품 및 생활용품 안전관리법 시행규칙",
         "article": "第9条第3/4項及び別表9"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "When KC certification information appears on an e-commerce product page, reminder to disclose the safety certification number/product name/model/manufacturer-importer name and to verify that certification status matches the ad. Tool cannot verify actual certification status. Non-blocking reminder."
     },
     {
       "rule_id": "demo-kr-warranty-dispute-standard",
       "rule_version_id": "demo-kr-warranty-dispute-standard-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "广告出现品质保证/保修承诺用语——提醒与消费者纠纷解决标准及实际保修条款核对。工具无法核验条款状态，非阻塞提醒。",
+      "summary": "Ad uses 'quality guarantee/warranty commitment' wording — reminder to verify consistency with the Consumer Dispute Resolution Standards and actual warranty terms. Tool cannot verify the actual terms. Non-blocking reminder.",
       "trigger_terms": [
         "품질보증",
         "무상수리",
@@ -2430,7 +2419,9 @@
       "citation": {
         "law_name": "소비자분쟁해결기준",
         "article": "공정거래위원회 고시"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Ad uses 'quality guarantee/warranty commitment' wording — reminder to verify consistency with the Consumer Dispute Resolution Standards and actual warranty terms. Tool cannot verify the actual terms. Non-blocking reminder."
     },
     {
       "rule_id": "demo-au-fake-discount-reference-price",
@@ -2615,7 +2606,7 @@
       "rule_version_id": "demo-au-rcm-gems-certification-claim-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "广告出现RCM标志或符合澳洲强制能效认证宣称——吸尘器/搅拌机/空气炸锅现阶段不在GEMS强制清单内，提醒核对认证范围与广告一致。工具无法核验SKU认证状态，非阻塞提醒。",
+      "summary": "Ad displays the RCM mark or claims compliance with mandatory Australian energy-rating certification — vacuum cleaners/blenders/air fryers are currently not on the mandatory GEMS list; reminder to verify the certification scope matches the ad. Tool cannot verify actual SKU certification status. Non-blocking reminder.",
       "trigger_terms": [
         "RCM certified",
         "meets australian energy rating",
@@ -2643,7 +2634,9 @@
       "citation": {
         "law_name": "AS/NZS 4417 (RCM) / GEMS Regulated Products",
         "article": "EESS/ACMA + energyrating.gov.au"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Ad displays the RCM mark or claims compliance with mandatory Australian energy-rating certification — vacuum cleaners/blenders/air fryers are currently not on the mandatory GEMS list; reminder to verify the certification scope matches the ad. Tool cannot verify actual SKU certification status. Non-blocking reminder."
     },
     {
       "rule_id": "demo-au-children-code-review",
@@ -2885,7 +2878,7 @@
       "rule_version_id": "demo-cn-ccc-energy-label-review-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "吸尘器/破壁机等CCC强制认证目录产品，广告使用认证标志或能效标识时，提醒与证书/备案状态核对。工具无法核验真实认证状态，非阻塞提醒。",
+      "summary": "For products under the CCC mandatory certification catalogue (e.g. vacuum cleaners, high-speed blenders), when the ad uses a certification mark or energy-efficiency label, reminder to verify consistency with the certificate/filing status. Tool cannot verify actual certification status. Non-blocking reminder.",
       "trigger_terms": [
         "CCC认证",
         "3C认证",
@@ -2906,14 +2899,16 @@
       "citation": {
         "law_name": "《节约能源法》",
         "article": "第七十三条 — 伪造或冒用能效标识的处罚"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "For products under the CCC mandatory certification catalogue (e.g. vacuum cleaners, high-speed blenders), when the ad uses a certification mark or energy-efficiency label, reminder to verify consistency with the certificate/filing status. Tool cannot verify actual certification status. Non-blocking reminder."
     },
     {
       "rule_id": "demo-cn-capacity-metrology-review",
       "rule_version_id": "demo-cn-capacity-metrology-review-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "容量/净含量类宣称提醒与法定计量单位标注一致；工具无法核验计量备案状态，非阻塞提醒。",
+      "summary": "Capacity/net-content claims — reminder to ensure consistency with statutory measurement unit labelling. Tool cannot verify metrology filing status. Non-blocking reminder.",
       "trigger_terms": [
         "大容量",
         "升杯体",
@@ -2935,14 +2930,16 @@
       "citation": {
         "law_name": "《定量包装商品计量监督管理办法》（市场监管总局第70号令）",
         "article": "CN-RULE-004"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Capacity/net-content claims — reminder to ensure consistency with statutory measurement unit labelling. Tool cannot verify metrology filing status. Non-blocking reminder."
     },
     {
       "rule_id": "demo-cn-warranty-sanbao-review",
       "rule_version_id": "demo-cn-warranty-sanbao-review-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "保修/售后类宣称提醒不得超出三包规定的法定期限和范围；工具无法核验实际保修条款，非阻塞提醒。",
+      "summary": "Warranty/after-sales claims — reminder that these must not exceed the statutory term and scope under the Sanbao (Three Guarantees) regulations. Tool cannot verify actual warranty terms. Non-blocking reminder.",
       "trigger_terms": [
         "终身保修",
         "全国联保",
@@ -2968,14 +2965,16 @@
       "citation": {
         "law_name": "《部分商品修理更换退货责任规定》（三包规定）",
         "article": "CN-RULE-005"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Warranty/after-sales claims — reminder that these must not exceed the statutory term and scope under the Sanbao (Three Guarantees) regulations. Tool cannot verify actual warranty terms. Non-blocking reminder."
     },
     {
       "rule_id": "demo-cn-environmental-recycling-review",
       "rule_version_id": "demo-cn-environmental-recycling-review-v1",
       "severity": "LOW",
       "decision": "INFO",
-      "summary": "环保/回收类宣称提醒与生产者回收责任表述一致；工具无法核验回收义务履行状态，非阻塞提醒。",
+      "summary": "Environmental/recycling claims — reminder to ensure consistency with the manufacturer's stated recycling responsibility. Tool cannot verify fulfilment of recycling obligations. Non-blocking reminder.",
       "trigger_terms": [
         "环保回收",
         "以旧换新符合国家规定",
@@ -3000,7 +2999,9 @@
       "citation": {
         "law_name": "《废弃电器电子产品回收处理管理条例》（国务院令第551号）",
         "article": "CN-RULE-006"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Environmental/recycling claims — reminder to ensure consistency with the manufacturer's stated recycling responsibility. Tool cannot verify fulfilment of recycling obligations. Non-blocking reminder."
     },
     {
       "rule_id": "demo-cn-sensitive-content-manual-review",
@@ -3044,7 +3045,7 @@
       "rule_version_id": "demo-th-tisi-mandatory-voluntary-check-v1",
       "severity": "MEDIUM",
       "decision": "INFO",
-      "summary": "广告出现TISI/มอก.认证标志或符合国家标准宣称——吸尘器目前为自愿标准，电饭煲/电风扇/电熨斗为强制标准，提醒核对该SKU实际分类，勿对自愿类目暗示强制认证。工具无法核验SKU分类，非阻塞提醒。",
+      "summary": "Ad displays the TISI/มอก. certification mark or claims compliance with a national standard — vacuum cleaners are currently a voluntary standard while rice cookers/electric fans/irons are mandatory standards; reminder to verify the actual classification of this SKU and not imply mandatory certification for a voluntary category. Tool cannot verify SKU classification. Non-blocking reminder.",
       "trigger_terms": [
         "มอก",
         "tisi certified",
@@ -3067,7 +3068,9 @@
       "citation": {
         "law_name": "TISI（มอก.）标准分类",
         "article": "TISI官网已核实吸尘器为自愿性标准（มาตรฐานทั่วไป）"
-      }
+      },
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+      "summary_en": "Ad displays the TISI/มอก. certification mark or claims compliance with a national standard — vacuum cleaners are currently a voluntary standard while rice cookers/electric fans/irons are mandatory standards; reminder to verify the actual classification of this SKU and not imply mandatory certification for a voluntary category. Tool cannot verify SKU classification. Non-blocking reminder."
     }
   ]
 }

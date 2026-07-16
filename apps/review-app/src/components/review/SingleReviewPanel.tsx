@@ -166,7 +166,7 @@ export function SingleReviewPanel({
               >
                 <option value="">未标注（有赠送/合作等信号时才查披露）</option>
                 <option value="BRAND_PRODUCT">品牌产品文案（不强制披露）</option>
-                <option value="INFLUENCER_UGC">网红/合作内容（缺 #ad 等则 WARN）</option>
+                <option value="INFLUENCER_UGC">网红/合作内容（发布前需确认披露标签）</option>
               </select>
             </div>
 

@@ -83,10 +83,16 @@ export function renderOpenRiskPrompt(
     .replaceAll('{shared_rule_refs}', caseContext?.sharedRuleRefs.join(', ') || 'none');
 }
 
-/** Recall-only risk types: must never soft-pass as WARN. */
+/**
+ * Force MANUAL_REVIEW risk types: must never soft-pass as WARN, regardless of what the LLM
+ * suggests. Recall-only pre-screens (aana-children-code-risk, sensitive-content-flag) plus
+ * health-implication, which sits on an evidence boundary and must fuse the same way as the
+ * Rule/Playbook REVIEW tier (see demo-apac-sa-health-implication) rather than collapse to WARN.
+ */
 const RECALL_ONLY_RISK_TYPES = new Set([
   'aana-children-code-risk',
   'sensitive-content-flag',
+  'health-implication',
 ]);
 
 function mapSuggestedAction(
@@ -296,7 +302,7 @@ export class OpenRiskDiscoveryService {
     }
     const stubPayload = parseOpenRiskResponseContent(completion.content);
     const promptPackVersion =
-      stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.3';
+      stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.4';
 
     const findings = applyOpenRiskGuardrails(
       stubPayload.findings.map((finding) =>

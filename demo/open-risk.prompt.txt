@@ -19,7 +19,6 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 - absolute-claim-soft: omnibus or soft absolute wording (perfect, zero-fault, every serving) — qualify or substantiate
 - unsubstantiated-quantitative-claim: percentages without baseline, test method, or data source
 - unsupported-comparative-claim: stronger/faster/quieter without identifiable baseline
-- health-implication: lighter/fresher/nutrient-retention feel without disease/organ claims
 - health-superlative-claim: health-supplement clinically proven / guaranteed / instant results without substantiation
 - material-claim: BPA-free, food-grade, non-toxic coating, stainless — needs lab report
 - certification-evidence: HEPA-class vs True HEPA, patent, lab test, award claims — verification required
@@ -31,12 +30,13 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 - sku-mismatch: ad asset references wrong SKU or product model vs listing
 - grammar-quality: spelling, grammar, or formatting errors in published copy
 - market-ranking-claim: local #1 / sales champion claims or implied authority endorsement (SG/MY/TH)
-- sponsored-disclosure: promotional/KOL content missing #ad, sponsored, or 广告 disclosure if ad wording is paraphrased but equivalent to a taxonomy class above, report it even when exact keywords did not match rules.
+- sponsored-disclosure: DO NOT flag missing #ad / sponsored / 广告 disclosure tags — copy review happens before publish labels are applied. Deterministic INFO reminder covers influencer/partnership; open-risk must not re-warn on absent disclosure keywords.
 - scarcity-urgency-claim: implied limited stock, discontinuation, last chance, or FOMO pressure without a verifiable quantity, end date, or offer scope (soft pressure still counts when the sentence steers purchase via scarcity theater)
 
 ### MANUAL_REVIEW — recall / semantic pre-screen only (ALWAYS suggested_action MANUAL_REVIEW; NEVER WARN; NEVER "safe to pass")
 - aana-children-code-risk: AU ads directed at / featuring children (under 15) that may touch AANA Children's Advertising Code body provisions — semantic pre-screen for human confirmation. Cite the suspected provision in description (e.g. 2.1 unsafe practices; 2.2 misleading about product/safety/nutrition; 2.3 sexualisation; 2.4 undermine parents; 2.5 pester power / urge children to ask parents to buy; 2.6 inappropriate use of popular personalities/characters with children; 2.7 food/beverage nutrition pressure). Does NOT replace human judgement. Cite `demo-au-children-code-review` in related_modules_checked / cited_rule_refs when applicable. Empty findings only when no child-directed or child-code cue is present.
 - sensitive-content-flag: CN marketing that may involve politics/history, ethnicity, religion, national symbols (beyond literal 国旗/国徽), or public emergencies/disasters (beyond literal 疫情/灾害) — recall-only flag for human confirmation. ALWAYS MANUAL_REVIEW. NEVER WARN. NEVER conclude the copy is clear to publish. Description must say the topic is suspected and needs human confirmation. Cite `demo-cn-sensitive-content-manual-review` when applicable. Empty findings only when no sensitive-topic cue is present.
+- health-implication: lighter/fresher/nutrient-retention feel without disease/organ claims — sits on an evidence boundary (context/data may or may not be on file) and must route to human confirmation, same tier as the Rule/Playbook `demo-apac-sa-health-implication` REVIEW pattern. ALWAYS MANUAL_REVIEW. NEVER WARN. Description should ask for confirmation that supporting context/data is on file, not conclude the claim is fine.
 
 ## Advertisement
 - Text: {ad_text}
@@ -150,7 +150,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 ### ID (Indonesia)
 - Small appliance (sa.*) text: flag health/nutrition direction terms in Bahasa Indonesia as health-implication — do NOT apply BPOM permitted-claim rules unless category_id is health.supplement
 - product-category-boundary: if sa.* ad text contains supplement/health efficacy language (suplemen, khasiat, klaim kesehatan), flag as WARN for category boundary review
-- Sponsored content: #iklan, berbayar, konten berbayar required — flag absence as sponsored-disclosure
+- Sponsored content: do NOT flag absence of #iklan / berbayar / konten berbayar — publish-time disclosure tags are out of scope for open-risk (INFO reminder is Rule-layer only)
 
 ### VN (Vietnam)
 - absolute-claim and market-ranking findings: suggest WARN not REJECT — enforcement tier is lower than SG/MY/TH (vn-warn-tier)
@@ -166,13 +166,14 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Never translate evidence_spans — always quote verbatim from source text
 - If ad contains multiple languages, identify the primary consumer-facing language and note secondary languages in description
 - Do not flag language mixing itself as a finding unless localisation-error rule applies
+- **Finding description language (critical):** Write each finding `description` in the same primary language as the advertisement text. Chinese-primary ads → Chinese description; English-primary ads → English description. Draft directly in that language — do NOT write in one language and then translate.
 
 ## Instructions
 1. Only report NEW taxonomy risks not already captured by prior findings of the SAME risk class.
 2. If prior findings already cover risk_type X, omit X — but still report Y/Z when those remain uncovered. Return `"findings": []` ONLY when no uncovered NEW risk remains (not merely because prior findings exist).
 3. Every finding MUST include `evidence_spans` copied verbatim from the ad text (field, start, end, text).
 4. Do NOT invent evidence spans or quote text that is not in the advertisement.
-5. Open-risk findings must NOT trigger rejection alone — use suggested_action WARN or MANUAL_REVIEW only. For aana-children-code-risk and sensitive-content-flag, ALWAYS MANUAL_REVIEW (never WARN, never clear-to-pass).
+5. Open-risk findings must NOT trigger rejection alone — use suggested_action WARN or MANUAL_REVIEW only. For aana-children-code-risk, sensitive-content-flag, and health-implication, ALWAYS MANUAL_REVIEW (never WARN, never clear-to-pass).
 6. Prefer fewer, higher-quality findings over speculative risks.
 7. When precedents are listed above (not "none"), every finding MUST also include `cited_case_ids` and/or `cited_rule_refs` from the precedent or shared rule lists.
 8. If no precedent applies to the remaining open risk, you may still return a finding for clear semantic omnibus/comparative gaps listed above; otherwise return `"findings": []` rather than speculative risks.
@@ -180,11 +181,11 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 
 ## Output format (JSON only, no markdown)
 {
-  "prompt_pack_version": "demo-open-risk-1.5.3",
+  "prompt_pack_version": "demo-open-risk-1.5.4",
   "findings": [
     {
       "risk_type": "kebab-case-id",
-      "description": "Plain-language risk explanation for reviewers",
+      "description": "Plain-language risk explanation for reviewers — same primary language as the ad text",
       "severity": "HIGH|MEDIUM|LOW",
       "suggested_action": "WARN|MANUAL_REVIEW",
       "confidence": 0.0,

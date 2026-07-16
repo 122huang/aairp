@@ -50,7 +50,6 @@ function FindingItem({ finding }: { finding: MergedFinding }) {
   const showRewrites = finding.decision === 'WARN' && rewrites.length > 0;
   const trigger = triggerSnippet(finding);
   const legalSummaryZh = resolveLegalSummaryZh(finding);
-  const showInfoBadge = finding.decision === 'INFO';
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4">
@@ -60,17 +59,19 @@ function FindingItem({ finding }: { finding: MergedFinding }) {
             {finding.riskType}
           </span>
           <ModuleBadges modules={finding.modules} />
-          {showInfoBadge && (
-            <span
-              className={cn(
-                'rounded-md px-2 py-0.5 text-xs font-medium',
-                findingDecisionBadgeClass(finding.decision),
-              )}
-            >
-              INFO
-            </span>
-          )}
-          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', severityBadgeClass(finding.severity))}>
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              findingDecisionBadgeClass(finding.decision),
+            )}
+            title="decision：现在要不要拦 / 要不要人工处理（与 severity 独立）"
+          >
+            {finding.decision}
+          </span>
+          <span
+            className={cn('rounded-md px-2 py-0.5 text-xs font-medium', severityBadgeClass(finding.severity))}
+            title="severity：若问题属实的法律/合规严重程度（与 decision 独立）"
+          >
             {finding.severity}
           </span>
           <div className="min-w-0 flex-1">

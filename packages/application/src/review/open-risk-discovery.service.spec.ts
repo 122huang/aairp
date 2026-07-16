@@ -217,7 +217,10 @@ describe('OpenRiskDiscoveryService', () => {
 
   it('calls stub LLM gateway and parses findings from stub JSON', async () => {
     const gateway: ILlmGateway = {
-      complete: vi.fn().mockResolvedValue({ content: readFileSync(demoStubPath, 'utf8') }),
+      complete: vi.fn().mockResolvedValue({
+        content: readFileSync(demoStubPath, 'utf8'),
+        model: 'stub',
+      }),
     };
     const service = new OpenRiskDiscoveryService({
       promptPath: demoPromptPath,
@@ -230,7 +233,8 @@ describe('OpenRiskDiscoveryService', () => {
 
     expect(gateway.complete).toHaveBeenCalledTimes(1);
     expect(result.skipped).toBe(false);
-    expect(result.promptPackVersion).toBe('demo-open-risk-1.5.3');
+    expect(result.promptPackVersion).toBe('demo-open-risk-1.5.4');
+    expect(result.model).toBe('stub');
     expect(result.findings).toHaveLength(1);
     expect(result.findings[0]).toMatchObject({
       module: 'LLM',
@@ -332,7 +336,7 @@ describe('OpenRiskDiscoveryService', () => {
 
   it('aligns with demo/open-risk.stub.json reference asset', () => {
     const asset = parseOpenRiskStubResponse(readFileSync(demoStubPath, 'utf8'));
-    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.5.3');
+    expect(asset.prompt_pack_version).toBe('demo-open-risk-1.5.4');
     expect(asset.findings[0]?.risk_type).toBe('combined-misleading-claim');
   });
 
@@ -362,6 +366,15 @@ describe('OpenRiskDiscoveryService', () => {
                 evidence_spans: [{ field: 'text', start: 0, end: adText.length, text: adText }],
                 related_modules_checked: ['demo-au-children-code-review'],
               },
+              {
+                risk_type: 'health-implication',
+                description: 'Lighter/fresher wellness framing without disease/organ claims — confirm supporting context/data is on file',
+                severity: 'MEDIUM',
+                suggested_action: 'WARN',
+                confidence: 0.65,
+                evidence_spans: [{ field: 'text', start: 0, end: adText.length, text: adText }],
+                related_modules_checked: ['demo-apac-sa-health-implication'],
+              },
             ],
           }),
         }),
@@ -370,7 +383,7 @@ describe('OpenRiskDiscoveryService', () => {
 
     const result = await service.discover(baseContext, priorWithoutBlocker);
 
-    expect(result.findings).toHaveLength(2);
+    expect(result.findings).toHaveLength(3);
     for (const finding of result.findings) {
       expect(finding.decision).toBe('REVIEW');
       expect(finding.evaluationDetail?.suggestedAction).toBe('MANUAL_REVIEW');
@@ -397,7 +410,62 @@ describe('OpenRiskDiscoveryService', () => {
     expect(prompt).toContain('aana-children-code-risk');
     expect(prompt).toContain('sensitive-content-flag');
     expect(prompt).toContain('## AU / CN guidance');
-    expect(prompt).toContain('demo-open-risk-1.5.3');
+    expect(prompt).toContain('demo-open-risk-1.5.4');
     expect(prompt).toContain('NEVER WARN');
   });
+
+  /**
+   * Regression: CN/JP/KR have no Rule/Playbook health-implication layer.
+   * When Open Risk LLM fires health-implication for implied-nutrition copy,
+   * the RECALL_ONLY_RISK_TYPES forcing must upgrade it to REVIEW in all three markets.
+   * Copy: "细腻破壁，帮助释放食材中的营养" (implied nutrient-retention benefit, no disease claim).
+   */
+  it.each([
+    { countryId: 'CN', categoryId: 'sa.blender_processor' },
+    { countryId: 'JP', categoryId: 'sa.blender_processor' },
+    { countryId: 'KR', categoryId: 'sa.blender_processor' },
+  ])(
+    'forces health-implication WARN → REVIEW for implied-nutrition copy in $countryId',
+    async ({ countryId, categoryId }) => {
+      const adText = '细腻破壁，帮助释放食材中的营养。';
+      const context: ReviewContext = {
+        ...baseContext,
+        normalizedContent: { text: adText, imageUrls: [] },
+        dimensions: { ...baseContext.dimensions, countryId, categoryId },
+      };
+      const service = new OpenRiskDiscoveryService({
+        promptPath: demoPromptPath,
+        llmGateway: {
+          complete: vi.fn().mockResolvedValue({
+            content: JSON.stringify({
+              findings: [
+                {
+                  risk_type: 'health-implication',
+                  description:
+                    '「帮助释放食材中的营养」暗示营养保留功效，存在证据边界——请确认内部是否有对应测试数据支撑。',
+                  severity: 'MEDIUM',
+                  suggested_action: 'WARN',
+                  confidence: 0.72,
+                  evidence_spans: [{ field: 'text', start: 0, end: adText.length, text: adText }],
+                  related_modules_checked: [],
+                },
+              ],
+            }),
+          }),
+        },
+      });
+
+      const result = await service.discover(context, {
+        hasBlocker: false,
+        ruleFindings: [],
+        playbookFindings: [],
+      });
+
+      expect(result.findings).toHaveLength(1);
+      const finding = result.findings[0]!;
+      expect(finding.decision).toBe('REVIEW');
+      expect(finding.evaluationDetail?.suggestedAction).toBe('MANUAL_REVIEW');
+      expect(finding.evaluationDetail?.riskType).toBe('health-implication');
+    },
+  );
 });

@@ -272,7 +272,7 @@
     {
       "case_id": "id-sa-warn-sponsored-disclosure",
       "path": "ID/sa.air_fryer/id-sa-warn-sponsored-disclosure.json",
-      "intent": "WARN",
+      "intent": "EDGE",
       "verification": "auto"
     },
     {
@@ -344,7 +344,7 @@
     {
       "case_id": "ph-sa-warn-sponsored-disclosure",
       "path": "PH/sa.air_fryer/ph-sa-warn-sponsored-disclosure.json",
-      "intent": "WARN",
+      "intent": "EDGE",
       "verification": "auto"
     },
     {

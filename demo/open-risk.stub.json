@@ -1,5 +1,5 @@
 {
-  "prompt_pack_version": "demo-open-risk-1.5.3",
+  "prompt_pack_version": "demo-open-risk-1.5.4",
   "findings": [
     {
       "risk_type": "combined-misleading-claim",

@@ -137,7 +137,7 @@ export class ReviewPipelineService {
     const findings: WarnFinding[] = [];
 
     for (const finding of stage.ruleResult.findings) {
-      if (finding.decision === 'WARN') {
+      if (finding.decision === 'WARN' || finding.decision === 'REVIEW') {
         findings.push(finding);
       }
     }
@@ -171,7 +171,11 @@ export class ReviewPipelineService {
     stage: EvaluationStageResult,
   ): Promise<ContextualRewriteBatchResult | undefined> {
     const service = this.deps.contextualRewriteService;
-    if (!service || decision.finalDecision !== 'WARN') {
+    // REVIEW still routes to a human sign-off, but a draft rewrite suggestion is useful reference
+    // material for that manual check — same as WARN. (Registration/status-only REVIEW findings,
+    // e.g. CPSR/COE, may get suggestions that don't fit; revisit with a risk_type filter if reviewers
+    // report the suggestions are unhelpful there.)
+    if (!service || (decision.finalDecision !== 'WARN' && decision.finalDecision !== 'REVIEW')) {
       return undefined;
     }
 

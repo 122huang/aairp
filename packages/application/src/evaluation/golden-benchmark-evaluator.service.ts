@@ -88,6 +88,11 @@ function mapGoldenToEngine(expected: GoldenBenchmarkCase['expected']): string[] 
   if (expected === 'REJECT') {
     return ['REJECT'];
   }
+  // REVIEW golden label predates the engine's REVIEW decision tier — accept REVIEW alongside the
+  // legacy WARN/REJECT bucket so a case correctly routed to manual review isn't flagged as a MISMATCH.
+  if (expected === 'REVIEW') {
+    return ['WARN', 'REVIEW', 'REJECT'];
+  }
   return ['WARN', 'REJECT'];
 }
 

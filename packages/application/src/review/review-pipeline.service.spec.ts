@@ -56,11 +56,11 @@ describe('ReviewPipelineService contextual rewrites (6B-1f)', () => {
     });
   }
 
-  it('batch-generates rewrite suggestions after report when final decision is WARN', async () => {
+  it('batch-generates rewrite suggestions after report when final decision is REVIEW', async () => {
     const pipeline = createPipeline();
     const result = await pipeline.runThroughReport(warnContext);
 
-    expect(result.decision.finalDecision).toBe('WARN');
+    expect(result.decision.finalDecision).toBe('REVIEW');
     expect(result.contextualRewrites?.mode).toBe('stub');
     expect(result.contextualRewrites?.results.length).toBeGreaterThan(0);
     expect(
@@ -79,12 +79,12 @@ describe('ReviewPipelineService contextual rewrites (6B-1f)', () => {
     const pipeline = createPipeline();
     const result = await pipeline.runThroughReport(warnContext);
 
-    expect(result.decision.finalDecision).toBe('WARN');
+    expect(result.decision.finalDecision).toBe('REVIEW');
     expect(result.contextualRewrites?.mode).toBe('off');
     expect(result.contextualRewrites?.results).toEqual([]);
   });
 
-  it('omits contextual rewrites when final decision is not WARN', async () => {
+  it('omits contextual rewrites when final decision is not WARN or REVIEW', async () => {
     const pipeline = createPipeline();
     const result = await pipeline.runThroughReport({
       ...warnContext,

@@ -273,7 +273,15 @@ describe('DemoReviewController integration', () => {
     const body = response.json();
     expect(body.final_decision).toBe('PASS');
     expect(body.report_html).toContain('PASS');
-    expect(body.summary.findings).toEqual([]);
+    // SG small-appliance categories always carry the non-blocking CPSR registration-status
+    // reminder (demo-sg-cpsr-registration-prerequisite, INFO tier) — it doesn't affect PASS.
+    expect(body.summary.findings).toEqual([
+      expect.objectContaining({
+        module: 'RULE',
+        ref_id: 'demo-sg-cpsr-registration-prerequisite',
+        decision: 'INFO',
+      }),
+    ]);
     await app.close();
   });
 

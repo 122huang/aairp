@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { ReviewResultHelp } from '@/components/review/ReviewResultHelp';
 import { legalDecisionBannerText } from '@/lib/legal-copy';
 import { decisionBannerStyle } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -41,6 +42,8 @@ export function DecisionBanner({
           决策档位基准 {(confidence * 100).toFixed(0)}%
         </span>
       </div>
+
+      <ReviewResultHelp className="mt-2" />
 
       <p className="mt-2 text-sm leading-relaxed text-ink/80">
         {legalDecisionBannerText(decision, findingsCount)}

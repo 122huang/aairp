@@ -33,12 +33,36 @@ export function legalDecisionBannerText(decision: string, findingsCount: number)
       return '未发现需关注的风险项。';
     case 'WARN':
       return `发现 ${findingsCount} 项需关注的风险，发布前需人工处理。`;
+    case 'REVIEW':
+      return `发现 ${findingsCount} 项需人工复核的风险，发布前须法务/产品合规确认。`;
     case 'REJECT':
       return `发现 ${findingsCount} 项风险，不建议发布。`;
     default:
       return `发现 ${findingsCount} 项风险项。`;
   }
 }
+
+/** 常驻「审核结果说明」— 决策档位（含 finding 级 INFO） */
+export const DECISION_TIER_HELP = {
+  title: '决策档位说明',
+  body: [
+    'PASS：未发现需处理风险，可按流程继续。',
+    'WARN：有需修改或补证的风险，发布前人工处理；不自动拦截。',
+    'REVIEW：须人工复核（内容解读/合规确认），发布前不得视为已放行。',
+    'REJECT：存在阻断级问题，不建议发布。',
+    'INFO（仅 finding）：信息性提醒，不参与最终决策融合、不占 REVIEW/WARN 名额；例如品类前置认证提醒。最终决策仍可为 PASS。',
+  ].join('\n'),
+} as const;
+
+/** severity 与 decision 是两个独立维度 */
+export const SEVERITY_VS_DECISION_HELP = {
+  title: 'severity 与 decision',
+  body: [
+    'decision（如 INFO / WARN / REVIEW）：系统现在要不要拦、要不要人工处理。',
+    'severity（如 HIGH / MEDIUM / LOW）：若该问题属实，法律/合规上的严重程度。',
+    '二者独立：例如 INFO + HIGH =「现在不阻塞审核，但若 SKU 确实未注册，问题本身很严重」— 不是自相矛盾。',
+  ].join('\n'),
+} as const;
 
 export function resolveLegalSummaryZh(finding: MergedFinding): string {
   for (const refId of finding.refIds) {
