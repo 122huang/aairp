@@ -1,5 +1,6 @@
 import type { ResolvedKnowledgeVersions } from '../context/resolved-knowledge-versions.js';
 import type { FindingCitation } from '../findings/finding-types.js';
+import type { RemediationType } from './remediation-type.js';
 
 export type RuntimeRuleScope = {
   countries: string[];
@@ -50,10 +51,17 @@ export type RuntimeRuleDefinition = {
   rule_version_id: string;
   severity: string;
   decision: string;
+  /** Default / fallback summary (typically English). Prefer summary_en / summary_zh at evaluate time. */
   summary: string;
+  /** Human-authored English summary for bilingual review copy. */
+  summary_en?: string;
+  /** Human-authored Chinese summary for bilingual review copy. Citation fields stay untranslated. */
+  summary_zh?: string;
   scopes: RuntimeRuleScope;
   forbidden_terms?: string[];
   trigger_terms?: string[];
+  /** Regex patterns (case-insensitive) matched against ad text when trigger_terms miss. */
+  trigger_patterns?: string[];
   required_any_terms?: string[];
   /**
    * Soft signals (gifted/KOL language) that activate required_any checks when
@@ -70,6 +78,8 @@ export type RuntimeRuleDefinition = {
   sku_mismatch_check?: boolean;
   citation?: FindingCitation;
   country_decision_overrides?: Record<string, RuntimeRuleCountryOverride>;
+  /** Phase 1 remediation routing — how a matched rule finding can be addressed. */
+  remediation_type?: RemediationType;
 };
 
 export type RuntimeRulePack = {

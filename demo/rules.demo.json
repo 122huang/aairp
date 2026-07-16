@@ -765,7 +765,12 @@
       "citation": {
         "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
         "article": "Capacity claims — substantiation required"
-      }
+      },
+      "trigger_patterns": [
+        "\\bfeed(?:s)?\\s+up to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b",
+        "\\bup to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b"
+      ],
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-absolute-claim-soft",

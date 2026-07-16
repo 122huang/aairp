@@ -9,8 +9,22 @@ import type {
   RuntimeRulePack,
 } from '@aairp/shared-kernel';
 import { loadDemoRulePackSync } from '../knowledge/load-demo-rule-pack.js';
-import { findTermMatch, hasAnyTerm, searchableFields } from './content-matching.js';
+import {
+  findPatternMatch,
+  findTermMatch,
+  hasAnyTerm,
+  searchableFields,
+} from './content-matching.js';
+import { detectReviewCopyLocale, pickLocalizedCopy } from './content-locale.js';
 import { findSkuMismatchToken, matchesRuleWhen } from './modality-rules.js';
+
+function resolveRuleSummary(rule: RuntimeRuleDefinition, adText: string): string {
+  return pickLocalizedCopy(detectReviewCopyLocale(adText), {
+    en: rule.summary_en,
+    zh: rule.summary_zh,
+    fallback: rule.summary,
+  });
+}
 
 export type RuleEngineConfig = {
   now?: () => Date;
@@ -94,6 +108,7 @@ function createRuleFinding(
     summary: string;
     matchedSpan?: { field: string; start: number; end: number; text: string };
     citation?: FindingCitation;
+    remediationType?: RuleFinding['remediationType'];
   },
 ): RuleFinding {
   const findingId = `rf_${(config.createFindingId ?? randomUUID)()}`;
@@ -115,6 +130,7 @@ function createRuleFinding(
     refVersionId: params.ruleVersionId,
     summary: params.summary,
     confidence: 1,
+    ...(params.remediationType ? { remediationType: params.remediationType } : {}),
     ...(evaluationDetail ? { evaluationDetail } : {}),
   };
 }
@@ -152,6 +168,7 @@ function evaluateRuleDefinition(
   }
 
   const findings: RuleFinding[] = [];
+  const localizedSummary = resolveRuleSummary(rule, context.normalizedContent.text ?? '');
 
   if (rule.forbidden_terms?.length) {
     const forbiddenMatch = findTermMatch(fields, rule.forbidden_terms);
@@ -167,34 +184,37 @@ function evaluateRuleDefinition(
           ruleVersionId: rule.rule_version_id,
           severity,
           decision,
-          summary: rule.summary,
+          summary: localizedSummary,
           matchedSpan: forbiddenMatch,
           citation: rule.citation,
+          remediationType: rule.remediation_type,
         }),
       );
     }
   }
 
-  if (rule.trigger_terms?.length) {
-    const triggerMatch = findTermMatch(fields, rule.trigger_terms);
-    if (triggerMatch) {
-      const { severity, decision } = resolveRuleDecision(
-        rule,
-        context.dimensions.countryId,
-        triggerMatch.term ?? triggerMatch.text,
-      );
-      findings.push(
-        createRuleFinding(config, {
-          ruleId: rule.rule_id,
-          ruleVersionId: rule.rule_version_id,
-          severity,
-          decision,
-          summary: rule.summary,
-          matchedSpan: triggerMatch,
-          citation: rule.citation,
-        }),
-      );
-    }
+  const triggerMatch =
+    (rule.trigger_terms?.length ? findTermMatch(fields, rule.trigger_terms) : null) ??
+    (rule.trigger_patterns?.length ? findPatternMatch(fields, rule.trigger_patterns) : null);
+
+  if (triggerMatch) {
+    const { severity, decision } = resolveRuleDecision(
+      rule,
+      context.dimensions.countryId,
+      triggerMatch.term ?? triggerMatch.text,
+    );
+    findings.push(
+      createRuleFinding(config, {
+        ruleId: rule.rule_id,
+        ruleVersionId: rule.rule_version_id,
+        severity,
+        decision,
+        summary: localizedSummary,
+        matchedSpan: triggerMatch,
+        citation: rule.citation,
+        remediationType: rule.remediation_type,
+      }),
+    );
   }
 
   if (rule.when && !matchesRuleWhen(context, rule.when, fields)) {
@@ -203,7 +223,31 @@ function evaluateRuleDefinition(
 
   const { severity, decision } = resolveRuleDecision(rule, context.dimensions.countryId);
 
-  if (rule.required_any_terms?.length) {
+  if (rule.required_any_mode === 'influencer_or_activation') {
+    if (shouldEmitRequiredAnyFinding(rule, context, fields)) {
+      // INFO reminders (sponsored-disclosure): fire for influencer/activation without
+      // checking whether #ad / disclosure keywords are already present in copy.
+      const requiredAnyTerms = rule.required_any_terms ?? [];
+      // INFO reminders (sponsored-disclosure): fire for influencer/activation without
+      // checking whether #ad / disclosure keywords are already present in copy.
+      const skipDisclosurePresenceCheck = decision === 'INFO' || requiredAnyTerms.length === 0;
+      const missingDisclosure =
+        requiredAnyTerms.length > 0 && !hasAnyTerm(fields, requiredAnyTerms);
+      if (skipDisclosurePresenceCheck || missingDisclosure) {
+        findings.push(
+          createRuleFinding(config, {
+            ruleId: rule.rule_id,
+            ruleVersionId: rule.rule_version_id,
+            severity,
+            decision,
+            summary: localizedSummary,
+            citation: rule.citation,
+            remediationType: rule.remediation_type,
+          }),
+        );
+      }
+    }
+  } else if (rule.required_any_terms?.length) {
     const missingRequired = !hasAnyTerm(fields, rule.required_any_terms);
     if (missingRequired && shouldEmitRequiredAnyFinding(rule, context, fields)) {
       findings.push(
@@ -212,8 +256,9 @@ function evaluateRuleDefinition(
           ruleVersionId: rule.rule_version_id,
           severity,
           decision,
-          summary: rule.summary,
+          summary: localizedSummary,
           citation: rule.citation,
+          remediationType: rule.remediation_type,
         }),
       );
     }
@@ -230,7 +275,7 @@ function evaluateRuleDefinition(
             ruleVersionId: rule.rule_version_id,
             severity,
             decision,
-            summary: rule.summary,
+            summary: localizedSummary,
             matchedSpan: {
               field: 'text',
               start: 0,
@@ -238,6 +283,7 @@ function evaluateRuleDefinition(
               text: mismatchToken,
             },
             citation: rule.citation,
+            remediationType: rule.remediation_type,
           }),
         );
       }
@@ -263,8 +309,9 @@ function evaluateRuleDefinition(
         ruleVersionId: rule.rule_version_id,
         severity,
         decision,
-        summary: rule.summary,
+        summary: localizedSummary,
         citation: rule.citation,
+        remediationType: rule.remediation_type,
       }),
     );
   }

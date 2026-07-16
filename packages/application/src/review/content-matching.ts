@@ -98,3 +98,24 @@ export function hasAnyTerm(fields: SearchableField[], terms: string[]): boolean 
   }
   return false;
 }
+
+export function findPatternMatch(fields: SearchableField[], patterns: string[]): TermMatch | null {
+  for (const { field, value } of fields) {
+    for (const pattern of patterns) {
+      const match = new RegExp(pattern, 'i').exec(value);
+      if (match?.index !== undefined) {
+        const start = match.index;
+        const end = start + match[0].length;
+        return {
+          field,
+          start,
+          end,
+          text: value.slice(start, end),
+          term: pattern,
+        };
+      }
+    }
+  }
+
+  return null;
+}

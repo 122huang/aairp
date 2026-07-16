@@ -123,7 +123,7 @@ describe('RuleEngineService', () => {
     ).toBe(false);
   });
 
-  it('fires sponsored disclosure for INFLUENCER_UGC when #ad is missing', () => {
+  it('fires INFO reminder for INFLUENCER_UGC without requiring missing #ad', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({
       ...baseContext,
@@ -133,12 +133,27 @@ describe('RuleEngineService', () => {
       },
       advertisementContext: { adType: 'INFLUENCER_UGC' },
     });
-    expect(
-      result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
-    ).toBe(true);
+    const finding = result.findings.find((f) => f.refId === 'demo-sg-sponsored-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
   });
 
-  it('fires sponsored disclosure via activation_terms fallback when ad_type unset', () => {
+  it('still fires sponsored INFO reminder when #ad is already present', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      normalizedContent: {
+        text: 'Daily vitamins for general wellness support. #ad',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-sg-sponsored-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+  });
+
+  it('fires sponsored INFO reminder via activation_terms when ad_type unset', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({
       ...baseContext,
@@ -148,9 +163,10 @@ describe('RuleEngineService', () => {
       },
       advertisementContext: {},
     });
-    expect(
-      result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
-    ).toBe(true);
+    const finding = result.findings.find((f) => f.refId === 'demo-sg-sponsored-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+    expect(finding?.summary).toContain('网红/合作');
   });
 
   it('does not fire sponsored disclosure for BRAND_PRODUCT even without #ad', () => {
@@ -166,6 +182,20 @@ describe('RuleEngineService', () => {
     expect(
       result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
     ).toBe(false);
+  });
+
+  it('localizes rule summary to Chinese for Chinese-primary ad copy', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      normalizedContent: {
+        text: '每日维生素，支持日常健康与营养补充，适合全家使用。',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-sg-sponsored-disclosure');
+    expect(finding?.summary).toContain('网红/合作');
   });
 
   it('returns no findings for out-of-scope dimensions', () => {
@@ -232,7 +262,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(72);
+    expect(asset.rules).toHaveLength(74);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {
@@ -298,17 +328,21 @@ describe('RuleEngineService', () => {
       }),
     );
 
+    // INFO reminder still fires when disclosure keywords are already present in copy.
     const disclosedResult = service.evaluate({
       ...scopeContext,
       normalizedContent: {
-        text: `Buy wellness supplements today ${disclosureRule.required_any_terms![0]!}`,
+        text: 'Buy wellness supplements today #ad',
         imageUrls: [],
       },
       advertisementContext: { adType: 'INFLUENCER_UGC' },
     });
     expect(
       disclosedResult.findings.some((finding) => finding.refId === disclosureRule.rule_id),
-    ).toBe(false);
+    ).toBe(true);
+    expect(
+      disclosedResult.findings.find((finding) => finding.refId === disclosureRule.rule_id)?.decision,
+    ).toBe('INFO');
   });
 
   it('evaluates injected rulePack identically to default demo JSON path', () => {
@@ -1049,6 +1083,13 @@ describe('RuleEngineService', () => {
       ['PC-002', 'Large Capacity', 'demo-apac-sa-comparative-claim'],
       ['PC-003', 'Cook Faster', 'demo-apac-sa-comparative-claim'],
       ['PC-006', 'Stew up to 2kg beef', 'demo-apac-sa-capacity-claim'],
+      [
+        'PC-006b',
+        'PC201/PC200 - Cook for up to 8-10 people. 6.5 qt nonstick cooking pot.',
+        'demo-apac-sa-capacity-claim',
+      ],
+      ['PC-006c', 'cook for up to 6-8 servings', 'demo-apac-sa-capacity-claim'],
+      ['PC-006d', 'feeds up to 10 people', 'demo-apac-sa-capacity-claim'],
       ['PC-012', 'Comparison with higher-end Joyoung model', 'demo-apac-sa-comparative-claim'],
       ['PC-015', 'Comparison may make competitor look better', 'demo-apac-sa-comparative-claim'],
       ['BL-005', 'Quieter by design', 'demo-apac-sa-comparative-claim'],

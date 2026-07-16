@@ -18,9 +18,12 @@ type DemoRulesFileEntry = {
   severity: string;
   decision: string;
   summary: string;
+  summary_en?: string;
+  summary_zh?: string;
   scopes: { countries: string[]; categories: string[] };
   forbidden_terms?: string[];
   trigger_terms?: string[];
+  trigger_patterns?: string[];
   required_any_terms?: string[];
   activation_terms?: string[];
   required_any_mode?: 'always' | 'influencer_or_activation';
@@ -28,6 +31,7 @@ type DemoRulesFileEntry = {
   sku_mismatch_check?: boolean;
   citation?: { law_name: string; article?: string };
   country_decision_overrides?: Record<string, DemoRulesCountryOverride>;
+  remediation_type?: RuntimeRuleDefinition['remediation_type'];
 };
 
 type DemoRulesFile = {
@@ -42,9 +46,12 @@ function normalizeRule(entry: DemoRulesFileEntry): RuntimeRuleDefinition {
     severity: entry.severity,
     decision: entry.decision,
     summary: entry.summary,
+    summary_en: entry.summary_en,
+    summary_zh: entry.summary_zh,
     scopes: entry.scopes,
     forbidden_terms: entry.forbidden_terms,
     trigger_terms: entry.trigger_terms,
+    trigger_patterns: entry.trigger_patterns,
     required_any_terms: entry.required_any_terms,
     activation_terms: entry.activation_terms,
     required_any_mode: entry.required_any_mode,
@@ -54,6 +61,7 @@ function normalizeRule(entry: DemoRulesFileEntry): RuntimeRuleDefinition {
       ? { lawName: entry.citation.law_name, article: entry.citation.article }
       : undefined,
     country_decision_overrides: entry.country_decision_overrides,
+    remediation_type: entry.remediation_type,
   };
 }
 

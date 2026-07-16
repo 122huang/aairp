@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findTermMatch, hasAnyTerm } from './content-matching.js';
+import { findPatternMatch, findTermMatch, hasAnyTerm } from './content-matching.js';
 
 describe('content-matching word boundaries', () => {
   const textField = [{ field: 'text', value: 'Secure checkout for wellness supplements.' }];
@@ -66,5 +66,31 @@ describe('content-matching word boundaries', () => {
 
     const comparative = [{ field: 'text', value: 'A cleaner than ordinary mop experience' }];
     expect(findTermMatch(comparative, ['cleaner than'])).toMatchObject({ text: 'cleaner than' });
+  });
+
+  const servingCapacityPatterns = [
+    '\\bfeed(?:s)?\\s+up to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b',
+    '\\bup to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b',
+  ];
+
+  it.each([
+    ['Cook for up to 8-10 people', 'up to 8-10 people'],
+    ['cook for up to 6-8 servings', 'up to 6-8 servings'],
+    ['feeds up to 10 people', 'feeds up to 10 people'],
+    ['Feeds up to 12 persons tonight', 'Feeds up to 12 persons'],
+  ])('matches serving capacity pattern in %s', (text, expected) => {
+    const fields = [{ field: 'text', value: text }];
+    expect(findPatternMatch(fields, servingCapacityPatterns)).toMatchObject({ text: expected });
+  });
+
+  it('does not match weight-only up-to phrasing with serving capacity patterns', () => {
+    const fields = [
+      {
+        field: 'text',
+        value:
+          '6.5 qt pot fits up to a 4lb. chicken or Removes up to 99% of household dust.',
+      },
+    ];
+    expect(findPatternMatch(fields, servingCapacityPatterns)).toBeNull();
   });
 });
