@@ -45,6 +45,13 @@ export type EvalCaseResult = {
   failures: string[];
 };
 
+export type EvalMarketTierMetrics = {
+  total_cases: number;
+  passed_cases: number;
+  decision_accuracy: number;
+  country_ids: string[];
+};
+
 export type EvalMetrics = {
   total_cases: number;
   passed_cases: number;
@@ -55,6 +62,14 @@ export type EvalMetrics = {
   finding_precision: number;
   finding_recall: number;
   finding_f1: number;
+  /**
+   * decision_accuracy above is computed across every case, including markets with no
+   * Legal-written market card yet (see isLegalReviewedMarket). These two breakdowns split
+   * that headline number apart so an unreviewed market's demo-rule accuracy is never read
+   * as if it carries the same legal confidence as an already-reviewed market.
+   */
+  legal_reviewed_markets: EvalMarketTierMetrics;
+  unreviewed_markets: EvalMarketTierMetrics;
 };
 
 export type BenchmarkEvalResult = {

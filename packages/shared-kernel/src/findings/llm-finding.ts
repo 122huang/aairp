@@ -24,6 +24,8 @@ export type LlmFinding = ModuleFinding & {
 export type OpenRiskDiscoveryResult = {
   reviewId: string;
   promptPackVersion: string;
+  /** Concrete model id returned by the LLM gateway for this call. */
+  model?: string;
   findings: LlmFinding[];
   skipped: boolean;
   skipReason?: 'HAS_BLOCKER' | 'EXACT_HASH_PRECEDENT';

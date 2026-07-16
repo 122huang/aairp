@@ -138,6 +138,7 @@ describe('CaseRetrievalService', () => {
               country_id: 'SG',
               platform_id: 'META',
               category_id: 'health.supplement',
+              legal_reviewed_market: true,
             },
             advertisement: {
               advertisement_id: 'ad_old',

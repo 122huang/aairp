@@ -20,6 +20,8 @@ describe('renderAccuracyReportMarkdown', () => {
         finding_precision: 1,
         finding_recall: 0.5,
         finding_f1: 0.667,
+        legal_reviewed_markets: { total_cases: 2, passed_cases: 1, decision_accuracy: 0.5, country_ids: ['SG'] },
+        unreviewed_markets: { total_cases: 0, passed_cases: 0, decision_accuracy: 1, country_ids: [] },
       },
       case_results: [
         {

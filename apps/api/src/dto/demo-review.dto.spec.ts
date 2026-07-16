@@ -55,6 +55,7 @@ describe('demo-review.dto', () => {
           country_id: 'SG',
           platform_id: 'META',
           category_id: 'health.supplement',
+          legal_reviewed_market: true,
         },
         findings: [],
         open_risk_skipped: true,

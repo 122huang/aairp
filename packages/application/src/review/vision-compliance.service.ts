@@ -265,6 +265,7 @@ export class VisionComplianceService {
     const extractedText: string[] = [];
     const seenFindingKeys = new Set<string>();
     let promptPackVersion = this.config.promptPackVersion ?? 'demo-vision-1.0.0';
+    let model: string | undefined;
     const cropImageForSlice = this.config.cropImageForSlice ?? cropImageDataUrlForSlice;
 
     for (const manifest of manifests) {
@@ -287,11 +288,18 @@ export class VisionComplianceService {
             );
           }
 
-          return { slice, parsed: parseVisionResponseContent(response.content) };
+          return {
+            slice,
+            parsed: parseVisionResponseContent(response.content),
+            model: response.model,
+          };
         }),
       );
 
-      for (const { slice, parsed } of sliceResults) {
+      for (const { slice, parsed, model: sliceModel } of sliceResults) {
+        if (!model && sliceModel) {
+          model = sliceModel;
+        }
         if (parsed.prompt_pack_version) {
           promptPackVersion = parsed.prompt_pack_version;
         }
@@ -312,6 +320,7 @@ export class VisionComplianceService {
     return {
       reviewId: context.reviewId,
       promptPackVersion,
+      ...(model ? { model } : {}),
       manifests,
       findings,
       hasBlocker: visionFindingHasBlocker(findings),

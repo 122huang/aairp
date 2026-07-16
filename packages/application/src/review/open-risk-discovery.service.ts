@@ -309,6 +309,7 @@ export class OpenRiskDiscoveryService {
     return {
       reviewId: context.reviewId,
       promptPackVersion,
+      ...(completion.model ? { model: completion.model } : {}),
       findings,
       skipped: false,
       evaluatedAt,

@@ -1,6 +1,7 @@
 import type { FinalDecision } from '../decision/review-decision.js';
 import type { PlaybookFinding } from '../findings/playbook-finding.js';
 import type { RuleFinding } from '../findings/rule-finding.js';
+import type { VisionFinding } from '../findings/vision-finding.js';
 import type { ReviewContext } from '../context/review-context.js';
 
 export const CASE_SCHEMA_VERSION = '1.0.0';
@@ -18,6 +19,13 @@ export type CaseDimensions = {
   country_id: string;
   platform_id: string;
   category_id: string;
+  /**
+   * True only once Legal has written a market card for country_id (see
+   * isLegalReviewedMarket in @aairp/shared-kernel review-dimensions). False means the
+   * decision above ran on demo-level keyword rules only, without a legal-reviewed basis
+   * — do not present it with the same confidence as an already-reviewed market.
+   */
+  legal_reviewed_market: boolean;
 };
 
 export type CaseAdvertisementContent = {
@@ -56,11 +64,30 @@ export type CaseMatchedFinding = {
   decision: string;
   summary: string;
   confidence: number;
-  evaluation_detail?: RuleFinding['evaluationDetail'] | PlaybookFinding['evaluationDetail'];
+  evaluation_detail?:
+    | RuleFinding['evaluationDetail']
+    | PlaybookFinding['evaluationDetail']
+    | VisionFinding['evaluationDetail'];
 };
 
 export type CaseLlmAnalysis = {
   prompt_pack_version: string;
+  /**
+   * Concrete model id used for the Open Risk LLM call (e.g. deepseek-chat,
+   * claude-3-5-haiku-20241022). Distinct from prompt_pack_version (prompt text pack).
+   * Omitted when the step was skipped or no model identity was available.
+   */
+  llm_model?: string;
+  skipped: boolean;
+  skip_reason?: string;
+  findings: CaseMatchedFinding[];
+  evaluated_at: string;
+};
+
+export type CaseVisionAnalysis = {
+  prompt_pack_version: string;
+  /** Concrete vision model id used for image-slice calls. Omitted when skipped. */
+  llm_model?: string;
   skipped: boolean;
   skip_reason?: string;
   findings: CaseMatchedFinding[];
@@ -78,7 +105,7 @@ export type CaseDecision = {
 
 export type CaseEvidence = {
   evidence_id: string;
-  source_module: 'RULE' | 'PLAYBOOK' | 'LLM';
+  source_module: 'RULE' | 'PLAYBOOK' | 'LLM' | 'VISION';
   source_ref_id: string;
   evidence_type: 'TEXT_SPAN' | 'CITATION' | 'SUMMARY';
   field?: string;
@@ -142,6 +169,8 @@ export type CaseRecord = {
   matched_rules: CaseMatchedFinding[];
   matched_playbooks: CaseMatchedFinding[];
   llm_analysis: CaseLlmAnalysis;
+  /** Present whenever the Vision step ran (including skipped NO_IMAGES / VISION_MODE_OFF). */
+  vision_analysis?: CaseVisionAnalysis;
   decision: CaseDecision;
   evidence: CaseEvidence[];
   recommendation: CaseRecommendation;

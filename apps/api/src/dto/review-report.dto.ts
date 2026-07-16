@@ -1,4 +1,5 @@
 import type { ReviewReportResult } from '@aairp/shared-kernel';
+import { isLegalReviewedMarket } from '@aairp/shared-kernel';
 
 export type GenerateReviewReportRequestDto = {
   advertisement_id: string;
@@ -23,6 +24,12 @@ export type ReviewReportResponseDto = {
       country_id: string;
       platform_id: string;
       category_id: string;
+      /**
+       * False means country_id has no Legal-written market card yet (demo-level keyword
+       * rules only) — see isLegalReviewedMarket in @aairp/shared-kernel. Do not present
+       * findings for these markets with the same confidence as an already-reviewed one.
+       */
+      legal_reviewed_market: boolean;
     };
     findings: Array<{
       finding_id: string;
@@ -81,6 +88,7 @@ export function toReviewReportResponseDto(result: ReviewReportResult): ReviewRep
         country_id: result.summary.advertisement.countryId,
         platform_id: result.summary.advertisement.platformId,
         category_id: result.summary.advertisement.categoryId,
+        legal_reviewed_market: isLegalReviewedMarket(result.summary.advertisement.countryId),
       },
       findings: result.summary.findings.map((finding) => ({
         finding_id: finding.findingId,

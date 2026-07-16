@@ -11,5 +11,6 @@ describe('StubLlmGateway', () => {
     const result = await gateway.complete('prompt body');
 
     expect(result.content).toBe('{"findings":[]}');
+    expect(result.model).toBe('stub');
   });
 });

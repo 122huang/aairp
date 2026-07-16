@@ -13,6 +13,6 @@ export class StubLlmGateway implements ILlmGateway {
 
   async complete(_prompt: string): Promise<LlmGatewayCompleteResult> {
     const readTextFile = this.config.readTextFile ?? ((path: string) => readFileSync(path, 'utf8'));
-    return { content: readTextFile(this.config.responsePath) };
+    return { content: readTextFile(this.config.responsePath), model: 'stub' };
   }
 }

@@ -1,5 +1,7 @@
 export type LlmGatewayCompleteResult = {
   content: string;
+  /** Concrete model id used for this completion (provider-specific string). */
+  model?: string;
   usage?: {
     prompt_tokens?: number;
     completion_tokens?: number;

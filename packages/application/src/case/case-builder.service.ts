@@ -7,7 +7,7 @@ import type {
   CaseRegulationRef,
   ReviewCaseSnapshot,
 } from '@aairp/shared-kernel';
-import { CASE_SCHEMA_VERSION } from '@aairp/shared-kernel';
+import { CASE_SCHEMA_VERSION, isLegalReviewedMarket } from '@aairp/shared-kernel';
 import type { ModuleFinding } from '@aairp/shared-kernel';
 import type { ReviewDecisionResult } from '@aairp/shared-kernel';
 import type { ReviewHappyPathResult } from '@aairp/shared-kernel';
@@ -36,16 +36,47 @@ function mapFinding(finding: ModuleFinding): CaseMatchedFinding {
   };
 }
 
+type EvidenceDetail = {
+  matchedSpans?: Array<{ field: string; start: number; end: number; text: string }>;
+  evidenceSpans?: Array<{ field: string; start: number; end: number; text: string }>;
+  citation?: { lawName: string; article?: string };
+};
+
+/** Collect text spans from Rule/Playbook matchedSpans and Open Risk evidenceSpans. */
+function extractTextSpans(finding: ModuleFinding): Array<{
+  field: string;
+  start: number;
+  end: number;
+  text: string;
+}> {
+  const detail = finding.evaluationDetail as EvidenceDetail | undefined;
+  const spans = [...(detail?.matchedSpans ?? []), ...(detail?.evidenceSpans ?? [])];
+  const seen = new Set<string>();
+  return spans.filter((span) => {
+    const key = `${span.field}:${span.start}:${span.end}:${span.text}`;
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.add(key);
+    return true;
+  });
+}
+
 function buildEvidence(snapshot: ReviewCaseSnapshot): CaseEvidence[] {
   const evidence: CaseEvidence[] = [];
   const allFindings = [
     ...snapshot.ruleResult.findings.map((f) => ({ finding: f, module: 'RULE' as const })),
     ...snapshot.playbookResult.findings.map((f) => ({ finding: f, module: 'PLAYBOOK' as const })),
     ...snapshot.openRiskResult.findings.map((f) => ({ finding: f, module: 'LLM' as const })),
+    ...(snapshot.visionResult?.findings ?? []).map((f) => ({
+      finding: f,
+      module: 'VISION' as const,
+    })),
   ];
 
   for (const { finding, module } of allFindings) {
-    const spans = finding.evaluationDetail?.matchedSpans ?? [];
+    const detail = finding.evaluationDetail as EvidenceDetail | undefined;
+    const spans = extractTextSpans(finding);
     for (const span of spans) {
       evidence.push({
         evidence_id: `ev_${randomUUID()}`,
@@ -56,13 +87,13 @@ function buildEvidence(snapshot: ReviewCaseSnapshot): CaseEvidence[] {
         start: span.start,
         end: span.end,
         text: span.text,
-        regulation_ref: finding.evaluationDetail?.citation
-          ? `${finding.evaluationDetail.citation.lawName}${finding.evaluationDetail.citation.article ? ` ${finding.evaluationDetail.citation.article}` : ''}`
+        regulation_ref: detail?.citation
+          ? `${detail.citation.lawName}${detail.citation.article ? ` ${detail.citation.article}` : ''}`
           : undefined,
       });
     }
 
-    const citation = finding.evaluationDetail?.citation;
+    const citation = detail?.citation;
     if (citation && spans.length === 0) {
       evidence.push({
         evidence_id: `ev_${randomUUID()}`,
@@ -150,10 +181,26 @@ function buildRecommendation(
     });
   }
 
+  for (const finding of snapshot.visionResult?.findings ?? []) {
+    const suggested = finding.evaluationDetail?.suggestedAction;
+    actions.push({
+      priority: priority++,
+      action: suggested ?? 'MANUAL_REVIEW',
+      target: finding.refId,
+      detail: finding.summary,
+    });
+  }
+
   return {
     summary: decision.rationale,
     actions,
-    derived_from: ['matched_rules', 'matched_playbooks', 'llm_analysis', 'decision.rationale'],
+    derived_from: [
+      'matched_rules',
+      'matched_playbooks',
+      'llm_analysis',
+      'vision_analysis',
+      'decision.rationale',
+    ],
   };
 }
 
@@ -167,7 +214,7 @@ export class CaseBuilderService {
   build(input: CaseBuilderInput): CaseRecord {
     const now = (this.config.now ?? (() => new Date()))().toISOString();
     const caseId = `case_${(this.config.createCaseId ?? randomUUID)()}`;
-    const { context, ruleResult, playbookResult, openRiskResult } = input.caseSnapshot;
+    const { context, ruleResult, playbookResult, openRiskResult, visionResult } = input.caseSnapshot;
     const { decision, report } = input;
     const normalized = context.normalizedContent;
 
@@ -183,6 +230,7 @@ export class CaseBuilderService {
         country_id: context.dimensions.countryId,
         platform_id: context.dimensions.platformId,
         category_id: context.dimensions.categoryId,
+        legal_reviewed_market: isLegalReviewedMarket(context.dimensions.countryId),
       },
       advertisement: {
         advertisement_id: input.advertisementId,
@@ -212,11 +260,24 @@ export class CaseBuilderService {
       matched_playbooks: playbookResult.findings.map(mapFinding),
       llm_analysis: {
         prompt_pack_version: openRiskResult.promptPackVersion,
+        ...(openRiskResult.model ? { llm_model: openRiskResult.model } : {}),
         skipped: openRiskResult.skipped,
         ...(openRiskResult.skipReason ? { skip_reason: openRiskResult.skipReason } : {}),
         findings: openRiskResult.findings.map(mapFinding),
         evaluated_at: openRiskResult.evaluatedAt,
       },
+      ...(visionResult
+        ? {
+            vision_analysis: {
+              prompt_pack_version: visionResult.promptPackVersion,
+              ...(visionResult.model ? { llm_model: visionResult.model } : {}),
+              skipped: visionResult.skipped,
+              ...(visionResult.skipReason ? { skip_reason: visionResult.skipReason } : {}),
+              findings: visionResult.findings.map(mapFinding),
+              evaluated_at: visionResult.evaluatedAt,
+            },
+          }
+        : {}),
       decision: {
         ai_decision: decision.finalDecision,
         confidence: decision.confidence,

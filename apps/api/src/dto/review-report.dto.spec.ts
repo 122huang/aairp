@@ -48,6 +48,7 @@ describe('review-report.dto', () => {
           country_id: 'SG',
           platform_id: 'META',
           category_id: 'health.supplement',
+          legal_reviewed_market: true,
         },
         findings: [
           {
@@ -64,5 +65,30 @@ describe('review-report.dto', () => {
       },
       generated_at: '2026-06-26T10:10:00.000Z',
     });
+  });
+
+  it('flags legal_reviewed_market false for markets without a legal market card (e.g. VN/PH)', () => {
+    const dto = toReviewReportResponseDto({
+      reviewId: 'rev_vn',
+      advertisementId: 'ad_vn',
+      reportHtml: '<html>report</html>',
+      summary: {
+        finalDecision: 'PASS',
+        confidence: 1,
+        rationale: 'No findings.',
+        findingCounts: { rule: 0, playbook: 0, llm: 0 },
+        advertisement: {
+          textPreview: 'Sample ad text',
+          countryId: 'VN',
+          platformId: 'META',
+          categoryId: 'sa.air_fryer',
+        },
+        findings: [],
+        openRiskSkipped: false,
+      },
+      generatedAt: '2026-06-26T10:10:00.000Z',
+    });
+
+    expect(dto.summary.advertisement.legal_reviewed_market).toBe(false);
   });
 });

@@ -1,4 +1,10 @@
-import type { BenchmarkGroundTruth, EvalCaseResult, EvalMetrics } from './benchmark-types.js';
+import { isLegalReviewedMarket } from '@aairp/shared-kernel';
+import type {
+  BenchmarkGroundTruth,
+  EvalCaseResult,
+  EvalMarketTierMetrics,
+  EvalMetrics,
+} from './benchmark-types.js';
 
 function isBlockerExpected(groundTruth: BenchmarkGroundTruth): boolean {
   return groundTruth.expected_decision === 'REJECT';
@@ -12,6 +18,30 @@ function expectedFindingKeys(results: EvalCaseResult[]): Set<string> {
     }
   }
   return keys;
+}
+
+function computeMarketTierMetrics(
+  caseResults: EvalCaseResult[],
+  matchesTier: (countryId: string) => boolean,
+): EvalMarketTierMetrics {
+  // Case tags are built as [country_id, category_id, ...] by both dataset and ad-manifest
+  // benchmark evaluators — tags[0] is the country code. Cases without a recognizable
+  // country tag are excluded from both tiers rather than guessed into either bucket.
+  const tierCases = caseResults.filter((result) => {
+    const countryId = result.tags[0];
+    return typeof countryId === 'string' && countryId.length > 0 && matchesTier(countryId);
+  });
+  const passed = tierCases.filter((result) => result.passed).length;
+  const decisionCorrect = tierCases.filter(
+    (result) => result.actual.final_decision === result.expected.expected_decision,
+  ).length;
+
+  return {
+    total_cases: tierCases.length,
+    passed_cases: passed,
+    decision_accuracy: tierCases.length === 0 ? 1 : decisionCorrect / tierCases.length,
+    country_ids: Array.from(new Set(tierCases.map((result) => result.tags[0]!.toUpperCase()))).sort(),
+  };
 }
 
 export function computeEvalMetrics(caseResults: EvalCaseResult[]): EvalMetrics {
@@ -94,6 +124,13 @@ export function computeEvalMetrics(caseResults: EvalCaseResult[]): EvalMetrics {
     finding_precision,
     finding_recall,
     finding_f1,
+    legal_reviewed_markets: computeMarketTierMetrics(caseResults, (countryId) =>
+      isLegalReviewedMarket(countryId),
+    ),
+    unreviewed_markets: computeMarketTierMetrics(
+      caseResults,
+      (countryId) => !isLegalReviewedMarket(countryId),
+    ),
   };
 }
 

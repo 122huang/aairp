@@ -13,21 +13,38 @@ const defaultFallbackStubPath = join(
 );
 
 const imageUrlPromptPattern = /Image URL:\s*(\S+)/;
+const sliceIndexPromptPattern = /Slice index:\s*(\d+)/;
 
 export function extractImageUrlFromVisionPrompt(prompt: string): string | undefined {
   const match = prompt.match(imageUrlPromptPattern);
   return match?.[1];
 }
 
+export function extractSliceIndexFromVisionPrompt(prompt: string): number | undefined {
+  const match = prompt.match(sliceIndexPromptPattern);
+  return match ? Number(match[1]) : undefined;
+}
+
 export function resolveVisionScenarioStubPath(
   imageUrl: string | undefined,
   stubRoot = defaultStubRoot,
+  sliceIndex?: number,
 ): string | undefined {
   if (!imageUrl) {
     return undefined;
   }
 
   const fileName = basename(imageUrl).replace(/\.[a-z0-9]+$/i, '');
+
+  // A multi-slice image (long/tall crop) may only exhibit a defect in one region — prefer a
+  // slice-specific fixture when present, falling back to the whole-image fixture otherwise.
+  if (sliceIndex !== undefined) {
+    const sliceCandidate = join(stubRoot, `${fileName}-slice${sliceIndex}.json`);
+    if (existsSync(sliceCandidate)) {
+      return sliceCandidate;
+    }
+  }
+
   const candidate = join(stubRoot, `${fileName}.json`);
   if (existsSync(candidate)) {
     return candidate;
@@ -50,9 +67,10 @@ export class VisionScenarioStubGateway implements ILlmGateway {
     const stubRoot = this.config.stubRoot ?? defaultStubRoot;
     const fallbackStubPath = this.config.fallbackStubPath ?? defaultFallbackStubPath;
     const imageUrl = extractImageUrlFromVisionPrompt(prompt);
-    const scenarioStubPath = resolveVisionScenarioStubPath(imageUrl, stubRoot);
+    const sliceIndex = extractSliceIndexFromVisionPrompt(prompt);
+    const scenarioStubPath = resolveVisionScenarioStubPath(imageUrl, stubRoot, sliceIndex);
     const responsePath = scenarioStubPath ?? fallbackStubPath;
 
-    return { content: readTextFile(responsePath) };
+    return { content: readTextFile(responsePath), model: 'stub:vision-scenario' };
   }
 }

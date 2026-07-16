@@ -9,6 +9,7 @@ export function buildCaseSearchText(record: CaseRecord): string {
     ...record.matched_rules.map((finding) => finding.summary),
     ...record.matched_playbooks.map((finding) => finding.summary),
     ...record.llm_analysis.findings.map((finding) => finding.summary),
+    ...(record.vision_analysis?.findings ?? []).map((finding) => finding.summary),
   ]
     .filter((value) => value.length > 0)
     .join('\n');

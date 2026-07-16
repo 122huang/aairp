@@ -82,6 +82,7 @@ describe('CaseBuilderService + CaseRecorderService', () => {
     expect(caseRecord.schema_version).toBe('1.0.0');
     expect(caseRecord.case_version).toBe(1);
     expect(caseRecord.dimensions.country_id).toBe('SG');
+    expect(caseRecord.dimensions.legal_reviewed_market).toBe(true);
     expect(caseRecord.advertisement.content.text).toContain('cure');
     expect(caseRecord.matched_rules.length).toBeGreaterThan(0);
     expect(caseRecord.decision.ai_decision).toBe('REJECT');
@@ -89,6 +90,204 @@ describe('CaseBuilderService + CaseRecorderService', () => {
     expect(caseRecord.llm_analysis.skipped).toBe(true);
     expect(caseRecord.reference_regulations.length).toBeGreaterThan(0);
     expect(caseRecord.created_at).toBeTruthy();
+  });
+
+  it('maps Open Risk evidenceSpans into CaseRecord evidence TEXT_SPAN', () => {
+    const builder = new CaseBuilderService({
+      createCaseId: () => '19191919-1919-1919-1919-191919191919',
+      now: () => new Date('2026-06-26T10:11:00.000Z'),
+    });
+
+    const caseRecord = builder.build({
+      reviewId: 'rev_test',
+      advertisementId: 'ad_test',
+      decision: {
+        finalDecision: 'WARN',
+        confidence: 0.8,
+        rationale: 'test',
+        findingCounts: { blocker: 0, high: 0, medium: 1, low: 0, info: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      report: {
+        summary: { openRiskSkipped: false },
+      } as never,
+      caseSnapshot: {
+        context: {
+          reviewId: 'rev_test',
+          contentHash: 'hash',
+          contentVersion: 1,
+          dimensions: {
+            tenantId: 'demo',
+            countryId: 'SG',
+            platformId: 'tiktok',
+            categoryId: 'health.supplement',
+          },
+          normalizedContent: {
+            text: 'This blender is clinically proven to cure fatigue.',
+            imageUrls: [],
+          },
+          resolvedKnowledgeVersions: {},
+          advertisementContext: {},
+          tags: [],
+          builtAt: '2026-06-26T10:05:00.000Z',
+        },
+        ruleResult: { findings: [], hasBlocker: false, evaluatedAt: '2026-06-26T10:06:00.000Z' },
+        playbookResult: { findings: [], evaluatedAt: '2026-06-26T10:07:00.000Z' },
+        openRiskResult: {
+          promptPackVersion: 'demo-open-risk-1.5.4',
+          model: 'deepseek-chat',
+          skipped: false,
+          findings: [
+            {
+              module: 'LLM',
+              refId: 'medical-claim',
+              refVersionId: 'open-risk',
+              severity: 'HIGH',
+              decision: 'WARN',
+              summary: 'Implies medical cure without substantiation.',
+              evaluationDetail: {
+                evidenceSpans: [
+                  {
+                    field: 'text',
+                    start: 20,
+                    end: 48,
+                    text: 'clinically proven to cure',
+                  },
+                ],
+              },
+            },
+          ],
+          evaluatedAt: '2026-06-26T10:08:00.000Z',
+        },
+      } as never,
+    } as never);
+
+    expect(caseRecord.llm_analysis.llm_model).toBe('deepseek-chat');
+    const spanEvidence = caseRecord.evidence.filter((e) => e.evidence_type === 'TEXT_SPAN');
+    expect(spanEvidence).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_module: 'LLM',
+          source_ref_id: 'medical-claim',
+          evidence_type: 'TEXT_SPAN',
+          field: 'text',
+          start: 20,
+          end: 48,
+          text: 'clinically proven to cure',
+        }),
+      ]),
+    );
+    expect(spanEvidence.some((e) => e.evidence_type === 'SUMMARY')).toBe(false);
+  });
+
+  it('persists Vision findings and model into CaseRecord vision_analysis', () => {
+    const builder = new CaseBuilderService({
+      createCaseId: () => '20202020-2020-2020-2020-202020202020',
+      now: () => new Date('2026-06-26T10:11:00.000Z'),
+    });
+
+    const caseRecord = builder.build({
+      reviewId: 'rev_vision',
+      advertisementId: 'ad_vision',
+      decision: {
+        finalDecision: 'WARN',
+        confidence: 0.7,
+        rationale: 'vision finding',
+        findingCounts: { blocker: 0, high: 0, medium: 1, low: 0, info: 0, vision: 1 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      report: {
+        summary: { openRiskSkipped: false },
+      } as never,
+      caseSnapshot: {
+        context: {
+          reviewId: 'rev_vision',
+          contentHash: 'hash_v',
+          contentVersion: 1,
+          dimensions: {
+            tenantId: 'demo',
+            countryId: 'CN',
+            platformId: 'META',
+            categoryId: 'sa.air_fryer',
+          },
+          normalizedContent: {
+            text: '空气炸锅',
+            imageUrls: ['https://example.com/panel.png'],
+          },
+          resolvedKnowledgeVersions: {},
+          advertisementContext: {},
+          tags: [],
+          builtAt: '2026-06-26T10:05:00.000Z',
+        },
+        ruleResult: { findings: [], hasBlocker: false, evaluatedAt: '2026-06-26T10:06:00.000Z' },
+        playbookResult: { findings: [], evaluatedAt: '2026-06-26T10:07:00.000Z' },
+        openRiskResult: {
+          promptPackVersion: 'demo-open-risk-1.5.4',
+          model: 'stub',
+          skipped: false,
+          findings: [],
+          evaluatedAt: '2026-06-26T10:08:00.000Z',
+        },
+        visionResult: {
+          promptPackVersion: 'demo-vision-1.0.0',
+          model: 'stub:vision-scenario',
+          manifests: [],
+          findings: [
+            {
+              module: 'VISION',
+              findingId: 'vf_1',
+              refType: 'VISION_RISK',
+              refId: 'localisation-error',
+              refVersionId: 'demo-vision-1.0.0-localisation-error-v1',
+              severity: 'HIGH',
+              decision: 'WARN',
+              summary: 'Unreplaced POS panel language',
+              confidence: 0.9,
+              evaluationDetail: {
+                riskType: 'localisation-error',
+                suggestedAction: 'WARN',
+                evidenceSpans: [
+                  {
+                    field: 'image',
+                    sliceIndex: 0,
+                    regionDescription: 'top panel',
+                    text: '未替换文案',
+                  },
+                ],
+              },
+            },
+          ],
+          hasBlocker: false,
+          skipped: false,
+          evaluatedAt: '2026-06-26T10:08:30.000Z',
+        },
+      } as never,
+    } as never);
+
+    expect(caseRecord.vision_analysis).toEqual(
+      expect.objectContaining({
+        prompt_pack_version: 'demo-vision-1.0.0',
+        llm_model: 'stub:vision-scenario',
+        skipped: false,
+        findings: [
+          expect.objectContaining({
+            ref_id: 'localisation-error',
+            decision: 'WARN',
+            summary: 'Unreplaced POS panel language',
+          }),
+        ],
+      }),
+    );
+    expect(caseRecord.evidence).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source_module: 'VISION',
+          source_ref_id: 'localisation-error',
+          evidence_type: 'TEXT_SPAN',
+          text: '未替换文案',
+        }),
+      ]),
+    );
   });
 
   it('recordSafely does not throw when store fails', async () => {

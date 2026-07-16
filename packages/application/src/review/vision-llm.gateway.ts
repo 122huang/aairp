@@ -160,6 +160,7 @@ async function completeVisionLive(
   const usage = data.usage as JsonMessage | undefined;
   return {
     content: await readOpenAiText(data),
+    model,
     ...(usage
       ? {
           usage: {

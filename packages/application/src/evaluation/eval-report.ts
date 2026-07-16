@@ -59,6 +59,16 @@ export function renderAccuracyReportMarkdown(result: BenchmarkEvalResult): strin
 | Finding Recall | ${formatMetricPercent(metrics.finding_recall)} |
 | Finding F1 | ${formatMetricPercent(metrics.finding_f1)} |
 
+## Market Review Status
+
+Decision Accuracy above spans every market, including ones with no Legal-written market
+card yet. Split by review status:
+
+| Tier | Countries | Passed | Total | Decision Accuracy |
+|------|-----------|--------|-------|--------------------|
+| Legal-reviewed markets | ${metrics.legal_reviewed_markets.country_ids.join(', ')} | ${metrics.legal_reviewed_markets.passed_cases} | ${metrics.legal_reviewed_markets.total_cases} | ${formatMetricPercent(metrics.legal_reviewed_markets.decision_accuracy)} |
+| ⚠ No market card yet (demo rules only) | ${metrics.unreviewed_markets.country_ids.join(', ') || '—'} | ${metrics.unreviewed_markets.passed_cases} | ${metrics.unreviewed_markets.total_cases} | ${formatMetricPercent(metrics.unreviewed_markets.decision_accuracy)} |
+
 ## Case Results
 
 | Case ID | Expected | Actual | Pass |

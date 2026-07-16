@@ -40,6 +40,8 @@ export type VisionFinding = ModuleFinding & {
 export type VisionDiscoveryResult = {
   reviewId: string;
   promptPackVersion: string;
+  /** Concrete vision model id returned by the LLM gateway for slice calls. */
+  model?: string;
   manifests: ImageSliceManifest[];
   findings: VisionFinding[];
   hasBlocker: boolean;

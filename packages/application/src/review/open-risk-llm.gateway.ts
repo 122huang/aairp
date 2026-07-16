@@ -48,7 +48,7 @@ export function resolveOpenRiskLlmMode(): 'live' | 'stub' {
   return process.env.AAIRP_OPEN_RISK_MODE?.trim().toLowerCase() === 'live' ? 'live' : 'stub';
 }
 
-function resolveOpenRiskModel(provider: OpenRiskLlmProvider): string {
+export function resolveOpenRiskModel(provider: OpenRiskLlmProvider): string {
   const configured = process.env.OPEN_RISK_LLM_MODEL?.trim();
   if (configured) {
     return configured;
@@ -93,7 +93,10 @@ async function readOpenAiText(data: JsonMessage): Promise<string> {
   return content;
 }
 
-async function completeAnthropicText(prompt: string, maxTokens: number): Promise<string> {
+async function completeAnthropicText(
+  prompt: string,
+  maxTokens: number,
+): Promise<{ content: string; model: string }> {
   const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
   if (!apiKey) {
     throw new Error('ANTHROPIC_API_KEY is not configured for OPEN_RISK live mode');
@@ -123,14 +126,14 @@ async function completeAnthropicText(prompt: string, maxTokens: number): Promise
     throw new Error(`Open Risk Anthropic API ${response.status}: ${errText.slice(0, 300)}`);
   }
 
-  return readAnthropicText((await response.json()) as JsonMessage);
+  return { content: await readAnthropicText((await response.json()) as JsonMessage), model };
 }
 
 async function completeOpenAiCompatibleText(
   prompt: string,
   maxTokens: number,
   options: { apiKey: string; baseUrl: string; model: string; label: string },
-): Promise<string> {
+): Promise<{ content: string; model: string }> {
   const response = await fetch(`${options.baseUrl}/v1/chat/completions`, {
     method: 'POST',
     headers: {
@@ -150,14 +153,17 @@ async function completeOpenAiCompatibleText(
     throw new Error(`Open Risk ${options.label} API ${response.status}: ${errText.slice(0, 300)}`);
   }
 
-  return readOpenAiText((await response.json()) as JsonMessage);
+  return {
+    content: await readOpenAiText((await response.json()) as JsonMessage),
+    model: options.model,
+  };
 }
 
 async function completeOpenRiskProviderText(
   provider: OpenRiskLlmProvider,
   prompt: string,
   maxTokens: number,
-): Promise<string> {
+): Promise<{ content: string; model: string }> {
   switch (provider) {
     case 'deepseek': {
       const apiKey = process.env.DEEPSEEK_API_KEY?.trim();
@@ -219,8 +225,8 @@ export class OpenRiskLlmGateway implements ILlmGateway {
     }
 
     const maxTokens = this.config.maxTokens ?? Number(process.env.OPEN_RISK_MAX_TOKENS ?? 2048);
-    const content = await completeOpenRiskProviderText(provider, prompt, maxTokens);
-    return { content };
+    const { content, model } = await completeOpenRiskProviderText(provider, prompt, maxTokens);
+    return { content, model };
   }
 }
 
