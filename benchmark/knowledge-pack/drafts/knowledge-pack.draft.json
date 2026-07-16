@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0.0",
-  "knowledge_pack_id": "kp-2026.07.19",
-  "knowledge_pack_version": "kp-2026.07.19",
+  "knowledge_pack_id": "kp-2026.07.29",
+  "knowledge_pack_version": "kp-2026.07.29",
   "platform_version": "1.0.0",
   "generated_at": "2026-07-01T12:00:00.000Z",
   "release_status": "released",
@@ -75,7 +75,7 @@
   "dependency_graph": {
     "frozen_at": "2026-07-01T12:00:00.000Z",
     "nodes": {
-      "rule": 39,
+      "rule": 72,
       "regulation": 85,
       "skill": 5,
       "rewrite": 9,
@@ -99,14 +99,14 @@
   },
   "runtime_components": {
     "rules": {
-      "version": "demo-rule-1.7.3",
-      "count": 39,
+      "version": "demo-rule-1.8.6",
+      "count": 72,
       "source": "demo/rules.demo.json"
     },
     "playbooks": {
-      "version": "demo-playbook-1.6.1",
+      "version": "demo-playbook-1.7.1",
       "playbook_id": "demo-health-supplement-playbook",
-      "pattern_count": 31,
+      "pattern_count": 34,
       "source": "demo/playbook.demo.md"
     },
     "legacy_references": {
@@ -117,8 +117,8 @@
     "benchmark": {
       "benchmark_id": "aairp-benchmark-v3",
       "schema_version": "3.0.0",
-      "content_fingerprint": "d7f336a242baf619196ac78f7f9d669ed38c8f1ba96e047adc102f61962149e6",
-      "case_count": 125,
+      "content_fingerprint": "1f764d93acfaab2222e773c81fe51fa870b00c844143b4d9123eac7849e75745",
+      "case_count": 128,
       "source": "benchmark/benchmark-v3.json"
     },
     "case_corpus": {
@@ -126,8 +126,8 @@
       "entry_count": 28,
       "benchmark_coverage": {
         "covered": 28,
-        "total": 125,
-        "pct": 22.4
+        "total": 128,
+        "pct": 21.9
       },
       "verified_count": 28,
       "regression_count": 0
@@ -184,7 +184,7 @@
     "freshness_yellow": 0,
     "freshness_red": 0
   },
-  "knowledge_pack_fingerprint": "9e485a390b4c5bfeb229a0d749eb76f5731e2b2de09e4cd6bc6f39e716a203be",
+  "knowledge_pack_fingerprint": "cca4bef15c3eeaef6422198de428090ee06ef1cc69223aff418e58d9e84584b2",
   "released_at": "2026-07-01T12:00:00.000Z",
   "released_by": "test@aairp"
 }
