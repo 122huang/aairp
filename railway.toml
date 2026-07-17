@@ -6,7 +6,9 @@ buildCommand = "pnpm build:review-app && pnpm --filter @aairp/domain build && pn
 
 [deploy]
 preDeployCommand = "pnpm migrate"
-startCommand = "node apps/api/dist/main.js"
+# Explicit live for evidence judgment — do NOT inherit AAIRP_OPEN_RISK_MODE.
+# Prefer also setting AAIRP_EVIDENCE_JUDGMENT_MODE=live in the Railway Variables UI.
+startCommand = "AAIRP_EVIDENCE_JUDGMENT_MODE=live node apps/api/dist/main.js"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

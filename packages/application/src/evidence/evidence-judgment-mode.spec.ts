@@ -30,20 +30,21 @@ describe('resolveEvidenceJudgmentLlmMode', () => {
     expect(resolveEvidenceJudgmentLlmMode()).toBe('stub');
   });
 
-  it('inherits open-risk mode when unset', () => {
+  it('does not inherit open-risk mode when unset (defaults to stub)', () => {
     delete process.env.AAIRP_EVIDENCE_JUDGMENT_MODE;
     process.env.AAIRP_OPEN_RISK_MODE = 'live';
-    expect(resolveEvidenceJudgmentLlmMode()).toBe('live');
-    process.env.AAIRP_OPEN_RISK_MODE = 'stub';
     expect(resolveEvidenceJudgmentLlmMode()).toBe('stub');
+    const info = getEvidenceJudgmentRuntimeInfo();
+    expect(info.evidence_judgment_mode).toBe('stub');
+    expect(info.evidence_judgment_mode_source).toBe('default_stub_when_unset');
   });
 
-  it('runtime info reports source of mode', () => {
-    delete process.env.AAIRP_EVIDENCE_JUDGMENT_MODE;
-    process.env.AAIRP_OPEN_RISK_MODE = 'live';
+  it('runtime info reports explicit source when set', () => {
+    process.env.AAIRP_EVIDENCE_JUDGMENT_MODE = 'live';
+    process.env.AAIRP_OPEN_RISK_MODE = 'stub';
     const info = getEvidenceJudgmentRuntimeInfo();
     expect(info.evidence_judgment_mode).toBe('live');
-    expect(info.evidence_judgment_mode_source).toBe('inherited_AAIRP_OPEN_RISK_MODE');
+    expect(info.evidence_judgment_mode_source).toBe('AAIRP_EVIDENCE_JUDGMENT_MODE');
   });
 });
 
