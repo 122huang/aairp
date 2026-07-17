@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+﻿import Fastify from 'fastify';
 import { Pool } from 'pg';
 import { Redis } from 'ioredis';
 import {
@@ -54,6 +54,7 @@ import { registerDemoReviewController } from './controllers/demo-review.controll
 import { registerCaseAdminController } from './controllers/case-admin.controller.js';
 import { registerKosRoutes } from './kos/register-kos-routes.js';
 import { registerErrorHandler, registerTraceMiddleware } from './middleware/http.js';
+import { registerReviewBasicAuth } from './middleware/basic-auth.js';
 import { registerDemoUi } from './register-demo-ui.js';
 import { registerKnowledgePreviewController } from './controllers/knowledge-preview.controller.js';
 import { registerKnowledgePreviewFeedbackController } from './controllers/knowledge-preview-feedback.controller.js';
@@ -97,6 +98,8 @@ export async function buildApp(config: ApiConfig) {
 
   registerTraceMiddleware(app);
   registerErrorHandler(app);
+  // Shared-password gate for /review UI + /demo APIs (Railway same-origin deploy).
+  registerReviewBasicAuth(app);
 
   const pool = new Pool({ connectionString: config.databaseUrl });
   const redis = new Redis(config.redisUrl, { lazyConnect: true, maxRetriesPerRequest: 1 });
