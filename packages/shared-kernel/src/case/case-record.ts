@@ -3,6 +3,7 @@ import type { PlaybookFinding } from '../findings/playbook-finding.js';
 import type { RuleFinding } from '../findings/rule-finding.js';
 import type { VisionFinding } from '../findings/vision-finding.js';
 import type { ReviewContext } from '../context/review-context.js';
+import type { RemediationType } from '../knowledge/remediation-type.js';
 
 export const CASE_SCHEMA_VERSION = '1.0.0';
 
@@ -64,6 +65,8 @@ export type CaseMatchedFinding = {
   decision: string;
   summary: string;
   confidence: number;
+  /** Persisted from RuleFinding.remediationType when present. */
+  remediation_type?: RemediationType;
   evaluation_detail?:
     | RuleFinding['evaluationDetail']
     | PlaybookFinding['evaluationDetail']

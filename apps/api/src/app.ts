@@ -10,6 +10,8 @@ import {
   CaseSearchService,
   CaseExportService,
   CaseKosAdminService,
+  CaseReportAssemblyService,
+  CaseReportService,
   EvidenceService,
   EvidenceJudgmentService,
   resolveEvidenceLibraryRoot,
@@ -57,6 +59,7 @@ import { registerReviewReportController } from './controllers/review-report.cont
 import { registerDemoReviewController } from './controllers/demo-review.controller.js';
 import { registerEvidenceController } from './controllers/evidence.controller.js';
 import { registerCaseAdminController } from './controllers/case-admin.controller.js';
+import { registerCaseReportController } from './controllers/case-report.controller.js';
 import { registerKosRoutes } from './kos/register-kos-routes.js';
 import { registerErrorHandler, registerTraceMiddleware } from './middleware/http.js';
 import { registerReviewBasicAuth } from './middleware/basic-auth.js';
@@ -274,6 +277,13 @@ export async function buildApp(config: ApiConfig) {
   const evidenceJudgmentService = new EvidenceJudgmentService({ evidenceStore });
   const evidenceService = new EvidenceService(evidenceStore, evidenceJudgmentService);
   await registerEvidenceController(app, { evidenceService });
+
+  const caseReportAssemblyService = new CaseReportAssemblyService({
+    caseStore,
+    evidenceService,
+  });
+  const caseReportService = new CaseReportService(caseReportAssemblyService);
+  await registerCaseReportController(app, { caseReportService });
 
   await registerCaseAdminController(app, {
     caseSearchService,
