@@ -38,6 +38,7 @@ export type ReviewReportResponseDto = {
       severity: string;
       decision: string;
       summary: string;
+      remediation_type?: string;
       evidence_spans?: Array<{
         field: string;
         start?: number;
@@ -97,6 +98,7 @@ export function toReviewReportResponseDto(result: ReviewReportResult): ReviewRep
         severity: finding.severity,
         decision: finding.decision,
         summary: finding.summary,
+        ...(finding.remediationType ? { remediation_type: finding.remediationType } : {}),
         ...(finding.evidenceSpans?.length
           ? {
               evidence_spans: finding.evidenceSpans.map((span) => ({

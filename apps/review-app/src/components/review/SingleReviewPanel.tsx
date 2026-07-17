@@ -8,6 +8,7 @@ import { submitReview, type DemoReviewResponse, type ReviewApiError } from '@/ap
 import { SharedReviewDimensions } from '@/components/review/SharedReviewDimensions';
 import { DecisionBanner } from '@/components/review/DecisionBanner';
 import { FindingsList } from '@/components/review/FindingsList';
+import { FindingEvidencePanel } from '@/components/review/FindingEvidencePanel';
 import { SourceMaterial } from '@/components/review/SourceMaterial';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -273,11 +274,19 @@ export function SingleReviewPanel({
 
             <section>
               <h2 className="mb-3 text-sm font-semibold text-ink">
-                审查发现 ({findingsCount})
+                第一步：审查发现 ({findingsCount})
                 <span className="ml-1.5 text-xs font-normal text-muted-foreground">Findings</span>
               </h2>
               <FindingsList findings={mergedFindings} />
             </section>
+
+            <FindingEvidencePanel
+              reviewId={result.review_id}
+              findings={result.summary.findings}
+              adText={text}
+              countryId={result.summary.advertisement.country_id}
+              categoryId={result.summary.advertisement.category_id}
+            />
 
             <SourceMaterial text={text} highlightSpans={highlightSpans} imagePreviews={imagePreviews} />
           </>

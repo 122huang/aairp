@@ -1,0 +1,328 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_id": "evidence-judgment-v1",
+  "description": "Phase 2 evidence AI judgment eval — structural prescreen + per-case LLM stubs",
+  "cases": [
+    {
+      "case_id": "CLM-012884-internal-capacity",
+      "source": "production",
+      "notes": "Internal test memo vs PC201/PC200 capacity claim — methodology complete",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "Cook for up to 8-10 people with PC201 multi-cooker.",
+        "claim_anchor_text": "Cook for up to 8-10 people",
+        "finding_summary": "Capacity claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "capacity-claim"
+      },
+      "evidence": {
+        "title": "CLM-012884 Internal capacity test memo",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201", "PC200"] },
+        "evidence_text": "Product PC201/PC200 total stew weight measured 1.96–2.45 kg under standard fill test. Per FDA reference single-serving weight 245g/person. Calculation: 2450g ÷ 245g = 10 servings (conservative lower bound 8 servings). Method: full pot load, drained yield weighed on calibrated scale."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "FDA 245g methodology applied to PC201 measured yield.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Conservative serving calculation documented.",
+        "extracted_key_facts": "1.96–2.45 kg total ÷ 245g = 8–10 servings."
+      }
+    },
+    {
+      "case_id": "SGS-40N1S-wrong-model",
+      "source": "production",
+      "notes": "SGS non-stick test for 40N1S — wrong SKU vs PC201 finding",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "Cook for up to 8-10 people with PC201.",
+        "claim_anchor_text": "Cook for up to 8-10 people",
+        "finding_summary": "Capacity claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "capacity-claim"
+      },
+      "evidence": {
+        "title": "SGS SHES240100023371 Non-stick performance test",
+        "evidence_source_type": "THIRD_PARTY_LAB",
+        "scope": { "skus": ["40N1S"] },
+        "evidence_text": "Report SHES240100023371: Rice cooker model 40N1S non-stick coating adhesion test."
+      },
+      "expect": { "relevance": "none", "sufficiency": "insufficient", "skip_llm": true }
+    },
+    {
+      "case_id": "sku-mismatch-no-overlap",
+      "context": {
+        "country_id": "MY",
+        "category_id": "sa.air_fryer",
+        "product_sku": "AF2024",
+        "ad_text": "AF2024 uses 50% less oil.",
+        "claim_anchor_text": "50% less oil",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim",
+        "finding_summary": "Quantitative claim needs data"
+      },
+      "evidence": {
+        "title": "Lab report for AF1000",
+        "evidence_source_type": "THIRD_PARTY_LAB",
+        "scope": { "skus": ["AF1000"] },
+        "evidence_text": "Oil consumption comparison test for model AF1000."
+      },
+      "expect": { "relevance": "none", "sufficiency": "insufficient", "skip_llm": true }
+    },
+    {
+      "case_id": "expired-evidence-date",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.vacuum_floor",
+        "product_sku": "V15",
+        "ad_text": "Strongest suction in its class — V15.",
+        "claim_anchor_text": "Strongest suction",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "health-superlative-claim",
+        "finding_summary": "Superlative needs proof"
+      },
+      "evidence": {
+        "title": "2020 suction benchmark",
+        "evidence_source_type": "THIRD_PARTY_LAB",
+        "valid_until": "2023-12-31",
+        "scope": { "skus": ["V15"] },
+        "evidence_text": "Suction test 180AW for V15 dated 2020-03-01."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "skip_llm": true, "expired": true }
+    },
+    {
+      "case_id": "internal-test-health-implication",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.air_fryer",
+        "product_sku": "AF300",
+        "ad_text": "Reduces oil intake for healthier meals.",
+        "claim_anchor_text": "healthier meals",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "health-implication",
+        "finding_summary": "Health implication claim"
+      },
+      "evidence": {
+        "title": "Internal kitchen test log",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["AF300"] },
+        "evidence_text": "Internal memo: air fryer uses less oil than deep fryer in our kitchen demo."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "source_rule_applied": true },
+      "llm_stub_response": {
+        "relevance": "partial",
+        "relevance_reasoning": "Internal memo references health outcome.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Would be sufficient if internal test were allowed.",
+        "extracted_key_facts": "Less oil than deep fryer in kitchen demo."
+      }
+    },
+    {
+      "case_id": "internal-test-performance-ok",
+      "context": {
+        "country_id": "TH",
+        "category_id": "sa.blender_processor",
+        "product_sku": "BL500",
+        "ad_text": "1200W peak motor power.",
+        "claim_anchor_text": "1200W peak motor power",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim",
+        "finding_summary": "Power spec needs data"
+      },
+      "evidence": {
+        "title": "Engineering bench test",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["BL500"] },
+        "evidence_text": "Test method IEC 60335-2-14 clause 11. Method: wattmeter on BL500 unit SN0042, 3 samples avg 1195W peak. Raw data table attached."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "IEC test on BL500 with raw wattmeter data.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Methodology and raw measurements present.",
+        "extracted_key_facts": "1195W peak avg of 3 samples per IEC 60335-2-14."
+      }
+    },
+    {
+      "case_id": "external-status-internal-rejected",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.vacuum_floor",
+        "product_sku": "V12",
+        "ad_text": "SAFETY Mark registered V12 vacuum.",
+        "claim_anchor_text": "SAFETY Mark registered",
+        "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+        "risk_type": "certification-evidence",
+        "finding_summary": "Verify CPSR registration"
+      },
+      "evidence": {
+        "title": "Internal compliance checklist",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["V12"], "countries": ["SG"] },
+        "evidence_text": "Internal team checked CPSR portal screenshot."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "skip_llm": false, "source_rule_applied": true }
+    },
+    {
+      "case_id": "official-cert-external-status",
+      "context": {
+        "country_id": "CN",
+        "category_id": "sa.vacuum_floor",
+        "product_sku": "XCQ001",
+        "ad_text": "已通过CCC强制认证",
+        "claim_anchor_text": "已通过CCC强制认证",
+        "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
+        "risk_type": "certification-evidence",
+        "finding_summary": "Verify CCC status"
+      },
+      "evidence": {
+        "title": "CCC certificate",
+        "evidence_source_type": "OFFICIAL_CERTIFICATION",
+        "scope": { "skus": ["XCQ001"], "countries": ["CN"] },
+        "evidence_text": "CCC certificate No. 202401070567890 for model XCQ001 vacuum cleaner, valid until 2029-01-01."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Certificate lists XCQ001 and active validity.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Official CCC certificate with registration number.",
+        "extracted_key_facts": "CCC No. 202401070567890 for XCQ001 valid until 2029-01-01."
+      }
+    },
+    {
+      "case_id": "ranking-internal-rejected",
+      "context": {
+        "country_id": "JP",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "RC100",
+        "ad_text": "No.1 rice cooker in Japan.",
+        "claim_anchor_text": "No.1 rice cooker in Japan",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "market-ranking-claim",
+        "finding_summary": "Ranking claim needs survey source"
+      },
+      "evidence": {
+        "title": "Sales dashboard export",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["RC100"], "countries": ["JP"] },
+        "evidence_text": "Internal sales report Q1: RC100 top SKU in our JP channel."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "source_rule_applied": true },
+      "llm_stub_response": {
+        "relevance": "partial",
+        "relevance_reasoning": "Internal sales data cited for ranking.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Would accept if internal allowed.",
+        "extracted_key_facts": "Top SKU in JP channel Q1."
+      }
+    },
+    {
+      "case_id": "comparative-third-party-survey",
+      "context": {
+        "country_id": "KR",
+        "category_id": "sa.vacuum_floor",
+        "product_sku": "VK900",
+        "ad_text": "More suction than Brand X under same test.",
+        "claim_anchor_text": "More suction than Brand X",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsupported-comparative-claim",
+        "finding_summary": "Comparative claim needs like-for-like data"
+      },
+      "evidence": {
+        "title": "KOTRA consumer survey",
+        "evidence_source_type": "THIRD_PARTY_SURVEY",
+        "scope": { "skus": ["VK900"], "countries": ["KR"] },
+        "evidence_text": "Survey n=1200 households on brand preference only — no suction measurement."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "partial",
+        "relevance_reasoning": "Survey measures preference not suction performance.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "No like-for-like suction measurement vs Brand X.",
+        "extracted_key_facts": "Brand preference survey n=1200 only."
+      }
+    },
+    {
+      "case_id": "country-scope-partial",
+      "context": {
+        "country_id": "AU",
+        "category_id": "sa.air_fryer",
+        "product_sku": "AF88",
+        "ad_text": "Uses 40% less energy.",
+        "claim_anchor_text": "40% less energy",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "environmental-claim",
+        "finding_summary": "Environmental quant claim"
+      },
+      "evidence": {
+        "title": "EU energy lab report",
+        "evidence_source_type": "THIRD_PARTY_LAB",
+        "scope": { "countries": ["DE"], "skus": ["AF88"] },
+        "evidence_text": "Energy test for AF88 under EU ERP protocol."
+      },
+      "expect": { "relevance": "none", "sufficiency": "insufficient", "skip_llm": true },
+      "llm_stub_response": {
+        "relevance": "partial",
+        "relevance_reasoning": "SKU matches but test jurisdiction is DE not AU market.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "EU ERP protocol may not map to AU claim without local test.",
+        "extracted_key_facts": "EU ERP energy test for AF88."
+      }
+    },
+    {
+      "case_id": "partial-sku-match-llm",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.steam_mop",
+        "product_sku": "SM700-Pro",
+        "ad_text": "SM700-Pro steams in 30 seconds.",
+        "claim_anchor_text": "steams in 30 seconds",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim",
+        "finding_summary": "Time claim needs test data"
+      },
+      "evidence": {
+        "title": "Heat-up test SM700",
+        "evidence_source_type": "THIRD_PARTY_LAB",
+        "scope": { "skus": ["SM700"] },
+        "evidence_text": "Steam ready time 28–32 seconds for model SM700 (base model, not Pro variant)."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "partial",
+        "relevance_reasoning": "Base model SM700 tested; Pro variant claim may differ.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "Evidence does not cover SM700-Pro variant explicitly.",
+        "extracted_key_facts": "SM700 heat-up 28–32s, not Pro."
+      }
+    },
+    {
+      "case_id": "unreadable-evidence-placeholder",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.other",
+        "product_sku": "GEN1",
+        "ad_text": "Best performance.",
+        "claim_anchor_text": "Best performance",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "health-superlative-claim",
+        "finding_summary": "Superlative claim"
+      },
+      "evidence": {
+        "title": "Scanned blurry image",
+        "evidence_source_type": "THIRD_PARTY_LAB",
+        "scope": { "skus": ["GEN1"] },
+        "evidence_text": ""
+      },
+      "expect": { "relevance": "none", "sufficiency": "insufficient", "skip_llm": true, "text_unreadable": true }
+    }
+  ]
+}

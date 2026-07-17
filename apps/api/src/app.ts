@@ -10,6 +10,9 @@ import {
   CaseSearchService,
   CaseExportService,
   CaseKosAdminService,
+  EvidenceService,
+  EvidenceJudgmentService,
+  resolveEvidenceLibraryRoot,
   KosSearchService,
   KosPublishService,
   RegulationAdminService,
@@ -27,6 +30,7 @@ import {
   HealthRepository,
   InMemoryAdvertisementRepository,
   JsonCaseStore,
+  JsonEvidenceStore,
   KosCaseStoreAdapter,
   DualWriteCaseStore,
   PgCaseKosRepository,
@@ -51,6 +55,7 @@ import { registerOpenRiskDiscoveryController } from './controllers/open-risk-dis
 import { registerDecisionController } from './controllers/decision.controller.js';
 import { registerReviewReportController } from './controllers/review-report.controller.js';
 import { registerDemoReviewController } from './controllers/demo-review.controller.js';
+import { registerEvidenceController } from './controllers/evidence.controller.js';
 import { registerCaseAdminController } from './controllers/case-admin.controller.js';
 import { registerKosRoutes } from './kos/register-kos-routes.js';
 import { registerErrorHandler, registerTraceMiddleware } from './middleware/http.js';
@@ -264,6 +269,11 @@ export async function buildApp(config: ApiConfig) {
     reviewHappyPathService,
     caseRecorderService,
   });
+
+  const evidenceStore = new JsonEvidenceStore({ rootPath: resolveEvidenceLibraryRoot() });
+  const evidenceJudgmentService = new EvidenceJudgmentService({ evidenceStore });
+  const evidenceService = new EvidenceService(evidenceStore, evidenceJudgmentService);
+  await registerEvidenceController(app, { evidenceService });
 
   await registerCaseAdminController(app, {
     caseSearchService,

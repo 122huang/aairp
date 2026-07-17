@@ -26,7 +26,8 @@
         "article": "Section 7 — Prohibited claims"
       },
       "summary_en": "Prohibited absolute health cure claims are not allowed",
-      "summary_zh": "禁止使用绝对化的\"治愈/根治\"类健康宣称"
+      "summary_zh": "禁止使用绝对化的\"治愈/根治\"类健康宣称",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-sg-health-superlative",
@@ -49,7 +50,8 @@
         ]
       },
       "summary_en": "Unsubstantiated superlative or efficacy claims require substantiation",
-      "summary_zh": "未经证实的最高级或功效类宣称，须有依据支撑"
+      "summary_zh": "未经证实的最高级或功效类宣称，须有依据支撑",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-sg-sponsored-disclosure",
@@ -295,7 +297,8 @@
         "article": "Prohibited health & medical claims — small appliances | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       },
       "summary_en": "Medical claim: disease, organ function, clinical metric, or medical endorsement — small appliances cannot make these claims; substantiation cannot cure overreach (REJECT)",
-      "summary_zh": "医疗宣称：涉及疾病、器官功能、临床指标或医疗背书——小家电不得作出此类宣称，补充证据无法弥补越权问题（REJECT）"
+      "summary_zh": "医疗宣称：涉及疾病、器官功能、临床指标或医疗背书——小家电不得作出此类宣称，补充证据无法弥补越权问题（REJECT）",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-absolute-claim",
@@ -370,7 +373,8 @@
         "article": "Substantiation — absolute claims | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       },
       "summary_en": "Absolute claim: unconditional guarantees (best, first, never, zero-fault) without verifiable basis — may pass with audited substantiation (WARN/BLOCKER by term)",
-      "summary_zh": "绝对化宣称：无条件保证类用语（最佳、第一、绝不、零失误）且无可验证依据——视具体用词，经审计证据支持后可能通过（WARN/BLOCKER）"
+      "summary_zh": "绝对化宣称：无条件保证类用语（最佳、第一、绝不、零失误）且无可验证依据——视具体用词，经审计证据支持后可能通过（WARN/BLOCKER）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-performance-claim",
@@ -447,7 +451,8 @@
         "article": "Performance claims — substantiation required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       },
       "summary_en": "Unsubstantiated quantitative claim: numbers or percentages without comparison baseline, reference product, test standard, or data source (WARN)",
-      "summary_zh": "未经证实的量化宣称：给出数字或百分比但缺少对比基准、参照产品、测试标准或数据来源（WARN）"
+      "summary_zh": "未经证实的量化宣称：给出数字或百分比但缺少对比基准、参照产品、测试标准或数据来源（WARN）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-certification-evidence",
@@ -514,7 +519,8 @@
         "article": "Evidence & certification — verification required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       },
       "summary_en": "HEPA-class filtration / lab / certification evidence referenced — document authenticity and scope cannot be verified by the engine; escalate for product-compliance confirmation (REVIEW)",
-      "summary_zh": "引用HEPA级过滤/实验室/认证类证据——引擎无法核实文件真实性与适用范围；需升级至产品合规团队确认（REVIEW）"
+      "summary_zh": "引用HEPA级过滤/实验室/认证类证据——引擎无法核实文件真实性与适用范围；需升级至产品合规团队确认（REVIEW）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-content-consistency-blocker",
@@ -549,7 +555,8 @@
         "article": "Content consistency — conflicting claims"
       },
       "summary_en": "Material or product description inconsistency across ad assets must be resolved before publishing",
-      "summary_zh": "广告素材之间的产品描述或物料信息不一致，须在发布前解决"
+      "summary_zh": "广告素材之间的产品描述或物料信息不一致，须在发布前解决",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-health-implication",
@@ -657,7 +664,8 @@
         "article": "Health & nutrition implications | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       },
       "summary_en": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — require human check that context/data are on file (REVIEW)",
-      "summary_zh": "健康暗示：感受/体验类描述（更轻盈、更清新、营养保留）但未涉及疾病/器官宣称——需人工核实是否已有对应语境/数据支撑（REVIEW）"
+      "summary_zh": "健康暗示：感受/体验类描述（更轻盈、更清新、营养保留）但未涉及疾病/器官宣称——需人工核实是否已有对应语境/数据支撑（REVIEW）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-comparative-claim",
@@ -750,7 +758,8 @@
         "article": "Comparative advertising — baseline required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
       },
       "summary_en": "Unsupported comparative claim: stronger/faster/quieter without identifiable, verifiable baseline (WARN)",
-      "summary_zh": "未经支撑的比较宣称：更强/更快/更安静，但缺乏可识别、可验证的对比基准（WARN）"
+      "summary_zh": "未经支撑的比较宣称：更强/更快/更安静，但缺乏可识别、可验证的对比基准（WARN）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-capacity-claim",
@@ -840,7 +849,8 @@
         "article": "Substantiation — absolute claims"
       },
       "summary_en": "Absolute or omnibus claims (e.g. zero waste, zero-fault, never look back, every serving, 每一次) require qualification and substantiation",
-      "summary_zh": "绝对化或全称类宣称（如零浪费、零失误、每一次都、每一次）须加以限定并提供依据支撑"
+      "summary_zh": "绝对化或全称类宣称（如零浪费、零失误、每一次都、每一次）须加以限定并提供依据支撑",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-social-proof-claim",
@@ -881,7 +891,8 @@
         "article": "Substantiation — social proof claims"
       },
       "summary_en": "Unsupported quantified or nationwide social-proof claims (household/user counts, loved-by-millions wording) require substantiation or non-quantified rephrase",
-      "summary_zh": "未经支撑的量化或全国性从众宣称（家庭数量/用户总数、\"深受数百万人喜爱\"类用语）须提供依据支撑，或改写为非量化表述"
+      "summary_zh": "未经支撑的量化或全国性从众宣称（家庭数量/用户总数、\"深受数百万人喜爱\"类用语）须提供依据支撑，或改写为非量化表述",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-patent-claim",
@@ -916,7 +927,8 @@
         "article": "Patent claims — verification required"
       },
       "summary_en": "Patent claims require verification of jurisdiction, patent number, and ownership",
-      "summary_zh": "专利类宣称须核实管辖地、专利号及权属归属"
+      "summary_zh": "专利类宣称须核实管辖地、专利号及权属归属",
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION"
     },
     {
       "rule_id": "demo-apac-sa-wrong-sku",
@@ -952,7 +964,8 @@
         "article": "Content consistency — SKU alignment"
       },
       "summary_en": "Ad content appears to reference the wrong SKU or product model; verify asset-to-SKU alignment",
-      "summary_zh": "广告内容疑似引用了错误的SKU或产品型号；请核实素材与SKU是否一致"
+      "summary_zh": "广告内容疑似引用了错误的SKU或产品型号；请核实素材与SKU是否一致",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-localization",
@@ -999,7 +1012,8 @@
         "article": "Localization — market-appropriate assets"
       },
       "summary_en": "Localisation error: wrong-language panel, model suffix, invalid certification for market, internal placeholders, voltage mismatch — fix before publish; invalid cert citation may upgrade to REJECT (WARN)",
-      "summary_zh": "本地化错误：面板语言错误、型号后缀错误、认证不适用于该市场、内部占位符残留、电压不匹配——发布前须修正；认证引用无效的情况可能升级为REJECT（WARN）"
+      "summary_zh": "本地化错误：面板语言错误、型号后缀错误、认证不适用于该市场、内部占位符残留、电压不匹配——发布前须修正；认证引用无效的情况可能升级为REJECT（WARN）",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-ai-image-disclaimer",
@@ -1051,7 +1065,8 @@
         "article": "AI / illustration disclaimer"
       },
       "summary_en": "AI-generated or rendered product imagery requires an illustration disclaimer visible in ad copy, OCR text, or image",
-      "summary_zh": "AI生成或渲染的产品图片，须在文案、图片OCR文字或图片本身中包含可见的示意图免责声明"
+      "summary_zh": "AI生成或渲染的产品图片，须在文案、图片OCR文字或图片本身中包含可见的示意图免责声明",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-grammar-quality",
@@ -1088,7 +1103,8 @@
         "article": "Content quality — language accuracy"
       },
       "summary_en": "Grammar, spelling, or formatting errors detected; revise before publishing",
-      "summary_zh": "检测到语法、拼写或排版错误；发布前须修改"
+      "summary_zh": "检测到语法、拼写或排版错误；发布前须修改",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-food-safety-blocker",
@@ -1143,7 +1159,8 @@
         "article": "Food safety — overnight raw-meat depiction"
       },
       "summary_en": "Food safety hazard: depicting raw meat/seafood/eggs left unrefrigerated for extended periods before cooking — real bacterial risk in APAC ambient conditions; rewrite cannot eliminate liability (REJECT)",
-      "summary_zh": "食品安全隐患：画面展示生肉/海鲜/蛋类在烹饪前长时间未冷藏放置——在东南亚常温环境下存在真实的细菌滋生风险；改写无法消除该责任风险（REJECT）"
+      "summary_zh": "食品安全隐患：画面展示生肉/海鲜/蛋类在烹饪前长时间未冷藏放置——在东南亚常温环境下存在真实的细菌滋生风险；改写无法消除该责任风险（REJECT）",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-material-safety-claim",
@@ -1189,7 +1206,8 @@
         "article": "Material safety — third-party substantiation required"
       },
       "summary_en": "Material claim: BPA-free, food-grade, non-toxic coating, stainless steel, etc. — third-party test report required per material standard (WARN)",
-      "summary_zh": "材质类宣称：不含双酚A（BPA-free）、食品级、无毒涂层、不锈钢等——须按材质标准提供第三方检测报告（WARN）"
+      "summary_zh": "材质类宣称：不含双酚A（BPA-free）、食品级、无毒涂层、不锈钢等——须按材质标准提供第三方检测报告（WARN）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-sg-sa-market-claim",
@@ -1227,7 +1245,8 @@
         "article": "Local ranking and endorsement claims"
       },
       "summary_en": "Singapore-local ranking or professional-endorsement claims require substantiation and must not imply official medical endorsement",
-      "summary_zh": "新加坡本地排名或专业背书类宣称须有依据支撑，且不得暗示获得官方医疗背书"
+      "summary_zh": "新加坡本地排名或专业背书类宣称须有依据支撑，且不得暗示获得官方医疗背书",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-my-sa-market-claim",
@@ -1266,7 +1285,8 @@
         "article": "Local ranking and authority endorsement claims"
       },
       "summary_en": "Malaysia-local ranking or authority-endorsement claims require substantiation and must not imply official medical or government endorsement",
-      "summary_zh": "马来西亚本地排名或权威背书类宣称须有依据支撑，且不得暗示获得官方医疗或政府背书"
+      "summary_zh": "马来西亚本地排名或权威背书类宣称须有依据支撑，且不得暗示获得官方医疗或政府背书",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-th-sa-market-claim",
@@ -1303,7 +1323,8 @@
         "article": "Local ranking and authority endorsement claims"
       },
       "summary_en": "Thailand-local ranking or government-health-authority endorsement claims require substantiation and must not imply official medical endorsement",
-      "summary_zh": "泰国本地排名或政府卫生机构背书类宣称须有依据支撑，且不得暗示获得官方医疗背书"
+      "summary_zh": "泰国本地排名或政府卫生机构背书类宣称须有依据支撑，且不得暗示获得官方医疗背书",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-false-authority-endorsement",
@@ -1351,7 +1372,8 @@
         "article": "False government or authority endorsement"
       },
       "summary_en": "False certification or government endorsement: unverified official certification, ministry recommendation, or implied state approval (REJECT)",
-      "summary_zh": "虚假认证或政府背书：未经核实的官方认证、部委推荐或暗示获得国家批准（REJECT）"
+      "summary_zh": "虚假认证或政府背书：未经核实的官方认证、部委推荐或暗示获得国家批准（REJECT）",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-competitor-trademark",
@@ -1399,7 +1421,8 @@
         "article": "Comparative advertising — competitor IP"
       },
       "summary_en": "Unauthorised third-party trademark: identifiable competitor brand, logo, product appearance, or registered mark without rights-holder consent (REJECT)",
-      "summary_zh": "未经授权使用第三方商标：可识别的竞品品牌、logo、产品外观或注册商标，且未取得权利人同意（REJECT）"
+      "summary_zh": "未经授权使用第三方商标：可识别的竞品品牌、logo、产品外观或注册商标，且未取得权利人同意（REJECT）",
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION"
     },
     {
       "rule_id": "demo-apac-sa-urgency-scarcity-claim",
@@ -1456,7 +1479,8 @@
         "article": "Pressure / FOMO claims require verifiable time or quantity limits"
       },
       "summary_en": "Urgency or scarcity pressure without a verifiable offer end date, remaining stock quantity, or production-end fact — soft FOMO framing (WARN; qualify or remove)",
-      "summary_zh": "紧迫感/稀缺性施压话术，但缺乏可验证的优惠截止日期、剩余库存数量或停产事实——软性FOMO话术（WARN；须限定或删除）"
+      "summary_zh": "紧迫感/稀缺性施压话术，但缺乏可验证的优惠截止日期、剩余库存数量或停产事实——软性FOMO话术（WARN；须限定或删除）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-pricing-misrepresentation",
@@ -1506,7 +1530,8 @@
         "article": "Pricing transparency — misleading promotions"
       },
       "summary_en": "Misleading pricing: false reference price, perpetual flash sale, checkout above headline price, sham closing-down sale — factual falsity, not wording (REJECT)",
-      "summary_zh": "误导性定价：虚假参考价、常态化限时促销、结算价高于宣传价、虚假的\"即将下架\"促销——属事实性虚假，非措辞问题（REJECT）"
+      "summary_zh": "误导性定价：虚假参考价、常态化限时促销、结算价高于宣传价、虚假的\"即将下架\"促销——属事实性虚假，非措辞问题（REJECT）",
+      "remediation_type": "OUT_OF_SCOPE_INTERNAL_DATA"
     },
     {
       "rule_id": "demo-apac-sa-analogy-claim",
@@ -1552,7 +1577,8 @@
         "article": "Analogy claims — substantiation required"
       },
       "summary_en": "Analogical claim: 媲美/如同/宛如-style subjective comparison to reference standard (clay-pot, restaurant, cold-pressed) — sensory test data if reference is quantifiable (WARN)",
-      "summary_zh": "类比宣称：媲美/如同/宛如式的主观类比参照标准（砂锅、餐厅、冷萃）——若参照标准可量化，须有感官测试数据支撑（WARN）"
+      "summary_zh": "类比宣称：媲美/如同/宛如式的主观类比参照标准（砂锅、餐厅、冷萃）——若参照标准可量化，须有感官测试数据支撑（WARN）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-sustainability-claim",
@@ -1600,7 +1626,8 @@
         "article": "Environmental claims — substantiation required"
       },
       "summary_en": "Environmental claim: eco/sustainable/low-carbon/zero-pollution — specific, verifiable basis required; generic green labels insufficient (WARN)",
-      "summary_zh": "环保类宣称：环保/可持续/低碳/零污染——须有具体、可验证的依据支撑；笼统的绿色标签不足以支撑（WARN）"
+      "summary_zh": "环保类宣称：环保/可持续/低碳/零污染——须有具体、可验证的依据支撑；笼统的绿色标签不足以支撑（WARN）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-localization-cjk",
@@ -1636,7 +1663,8 @@
         "article": "Localization — CJK in image OCR"
       },
       "summary_en": "Image OCR contains Chinese/CJK text — verify market-appropriate localized assets for SG/MY/TH listings",
-      "summary_zh": "图片OCR识别出中文/CJK文字——请核实SG/MY/TH市场listing使用的是否为适配当地市场的本地化素材"
+      "summary_zh": "图片OCR识别出中文/CJK文字——请核实SG/MY/TH市场listing使用的是否为适配当地市场的本地化素材",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-internal-note-visible",
@@ -1683,7 +1711,8 @@
         "article": "Internal annotations — must not appear in consumer-facing assets"
       },
       "summary_en": "Internal design note, draft watermark, or non-public annotation visible in ad asset — remove before publishing",
-      "summary_zh": "广告素材中出现内部设计批注、草稿水印或非公开注释——发布前须删除"
+      "summary_zh": "广告素材中出现内部设计批注、草稿水印或非公开注释——发布前须删除",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-apac-sa-evidence-unreadable",
@@ -1719,7 +1748,8 @@
         "article": "Evidence quality — certification legibility"
       },
       "summary_en": "Certification or test-report image is unreadable or illegible — obtain clear evidence before publishing claims",
-      "summary_zh": "认证或检测报告图片无法辨认或不清晰——发布宣称前须取得清晰可辨的证据材料"
+      "summary_zh": "认证或检测报告图片无法辨认或不清晰——发布宣称前须取得清晰可辨的证据材料",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-apac-sa-ai-image-quality",
@@ -1755,7 +1785,8 @@
         "article": "AI image quality — consumer-facing assets"
       },
       "summary_en": "AI-generated or rendered image shows visible distortion, abnormal proportions, or quality defects — revise or disclose",
-      "summary_zh": "AI生成或渲染的图片存在明显失真、比例异常或质量缺陷——须修改或加以说明"
+      "summary_zh": "AI生成或渲染的图片存在明显失真、比例异常或质量缺陷——须修改或加以说明",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-id-sponsored-disclosure",
@@ -1844,7 +1875,8 @@
         "article": "sa.* appliances must not use supplement/efficacy vocabulary without category re-annotation"
       },
       "summary_en": "Small-appliance copy touching supplement or health vocabulary — confirm product category annotation before publish",
-      "summary_zh": "小家电文案中出现涉及保健品/健康类词汇——发布前须确认产品品类标注"
+      "summary_zh": "小家电文案中出现涉及保健品/健康类词汇——发布前须确认产品品类标注",
+      "remediation_type": "MANUAL_CONTEXT_JUDGMENT"
     },
     {
       "rule_id": "demo-id-sa-market-claim",
@@ -1884,7 +1916,8 @@
         "article": "1.18 comparative advertising — methodology/source/period required for ranking claims"
       },
       "summary_en": "Indonesia-local ranking or superiority claims require substantiation",
-      "summary_zh": "印尼本地排名或优越性宣称须有依据支撑"
+      "summary_zh": "印尼本地排名或优越性宣称须有依据支撑",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-vn-sa-market-claim",
@@ -1924,7 +1957,8 @@
         "article": "Article 9 — Ranking / superiority claims require substantiation"
       },
       "summary_en": "Vietnam-local ranking or market-leader claims require substantiation (warn-tier enforcement)",
-      "summary_zh": "越南本地排名或市场领先类宣称须有依据支撑（按WARN级别执行）"
+      "summary_zh": "越南本地排名或市场领先类宣称须有依据支撑（按WARN级别执行）",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-vn-foreign-brand-ad-approval",
@@ -1963,7 +1997,8 @@
         "article": "Article 33 — Foreign / cross-border advertising approval"
       },
       "summary_en": "Cross-border or foreign-origin brand advertising targeting Vietnam may require approval — legal confirmation required",
-      "summary_zh": "面向越南市场的跨境或外国品牌广告可能需要事先审批——需法务确认"
+      "summary_zh": "面向越南市场的跨境或外国品牌广告可能需要事先审批——需法务确认",
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION"
     },
     {
       "rule_id": "demo-ph-sponsored-disclosure",
@@ -2051,7 +2086,8 @@
         "article": "Article 50 — Misleading representations / superiority claims"
       },
       "summary_en": "Philippines-local ranking or superiority claims require substantiation",
-      "summary_zh": "菲律宾本地排名或优越性宣称须有依据支撑"
+      "summary_zh": "菲律宾本地排名或优越性宣称须有依据支撑",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-jp-ranking-unsubstantiated",
@@ -2098,7 +2134,8 @@
         "article": "消費者庁《No.1表示に関する実態調査報告書》2024-09-26"
       },
       "summary_en": "No.1/ranking-type claims lacking third-party survey basis — must state the surveying organization, survey period, sample size, and methodology",
-      "summary_zh": "No.1/排名类宣称缺乏第三方调查依据——需注明调查机构、调查时间、样本量及方法"
+      "summary_zh": "No.1/排名类宣称缺乏第三方调查依据——需注明调查机构、调查时间、样本量及方法",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-jp-yakukiho-efficacy-overclaim",
@@ -2146,23 +2183,38 @@
         "article": "現行版本 2024-04-01施行"
       },
       "summary_en": "Efficacy claims for cosmetics/quasi-drugs/general consumer products exceeding the scope permitted under the Pharmaceutical and Medical Device Act — non-pharmaceutical products may not use medical/therapeutic effect wording",
-      "summary_zh": "化妆品/医药部外品/一般消费品功效宣称超出药机法法定范围——非医药品不得使用医疗/治疗效果表述"
+      "summary_zh": "化妆品/医药部外品/一般消费品功效宣称超出药机法法定范围——非医药品不得使用医疗/治疗效果表述",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-jp-stealth-marketing-disclosure",
-      "rule_version_id": "demo-jp-stealth-marketing-disclosure-v1",
+      "rule_version_id": "demo-jp-stealth-marketing-disclosure-v2",
       "severity": "LOW",
-      "decision": "WARN",
-      "summary": "Influencer/KOL promotional content without a clear advertising disclosure may be deemed stealth marketing (ステマ)",
-      "required_any_terms": [
-        "PR",
-        "広告",
-        "宣伝",
+      "decision": "INFO",
+      "summary": "Japan Consumer Affairs Agency actively enforces stealth marketing (ステマ) rules. This content is marked as influencer/partnership — before publish, add a clear local disclosure (#PR / 提供 / 広告 etc.). Non-blocking reminder (copy review does not verify tags); enforcement risk is higher than in other markets.",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
         "提供",
-        "#PR",
-        "#広告",
-        "スポンサー"
+        "ご提供",
+        "タイアップ",
+        "コラボ",
+        "案件",
+        "モニター",
+        "プレゼント企画",
+        "ブランド様より",
+        "#gifted",
+        "gifted by",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "PR案件"
       ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
       "scopes": {
         "countries": [
           "JP"
@@ -2187,8 +2239,8 @@
         "law_name": "景品表示法",
         "article": "ステルスマーケティングに関する運用基準（2023年10月施行）"
       },
-      "summary_en": "Influencer/KOL promotional content without a clear advertising disclosure may be deemed stealth marketing (ステマ)",
-      "summary_zh": "网红/KOL推广内容未明确标注广告关系，可能被认定为隐性营销（ステマ）"
+      "summary_en": "Japan Consumer Affairs Agency actively enforces stealth marketing (ステマ) rules. This content is marked as influencer/partnership — before publish, add a clear local disclosure (#PR / 提供 / 広告 etc.). Non-blocking reminder (copy review does not verify tags); enforcement risk is higher than in other markets.",
+      "summary_zh": "日本消费者厅对ステルスマーケティング（ステマ）有实际执法记录。该内容标注为网红/合作——发布前需按当地要求添加#PR/提供/広告等披露标识。非阻塞提醒（文案审核不核验标识是否已贴）；本市场执法风险高于其他市场。"
     },
     {
       "rule_id": "demo-jp-unfair-competition-misrepresentation",
@@ -2229,7 +2281,8 @@
         "article": "第2条第1項第20号（誤認惹起行為）、第21条第2項第1号（罰則：5年以下懲役又は500万円以下罰金）"
       },
       "summary_en": "Misleading representation: statements about origin, quality, content, manufacturing method, use, or quantity likely to cause misapprehension, concurrently regulated under the Premiums and Representations Act",
-      "summary_zh": "誤認惹起行為——就原产地、品质、内容、制造方法、用途或数量作出引人误认的表示，与景品表示法竞合规制"
+      "summary_zh": "誤認惹起行為——就原产地、品质、内容、制造方法、用途或数量作出引人误认的表示，与景品表示法竞合规制",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-jp-household-label-consistency",
@@ -2293,7 +2346,8 @@
         "article": "任意規格（JISC官网已核实自愿性质）"
       },
       "summary_en": "JIS is a voluntary standard, not mandatory — do not claim 'legally required to meet JIS standard' or imply mandatory national certification",
-      "summary_zh": "JIS为自愿性标准，非强制——不得宣称'依法必须符合JIS标准'或暗示国家强制认证"
+      "summary_zh": "JIS为自愿性标准，非强制——不得宣称'依法必须符合JIS标准'或暗示国家强制认证",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-kr-comparative-denigration",
@@ -2336,7 +2390,8 @@
         "article": "2025-01-21最新修正，比较广告条款"
       },
       "summary_en": "Comparative advertising that denigrates competitors — must be based on comparable conditions of the same category and cite the source",
-      "summary_zh": "比较广告贬损竞品——须基于同类可比条件并注明来源"
+      "summary_zh": "比较广告贬损竞品——须基于同类可比条件并注明来源",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-kr-fake-discount-pricing",
@@ -2378,7 +2433,8 @@
         "article": "허위・과장 광고 조항"
       },
       "summary_en": "Fake discount: inflating the original price before claiming a large discount — a factual falsity, not a wording issue",
-      "summary_zh": "虚假折扣——虚高原价后声称大幅折扣，事实性虚假而非措辞问题"
+      "summary_zh": "虚假折扣——虚高原价后声称大幅折扣，事实性虚假而非措辞问题",
+      "remediation_type": "OUT_OF_SCOPE_INTERNAL_DATA"
     },
     {
       "rule_id": "demo-kr-kol-disclosure-format",
@@ -2449,7 +2505,8 @@
         "article": "절대적 표현 — 미검증 성능 주장"
       },
       "summary_en": "Unsubstantiated absolute claims of 'strongest suction' type — may be treated as deceptive labelling/advertising",
-      "summary_zh": "无实测依据的'吸力最强'类绝对化宣称——可按欺瞒性标示广告处理"
+      "summary_zh": "无实测依据的'吸力最强'类绝对化宣称——可按欺瞒性标示广告处理",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-kr-kc-certification-labeling",
@@ -2563,7 +2620,8 @@
         "article": "Section 18 / 29 — Misleading or deceptive conduct"
       },
       "summary_en": "Inflated reference-price discount — a factual pricing falsity, not a wording issue",
-      "summary_zh": "虚高原价折扣——事实性虚假定价，非措辞问题"
+      "summary_zh": "虚高原价折扣——事实性虚假定价，非措辞问题",
+      "remediation_type": "OUT_OF_SCOPE_INTERNAL_DATA"
     },
     {
       "rule_id": "demo-au-subscription-disclosure",
@@ -2595,7 +2653,8 @@
         "article": "ACCC subscription traps guidance"
       },
       "summary_en": "Subscription/auto-renewal — billing cycle, amount, and cancellation path must be clearly disclosed before payment",
-      "summary_zh": "订阅/自动续费——须在付费前清晰披露收费周期、金额及取消路径"
+      "summary_zh": "订阅/自动续费——须在付费前清晰披露收费周期、金额及取消路径",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-au-fake-consumer-reviews",
@@ -2635,7 +2694,8 @@
         "article": "Section 18 — Misleading conduct (fake reviews)"
       },
       "summary_en": "Fake or purchased consumer reviews — must be genuine and from a verifiable source",
-      "summary_zh": "虚假或购买的消费者评价——须真实且可核验来源"
+      "summary_zh": "虚假或购买的消费者评价——须真实且可核验来源",
+      "remediation_type": "OUT_OF_SCOPE_INTERNAL_DATA"
     },
     {
       "rule_id": "demo-au-greenwashing-claim",
@@ -2675,7 +2735,8 @@
         "article": "ACCC v Clorox (2024) — greenwashing precedent"
       },
       "summary_en": "Environmental/sustainability/carbon-neutral claims lacking specific, quantified basis — the 2024 ACCC v Clorox greenwashing case established that colour scheme/imagery implications can also constitute misleading conduct",
-      "summary_zh": "环保/可持续/碳中和宣称缺乏具体量化依据——2024年ACCC诉Clorox漂绿案确立'配色/意象暗示也构成误导'先例"
+      "summary_zh": "环保/可持续/碳中和宣称缺乏具体量化依据——2024年ACCC诉Clorox漂绿案确立'配色/意象暗示也构成误导'先例",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-au-warranty-consumer-guarantee-disclosure",
@@ -2711,7 +2772,8 @@
         "article": "Consumer Guarantees — mandatory disclosure"
       },
       "summary_en": "Ad/warranty document uses 'warranty' wording — must also state that this does not affect the consumer's other rights under the ACL, otherwise may be misleading (the engine only triggers when 'warranty'/保修 wording appears; whether ACL disclosure is complete requires manual review)",
-      "summary_zh": "广告/保修文件使用'warranty'措辞——须同时声明不影响消费者在ACL下的其他权利，否则构成误导（引擎仅在出现 warranty/保修词时命中；ACL 披露齐全与否需人工核对）"
+      "summary_zh": "广告/保修文件使用'warranty'措辞——须同时声明不影响消费者在ACL下的其他权利，否则构成误导（引擎仅在出现 warranty/保修词时命中；ACL 披露齐全与否需人工核对）",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-au-rcm-gems-certification-claim",
@@ -2788,7 +2850,8 @@
         "article": "2023-12版，儿童定义15岁以下"
       },
       "summary_en": "Ad contains elements targeting a child audience — the 7 substantive provisions of the AANA Children's Advertising Code (under 15) require line-by-line manual comparison; not a keyword-determinable matter",
-      "summary_zh": "广告出现儿童受众元素——AANA儿童广告准则（15岁以下）7条正文需人工逐条比对，非关键词可判定事项"
+      "summary_zh": "广告出现儿童受众元素——AANA儿童广告准则（15岁以下）7条正文需人工逐条比对，非关键词可判定事项",
+      "remediation_type": "MANUAL_CONTEXT_JUDGMENT"
     },
     {
       "rule_id": "demo-cn-absolute-terms-blocker",
@@ -2836,7 +2899,8 @@
         "article": "第九条 — 绝对化用语禁止性规定"
       },
       "summary_en": "Article 9 of the Advertising Law expressly prohibits absolute terms such as \"national-grade/top-grade/best\" in advertising for general goods — this is not a matter that can be cured by providing supporting evidence",
-      "summary_zh": "广告法第九条明文禁止使用'国家级''最高级''最佳'等绝对化用语于一般商品广告，不是需要补证据就能过关的事项"
+      "summary_zh": "广告法第九条明文禁止使用'国家级''最高级''最佳'等绝对化用语于一般商品广告，不是需要补证据就能过关的事项",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-cn-data-citation-unsourced",
@@ -2880,7 +2944,8 @@
         "article": "引证内容须注明出处、适用范围、有效期"
       },
       "summary_en": "Ads citing lab conclusions, test data, or rankings must state the source, scope of application, and validity period, otherwise subject to enforcement under Articles 34/60 of the Advertising Law",
-      "summary_zh": "广告引用实验结论、检验检测数据、排名/榜单须注明出处、适用范围和有效期，否则依广告法第三十四条/第六十条查处"
+      "summary_zh": "广告引用实验结论、检验检测数据、排名/榜单须注明出处、适用范围和有效期，否则依广告法第三十四条/第六十条查处",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-cn-internet-ad-identifiable-tag",
@@ -2918,7 +2983,8 @@
         "article": "互联网广告可识别性要求"
       },
       "summary_en": "Internet advertising must be prominently labelled as \"advertisement\"; livestream/short-video ads must comply with presenter qualification and product-information disclosure requirements",
-      "summary_zh": "互联网广告须显著标明'广告'字样，直播/短视频广告需符合主播资质及商品信息披露要求"
+      "summary_zh": "互联网广告须显著标明'广告'字样，直播/短视频广告需符合主播资质及商品信息披露要求",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-cn-performance-data-mismatch-risk",
@@ -2956,7 +3022,8 @@
         "article": "第三十四条/第六十条 — 引证内容与实际不符的处罚"
       },
       "summary_en": "Quantified performance claims (oil consumption, power consumption, capacity, etc.) must match actual test data — there is a public enforcement precedent of a kitchen appliance company being fined RMB 200,000 for such claims not matching actual test results",
-      "summary_zh": "耗油量/耗电量/容量等量化性能宣称需与实测数据一致——已有厨房小家电企业因此类宣称与实测不符被处20万元罚款的公开案例"
+      "summary_zh": "耗油量/耗电量/容量等量化性能宣称需与实测数据一致——已有厨房小家电企业因此类宣称与实测不符被处20万元罚款的公开案例",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-cn-false-official-endorsement",
@@ -2996,7 +3063,8 @@
         "article": "虚假宣传及冒用官方关系条款"
       },
       "summary_en": "Unsubstantiated claims of government/official endorsement — a high-risk absolute/false claim",
-      "summary_zh": "无依据的政府/官方关系背书宣称，属高风险绝对化/虚假宣称"
+      "summary_zh": "无依据的政府/官方关系背书宣称，属高风险绝对化/虚假宣称",
+      "remediation_type": "REWRITE_ONLY"
     },
     {
       "rule_id": "demo-cn-ccc-energy-label-review",
@@ -3169,7 +3237,8 @@
         "article": "非成文法条款，属人工审慎判断范畴"
       },
       "summary_en": "Marketing material touching on political history, ethnicity, religion, national symbols such as the national flag/emblem, or public events such as epidemics/disasters — not a keyword-determinable matter, requires line-by-line manual review",
-      "summary_zh": "涉及政治历史、民族、宗教、国旗国徽等国家象征、疫情/灾害等公共事件的营销素材——非关键词可判定事项，需人工逐条把关"
+      "summary_zh": "涉及政治历史、民族、宗教、国旗国徽等国家象征、疫情/灾害等公共事件的营销素材——非关键词可判定事项，需人工逐条把关",
+      "remediation_type": "MANUAL_CONTEXT_JUDGMENT"
     },
     {
       "rule_id": "demo-th-tisi-mandatory-voluntary-check",
@@ -3242,7 +3311,8 @@
         "article": "BPJPH认证要求 — 未经核实的清真/Halal宣称须核实认证状态"
       },
       "summary_en": "Ad claims Halal/BPJPH certification but certification status cannot be confirmed by tooling — requires human verification of valid BPJPH certificate before publication. Not curable by copy rewrite.",
-      "summary_zh": "广告使用清真/Halal/BPJPH宣称，工具无法核实认证状态，需人工核实BPJPH证书有效性后再发布。非文案改写可解决事项。"
+      "summary_zh": "广告使用清真/Halal/BPJPH宣称，工具无法核实认证状态，需人工核实BPJPH证书有效性后再发布。非文案改写可解决事项。",
+      "remediation_type": "EXTERNAL_STATUS_VERIFICATION"
     },
     {
       "rule_id": "demo-in-efficacy-return-absolute-claim-blocker",
@@ -3287,7 +3357,8 @@
         "article": "第21条 — 误导性广告处罚机制；指引第4条 — 有效且不误导广告判断标准"
       },
       "summary_en": "Absolute efficacy or return-guarantee claims (e.g. '100% guaranteed', 'guaranteed cure', 'risk-free returns') are prohibited under CCPA 2022 Guidelines on Prevention of Misleading Advertisements — not curable by adding disclaimers or evidence.",
-      "summary_zh": "绝对化疗效或收益保证宣称（如「100%有效」「保证治愈」「无风险收益」）属CCPA 2022年指引明确规制的高风险宣称，无法通过补充声明或证据通过。"
+      "summary_zh": "绝对化疗效或收益保证宣称（如「100%有效」「保证治愈」「无风险收益」）属CCPA 2022年指引明确规制的高风险宣称，无法通过补充声明或证据通过。",
+      "remediation_type": "REWRITE_ONLY"
     }
   ]
 }

@@ -45,6 +45,7 @@ export type ReviewFindingDto = {
   severity: string;
   decision: string;
   summary: string;
+  remediation_type?: string;
   evidence_spans?: EvidenceSpanDto[];
   rewrite_suggestions?: RewriteSuggestionDto[];
 };

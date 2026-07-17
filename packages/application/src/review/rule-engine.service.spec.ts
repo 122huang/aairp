@@ -138,6 +138,27 @@ describe('RuleEngineService', () => {
     expect(finding?.decision).toBe('INFO');
   });
 
+  it('fires JP stealth-marketing INFO reminder with CAA enforcement copy for INFLUENCER_UGC', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'JP',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'ブランド様よりいただいたエアフライヤーで毎日おいしく調理。',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-jp-stealth-marketing-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+    expect(finding?.summary).toMatch(/Consumer Affairs Agency|ステマ|执法/);
+  });
+
   it('still fires sponsored INFO reminder when #ad is already present', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({

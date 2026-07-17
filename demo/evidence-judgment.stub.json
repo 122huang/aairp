@@ -1,0 +1,8 @@
+{
+  "prompt_pack_version": "evidence-judgment-v1",
+  "relevance": "strong",
+  "relevance_reasoning": "Evidence documents measured total food weight and divides by FDA single-serving reference (245g) for the same product model referenced in the claim anchor.",
+  "sufficiency": "sufficient",
+  "sufficiency_reasoning": "Methodology is explicit and conservative: total stew weight divided by 245g per person yields 8–10 servings, matching the claim anchor.",
+  "extracted_key_facts": "Total measured weight 1.96–2.45 kg; reference 245g/person; yields 8–10 people for PC201/PC200 series."
+}

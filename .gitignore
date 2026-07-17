@@ -27,6 +27,13 @@ case-library/cases/**/*.json
 case-library/index/manifest.json
 case-library/index/by-dimension/**
 
+# Uploaded finding evidence (Phase 1 manual flow)
+data/finding-evidence/files/**
+data/finding-evidence/evidence/**
+data/finding-evidence/links/**
+data/finding-evidence/*-manifest.json
+!data/finding-evidence/.gitkeep
+
 # Keep structure and examples
 !case-library/cases/.gitkeep
 !case-library/index/.gitkeep

@@ -8,6 +8,7 @@ export * from './case/pg-case-kos.repository.js';
 export * from './case/pg-case-embedding.repository.js';
 export * from './case/kos-case-store.adapter.js';
 export * from './case/dual-write-case-store.js';
+export * from './evidence/json-evidence-store.js';
 export * from './knowledge/pg-utils.js';
 export * from './knowledge/pg-rule.repository.js';
 export * from './knowledge/pg-playbook.repository.js';

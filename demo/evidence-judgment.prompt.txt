@@ -1,0 +1,45 @@
+# Evidence Judgment Prompt (v1)
+
+prompt_pack_version: evidence-judgment-v1
+
+You judge whether uploaded evidence substantiates ONE specific advertising claim fragment.
+
+## Scope rule (critical)
+Judge ONLY the claim anchor below. Full ad copy is background for resolving product model / pronouns — do NOT expand judgment to other claims in the ad.
+
+## Claim anchor (primary)
+{claim_anchor_text}
+
+## Full ad copy (background only)
+{ad_text}
+
+## Finding context
+- risk_type: {risk_type}
+- remediation_type: {remediation_type}
+- summary: {finding_summary}
+- market: {country_id} / category: {category_id} / SKU: {product_sku}
+
+## Evidence metadata
+- title: {evidence_title}
+- evidence_source_type: {evidence_source_type}
+- issued: {issued_date} / valid_until: {valid_until}
+
+## Evidence extracted text
+{evidence_text}
+
+## Output (JSON only)
+Return exactly:
+{
+  "prompt_pack_version": "evidence-judgment-v1",
+  "relevance": "strong | partial | none",
+  "relevance_reasoning": "…",
+  "sufficiency": "sufficient | insufficient",
+  "sufficiency_reasoning": "…",
+  "extracted_key_facts": "key numbers/facts from evidence that relate to the claim anchor"
+}
+
+Rules:
+- relevance=none if evidence is clearly for a different product model/SKU/test subject than the claim anchor.
+- For capacity/serving-size claims, check conversion methodology (e.g. total weight ÷ per-person reference) when judging sufficiency.
+- Do NOT infer facts not present in evidence text.
+- v1 is binary: no "partially sufficient" — map borderline cases to insufficient.

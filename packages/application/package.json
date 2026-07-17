@@ -53,6 +53,8 @@
     "knowledge:coverage-gap-report": "pnpm build && node dist/knowledge/run-coverage-gap-report.js",
     "eval:benchmark-v3": "pnpm build && node dist/evaluation/run-benchmark-v3.js",
     "eval:gray-copy": "pnpm build && node dist/evaluation/run-gray-copy-eval.js",
+    "eval:evidence-judgment": "pnpm build && node dist/evaluation/run-evidence-judgment-eval.js",
+    "eval:evidence-e2e": "pnpm build && node dist/evaluation/run-evidence-e2e.js",
     "eval:rewrite-quality": "pnpm build && node ../../scripts/run-rewrite-benchmark-stub.mjs",
     "eval:module-dashboard": "pnpm build && node dist/evaluation/run-module-eval-dashboard.js"
   },

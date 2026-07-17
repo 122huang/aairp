@@ -78,6 +78,9 @@ function toFindingSummary(
     severity: finding.severity,
     decision: finding.decision,
     summary: finding.summary,
+    ...(finding.module === 'RULE' && finding.remediationType
+      ? { remediationType: finding.remediationType }
+      : {}),
     ...(evidenceSpans?.length ? { evidenceSpans } : {}),
   };
 }
