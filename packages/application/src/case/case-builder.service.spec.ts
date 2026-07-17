@@ -88,6 +88,7 @@ describe('CaseBuilderService + CaseRecorderService', () => {
     expect(caseRecord.dimensions.legal_reviewed_market).toBe(true);
     expect(caseRecord.advertisement.content.text).toContain('cure');
     expect(caseRecord.matched_rules.length).toBeGreaterThan(0);
+    expect(caseRecord.matched_rules.some((finding) => finding.remediation_type)).toBe(true);
     expect(caseRecord.decision.ai_decision).toBe('REJECT');
     expect(caseRecord.decision.final_decision).toBe('REJECT');
     expect(caseRecord.llm_analysis.skipped).toBe(true);

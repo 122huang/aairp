@@ -4,7 +4,9 @@ export type RemediationType =
   | 'EVIDENCE_SUPPLEMENT'
   | 'EXTERNAL_STATUS_VERIFICATION'
   | 'OUT_OF_SCOPE_INTERNAL_DATA'
-  | 'MANUAL_CONTEXT_JUDGMENT';
+  | 'MANUAL_CONTEXT_JUDGMENT'
+  /** Business-handoff disclosure reminder; not evidence-attachable. */
+  | 'NOT_APPLICABLE_DISCLOSURE';
 
 export const REMEDIATION_TYPES: readonly RemediationType[] = [
   'REWRITE_ONLY',
@@ -12,6 +14,7 @@ export const REMEDIATION_TYPES: readonly RemediationType[] = [
   'EXTERNAL_STATUS_VERIFICATION',
   'OUT_OF_SCOPE_INTERNAL_DATA',
   'MANUAL_CONTEXT_JUDGMENT',
+  'NOT_APPLICABLE_DISCLOSURE',
 ] as const;
 
 export function isRemediationType(value: string): value is RemediationType {
@@ -29,4 +32,11 @@ export function supportsEvidenceAttachment(
     return decision !== undefined && decision !== 'INFO';
   }
   return false;
+}
+
+/** Findings that Template A (business handoff) may surface. */
+export function isBusinessHandoffRemediationType(
+  type: RemediationType | undefined,
+): boolean {
+  return type === 'EXTERNAL_STATUS_VERIFICATION' || type === 'NOT_APPLICABLE_DISCLOSURE';
 }

@@ -109,7 +109,8 @@
         "article": "Sponsored content identification — cross-category"
       },
       "summary_en": "This content is marked as influencer/partnership — confirm advertising disclosure labels (#ad / sponsored) are added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
-      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加广告披露标签。非阻塞提醒（文案审核不核验披露标识是否已贴）。"
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加广告披露标签。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-sg-cpsr-registration-prerequisite",
@@ -1837,7 +1838,8 @@
         "article": "Ad identification / commercial relationship disclosure (endorsement & paid content)"
       },
       "summary_en": "This content is marked as influencer/partnership — confirm Bahasa advertising disclosure (#iklan / berbayar) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
-      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加印尼语广告披露标识（#iklan / berbayar）。非阻塞提醒（文案审核不核验披露标识是否已贴）。"
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加印尼语广告披露标识（#iklan / berbayar）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-id-product-category-boundary",
@@ -2047,7 +2049,8 @@
         "article": "Article II — Sponsored content identification"
       },
       "summary_en": "This content is marked as influencer/partnership — confirm ASC-recognised advertising disclosure (#ad / sponsored) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
-      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加ASC认可的广告披露标识。非阻塞提醒（文案审核不核验披露标识是否已贴）。"
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加ASC认可的广告披露标识。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-ph-sa-market-claim",
@@ -2240,7 +2243,8 @@
         "article": "ステルスマーケティングに関する運用基準（2023年10月施行）"
       },
       "summary_en": "Japan Consumer Affairs Agency actively enforces stealth marketing (ステマ) rules. This content is marked as influencer/partnership — before publish, add a clear local disclosure (#PR / 提供 / 広告 etc.). Non-blocking reminder (copy review does not verify tags); enforcement risk is higher than in other markets.",
-      "summary_zh": "日本消费者厅对ステルスマーケティング（ステマ）有实际执法记录。该内容标注为网红/合作——发布前需按当地要求添加#PR/提供/広告等披露标识。非阻塞提醒（文案审核不核验标识是否已贴）；本市场执法风险高于其他市场。"
+      "summary_zh": "日本消费者厅对ステルスマーケティング（ステマ）有实际执法记录。该内容标注为网红/合作——发布前需按当地要求添加#PR/提供/広告等披露标识。非阻塞提醒（文案审核不核验标识是否已贴）；本市场执法风险高于其他市场。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-jp-unfair-competition-misrepresentation",
@@ -2477,7 +2481,8 @@
         "article": "2024年修正，2024-12-01施行"
       },
       "summary_en": "KOL/influencer promotional disclosure must appear at the start of the title or body text, in wording easily understood by consumers — vague or conditional disclosure is non-compliant. This rule can only detect whether disclosure wording is present; placement and font require manual review",
-      "summary_zh": "KOL/网红推广披露须放在标题或正文开头，用消费者易懂措辞，模糊/附条件表述视为不合格——本规则仅能检测披露词是否存在，位置与字体需人工复核"
+      "summary_zh": "KOL/网红推广披露须放在标题或正文开头，用消费者易懂措辞，模糊/附条件表述视为不合格——本规则仅能检测披露词是否存在，位置与字体需人工复核",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-kr-suction-superlative-unsubstantiated",

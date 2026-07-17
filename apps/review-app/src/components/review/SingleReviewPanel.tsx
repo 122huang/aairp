@@ -5,6 +5,7 @@ import {
   type DemoSaCategoryId,
 } from '@aairp/shared-kernel';
 import { submitReview, type DemoReviewResponse, type ReviewApiError } from '@/api/review';
+import { openCaseReport } from '@/api/case-report';
 import { SharedReviewDimensions } from '@/components/review/SharedReviewDimensions';
 import { DecisionBanner } from '@/components/review/DecisionBanner';
 import { FindingsList } from '@/components/review/FindingsList';
@@ -295,12 +296,31 @@ export function SingleReviewPanel({
             />
 
             {result.case_id && (
-              <div className="rounded-lg border border-gray-200 bg-white px-4 py-3">
-                <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleResubmitFromCase}>
-                  基于此案例修改后重新提交
-                </Button>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  保留当前文案回到左侧编辑；再次提交后将关联到同一审查线程（不自动猜测是否同一文案）。
+              <div className="space-y-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+                <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => openCaseReport(result.case_id!, 'business_handoff')}
+                  >
+                    导出业务提醒摘要
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => openCaseReport(result.case_id!, 'legal_audit')}
+                  >
+                    导出完整审核报告
+                  </Button>
+                  <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleResubmitFromCase}>
+                    基于此案例修改后重新提交
+                  </Button>
+                </div>
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  业务提醒摘要仅在 PASS/WARN，或 REVIEW 且全部 REVIEW
+                  finding 已完成证据确认时可导出；完整审核报告始终可导出。重新提交将关联到同一审查线程。
                 </p>
               </div>
             )}

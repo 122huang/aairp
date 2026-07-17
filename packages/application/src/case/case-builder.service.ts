@@ -5,12 +5,13 @@ import type {
   CaseRecommendation,
   CaseRecord,
   CaseRegulationRef,
+  ModuleFinding,
   ReviewCaseSnapshot,
+  ReviewDecisionResult,
+  ReviewHappyPathResult,
+  RuleFinding,
 } from '@aairp/shared-kernel';
 import { CASE_SCHEMA_VERSION, isLegalReviewedMarket } from '@aairp/shared-kernel';
-import type { ModuleFinding } from '@aairp/shared-kernel';
-import type { ReviewDecisionResult } from '@aairp/shared-kernel';
-import type { ReviewHappyPathResult } from '@aairp/shared-kernel';
 
 export type CaseBuilderConfig = {
   pipelineVersion?: string;
@@ -24,6 +25,8 @@ function resolveAdType(snapshot: ReviewCaseSnapshot): string {
 }
 
 function mapFinding(finding: ModuleFinding): CaseMatchedFinding {
+  const remediationType =
+    finding.module === 'RULE' ? (finding as RuleFinding).remediationType : undefined;
   return {
     finding_id: finding.findingId,
     ref_id: finding.refId,
@@ -32,6 +35,7 @@ function mapFinding(finding: ModuleFinding): CaseMatchedFinding {
     decision: finding.decision,
     summary: finding.summary,
     confidence: finding.confidence,
+    ...(remediationType ? { remediation_type: remediationType } : {}),
     ...(finding.evaluationDetail ? { evaluation_detail: finding.evaluationDetail } : {}),
   };
 }
