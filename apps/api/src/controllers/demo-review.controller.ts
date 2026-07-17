@@ -5,7 +5,7 @@ import {
   ReviewHappyPathService,
   CaseRecorderService,
 } from '@aairp/application';
-import { toDemoReviewResponseDto } from '../dto/demo-review.dto.js';
+import { extractParentCaseId, toDemoReviewResponseDto } from '../dto/demo-review.dto.js';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
 import { logReviewPipelineTimings } from '../middleware/review-logging.js';
 
@@ -25,9 +25,26 @@ export async function registerDemoReviewController(
     { preHandler: probePreHandler },
     async (request, reply) => {
       try {
+        const parentCaseId = extractParentCaseId(request.body);
         const result = await deps.reviewHappyPathService.run(request.body);
 
-        deps.caseRecorderService?.recordSafely(result);
+        let caseRecord = null;
+        if (deps.caseRecorderService) {
+          try {
+            caseRecord = await deps.caseRecorderService.record(result, {
+              ...(parentCaseId ? { parent_case_id: parentCaseId } : {}),
+            });
+          } catch (error) {
+            request.log.warn(
+              {
+                trace_id: request.traceId,
+                review_id: result.reviewId,
+                error: error instanceof Error ? error.message : String(error),
+              },
+              'case library save failed after review',
+            );
+          }
+        }
 
         logReviewPipelineTimings(
           request.log,
@@ -39,12 +56,19 @@ export async function registerDemoReviewController(
             confidence: result.decision.confidence,
             finding_count: result.report.summary.findings.length,
             open_risk_skipped: result.report.summary.openRiskSkipped,
+            ...(caseRecord
+              ? {
+                  case_id: caseRecord.case_id,
+                  thread_id: caseRecord.thread_id,
+                  parent_case_id: caseRecord.parent_case_id,
+                }
+              : {}),
           },
           result.timings,
           'happy path review completed',
         );
 
-        sendJson(reply, 200, toDemoReviewResponseDto(result));
+        sendJson(reply, 200, toDemoReviewResponseDto(result, caseRecord));
       } catch (error) {
         if (error instanceof AdvertisementUploadValidationError) {
           request.log.warn(

@@ -206,7 +206,20 @@ function buildRecommendation(
 
 export type CaseBuilderInput = ReviewHappyPathResult & {
   caseSnapshot: ReviewCaseSnapshot;
+  /**
+   * Optional thread link when recording a resubmit. Root cases omit this
+   * (thread_id becomes case_id; no parent_case_id).
+   */
+  threadLink?: {
+    parent_case_id?: string;
+    /** Parent's thread_id, or parent.case_id when the parent predates thread fields. */
+    inherited_thread_id?: string;
+    reviewer_id?: string;
+  };
 };
+
+/** Placeholder submitter until review-app auth exists. */
+export const DEFAULT_CASE_REVIEWER_ID = 'pilot-default';
 
 export class CaseBuilderService {
   constructor(private readonly config: CaseBuilderConfig = {}) {}
@@ -217,6 +230,9 @@ export class CaseBuilderService {
     const { context, ruleResult, playbookResult, openRiskResult, visionResult } = input.caseSnapshot;
     const { decision, report } = input;
     const normalized = context.normalizedContent;
+    const reviewerId = input.threadLink?.reviewer_id?.trim() || DEFAULT_CASE_REVIEWER_ID;
+    const threadId = input.threadLink?.inherited_thread_id?.trim() || caseId;
+    const parentCaseId = input.threadLink?.parent_case_id?.trim();
 
     const record: CaseRecord = {
       schema_version: CASE_SCHEMA_VERSION,
@@ -224,6 +240,9 @@ export class CaseBuilderService {
       case_id: caseId,
       review_id: input.reviewId,
       advertisement_id: input.advertisementId,
+      thread_id: threadId,
+      ...(parentCaseId ? { parent_case_id: parentCaseId } : {}),
+      reviewer_id: reviewerId,
       lifecycle_status: 'GENERATED',
       dimensions: {
         tenant_id: context.dimensions.tenantId,
