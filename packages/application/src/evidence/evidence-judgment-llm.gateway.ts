@@ -14,25 +14,28 @@ const defaultStubPath = join(
 /**
  * Resolve evidence-judgment LLM mode.
  *
- * - Explicit `AAIRP_EVIDENCE_JUDGMENT_MODE=live|stub` wins.
- * - Otherwise inherits `AAIRP_OPEN_RISK_MODE` (same provider stack).
+ * Explicit `AAIRP_EVIDENCE_JUDGMENT_MODE=live|stub` only — does NOT inherit
+ * `AAIRP_OPEN_RISK_MODE` (kept independent so open-risk toggles cannot silently
+ * change evidence judgment). Unset → stub (local/CI safe).
+ *
+ * Production Railway sets `AAIRP_EVIDENCE_JUDGMENT_MODE=live` in railway.toml
+ * startCommand so the process always sees an explicit value.
  *
  * Important: stub does NOT key off document IDs / PLACEHOLDER titles.
  * Stub always returns demo/evidence-judgment.stub.json (strong/sufficient).
- * A relevance=none result is therefore NOT explained by "stub default for unknown docs".
  */
 export function resolveEvidenceJudgmentLlmMode(): 'live' | 'stub' {
   const raw = process.env.AAIRP_EVIDENCE_JUDGMENT_MODE?.trim().toLowerCase();
   if (raw === 'live') return 'live';
   if (raw === 'stub') return 'stub';
-  return resolveOpenRiskLlmMode();
+  return 'stub';
 }
 
 export type EvidenceJudgmentRuntimeInfo = {
   evidence_judgment_mode: 'live' | 'stub';
   evidence_judgment_mode_source:
     | 'AAIRP_EVIDENCE_JUDGMENT_MODE'
-    | 'inherited_AAIRP_OPEN_RISK_MODE';
+    | 'default_stub_when_unset';
   open_risk_mode: 'live' | 'stub';
   open_risk_provider: string | null;
   has_deepseek_api_key: boolean;
@@ -59,7 +62,7 @@ export function getEvidenceJudgmentRuntimeInfo(): EvidenceJudgmentRuntimeInfo {
     evidence_judgment_mode_source:
       explicit === 'live' || explicit === 'stub'
         ? 'AAIRP_EVIDENCE_JUDGMENT_MODE'
-        : 'inherited_AAIRP_OPEN_RISK_MODE',
+        : 'default_stub_when_unset',
     open_risk_mode: openRiskMode,
     open_risk_provider: provider,
     has_deepseek_api_key: hasDeepseek,
