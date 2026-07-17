@@ -63,8 +63,16 @@ function sharedStyles(): string {
       margin: 0 0 10px;
       letter-spacing: -0.02em;
     }
-    .conclusion-lines { margin: 0; padding-left: 18px; }
+    .conclusion-lines { margin: 0 0 12px; padding-left: 18px; }
     .conclusion-lines li { margin: 4px 0; }
+    .conclusion-audit {
+      margin: 12px 0 0;
+      padding-top: 10px;
+      border-top: 1px solid rgba(28, 25, 23, 0.12);
+      font-size: 12px;
+      opacity: 0.78;
+      font-weight: 500;
+    }
     .tone-pass { background: #e8f6ee; border-color: #86efac; color: #14532d; }
     .tone-resolved { background: #e8f0fb; border-color: #93c5fd; color: #1e3a8a; }
     .tone-open { background: #fff4e5; border-color: #fdba74; color: #9a3412; }
@@ -284,10 +292,18 @@ function renderConclusionCard(effective: CaseEffectiveStatusView): string {
           .map((line) => `<li>${escapeHtml(line)}</li>`)
           .join('')}</ul>`;
 
+  // Dual lines: (1) human effective conclusion  (2) immutable audit snapshot — neither overwrites the other.
+  const auditRow = effective.applies
+    ? `<p class="conclusion-audit">审核快照（未改写）：${escapeHtml(effective.audit_final_decision)}${
+        effective.status ? ` · 有效状态 ${escapeHtml(effective.status)}` : ''
+      }</p>`
+    : `<p class="conclusion-audit">审核快照（未改写）：${escapeHtml(effective.audit_final_decision)} · REJECT 不参与 effective_status 流转</p>`;
+
   return `<section class="conclusion tone-${escapeHtml(effective.tone)}" aria-label="审核结论">
     <p class="conclusion-kicker">审核结论</p>
     <p class="conclusion-headline">${escapeHtml(effective.headline)}</p>
     ${lines}
+    ${auditRow}
   </section>`;
 }
 
@@ -338,7 +354,11 @@ export function renderLegalAuditHtml(model: CaseReportModel): string {
 
   const decisionPath = `<div class="card">
       <p><strong>AI 决策：</strong>${escapeHtml(caseRecord.decision.ai_decision)} → <strong>最终：</strong>${escapeHtml(caseRecord.decision.final_decision)}<span class="audit-chip">审计快照 · 未改写</span></p>
-      <p class="meta">判定于 ${escapeHtml(caseRecord.decision.decided_at)} · 有效状态 ${escapeHtml(effective.status)}</p>
+      <p class="meta">判定于 ${escapeHtml(caseRecord.decision.decided_at)}${
+        effective.applies && effective.status
+          ? ` · 有效状态 ${escapeHtml(effective.status)}`
+          : ' · REJECT 不参与 effective_status 流转'
+      }</p>
       <p>${escapeHtml(caseRecord.decision.rationale)}</p>
       ${caseRecord.human_feedback ? `<p class="meta">人工反馈：${escapeHtml(caseRecord.human_feedback.decision)} · ${escapeHtml(caseRecord.human_feedback.comment ?? '')}</p>` : '<p class="muted">无整案人工反馈记录</p>'}
     </div>`;

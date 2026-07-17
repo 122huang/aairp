@@ -321,6 +321,7 @@ describe('case effective status', () => {
 
   it('PASS with no open issues → cleared green headline', () => {
     const view = deriveCaseEffectiveStatus('PASS', [], []);
+    expect(view.applies).toBe(true);
     expect(view.status).toBe('CLEARED');
     expect(view.tone).toBe('pass');
     expect(view.headline).toContain('可以进入下一步');
@@ -364,6 +365,7 @@ describe('case effective status', () => {
         },
       },
     ]);
+    expect(view.applies).toBe(true);
     expect(view.status).toBe('CLEARED');
     expect(view.tone).toBe('resolved');
     expect(view.headline).toContain('已通过证据解决');
@@ -384,20 +386,24 @@ describe('case effective status', () => {
       ],
       [],
     );
+    expect(view.applies).toBe(true);
     expect(view.status).toBe('OPEN_ISSUES');
     expect(view.tone).toBe('open');
     expect(view.detail_lines).toEqual(['夸大功效需改写']);
   });
 
-  it('REJECT → blocked red', () => {
+  it('REJECT does not enter effective_status flow', () => {
     const view = deriveCaseEffectiveStatus(
       'REJECT',
       [finding({ finding_id: 'f1', decision: 'FAIL', summary: '绝对化用语' })],
       [],
     );
-    expect(view.status).toBe('BLOCKED');
+    expect(view.applies).toBe(false);
+    expect(view.status).toBeNull();
+    expect(view.finding_resolutions).toEqual([]);
     expect(view.tone).toBe('blocked');
     expect(view.headline).toContain('不能发布');
+    expect(view.detail_lines).toEqual(['绝对化用语']);
   });
 });
 
