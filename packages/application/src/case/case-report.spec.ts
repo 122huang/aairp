@@ -1,13 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import type { CaseRecord, FindingEvidenceLink } from '@aairp/shared-kernel';
 import { supportsEvidenceAttachment } from '@aairp/shared-kernel';
+import { deriveCaseEffectiveStatus } from './case-effective-status.js';
 import {
   collectCaseFindings,
   evaluateBusinessHandoffEligibility,
   filterBusinessHandoffFindings,
 } from './case-report-eligibility.js';
 import { renderBusinessHandoffHtml, renderLegalAuditHtml } from './case-report-html.js';
-import type { CaseReportModel } from './case-report.model.js';
+import type { CaseReportFinding, CaseReportModel } from './case-report.model.js';
 
 function baseCase(overrides: Partial<CaseRecord> = {}): CaseRecord {
   return {
@@ -301,6 +302,111 @@ describe('case report eligibility + filters', () => {
   });
 });
 
+describe('case effective status', () => {
+  function finding(
+    partial: Partial<CaseReportFinding> & Pick<CaseReportFinding, 'finding_id' | 'decision' | 'summary'>,
+  ): CaseReportFinding {
+    return {
+      finding_id: partial.finding_id,
+      ref_id: partial.ref_id ?? partial.finding_id,
+      ref_version_id: 'v1',
+      severity: partial.severity ?? 'MEDIUM',
+      decision: partial.decision,
+      summary: partial.summary,
+      confidence: 0.8,
+      remediation_type: partial.remediation_type,
+      module: partial.module ?? 'RULE',
+    };
+  }
+
+  it('PASS with no open issues → cleared green headline', () => {
+    const view = deriveCaseEffectiveStatus('PASS', [], []);
+    expect(view.applies).toBe(true);
+    expect(view.status).toBe('CLEARED');
+    expect(view.tone).toBe('pass');
+    expect(view.headline).toContain('可以进入下一步');
+    expect(view.headline).not.toMatch(/PASS|WARN|REVIEW|REJECT/);
+  });
+
+  it('WARN capacity resolved by confirmed sufficient evidence → blue resolved', () => {
+    const findings = [
+      finding({
+        finding_id: 'f-cap',
+        decision: 'WARN',
+        summary: '容量宣称',
+        remediation_type: 'EVIDENCE_SUPPLEMENT',
+      }),
+    ];
+    const links = [
+      link({
+        finding_id: 'f-cap',
+        status: 'HUMAN_CONFIRMED',
+        ai_judgment: {
+          relevance: 'strong',
+          relevance_reasoning: 'ok',
+          sufficiency: 'sufficient',
+          sufficiency_reasoning: 'ok',
+          extracted_key_facts: '8-10 people',
+          judged_at: '2026-07-17T00:00:00.000Z',
+        },
+      }),
+    ];
+    const view = deriveCaseEffectiveStatus('WARN', findings, [
+      {
+        ...links[0]!,
+        evidence: {
+          evidence_id: 'ev1',
+          title: 'CLM-012884',
+          evidence_source_type: 'THIRD_PARTY_LAB',
+          claim_risk_types: [],
+          scope: {},
+          file: { filename: 'a.pdf', mime_type: 'application/pdf', storage_path: 'x' },
+          created_at: '2026-07-17T00:00:00.000Z',
+        },
+      },
+    ]);
+    expect(view.applies).toBe(true);
+    expect(view.status).toBe('CLEARED');
+    expect(view.tone).toBe('resolved');
+    expect(view.headline).toContain('已通过证据解决');
+    expect(view.detail_lines[0]).toContain('CLM-012884');
+    expect(view.audit_final_decision).toBe('WARN');
+  });
+
+  it('WARN with unresolved rewrite finding → open orange', () => {
+    const view = deriveCaseEffectiveStatus(
+      'WARN',
+      [
+        finding({
+          finding_id: 'f-rw',
+          decision: 'WARN',
+          summary: '夸大功效需改写',
+          remediation_type: 'REWRITE_ONLY',
+        }),
+      ],
+      [],
+    );
+    expect(view.applies).toBe(true);
+    expect(view.status).toBe('OPEN_ISSUES');
+    expect(view.tone).toBe('open');
+    expect(view.detail_lines).toEqual(['夸大功效需改写']);
+  });
+
+  it('REJECT does not enter effective_status flow', () => {
+    const view = deriveCaseEffectiveStatus(
+      'REJECT',
+      [finding({ finding_id: 'f1', decision: 'FAIL', summary: '绝对化用语' })],
+      [],
+    );
+    expect(view.applies).toBe(false);
+    expect(view.status).toBeNull();
+    expect(view.finding_resolutions).toEqual([]);
+    expect(view.tone).toBe('blocked');
+    expect(view.headline).toContain('不能发布');
+    expect(view.detail_lines).toEqual(['绝对化用语']);
+  });
+});
+
 describe('case report HTML templates', () => {
   function model(partial: Partial<CaseReportModel> = {}): CaseReportModel {
     const caseRecord = baseCase({
@@ -318,15 +424,29 @@ describe('case report HTML templates', () => {
       ],
     });
     const findings = collectCaseFindings(caseRecord);
+    const handoff = filterBusinessHandoffFindings(findings);
+    const effective = deriveCaseEffectiveStatus(
+      caseRecord.decision.final_decision,
+      findings,
+      [],
+    );
     return {
       template: 'business_handoff',
       generated_at: '2026-07-17T01:00:00.000Z',
       case: caseRecord,
       thread_cases: [caseRecord],
       findings,
-      handoff_findings: filterBusinessHandoffFindings(findings),
+      handoff_findings: handoff,
+      publish_todos: handoff.map((item) => ({
+        finding_id: item.finding_id,
+        ref_id: item.ref_id,
+        summary: item.summary,
+        remediation_type: item.remediation_type!,
+        decision: item.decision,
+      })),
       evidence_links: [],
       business_handoff: { eligible: true },
+      effective,
       ...partial,
     };
   }
@@ -451,6 +571,12 @@ describe('case report HTML templates', () => {
       }),
     );
 
+    expect(html).toContain('审核结论');
+    expect(html).toContain('文案审核通过，可以进入下一步');
+    expect(html).toContain('发布前需完成：');
+    expect(html).toContain('confirm #ad');
+    expect(html).toContain('详情 · 决策路径');
+    expect(html).toContain('详情 · Finding 清单');
     expect(html).toContain('case_root');
     expect(html).toContain('case_child');
     expect(html.indexOf('case_root')).toBeLessThan(html.indexOf('case_child（当前）'));
@@ -458,5 +584,80 @@ describe('case report HTML templates', () => {
     expect(html).toContain('仅元数据');
     expect(html).not.toContain('secret raw bytes should not appear');
     expect(html).not.toContain('files/lab.pdf');
+    // Conclusion card should appear before details; jargon badge not in hero path.
+    expect(html.indexOf('审核结论')).toBeLessThan(html.indexOf('详情 · 决策路径'));
+    expect(html.indexOf('发布前待办清单')).toBeLessThan(html.indexOf('详情 · Finding 清单'));
+  });
+
+  it('legal audit conclusion uses resolved tone when evidence cleared WARN', () => {
+    const caseRecord = baseCase({
+      decision: {
+        ...baseCase().decision,
+        final_decision: 'WARN',
+        ai_decision: 'WARN',
+        rationale: 'capacity claim',
+      },
+      matched_rules: [
+        {
+          finding_id: 'f-cap',
+          ref_id: 'cap-rule',
+          ref_version_id: 'v1',
+          severity: 'HIGH',
+          decision: 'WARN',
+          summary: '容量宣称',
+          confidence: 0.9,
+          remediation_type: 'EVIDENCE_SUPPLEMENT',
+        },
+      ],
+    });
+    const findings = collectCaseFindings(caseRecord);
+    const evidenceLinks = [
+      {
+        link_id: 'l1',
+        case_id: 'case_a',
+        review_id: 'review_a',
+        finding_id: 'f-cap',
+        evidence_id: 'ev1',
+        status: 'HUMAN_CONFIRMED' as const,
+        created_at: '2026-07-17T00:00:00.000Z',
+        ai_judgment: {
+          relevance: 'strong' as const,
+          relevance_reasoning: 'ok',
+          sufficiency: 'sufficient' as const,
+          sufficiency_reasoning: 'ok',
+          extracted_key_facts: 'ok',
+          judged_at: '2026-07-17T00:00:00.000Z',
+        },
+        evidence: {
+          evidence_id: 'ev1',
+          title: 'CLM-012884',
+          evidence_source_type: 'THIRD_PARTY_LAB' as const,
+          claim_risk_types: [],
+          scope: {},
+          file: {
+            filename: 'lab.pdf',
+            mime_type: 'application/pdf',
+            storage_path: 'files/lab.pdf',
+          },
+          created_at: '2026-07-17T00:00:00.000Z',
+        },
+      },
+    ];
+    const effective = deriveCaseEffectiveStatus('WARN', findings, evidenceLinks);
+    const html = renderLegalAuditHtml(
+      model({
+        template: 'legal_audit',
+        case: caseRecord,
+        findings,
+        handoff_findings: [],
+        publish_todos: [],
+        evidence_links: evidenceLinks,
+        effective,
+      }),
+    );
+    expect(html).toContain('原本存在的问题已通过证据解决');
+    expect(html).toContain('CLM-012884');
+    expect(html).toContain('tone-resolved');
+    expect(html).toContain('审计快照 · 未改写');
   });
 });

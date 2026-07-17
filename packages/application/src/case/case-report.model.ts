@@ -7,6 +7,7 @@ import type {
   FinalDecision,
   RemediationType,
 } from '@aairp/shared-kernel';
+import type { CaseEffectiveStatusView } from './case-effective-status.js';
 
 export const CASE_REPORT_TEMPLATES = ['business_handoff', 'legal_audit'] as const;
 export type CaseReportTemplate = (typeof CASE_REPORT_TEMPLATES)[number];
@@ -47,6 +48,15 @@ export type BusinessHandoffEligibility =
       reasons: string[];
     };
 
+/** Pre-publish handoff items (EXTERNAL_STATUS_VERIFICATION / disclosure). */
+export type PublishTodoItem = {
+  finding_id: string;
+  ref_id: string;
+  summary: string;
+  remediation_type: RemediationType;
+  decision: string;
+};
+
 export type CaseReportModel = {
   template: CaseReportTemplate;
   generated_at: string;
@@ -54,8 +64,12 @@ export type CaseReportModel = {
   thread_cases: CaseRecord[];
   findings: CaseReportFinding[];
   handoff_findings: CaseReportFinding[];
+  /** Same handoff set, shaped for the legal-audit “发布前待办” layer. */
+  publish_todos: PublishTodoItem[];
   evidence_links: CaseReportEvidenceLink[];
   business_handoff: BusinessHandoffEligibility;
+  /** User-facing conclusion; does not mutate fusion final_decision. */
+  effective: CaseEffectiveStatusView;
 };
 
 export type CaseReportRenderResult = {

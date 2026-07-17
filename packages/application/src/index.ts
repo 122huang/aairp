@@ -28,6 +28,7 @@ export * from './case/case-recorder.service.js';
 export * from './case/case-search.service.js';
 export * from './case/case-export.service.js';
 export * from './case/case-report.model.js';
+export * from './case/case-effective-status.js';
 export * from './case/case-report-eligibility.js';
 export * from './case/case-report-assembly.service.js';
 export * from './case/case-report-html.js';
