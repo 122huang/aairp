@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "fixture_id": "evidence-judgment-v1",
-  "description": "Phase 2 evidence AI judgment eval — structural prescreen + per-case LLM stubs",
+  "description": "Phase 2 evidence AI judgment eval — structural prescreen + per-case LLM stubs (includes adversarial claim-echo + numeric containment regression cases)",
   "cases": [
     {
       "case_id": "CLM-012884-internal-capacity",
@@ -323,6 +323,93 @@
         "evidence_text": ""
       },
       "expect": { "relevance": "none", "sufficiency": "insufficient", "skip_llm": true, "text_unreadable": true }
+    },
+    {
+      "case_id": "adversarial-claim-echo-no-methodology",
+      "source": "production",
+      "notes": "Adversarial: evidence restates claim ('feed up to 8 people') with no method/data/date/institution. Production live result: relevance=strong, sufficiency=insufficient. Regression gate: sufficiency must stay insufficient — do not relax hollow-evidence checks when tuning numeric containment.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "Family-sized capacity - feed up to 8 people",
+        "claim_anchor_text": "feed up to 8 people",
+        "finding_summary": "Capacity claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "capacity-claim"
+      },
+      "evidence": {
+        "title": "Marketing confirmation memo (hollow)",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201"] },
+        "evidence_text": "This document confirms the following statement: 'The product has a family-sized capacity and can feed up to 8 people.' The above capacity has been confirmed and is accurate. This capacity meets the requirements for family-sized cooking appliances. Certified compliant for marketing use."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "insufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Evidence text addresses the same capacity claim and matching '8 people' figure, but only by restating the claim.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "No test method, measured data, date, or issuing institution — circular claim-echo is not substantiation.",
+        "extracted_key_facts": "Memo repeats 'feed up to 8 people' / 'confirmed accurate' with no measurements."
+      }
+    },
+    {
+      "case_id": "numeric-containment-claim-covered-by-higher-evidence",
+      "source": "production-diagnosis",
+      "notes": "Claim 'up to 6 people' covered by CLM-style evidence supporting 8–10 under documented method. Must NOT be relevance=none from literal digit mismatch. Separate from adversarial-claim-echo — this case has real methodology.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "Family-sized capacity - feed up to 6 people with PC201 multi-cooker.",
+        "claim_anchor_text": "feed up to 6 people",
+        "finding_summary": "Capacity claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "capacity-claim"
+      },
+      "evidence": {
+        "title": "CLM-012884 Internal capacity test memo",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201", "PC200"] },
+        "evidence_text": "Product PC201/PC200 total stew weight measured 1.96–2.45 kg under standard fill test. Per FDA reference single-serving weight 245g/person. Calculation: 2450g ÷ 245g = 10 servings (conservative lower bound 8 servings). Method: full pot load, drained yield weighed on calibrated scale."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Evidence supports 8–10 servings for PC201; claimed upper bound of 6 is within / below that range (numeric containment).",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Documented weight ÷ 245g methodology yields 8–10; covers claim of up to 6 people.",
+        "extracted_key_facts": "Measured 1.96–2.45 kg → 8–10 servings; claim asks for 6."
+      }
+    },
+    {
+      "case_id": "numeric-containment-claim-exceeds-evidence-upper-bound",
+      "source": "production-diagnosis",
+      "notes": "Claim 'up to 12 people' exceeds evidence upper bound 8–10. Must remain blocked (sufficiency insufficient; relevance none or partial — fixture locks none+insufficient). Do not weaken hollow-evidence fixtures to make this pass.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "Family-sized capacity - feed up to 12 people with PC201 multi-cooker.",
+        "claim_anchor_text": "feed up to 12 people",
+        "finding_summary": "Capacity claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "capacity-claim"
+      },
+      "evidence": {
+        "title": "CLM-012884 Internal capacity test memo",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201", "PC200"] },
+        "evidence_text": "Product PC201/PC200 total stew weight measured 1.96–2.45 kg under standard fill test. Per FDA reference single-serving weight 245g/person. Calculation: 2450g ÷ 245g = 10 servings (conservative lower bound 8 servings). Method: full pot load, drained yield weighed on calibrated scale."
+      },
+      "expect": { "relevance": "none", "sufficiency": "insufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "none",
+        "relevance_reasoning": "Claimed upper bound of 12 exceeds evidence-supported range of 8–10 servings.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "Evidence upper bound (10) does not cover claim of 12 people.",
+        "extracted_key_facts": "Evidence supports 8–10 servings; claim asks for 12."
+      }
     }
   ]
 }
