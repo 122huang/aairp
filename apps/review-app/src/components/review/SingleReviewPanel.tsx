@@ -43,7 +43,10 @@ export function SingleReviewPanel({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<DemoReviewResponse | null>(null);
+  /** Next submit joins this parent case's thread (set only via explicit resubmit button). */
+  const [pendingParentCaseId, setPendingParentCaseId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const mergedFindings = useMemo(() => {
     if (!result) return [];
@@ -79,6 +82,17 @@ export function SingleReviewPanel({
     setImagePreviews([]);
   }
 
+  function handleResubmitFromCase() {
+    if (!result?.case_id) return;
+    setPendingParentCaseId(result.case_id);
+    setResult(null);
+    setError(null);
+    window.requestAnimationFrame(() => {
+      textAreaRef.current?.focus();
+      textAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const trimmed = text.trim();
@@ -108,7 +122,9 @@ export function SingleReviewPanel({
         },
         ...(adType ? { context: { ad_type: adType } } : {}),
         tags: ['review-app:6u-1', `market:${countryId}`],
+        ...(pendingParentCaseId ? { parent_case_id: pendingParentCaseId } : {}),
       });
+      setPendingParentCaseId(null);
       setResult(response);
     } catch (caught) {
       const apiError = caught as ReviewApiError;
@@ -131,12 +147,18 @@ export function SingleReviewPanel({
         </CardHeader>
         <CardContent>
           <form className="space-y-4" onSubmit={handleSubmit}>
+            {pendingParentCaseId && (
+              <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900">
+                将基于上一案例重新提交（线程关联已就绪）。修改文案后点击审核即可。
+              </p>
+            )}
             <div className="space-y-2">
               <Label htmlFor="ad-text" className="font-medium text-ink">
                 文案内容
               </Label>
               <Textarea
                 id="ad-text"
+                ref={textAreaRef}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
                 placeholder="粘贴广告文案，支持中英文混排…"
@@ -271,6 +293,17 @@ export function SingleReviewPanel({
               refIds={refIds}
               findingsCount={findingsCount}
             />
+
+            {result.case_id && (
+              <div className="rounded-lg border border-gray-200 bg-white px-4 py-3">
+                <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleResubmitFromCase}>
+                  基于此案例修改后重新提交
+                </Button>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  保留当前文案回到左侧编辑；再次提交后将关联到同一审查线程（不自动猜测是否同一文案）。
+                </p>
+              </div>
+            )}
 
             <section>
               <h2 className="mb-3 text-sm font-semibold text-ink">

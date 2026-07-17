@@ -162,6 +162,18 @@ export type CaseRecord = {
   case_id: string;
   review_id: string;
   advertisement_id: string;
+  /**
+   * Shared across resubmits of the same ad copy thread. Root case: equals case_id.
+   * Child cases inherit from parent.thread_id (or parent.case_id when older parents lack it).
+   */
+  thread_id?: string;
+  /** Previous case in the thread; omitted for the first submission. */
+  parent_case_id?: string;
+  /**
+   * Submitter placeholder until real auth exists. Written at case creation so later
+   * account systems need no backfill for new cases.
+   */
+  reviewer_id?: string;
   lifecycle_status: CaseLifecycleStatus;
   dimensions: CaseDimensions;
   advertisement: CaseAdvertisement;
