@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { CaseRecord, FindingEvidenceLink } from '@aairp/shared-kernel';
+import { supportsEvidenceAttachment } from '@aairp/shared-kernel';
 import {
   collectCaseFindings,
   evaluateBusinessHandoffEligibility,
@@ -100,6 +101,11 @@ function link(
 }
 
 describe('case report eligibility + filters', () => {
+  it('treats undefined remediation_type as not evidence-attachable', () => {
+    expect(supportsEvidenceAttachment(undefined)).toBe(false);
+    expect(supportsEvidenceAttachment(undefined, 'REVIEW')).toBe(false);
+  });
+
   it('filters only EXTERNAL_STATUS_VERIFICATION and NOT_APPLICABLE_DISCLOSURE', () => {
     const caseRecord = baseCase({
       matched_rules: [
@@ -196,6 +202,36 @@ describe('case report eligibility + filters', () => {
     );
     expect(result.eligible).toBe(false);
     if (!result.eligible) expect(result.code).toBe('REVIEW_MANUAL_CONTEXT');
+  });
+
+  it('denies REVIEW when remediation_type is undefined (untagged rule)', () => {
+    const result = evaluateBusinessHandoffEligibility(
+      baseCase({
+        decision: {
+          ...baseCase().decision,
+          final_decision: 'REVIEW',
+          ai_decision: 'REVIEW',
+        },
+        matched_rules: [
+          {
+            finding_id: 'f-untagged',
+            ref_id: 'demo-untagged-review-rule',
+            ref_version_id: 'v1',
+            severity: 'HIGH',
+            decision: 'REVIEW',
+            summary: 'legacy rule without remediation tag',
+            confidence: 0.6,
+            // remediation_type intentionally omitted
+          },
+        ],
+      }),
+      [],
+    );
+    expect(result.eligible).toBe(false);
+    if (!result.eligible) {
+      expect(result.code).toBe('REVIEW_MANUAL_CONTEXT');
+      expect(result.reasons.some((reason) => reason.includes('remediation=unset'))).toBe(true);
+    }
   });
 
   it('allows REVIEW only when every REVIEW finding is evidence-confirmed', () => {
