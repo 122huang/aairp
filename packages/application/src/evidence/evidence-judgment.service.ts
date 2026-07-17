@@ -87,7 +87,11 @@ export class EvidenceJudgmentService {
     let evidenceText = options?.evidenceTextOverride;
     if (!evidenceText) {
       const fileBuffer = await this.config.evidenceStore.readEvidenceFile(evidence.file.storage_path);
-      const extracted = extractEvidenceText(fileBuffer, evidence.file.mime_type, evidence.file.filename);
+      const extracted = await extractEvidenceText(
+        fileBuffer,
+        evidence.file.mime_type,
+        evidence.file.filename,
+      );
       if (!extracted.ok) {
         return this.stamp(buildUnreadableJudgment());
       }
