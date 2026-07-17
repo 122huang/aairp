@@ -57,10 +57,40 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
         >
           充分性: {judgment.sufficiency}
         </span>
+        {judgment.judgment_mode && (
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              judgment.judgment_mode === 'live'
+                ? 'bg-emerald-50 text-emerald-800'
+                : 'bg-rose-100 text-rose-900',
+            )}
+          >
+            模式: {judgment.judgment_mode}
+            {judgment.llm_model ? ` (${judgment.llm_model})` : ''}
+          </span>
+        )}
         {judgment.prescreen_excluded && (
           <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600">结构化预筛</span>
         )}
+        {judgment.text_unreadable && (
+          <span className="rounded-md bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-900">
+            文本层不可读
+          </span>
+        )}
       </div>
+      {judgment.judgment_mode === 'stub' && (
+        <p className="text-xs leading-relaxed text-rose-800">
+          当前为 stub 模式：系统不会读取真实文档内容，返回的是固定演示结果。生产环境请设置
+          AAIRP_EVIDENCE_JUDGMENT_MODE=live。
+        </p>
+      )}
+      {judgment.text_unreadable && (
+        <p className="text-xs leading-relaxed text-rose-800">
+          未能从文件提取可选中文本（v1 仅支持纯文本 / 带文字层的 PDF，无 OCR）。扫描件或图片型 PDF
+          会得到 relevance=none，这不代表模型已读过材料后判定无关——请改传 .txt 或可选中文本的 PDF 后重试。
+        </p>
+      )}
     </div>
   );
 }

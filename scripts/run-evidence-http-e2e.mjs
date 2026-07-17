@@ -4,7 +4,10 @@
  * Env:
  *   API_BASE_URL (default http://127.0.0.1:3000)
  *   AAIRP_REVIEW_BASIC_AUTH_USER / AAIRP_REVIEW_BASIC_AUTH_PASSWORD (when API auth is enabled)
- *   AAIRP_EVIDENCE_JUDGMENT_MODE=stub recommended on server
+ *   AAIRP_EVIDENCE_JUDGMENT_MODE=stub only for local/CI fixture checks.
+ *   Production must use AAIRP_EVIDENCE_JUDGMENT_MODE=live (or inherit live open-risk).
+ *   Stub ignores document bytes and always returns demo/evidence-judgment.stub.json —
+ *   it does NOT special-case PLACEHOLDER-* titles.
  *
  * Uses non-sensitive placeholder evidence only — do not point at production with real CLM docs.
  */
