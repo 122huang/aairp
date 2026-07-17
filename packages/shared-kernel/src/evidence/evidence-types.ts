@@ -37,6 +37,14 @@ export type EvidenceAiJudgment = {
   source_rule_applied?: boolean;
   /** true when evidence text could not be extracted (no OCR in v1). */
   text_unreadable?: boolean;
+  /**
+   * Which LLM path produced this judgment.
+   * stub = fixed demo/evidence-judgment.stub.json (ignores document text).
+   * live = real provider call. Always stamp so operators can audit misconfig.
+   */
+  judgment_mode?: 'live' | 'stub';
+  /** Concrete model id when live; "stub" when judgment_mode=stub. */
+  llm_model?: string;
   judged_at: string;
   prompt_pack_version?: string;
 };

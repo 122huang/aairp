@@ -35,6 +35,7 @@ export * from './case/case-report.service.js';
 export * from './evidence/evidence.service.js';
 export * from './evidence/evidence-paths.js';
 export * from './evidence/evidence-judgment.service.js';
+export * from './evidence/evidence-judgment-llm.gateway.js';
 export * from './evidence/evidence-judgment-rules.js';
 export * from './evidence/evidence-judgment-response.parser.js';
 export * from './evidence/evidence-text-extractor.js';
