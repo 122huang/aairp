@@ -84,7 +84,8 @@ describe('ReviewReportService', () => {
     expect(result.reportHtml).toContain('urgency-cta');
     expect(result.reportHtml).toContain('HAS_BLOCKER');
     expect(result.reportHtml).toContain('Clinically proven to cure diabetes');
-    expect(result.reportHtml).toContain('(High)');
+    expect(result.reportHtml).toContain('REJECT');
+    expect(result.reportHtml).not.toContain('Confidence:');
   });
 
   it('renders rewrite suggestions under each WARN finding detail', () => {

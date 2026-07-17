@@ -289,7 +289,6 @@ export function SingleReviewPanel({
           <>
             <DecisionBanner
               decision={result.final_decision}
-              confidence={result.confidence}
               rationale={result.rationale}
               refIds={refIds}
               findingsCount={findingsCount}
