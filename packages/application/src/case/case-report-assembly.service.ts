@@ -2,9 +2,11 @@ import type {
   CaseRecord,
   FindingEvidenceLink,
   ICaseStore,
+  RemediationType,
 } from '@aairp/shared-kernel';
 import { AppError, isBusinessHandoffRemediationType } from '@aairp/shared-kernel';
 import type { EvidenceService } from '../evidence/evidence.service.js';
+import { deriveCaseEffectiveStatus } from './case-effective-status.js';
 import {
   collectCaseFindings,
   evaluateBusinessHandoffEligibility,
@@ -14,6 +16,7 @@ import type {
   CaseReportEvidenceLink,
   CaseReportModel,
   CaseReportTemplate,
+  PublishTodoItem,
 } from './case-report.model.js';
 
 export type CaseReportAssemblyDeps = {
@@ -94,8 +97,20 @@ export class CaseReportAssemblyService {
     const handoffFindings = filterBusinessHandoffFindings(findings).filter((finding) =>
       isBusinessHandoffRemediationType(finding.remediation_type),
     );
+    const publishTodos: PublishTodoItem[] = handoffFindings.map((finding) => ({
+      finding_id: finding.finding_id,
+      ref_id: finding.ref_id,
+      summary: finding.summary,
+      remediation_type: finding.remediation_type as RemediationType,
+      decision: finding.decision,
+    }));
 
     const businessHandoff = evaluateBusinessHandoffEligibility(caseRecord, currentEvidence);
+    const effective = deriveCaseEffectiveStatus(
+      caseRecord.decision.final_decision,
+      findings,
+      currentEvidence,
+    );
 
     return {
       template,
@@ -104,8 +119,10 @@ export class CaseReportAssemblyService {
       thread_cases: threadCases,
       findings,
       handoff_findings: handoffFindings,
+      publish_todos: publishTodos,
       evidence_links: template === 'legal_audit' ? allEvidence : currentEvidence,
       business_handoff: businessHandoff,
+      effective,
     };
   }
 }

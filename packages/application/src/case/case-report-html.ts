@@ -1,10 +1,12 @@
 import type { CaseRecord } from '@aairp/shared-kernel';
+import type { CaseEffectiveStatusView } from './case-effective-status.js';
 import type {
   BusinessHandoffEligibility,
   CaseReportEvidenceLink,
   CaseReportFinding,
   CaseReportModel,
   EvidenceReportView,
+  PublishTodoItem,
   ThreadCaseView,
 } from './case-report.model.js';
 
@@ -38,7 +40,72 @@ function sharedStyles(): string {
     th { background: #edf2ef; }
     .current-row td { background: #eef6f1; }
     .excerpt { white-space: pre-wrap; font-size: 13px; color: #44403c; margin: 6px 0 0; }
-    .muted { color: #78716c; font-size: 12px; }`;
+    .muted { color: #78716c; font-size: 12px; }
+    .conclusion {
+      margin: 18px 0 22px;
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      box-shadow: 0 10px 28px rgba(28, 25, 23, 0.06);
+    }
+    .conclusion-kicker {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0 0 8px;
+      opacity: 0.85;
+    }
+    .conclusion-headline {
+      font-family: "Source Serif 4", "Noto Serif SC", Georgia, serif;
+      font-size: 24px;
+      line-height: 1.35;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .conclusion-lines { margin: 0; padding-left: 18px; }
+    .conclusion-lines li { margin: 4px 0; }
+    .tone-pass { background: #e8f6ee; border-color: #86efac; color: #14532d; }
+    .tone-resolved { background: #e8f0fb; border-color: #93c5fd; color: #1e3a8a; }
+    .tone-open { background: #fff4e5; border-color: #fdba74; color: #9a3412; }
+    .tone-blocked { background: #fde8e8; border-color: #fca5a5; color: #991b1b; }
+    .todos {
+      margin: 8px 0 20px;
+      padding: 16px 18px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid #d7dfd9;
+    }
+    .todos h2 { margin-top: 0; border-bottom: none; padding-bottom: 0; }
+    .todos ol { margin: 8px 0 0 18px; padding: 0; }
+    .todos li { margin: 8px 0; }
+    .details-section { margin-top: 28px; }
+    .details-section > summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 15px;
+      font-weight: 650;
+      color: #44403c;
+      padding: 10px 0;
+      border-bottom: 1px solid #d6ddd8;
+    }
+    .details-section > summary::-webkit-details-marker { display: none; }
+    .details-section > summary::before {
+      content: "▸ ";
+      color: #78716c;
+    }
+    .details-section[open] > summary::before { content: "▾ "; }
+    .details-body { opacity: 0.92; }
+    .audit-chip {
+      display: inline-block;
+      font-size: 12px;
+      color: #57534e;
+      background: #e7ece8;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-left: 8px;
+      font-weight: 500;
+    }`;
 }
 
 function decisionClass(decision: string): string {
@@ -63,15 +130,25 @@ function renderShell(title: string, body: string): string {
 </html>`;
 }
 
-function caseHeader(caseRecord: CaseRecord, generatedAt: string, subtitle: string): string {
+function caseHeader(
+  caseRecord: CaseRecord,
+  generatedAt: string,
+  subtitle: string,
+  options?: { showDecisionBadge?: boolean },
+): string {
   const ad = caseRecord.advertisement.content;
   const preview = ad.text.length > 280 ? `${ad.text.slice(0, 280)}...` : ad.text;
+  const showDecision = options?.showDecisionBadge !== false;
   return `<p class="brand">AAIRP Case Report</p>
   <h1>${escapeHtml(subtitle)}</h1>
   <p class="meta">案例 ${escapeHtml(caseRecord.case_id)} · 审查 ${escapeHtml(caseRecord.review_id)} · 生成于 ${escapeHtml(generatedAt)}</p>
   <p class="meta">${escapeHtml(caseRecord.dimensions.country_id)} / ${escapeHtml(caseRecord.dimensions.category_id)} / ${escapeHtml(caseRecord.advertisement.ad_type)}</p>
-  <p><span class="${decisionClass(caseRecord.decision.final_decision)}">${escapeHtml(caseRecord.decision.final_decision)}</span></p>
-  <p class="meta"><strong>结论说明：</strong>${escapeHtml(caseRecord.decision.rationale)}</p>
+  ${
+    showDecision
+      ? `<p><span class="${decisionClass(caseRecord.decision.final_decision)}">${escapeHtml(caseRecord.decision.final_decision)}</span></p>
+  <p class="meta"><strong>结论说明：</strong>${escapeHtml(caseRecord.decision.rationale)}</p>`
+      : ''
+  }
   <div class="card"><p class="muted">广告文案摘录</p><p class="excerpt">${escapeHtml(preview)}</p></div>`;
 }
 
@@ -199,8 +276,46 @@ function renderFindingPath(finding: CaseReportFinding): string {
   </tr>`;
 }
 
+function renderConclusionCard(effective: CaseEffectiveStatusView): string {
+  const lines =
+    effective.detail_lines.length === 0
+      ? ''
+      : `<ul class="conclusion-lines">${effective.detail_lines
+          .map((line) => `<li>${escapeHtml(line)}</li>`)
+          .join('')}</ul>`;
+
+  return `<section class="conclusion tone-${escapeHtml(effective.tone)}" aria-label="审核结论">
+    <p class="conclusion-kicker">审核结论</p>
+    <p class="conclusion-headline">${escapeHtml(effective.headline)}</p>
+    ${lines}
+  </section>`;
+}
+
+function renderPublishTodos(todos: PublishTodoItem[]): string {
+  if (todos.length === 0) return '';
+  const items = todos
+    .map(
+      (todo) =>
+        `<li><strong>发布前需完成：</strong>${escapeHtml(todo.summary)} <span class="muted">（${escapeHtml(todo.ref_id)}）</span></li>`,
+    )
+    .join('\n');
+  return `<section class="todos" aria-label="发布前待办">
+    <h2>发布前待办清单</h2>
+    <p class="meta">外部状态核验与披露类事项，供业务在发布环节交接处理。</p>
+    <ol>${items}</ol>
+  </section>`;
+}
+
+function renderDetailsSection(title: string, body: string, open = false): string {
+  return `<details class="details-section"${open ? ' open' : ''}>
+    <summary>${escapeHtml(title)}</summary>
+    <div class="details-body">${body}</div>
+  </details>`;
+}
+
 export function renderLegalAuditHtml(model: CaseReportModel): string {
-  const { case: caseRecord, findings, evidence_links, generated_at } = model;
+  const { case: caseRecord, findings, evidence_links, generated_at, effective, publish_todos } =
+    model;
   const evidenceViews = toEvidenceViews(evidence_links);
   const threadViews = toThreadViews(model);
   const threadRows = threadViews
@@ -221,31 +336,37 @@ export function renderLegalAuditHtml(model: CaseReportModel): string {
       ? `<p class="meta">本线程无证据关联记录。</p>`
       : evidenceViews.map(renderEvidenceView).join('\n');
 
-  return renderShell(
-    `完整审核报告 ${caseRecord.case_id}`,
-    `${caseHeader(caseRecord, generated_at, '完整审核报告')}
-    <h2>决策路径</h2>
-    <div class="card">
-      <p><strong>AI 决策：</strong>${escapeHtml(caseRecord.decision.ai_decision)} → <strong>最终：</strong>${escapeHtml(caseRecord.decision.final_decision)}</p>
-      <p class="meta">判定于 ${escapeHtml(caseRecord.decision.decided_at)}</p>
+  const decisionPath = `<div class="card">
+      <p><strong>AI 决策：</strong>${escapeHtml(caseRecord.decision.ai_decision)} → <strong>最终：</strong>${escapeHtml(caseRecord.decision.final_decision)}<span class="audit-chip">审计快照 · 未改写</span></p>
+      <p class="meta">判定于 ${escapeHtml(caseRecord.decision.decided_at)} · 有效状态 ${escapeHtml(effective.status)}</p>
       <p>${escapeHtml(caseRecord.decision.rationale)}</p>
       ${caseRecord.human_feedback ? `<p class="meta">人工反馈：${escapeHtml(caseRecord.human_feedback.decision)} · ${escapeHtml(caseRecord.human_feedback.comment ?? '')}</p>` : '<p class="muted">无整案人工反馈记录</p>'}
-    </div>
+    </div>`;
 
-    <h2>Finding 清单（${findings.length}）</h2>
-    <table>
+  const findingsTable = `<table>
       <thead><tr><th>模块</th><th>Ref</th><th>Decision</th><th>Severity</th><th>Remediation</th><th>摘要</th></tr></thead>
       <tbody>${findings.map(renderFindingPath).join('\n')}</tbody>
-    </table>
+    </table>`;
 
-    <h2>证据判断（不含原始文件字节）</h2>
-    <p class="meta">relevance=none / prescreen 仅展示元数据；strong / partial 展示判断与短摘录。</p>
-    ${evidenceBlock}
-
-    <h2>提交线程历史（thread_id=${escapeHtml(caseRecord.thread_id ?? caseRecord.case_id)}）</h2>
-    <table>
+  const threadTable = `<table>
       <thead><tr><th>Case</th><th>时间</th><th>结论</th><th>Parent</th><th>计数</th><th>理由</th></tr></thead>
       <tbody>${threadRows}</tbody>
-    </table>`,
+    </table>`;
+
+  return renderShell(
+    `完整审核报告 ${caseRecord.case_id}`,
+    `${caseHeader(caseRecord, generated_at, '完整审核报告', { showDecisionBadge: false })}
+    ${renderConclusionCard(effective)}
+    ${renderPublishTodos(publish_todos)}
+    ${renderDetailsSection('详情 · 决策路径', decisionPath)}
+    ${renderDetailsSection(`详情 · Finding 清单（${findings.length}）`, findingsTable)}
+    ${renderDetailsSection(
+      '详情 · 证据判断（不含原始文件字节）',
+      `<p class="meta">relevance=none / prescreen 仅展示元数据；strong / partial 展示判断与短摘录。</p>${evidenceBlock}`,
+    )}
+    ${renderDetailsSection(
+      `详情 · 提交线程历史（thread_id=${caseRecord.thread_id ?? caseRecord.case_id}）`,
+      threadTable,
+    )}`,
   );
 }
