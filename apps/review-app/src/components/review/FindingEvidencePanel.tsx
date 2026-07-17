@@ -87,8 +87,8 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
       )}
       {judgment.text_unreadable && (
         <p className="text-xs leading-relaxed text-rose-800">
-          未能从文件提取可选中文本（v1 仅支持纯文本 / 带文字层的 PDF，无 OCR）。扫描件或图片型 PDF
-          会得到 relevance=none，这不代表模型已读过材料后判定无关——请改传 .txt 或可选中文本的 PDF 后重试。
+          未能从文件提取可读文本（PDF 使用标准文字层解析；扫描件/纯图片 PDF 仍需 OCR，v1
+          未覆盖）。请改传可选中文字的 PDF 或 .txt 后重试。
         </p>
       )}
     </div>

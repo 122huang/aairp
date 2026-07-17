@@ -1,15 +1,54 @@
+import { extractText, getDocumentProxy } from 'unpdf';
+
 export type EvidenceTextExtractionResult =
   | { ok: true; text: string }
   | { ok: false; reason: 'unreadable' | 'unsupported_type' };
 
 const MIN_EXTRACTED_CHARS = 20;
 
-/** v1: plain text + standard PDF text layer only (no OCR / vision). */
-export function extractEvidenceText(
+/** Reject extractions that are mostly binary/control noise (old regex scraper failure mode). */
+function looksLikeReadableText(text: string): boolean {
+  const trimmed = text.trim();
+  if (trimmed.length < MIN_EXTRACTED_CHARS) return false;
+  const sample = trimmed.slice(0, 4000);
+  let letters = 0;
+  let controls = 0;
+  for (const ch of sample) {
+    const code = ch.codePointAt(0) ?? 0;
+    if (
+      (code >= 0x41 && code <= 0x5a) ||
+      (code >= 0x61 && code <= 0x7a) ||
+      (code >= 0x4e00 && code <= 0x9fff) ||
+      (code >= 0x30 && code <= 0x39)
+    ) {
+      letters += 1;
+    } else if (code < 0x09 || (code > 0x0d && code < 0x20) || code === 0xfffd) {
+      controls += 1;
+    }
+  }
+  if (controls / sample.length > 0.05) return false;
+  if (letters / sample.length < 0.2) return false;
+  return true;
+}
+
+async function extractPdfWithUnpdf(buffer: Buffer): Promise<string> {
+  const pdf = await getDocumentProxy(new Uint8Array(buffer));
+  const result = await extractText(pdf, { mergePages: true });
+  const text = Array.isArray(result.text) ? result.text.join('\n') : String(result.text ?? '');
+  return text.replace(/\u0000/g, '').replace(/[ \t]+\n/g, '\n').trim();
+}
+
+/**
+ * v1 evidence text extraction.
+ * - Plain text: UTF-8 decode
+ * - PDF: Mozilla pdf.js via `unpdf` (handles FlateDecode / ToUnicode) — NOT a raw-byte regex scrape
+ * - No OCR / vision for image-only scans
+ */
+export async function extractEvidenceText(
   buffer: Buffer,
   mimeType: string,
   filename: string,
-): EvidenceTextExtractionResult {
+): Promise<EvidenceTextExtractionResult> {
   const lowerName = filename.toLowerCase();
   const mime = mimeType.toLowerCase();
 
@@ -20,62 +59,28 @@ export function extractEvidenceText(
     lowerName.endsWith('.csv')
   ) {
     const text = buffer.toString('utf8').trim();
-    return text.length >= MIN_EXTRACTED_CHARS
+    return text.length >= MIN_EXTRACTED_CHARS && looksLikeReadableText(text)
       ? { ok: true, text }
       : { ok: false, reason: 'unreadable' };
   }
 
   if (mime === 'application/pdf' || lowerName.endsWith('.pdf')) {
-    const text = extractPdfTextLayer(buffer);
-    return text.length >= MIN_EXTRACTED_CHARS
-      ? { ok: true, text }
-      : { ok: false, reason: 'unreadable' };
+    try {
+      const text = await extractPdfWithUnpdf(buffer);
+      if (!looksLikeReadableText(text)) {
+        return { ok: false, reason: 'unreadable' };
+      }
+      return { ok: true, text };
+    } catch {
+      return { ok: false, reason: 'unreadable' };
+    }
   }
 
   // Best-effort UTF-8 for unknown types
   const fallback = buffer.toString('utf8').replace(/[\x00-\x08\x0e-\x1f]/g, ' ').trim();
-  if (fallback.length >= MIN_EXTRACTED_CHARS && /[\u4e00-\u9fffA-Za-z0-9]/.test(fallback)) {
+  if (looksLikeReadableText(fallback)) {
     return { ok: true, text: fallback };
   }
 
   return { ok: false, reason: 'unsupported_type' };
-}
-
-/** Extract literal strings from PDF content streams (text layer only). */
-function extractPdfTextLayer(buffer: Buffer): string {
-  const raw = buffer.toString('latin1');
-  const chunks: string[] = [];
-
-  const parenRegex = /\((?:\\.|[^\\()])*\)/g;
-  let match: RegExpExecArray | null;
-  while ((match = parenRegex.exec(raw)) !== null) {
-    const decoded = decodePdfLiteral(match[0]);
-    if (decoded.trim().length >= 2) chunks.push(decoded.trim());
-  }
-
-  const hexRegex = /<([0-9A-Fa-f\s]+)>/g;
-  while ((match = hexRegex.exec(raw)) !== null) {
-    const hex = match[1]!.replace(/\s+/g, '');
-    if (hex.length >= 4 && hex.length % 2 === 0) {
-      let decoded = '';
-      for (let i = 0; i < hex.length; i += 2) {
-        const code = parseInt(hex.slice(i, i + 2), 16);
-        if (code >= 32 && code <= 126) decoded += String.fromCharCode(code);
-      }
-      if (decoded.trim().length >= 2) chunks.push(decoded.trim());
-    }
-  }
-
-  return [...new Set(chunks)].join('\n').replace(/\s+/g, ' ').trim();
-}
-
-function decodePdfLiteral(token: string): string {
-  const inner = token.slice(1, -1);
-  return inner
-    .replace(/\\n/g, '\n')
-    .replace(/\\r/g, '\r')
-    .replace(/\\t/g, '\t')
-    .replace(/\\\(/g, '(')
-    .replace(/\\\)/g, ')')
-    .replace(/\\\\/g, '\\');
 }

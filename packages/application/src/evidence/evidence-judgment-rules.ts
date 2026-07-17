@@ -82,10 +82,11 @@ export function buildPrescreenJudgment(reason: string): EvidenceAiJudgment {
 export function buildUnreadableJudgment(): EvidenceAiJudgment {
   return {
     relevance: 'none',
-    relevance_reasoning: 'Evidence file text layer could not be extracted (v1 supports standard PDF text layer and plain text only).',
+    relevance_reasoning:
+      'Evidence file text could not be extracted as readable content (PDF text-layer parse failed or file is image-only; v1 has no OCR).',
     sufficiency: 'insufficient',
     sufficiency_reasoning:
-      'Please re-upload a clearer document or a PDF with selectable text — same guidance as demo-apac-sa-evidence-unreadable.',
+      'Please re-upload a text-layer PDF or plain-text export — same guidance as demo-apac-sa-evidence-unreadable.',
     extracted_key_facts: '',
     text_unreadable: true,
     judged_at: new Date().toISOString(),
