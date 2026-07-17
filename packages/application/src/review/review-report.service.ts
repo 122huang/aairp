@@ -13,7 +13,6 @@ import type {
   RuleFinding,
   VisionFinding,
 } from '@aairp/shared-kernel';
-import { confidenceBand } from './decision-engine.service.js';
 
 export type ReviewReportConfig = {
   now?: () => Date;
@@ -253,7 +252,6 @@ function renderReportHtml(
   const playbookSummaries = findings.filter((finding) => finding.module === 'PLAYBOOK');
   const llmSummaries = findings.filter((finding) => finding.module === 'LLM');
   const visionSummaries = findings.filter((finding) => finding.module === 'VISION');
-  const band = confidenceBand(decision.confidence);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -294,7 +292,6 @@ function renderReportHtml(
 
   <h2>Decision</h2>
   <p class="decision ${decisionCssClass(decision.finalDecision)}">${escapeHtml(decision.finalDecision)}</p>
-  <p><strong>Confidence:</strong> ${decision.confidence} (${escapeHtml(band)})</p>
   <p><strong>Rationale:</strong> ${escapeHtml(decision.rationale)}</p>
   <p class="counts"><strong>Finding counts:</strong> Rule ${ruleFindings.length}, Case ${caseSummaries.length}, Playbook ${playbookFindings.length}, LLM ${openRiskResult.findings.length}, Vision ${visionSummaries.length}</p>
   ${openRiskNote}

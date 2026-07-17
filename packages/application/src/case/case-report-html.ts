@@ -227,7 +227,7 @@ export function renderLegalAuditHtml(model: CaseReportModel): string {
     <h2>决策路径</h2>
     <div class="card">
       <p><strong>AI 决策：</strong>${escapeHtml(caseRecord.decision.ai_decision)} → <strong>最终：</strong>${escapeHtml(caseRecord.decision.final_decision)}</p>
-      <p class="meta">置信度 ${caseRecord.decision.confidence} · 判定于 ${escapeHtml(caseRecord.decision.decided_at)}</p>
+      <p class="meta">判定于 ${escapeHtml(caseRecord.decision.decided_at)}</p>
       <p>${escapeHtml(caseRecord.decision.rationale)}</p>
       ${caseRecord.human_feedback ? `<p class="meta">人工反馈：${escapeHtml(caseRecord.human_feedback.decision)} · ${escapeHtml(caseRecord.human_feedback.comment ?? '')}</p>` : '<p class="muted">无整案人工反馈记录</p>'}
     </div>

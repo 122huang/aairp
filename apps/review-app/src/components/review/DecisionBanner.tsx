@@ -8,7 +8,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 
 type DecisionBannerProps = {
   decision: string;
-  confidence: number;
   rationale: string;
   refIds: string[];
   findingsCount: number;
@@ -16,7 +15,6 @@ type DecisionBannerProps = {
 
 export function DecisionBanner({
   decision,
-  confidence,
   rationale,
   refIds,
   findingsCount,
@@ -35,12 +33,6 @@ export function DecisionBanner({
     >
       <div className="flex flex-wrap items-center gap-3">
         <span className={cn('text-xl font-semibold', style.verdict)}>{decision}</span>
-        <span
-          className={cn('rounded-md px-2 py-0.5 text-xs font-medium', style.badge)}
-          title="决策档位基准值：由最终决策档（PASS/WARN/REVIEW/REJECT）映射的固定基准，不是针对本条文案的模型把握度；与 finding 来自 RULE 还是 LLM 无关。"
-        >
-          决策档位基准 {(confidence * 100).toFixed(0)}%
-        </span>
       </div>
 
       <ReviewResultHelp className="mt-2" />
