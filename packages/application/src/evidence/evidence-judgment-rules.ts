@@ -82,10 +82,11 @@ export function buildPrescreenJudgment(reason: string): EvidenceAiJudgment {
 export function buildUnreadableJudgment(): EvidenceAiJudgment {
   return {
     relevance: 'none',
-    relevance_reasoning: 'Evidence file text layer could not be extracted (v1 supports standard PDF text layer and plain text only).',
+    relevance_reasoning:
+      'Evidence file text could not be extracted as readable content (PDF text-layer parse failed or file is image-only; v1 has no OCR).',
     sufficiency: 'insufficient',
     sufficiency_reasoning:
-      'Please re-upload a clearer document or a PDF with selectable text — same guidance as demo-apac-sa-evidence-unreadable.',
+      'Please re-upload a text-layer PDF or plain-text export — same guidance as demo-apac-sa-evidence-unreadable.',
     extracted_key_facts: '',
     text_unreadable: true,
     judged_at: new Date().toISOString(),
@@ -193,10 +194,42 @@ export type JudgmentPromptContext = EvidenceJudgmentContext & {
   evidence_text: string;
 };
 
+/**
+ * Hard window for `{evidence_text}` in the judgment prompt.
+ * Step-1 mitigation: stamp + UI when truncated. Step-2 will replace prefix
+ * truncation with claim-relevant retrieval / chunk-then-merge.
+ */
+export const EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT = 12_000;
+
+export type EvidenceTextPromptWindow = {
+  text_for_prompt: string;
+  full_len: number;
+  prompt_len: number;
+  truncated: boolean;
+  limit: number;
+};
+
+export function sliceEvidenceTextForPrompt(
+  evidenceText: string,
+  limit = EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
+): EvidenceTextPromptWindow {
+  const full_len = evidenceText.length;
+  const text_for_prompt = evidenceText.slice(0, limit);
+  const prompt_len = text_for_prompt.length;
+  return {
+    text_for_prompt,
+    full_len,
+    prompt_len,
+    truncated: full_len > prompt_len,
+    limit,
+  };
+}
+
 export function renderEvidenceJudgmentPrompt(
   template: string,
   ctx: JudgmentPromptContext,
 ): string {
+  const window = sliceEvidenceTextForPrompt(ctx.evidence_text);
   return template
     .replaceAll('{prompt_pack_version}', 'evidence-judgment-v1')
     .replaceAll('{claim_anchor_text}', ctx.claim_anchor_text)
@@ -206,7 +239,7 @@ export function renderEvidenceJudgmentPrompt(
     .replaceAll('{remediation_type}', ctx.remediation_type ?? 'EVIDENCE_SUPPLEMENT')
     .replaceAll('{evidence_source_type}', ctx.evidence.evidence_source_type)
     .replaceAll('{evidence_title}', ctx.evidence.title)
-    .replaceAll('{evidence_text}', ctx.evidence_text.slice(0, 12000))
+    .replaceAll('{evidence_text}', window.text_for_prompt)
     .replaceAll('{country_id}', ctx.country_id)
     .replaceAll('{category_id}', ctx.category_id)
     .replaceAll('{product_sku}', ctx.product_sku ?? '(not provided)')
