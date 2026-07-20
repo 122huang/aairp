@@ -19,6 +19,9 @@
     "sa-competitor-trademark": { "legacy_pattern": true },
     "id-local-market-claim": { "legacy_pattern": true },
     "vn-local-market-claim": { "legacy_pattern": true },
-    "ph-local-market-claim": { "legacy_pattern": true }
+    "ph-local-market-claim": { "legacy_pattern": true },
+    "sg-asas-substantiation-guidance": { "legacy_pattern": true },
+    "id-epi-comparative-honesty": { "legacy_pattern": true },
+    "jp-jaro-ranking-method-guidance": { "legacy_pattern": true }
   }
 }

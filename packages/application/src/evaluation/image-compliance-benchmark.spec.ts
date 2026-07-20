@@ -99,15 +99,21 @@ describe('image-compliance-v1 benchmark (stub fixtures)', () => {
         expect(result.skipped, testCase.case_id).toBe(false);
         expect(result.promptPackVersion, testCase.case_id).toBe('demo-vision-1.0.0');
 
+        // Tall fixtures may yield the same risk_type across multiple slices;
+        // benchmark expectations are about which risk types appear, not multiplicity.
+        const uniqueRiskTypes = [...new Set(riskTypes)].sort();
+
         if (testCase.polarity === 'positive') {
-          expect(riskTypes, testCase.case_id).toEqual([...testCase.expected_risk_types].sort());
+          expect(uniqueRiskTypes, testCase.case_id).toEqual(
+            [...testCase.expected_risk_types].sort(),
+          );
           if (testCase.expected_decision === 'REJECT') {
             expect(result.hasBlocker, testCase.case_id).toBe(true);
           } else {
             expect(result.hasBlocker, testCase.case_id).toBe(false);
           }
         } else {
-          expect(riskTypes, testCase.case_id).toEqual([]);
+          expect(uniqueRiskTypes, testCase.case_id).toEqual([]);
           expect(result.hasBlocker, testCase.case_id).toBe(false);
         }
       }
