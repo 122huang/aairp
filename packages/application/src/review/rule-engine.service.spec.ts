@@ -138,6 +138,27 @@ describe('RuleEngineService', () => {
     expect(finding?.decision).toBe('INFO');
   });
 
+  it('fires MY sponsored-disclosure INFO reminder for INFLUENCER_UGC', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Crispy snacks for Malaysian families with this air fryer.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-my-sponsored-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+    expect(finding?.remediationType).toBe('NOT_APPLICABLE_DISCLOSURE');
+  });
+
   it('fires JP stealth-marketing INFO reminder with CAA enforcement copy for INFLUENCER_UGC', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({
@@ -283,7 +304,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(74);
+    expect(asset.rules).toHaveLength(75);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {

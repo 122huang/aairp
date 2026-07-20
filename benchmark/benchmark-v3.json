@@ -3,7 +3,7 @@
   "benchmark_id": "aairp-benchmark-v3",
   "modules_version": "skill-modules-1.3.0",
   "description": "Quality specification benchmark — generated from v2 + skill-modules + rewrite templates",
-  "generated_at": "2026-07-02T08:08:57.770Z",
+  "generated_at": "2026-07-20T01:29:28.170Z",
   "evaluation_profile": {
     "dimensions": [
       "decision",
@@ -29,7 +29,7 @@
     "user_lines_path": "benchmark/user-lines-14.json",
     "locale_expansion_path": "benchmark/locale-expansion.json"
   },
-  "case_count": 125,
+  "case_count": 126,
   "cases": [
     {
       "case_id": "AF-001",
@@ -66,7 +66,7 @@
         "source": "golden-v1",
         "golden_id": "AF-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -108,7 +108,7 @@
         "source": "golden-v1",
         "golden_id": "AF-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -147,10 +147,9 @@
         "source": "golden-v1",
         "golden_id": "AF-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
-      },
-      "mapping_note": "KNOWN_EXCEPTION (pattern-level): sa-comparative-claim is WARN (wording-only); do not promote the whole pattern to REVIEW. SG electronics ads may still final-decision REVIEW via demo-sg-cpsr-registration-prerequisite."
+      }
     },
     {
       "case_id": "AF-004",
@@ -185,7 +184,7 @@
         "source": "golden-v1",
         "golden_id": "AF-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -217,7 +216,7 @@
         "source": "golden-v1",
         "golden_id": "AF-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "No dedicated playbook pattern; image-brand cases use rule engine."
@@ -257,7 +256,7 @@
         "source": "golden-v1",
         "golden_id": "AF-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -305,7 +304,7 @@
         "source": "golden-v1",
         "golden_id": "AF-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -337,7 +336,7 @@
         "source": "golden-v1",
         "golden_id": "AF-008",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Visual quality review; no dedicated playbook pattern."
@@ -375,7 +374,7 @@
         "source": "golden-v1",
         "golden_id": "AF-009",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -412,7 +411,7 @@
         "source": "golden-v1",
         "golden_id": "AF-010",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -451,7 +450,7 @@
         "source": "golden-v1",
         "golden_id": "PC-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -490,7 +489,7 @@
         "source": "golden-v1",
         "golden_id": "PC-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -529,7 +528,7 @@
         "source": "golden-v1",
         "golden_id": "PC-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -566,7 +565,7 @@
         "source": "golden-v1",
         "golden_id": "PC-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -603,7 +602,7 @@
         "source": "golden-v1",
         "golden_id": "PC-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -645,7 +644,7 @@
         "source": "golden-v1",
         "golden_id": "PC-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -682,7 +681,7 @@
         "source": "golden-v1",
         "golden_id": "PC-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -719,7 +718,7 @@
         "source": "golden-v1",
         "golden_id": "PC-008",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -751,7 +750,7 @@
         "source": "golden-v1",
         "golden_id": "PC-009",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
@@ -784,7 +783,7 @@
         "source": "golden-v1",
         "golden_id": "PC-010",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
@@ -827,7 +826,7 @@
         "source": "golden-v1",
         "golden_id": "PC-011",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -866,7 +865,7 @@
         "source": "golden-v1",
         "golden_id": "PC-012",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -905,7 +904,7 @@
         "source": "golden-v1",
         "golden_id": "PC-013",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -941,7 +940,7 @@
         "source": "golden-v1",
         "golden_id": "PC-014",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -980,7 +979,7 @@
         "source": "golden-v1",
         "golden_id": "PC-015",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1012,7 +1011,7 @@
         "source": "golden-v1",
         "golden_id": "PC-016",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
@@ -1052,7 +1051,7 @@
         "source": "golden-v1",
         "golden_id": "BL-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1089,7 +1088,7 @@
         "source": "golden-v1",
         "golden_id": "BL-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1131,7 +1130,7 @@
         "source": "golden-v1",
         "golden_id": "BL-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1170,7 +1169,7 @@
         "source": "golden-v1",
         "golden_id": "BL-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1209,7 +1208,7 @@
         "source": "golden-v1",
         "golden_id": "BL-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1251,14 +1250,14 @@
         "source": "golden-v1",
         "golden_id": "BL-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "BL-007",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -1288,14 +1287,14 @@
         "source": "golden-v1",
         "golden_id": "BL-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "BL-008",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -1325,14 +1324,14 @@
         "source": "golden-v1",
         "golden_id": "BL-008",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "BL-009",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -1362,7 +1361,7 @@
         "source": "golden-v1",
         "golden_id": "BL-009",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1394,7 +1393,7 @@
         "source": "golden-v1",
         "golden_id": "BL-010",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
@@ -1427,7 +1426,7 @@
         "source": "golden-v1",
         "golden_id": "BL-011",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
@@ -1467,7 +1466,7 @@
         "source": "golden-v1",
         "golden_id": "BL-012",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1503,7 +1502,7 @@
         "source": "golden-v1",
         "golden_id": "BL-013",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1542,7 +1541,7 @@
         "source": "golden-v1",
         "golden_id": "BL-014",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1581,7 +1580,7 @@
         "source": "golden-v1",
         "golden_id": "BL-015",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1613,7 +1612,7 @@
         "source": "golden-v1",
         "golden_id": "BL-016",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Visual quality review; no dedicated playbook pattern."
@@ -1651,7 +1650,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1690,7 +1689,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1729,7 +1728,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1766,7 +1765,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1802,7 +1801,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1841,7 +1840,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1880,14 +1879,14 @@
         "source": "golden-v1",
         "golden_id": "RC18-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "RC18-008",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -1917,7 +1916,7 @@
         "source": "golden-v1",
         "golden_id": "RC18-008",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -1954,14 +1953,14 @@
         "source": "golden-v1",
         "golden_id": "RC18-009",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "RC40-001",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -1991,7 +1990,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2023,7 +2022,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
@@ -2063,7 +2062,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2100,7 +2099,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2142,7 +2141,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2184,7 +2183,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2216,7 +2215,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Reviewer internal note; excluded from strict linkage by default."
@@ -2253,7 +2252,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-008",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2294,7 +2293,7 @@
         "source": "golden-v1",
         "golden_id": "RC40-009",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "No dedicated playbook pattern; rule-only coverage until pattern added."
@@ -2334,7 +2333,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2371,7 +2370,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2408,7 +2407,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2447,7 +2446,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2479,7 +2478,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "No dedicated playbook pattern."
@@ -2519,7 +2518,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2556,7 +2555,7 @@
         "source": "golden-v1",
         "golden_id": "LZ9-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2598,7 +2597,7 @@
         "source": "golden-v1",
         "golden_id": "LZ585-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2640,7 +2639,7 @@
         "source": "golden-v1",
         "golden_id": "LZ585-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2677,7 +2676,7 @@
         "source": "golden-v1",
         "golden_id": "LZ585-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2714,7 +2713,7 @@
         "source": "golden-v1",
         "golden_id": "P655-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2751,7 +2750,7 @@
         "source": "golden-v1",
         "golden_id": "P655-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2788,7 +2787,7 @@
         "source": "golden-v1",
         "golden_id": "P655-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2827,14 +2826,14 @@
         "source": "golden-v1",
         "golden_id": "P655-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "V9-001",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -2864,14 +2863,14 @@
         "source": "golden-v1",
         "golden_id": "V9-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
     {
       "case_id": "V9-002",
       "expected_skill": "Claim Review",
-      "expected_pattern": "sa-medical-claim",
+      "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-claim-blocker",
       "expected_decision": "REJECT",
       "expected_severity": "HIGH",
@@ -2901,7 +2900,7 @@
         "source": "golden-v1",
         "golden_id": "V9-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2938,7 +2937,7 @@
         "source": "golden-v1",
         "golden_id": "V9-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -2975,7 +2974,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-001",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3012,7 +3011,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-002",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3049,7 +3048,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-003",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3088,7 +3087,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-004",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3136,7 +3135,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-005",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3172,7 +3171,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-006",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3209,7 +3208,7 @@
         "source": "golden-v1",
         "golden_id": "GEN-007",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3255,7 +3254,7 @@
         "source": "ad-manifest",
         "golden_id": "sg-health-reject-cure",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3296,7 +3295,7 @@
         "source": "ad-manifest",
         "golden_id": "sg-health-pass-disclosed",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3337,7 +3336,7 @@
         "source": "ad-manifest",
         "golden_id": "sg-health-fp-secure-no-cure",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3378,7 +3377,7 @@
         "source": "ad-manifest",
         "golden_id": "sg-health-warn-disclosure",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3387,9 +3386,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "unsubstantiated-testimonial",
       "expected_rule": "demo-sg-health-superlative",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "template_id": "qualify-efficacy",
@@ -3424,7 +3423,7 @@
         "source": "ad-manifest",
         "golden_id": "sg-health-warn-superlative",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3473,7 +3472,7 @@
         "source": "ad-manifest",
         "golden_id": "sg-health-playbook-urgency",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       }
     },
@@ -3512,7 +3511,7 @@
         "source": "ad-manifest",
         "golden_id": "supplement-ad-manifest-urgency",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Ad includes #ad; disclosure rule must not fire. Pattern-only urgency case."
@@ -3548,7 +3547,7 @@
         "source": "taxonomy-gap-fill",
         "golden_id": "supplement-before-after-imagery",
         "generated_at": "2026-06-30T05:14:07.294Z",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z",
         "upstream": "benchmark-v2"
       },
       "mapping_note": "Frozen decision engine outputs WARN (not REVIEW) for playbook CONDITIONAL findings."
@@ -3558,9 +3557,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-performance-claim",
       "expected_rule": "demo-apac-sa-performance-claim",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "HIGH",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3580,7 +3579,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3588,9 +3587,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "my-local-market-claim",
       "expected_rule": "demo-my-sa-market-claim",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3610,7 +3609,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3618,9 +3617,9 @@
       "expected_skill": "Evidence Review",
       "expected_pattern": "sa-certification-evidence",
       "expected_rule": "demo-apac-sa-certification-evidence",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "HIGH",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3640,7 +3639,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3670,7 +3669,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3678,9 +3677,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-implication",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3700,7 +3699,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3708,9 +3707,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-implication",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3730,7 +3729,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3738,9 +3737,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-oil-reduction-quantified",
       "expected_rule": "demo-apac-sa-performance-claim",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "HIGH",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3760,7 +3759,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3768,9 +3767,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-analogy-claim",
       "expected_rule": "demo-apac-sa-analogy-claim",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3790,7 +3789,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3798,9 +3797,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-implication",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3820,7 +3819,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3828,9 +3827,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-implication",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3850,7 +3849,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3858,9 +3857,9 @@
       "expected_skill": "Evidence Review",
       "expected_pattern": "sa-certification-evidence",
       "expected_rule": "demo-apac-sa-certification-evidence",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "HIGH",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3880,7 +3879,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3910,7 +3909,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3918,9 +3917,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-implication",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3940,7 +3939,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -3948,9 +3947,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-health-implication",
       "expected_rule": "demo-apac-sa-health-implication",
-      "expected_decision": "REVIEW",
+      "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "REWRITE",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -3970,7 +3969,7 @@
       "provenance": {
         "source": "user-lines-14",
         "upstream": "benchmark/user-lines-14.json",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4001,7 +4000,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "id-sa-pass-rice-cooker",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4032,7 +4031,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "id-sa-pass-blender",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4063,7 +4062,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "id-sa-pass-air-fryer",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4094,7 +4093,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "id-sa-warn-category-boundary",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4125,7 +4124,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "id-sa-warn-market-ranking",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4156,7 +4155,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "id-sa-warn-sponsored-disclosure",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4187,7 +4186,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "vn-sa-pass-air-fryer",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4218,7 +4217,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "vn-sa-pass-blender",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4249,7 +4248,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "vn-sa-pass-rice-cooker",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4280,7 +4279,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "vn-sa-warn-absolute-claim",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4311,7 +4310,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "vn-sa-warn-market-ranking",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4319,9 +4318,9 @@
       "expected_skill": "Claim Review",
       "expected_pattern": null,
       "expected_rule": "demo-vn-foreign-brand-ad-approval",
-      "expected_decision": "REVIEW",
+      "expected_decision": "PASS",
       "expected_severity": "MEDIUM",
-      "expected_action": "ESCALATE",
+      "expected_action": "PASS",
       "expected_rewrite": {
         "strategy": "qualify",
         "must_remove_terms": [],
@@ -4342,7 +4341,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "vn-sa-review-foreign-brand",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4373,7 +4372,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-pass-air-fryer",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4404,7 +4403,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-pass-blender",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4435,7 +4434,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-pass-rice-cooker",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4466,7 +4465,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-warn-health-implication",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4497,7 +4496,7 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-warn-market-ranking",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4528,7 +4527,38 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-warn-sponsored-disclosure",
-        "v3_generated_at": "2026-07-02T08:08:57.770Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
+      }
+    },
+    {
+      "case_id": "my-sa-info-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-my-sponsored-disclosure",
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Tried this air fryer in partnership with the brand — crispy snacks for Malaysian families, limited promo this week.",
+      "risk": "Medium",
+      "issue": "MY sponsored disclosure INFO reminder (MCMC/ASA)",
+      "modality": "text",
+      "country_id": "MY",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "my-sa-info-sponsored-disclosure",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {
@@ -4559,9 +4589,9 @@
         "source": "locale-expansion",
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "th-sa-warn-social-proof",
-        "v3_generated_at": "2026-07-03T02:30:00.000Z"
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     }
   ],
-  "content_fingerprint": "d7f336a242baf619196ac78f7f9d669ed38c8f1ba96e047adc102f61962149e6"
+  "content_fingerprint": "86baa3fd598dc031f8f43c7b4a7a09b74b6e1e6bdafc1f97f0627aeaa7046b64"
 }
