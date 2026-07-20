@@ -1,23 +1,33 @@
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { CaseDetailPage } from '@/pages/CaseDetailPage';
+import { ReviewHistoryPage } from '@/pages/ReviewHistoryPage';
 import { ReviewHubPage } from '@/pages/ReviewHubPage';
-import type { ReviewMode } from '@/components/review/ReviewModeTabs';
+import { resolveAppRoute, type AppRoute } from '@/lib/hash-route';
 import './index.css';
 
-function resolveInitialMode(): ReviewMode {
-  return window.location.hash === '#/batch' ? 'batch' : 'single';
-}
-
 function App() {
-  const [mode, setMode] = useState<ReviewMode>(resolveInitialMode);
+  const [route, setRoute] = useState<AppRoute>(() => resolveAppRoute());
 
   useEffect(() => {
-    const onHashChange = () => setMode(resolveInitialMode());
+    const onHashChange = () => setRoute(resolveAppRoute());
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  return <ReviewHubPage initialMode={mode} />;
+  if (route.name === 'history') {
+    return <ReviewHistoryPage />;
+  }
+  if (route.name === 'case') {
+    return <CaseDetailPage caseId={route.caseId} />;
+  }
+
+  return (
+    <ReviewHubPage
+      initialMode={route.name === 'batch' ? 'batch' : 'single'}
+      initialParentCaseId={route.name === 'single' ? route.parentCaseId : undefined}
+    />
+  );
 }
 
 createRoot(document.getElementById('root')!).render(

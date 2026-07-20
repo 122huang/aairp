@@ -60,6 +60,7 @@ import { registerReviewReportController } from './controllers/review-report.cont
 import { registerDemoReviewController } from './controllers/demo-review.controller.js';
 import { registerEvidenceController } from './controllers/evidence.controller.js';
 import { registerCaseAdminController } from './controllers/case-admin.controller.js';
+import { registerDemoCasesController } from './controllers/demo-cases.controller.js';
 import { registerCaseReportController } from './controllers/case-report.controller.js';
 import { registerKosRoutes } from './kos/register-kos-routes.js';
 import { registerErrorHandler, registerTraceMiddleware } from './middleware/http.js';
@@ -300,6 +301,13 @@ export async function buildApp(config: ApiConfig) {
   });
   const caseReportService = new CaseReportService(caseReportAssemblyService);
   await registerCaseReportController(app, { caseReportService });
+
+  // Register JSON case detail before /demo/cases/:caseId/report is already registered
+  // above; Fastify matches the more specific /report route first when both exist.
+  await registerDemoCasesController(app, {
+    caseSearchService,
+    caseStore,
+  });
 
   await registerCaseAdminController(app, {
     caseSearchService,
