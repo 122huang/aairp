@@ -35,6 +35,7 @@ type CreateAndAttachBody = {
     category_id: string;
     product_sku?: string;
     ad_text: string;
+    disclaimer_text?: string;
     finding_summary: string;
     remediation_type?: string;
     risk_type: string;
@@ -120,6 +121,9 @@ export async function registerEvidenceController(
                 category_id: jc.category_id,
                 product_sku: jc.product_sku,
                 ad_text: jc.ad_text,
+                ...(jc.disclaimer_text?.trim()
+                  ? { disclaimer_text: jc.disclaimer_text.trim() }
+                  : {}),
                 finding_summary: jc.finding_summary,
                 remediation_type: jc.remediation_type,
                 risk_type: jc.risk_type,

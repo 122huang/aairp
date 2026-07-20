@@ -73,6 +73,7 @@ export type AttachEvidencePayload = {
     category_id: string;
     product_sku?: string;
     ad_text: string;
+    disclaimer_text?: string;
     finding_summary: string;
     remediation_type?: string;
     risk_type: string;

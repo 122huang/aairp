@@ -79,6 +79,26 @@ describe('validateAdvertisementUpload', () => {
     }
   });
 
+  it('accepts and persists disclaimer_text separately from text', () => {
+    const result = validateAdvertisementUpload({
+      country_id: 'SG',
+      platform_id: 'META',
+      category_id: 'sa.rice_cooker',
+      content: {
+        text: 'Cook up to 70% faster*',
+        disclaimer_text: '*Compared with slow cooking, simmering or braising',
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.input.content.text).toBe('Cook up to 70% faster*');
+      expect(result.input.content.disclaimerText).toBe(
+        '*Compared with slow cooking, simmering or braising',
+      );
+    }
+  });
+
   it('rejects too many images', () => {
     const result = validateAdvertisementUpload({
       country_id: 'SG',

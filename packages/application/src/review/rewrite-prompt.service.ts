@@ -40,6 +40,10 @@ export function renderRewritePrompt(template: string, input: RewritePromptInput)
   const { context } = input;
   return template
     .replaceAll('{ad_text}', context.normalizedContent.text)
+    .replaceAll(
+      '{disclaimer_text}',
+      context.normalizedContent.disclaimerText?.trim() || '(none provided)',
+    )
     .replaceAll('{country_id}', context.dimensions.countryId)
     .replaceAll('{platform_id}', context.dimensions.platformId)
     .replaceAll('{category_id}', context.dimensions.categoryId)

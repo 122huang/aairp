@@ -35,6 +35,7 @@ export function buildCaseEmbedText(record: CaseRecord): string {
     `ad_type=${record.advertisement.ad_type}`,
     `content=${record.advertisement.content.text}`,
     `ocr=${record.advertisement.content.ocr_text ?? ''}`,
+    `disclaimer=${record.advertisement.content.disclaimer_text ?? ''}`,
     `decision=${record.decision.ai_decision}`,
     `rules=${record.matched_rules.map((finding) => finding.ref_id).join(',')}`,
     `playbooks=${record.matched_playbooks.map((finding) => finding.ref_id).join(',')}`,
@@ -52,6 +53,7 @@ export function buildReviewContextEmbedText(
     `platform=${context.dimensions.platformId}`,
     `content=${context.normalizedContent.text ?? ''}`,
     `ocr=${context.normalizedContent.ocrText ?? ''}`,
+    `disclaimer=${context.normalizedContent.disclaimerText ?? ''}`,
     `rules=${ruleRefIds.join(',')}`,
     `playbooks=${playbookRefIds.join(',')}`,
   ].join('\n');

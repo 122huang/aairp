@@ -42,6 +42,7 @@ export function SingleReviewPanel({
   initialParentCaseId,
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
+  const [disclaimerText, setDisclaimerText] = useState('');
   const [adType, setAdType] = useState<'' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC'>('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
@@ -100,6 +101,7 @@ export function SingleReviewPanel({
     void fetchCase(initialParentCaseId)
       .then((record) => {
         setText(record.advertisement.content.text ?? '');
+        setDisclaimerText(record.advertisement.content.disclaimer_text ?? '');
         const restoredAdType = record.advertisement.ad_type;
         if (restoredAdType === 'BRAND_PRODUCT' || restoredAdType === 'INFLUENCER_UGC') {
           setAdType(restoredAdType);
@@ -126,6 +128,7 @@ export function SingleReviewPanel({
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const trimmed = text.trim();
+    const trimmedDisclaimer = disclaimerText.trim();
     if (!trimmed && imageFiles.length === 0) {
       setError('请输入广告文案或上传至少一张图片');
       return;
@@ -148,6 +151,7 @@ export function SingleReviewPanel({
         category_id: categoryId,
         content: {
           text: trimmed,
+          ...(trimmedDisclaimer ? { disclaimer_text: trimmedDisclaimer } : {}),
           ...(imageDataUrls.length > 0 ? { images: imageDataUrls } : {}),
         },
         ...(adType ? { context: { ad_type: adType } } : {}),
@@ -168,6 +172,8 @@ export function SingleReviewPanel({
   const findingsCount = mergedFindings.length;
   const countrySelected = countryId !== '';
   const canSubmit = countrySelected && !loading;
+  const looksLikeMissingDisclaimer =
+    /[*†‡]|compared with|compared to/i.test(text) && !disclaimerText.trim();
 
   return (
     <div className="grid flex-1 gap-8 lg:grid-cols-[2fr_3fr]">
@@ -191,8 +197,29 @@ export function SingleReviewPanel({
                 ref={textAreaRef}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
-                placeholder="粘贴广告文案，支持中英文混排…"
+                placeholder="粘贴广告文案主文案（标题/正文）。星号对应的脚注请填到下方专用字段…"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ad-disclaimer" className="font-medium text-ink">
+                免责声明 / 脚注（如有）
+              </Label>
+              <Textarea
+                id="ad-disclaimer"
+                value={disclaimerText}
+                onChange={(event) => setDisclaimerText(event.target.value)}
+                placeholder="例如：*Compared with slow cooking, simmering or braising"
+                className="min-h-[4.5rem]"
+              />
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                与主文案分开保存。比较基线、测试条件、星号脚注等披露文字请写在这里，否则规则引擎与证据判断都看不到。
+              </p>
+              {looksLikeMissingDisclaimer && (
+                <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900">
+                  主文案疑似含星号或 “Compared with…” 信号，但脚注字段为空。若有对应免责声明，请一并粘贴后再提交。
+                </p>
+              )}
             </div>
 
             <SharedReviewDimensions
@@ -365,11 +392,17 @@ export function SingleReviewPanel({
               reviewId={result.review_id}
               findings={result.summary.findings}
               adText={text}
+              disclaimerText={disclaimerText}
               countryId={result.summary.advertisement.country_id}
               categoryId={result.summary.advertisement.category_id}
             />
 
-            <SourceMaterial text={text} highlightSpans={highlightSpans} imagePreviews={imagePreviews} />
+            <SourceMaterial
+              text={text}
+              disclaimerText={disclaimerText}
+              highlightSpans={highlightSpans}
+              imagePreviews={imagePreviews}
+            />
           </>
         )}
       </div>

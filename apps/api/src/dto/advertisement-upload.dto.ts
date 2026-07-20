@@ -12,6 +12,7 @@ export type AdvertisementUploadResponseDto = {
     images: string[];
     landing_url?: string;
     ocr_text?: string;
+    disclaimer_text?: string;
   };
   context: {
     campaign_type?: string;
@@ -47,6 +48,9 @@ export function toAdvertisementUploadResponseDto(
         : {}),
       ...(advertisement.content.ocrText
         ? { ocr_text: advertisement.content.ocrText }
+        : {}),
+      ...(advertisement.content.disclaimerText
+        ? { disclaimer_text: advertisement.content.disclaimerText }
         : {}),
     },
     context: {

@@ -12,6 +12,7 @@ export type EvidenceJudgmentFixtureCase = {
     category_id: string;
     product_sku?: string;
     ad_text: string;
+    disclaimer_text?: string;
     claim_anchor_text: string;
     finding_summary: string;
     remediation_type: RemediationType;

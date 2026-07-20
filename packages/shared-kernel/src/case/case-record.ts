@@ -32,6 +32,8 @@ export type CaseDimensions = {
 export type CaseAdvertisementContent = {
   text: string;
   ocr_text?: string;
+  /** Explicit footnote / disclaimer / claim-qualifier copy (not merged into text). */
+  disclaimer_text?: string;
   language?: string;
   image_urls: string[];
   landing_url?: string;

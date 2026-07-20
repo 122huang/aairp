@@ -8,6 +8,7 @@ export type ReviewUploadPayload = {
   content: {
     text: string;
     images?: string[];
+    disclaimer_text?: string;
   };
   context?: {
     ad_type?: 'BRAND_PRODUCT' | 'INFLUENCER_UGC';

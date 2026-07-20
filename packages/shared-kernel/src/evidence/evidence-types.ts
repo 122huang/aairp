@@ -143,6 +143,8 @@ export type EvidenceJudgmentContext = {
   category_id: string;
   product_sku?: string;
   ad_text: string;
+  /** Explicit footnote / disclaimer / claim-qualifier copy for the claim under review. */
+  disclaimer_text?: string;
   finding_id: string;
   finding_summary: string;
   remediation_type?: string;

@@ -146,6 +146,7 @@ function caseHeader(
 ): string {
   const ad = caseRecord.advertisement.content;
   const preview = ad.text.length > 280 ? `${ad.text.slice(0, 280)}...` : ad.text;
+  const disclaimer = ad.disclaimer_text?.trim();
   const showDecision = options?.showDecisionBadge !== false;
   return `<p class="brand">AAIRP Case Report</p>
   <h1>${escapeHtml(subtitle)}</h1>
@@ -157,7 +158,11 @@ function caseHeader(
   <p class="meta"><strong>结论说明：</strong>${escapeHtml(caseRecord.decision.rationale)}</p>`
       : ''
   }
-  <div class="card"><p class="muted">广告文案摘录</p><p class="excerpt">${escapeHtml(preview)}</p></div>`;
+  <div class="card"><p class="muted">广告文案摘录</p><p class="excerpt">${escapeHtml(preview)}</p>${
+    disclaimer
+      ? `<p class="meta" style="margin-top:8px"><strong>免责声明 / 脚注：</strong>${escapeHtml(disclaimer)}</p>`
+      : ''
+  }</div>`;
 }
 
 function renderHandoffFinding(finding: CaseReportFinding): string {

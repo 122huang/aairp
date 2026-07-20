@@ -24,6 +24,7 @@ export function CaseDetailPage({ caseId }: CaseDetailPageProps) {
     null,
   );
   const [adText, setAdText] = useState('');
+  const [disclaimerText, setDisclaimerText] = useState('');
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export function CaseDetailPage({ caseId }: CaseDetailPageProps) {
         if (cancelled) return;
         setResult(caseRecordToDemoReviewResponse(record));
         setAdText(record.advertisement.content.text ?? '');
+        setDisclaimerText(record.advertisement.content.disclaimer_text ?? '');
         setImagePreviews(record.advertisement.content.image_urls ?? []);
       })
       .catch((caught) => {
@@ -150,7 +152,12 @@ export function CaseDetailPage({ caseId }: CaseDetailPageProps) {
               <FindingsList findings={mergedFindings} />
             </section>
 
-            <SourceMaterial text={adText} highlightSpans={highlightSpans} imagePreviews={imagePreviews} />
+            <SourceMaterial
+              text={adText}
+              disclaimerText={disclaimerText}
+              highlightSpans={highlightSpans}
+              imagePreviews={imagePreviews}
+            />
           </div>
         )}
       </main>
