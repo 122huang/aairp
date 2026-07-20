@@ -10,6 +10,7 @@ import type {
 } from '@aairp/shared-kernel';
 import {
   buildCaseSearchText,
+  buildCaseTextPreview,
   kosCaseStoragePath,
 } from '@aairp/shared-kernel';
 import { parseJson, toIso } from '../knowledge/pg-utils.js';
@@ -92,6 +93,17 @@ export class PgCaseKosRepository implements ICaseKosRepository {
        )`,
     ];
 
+    if (filters.case_id) {
+      params.push(filters.case_id);
+      where.push(`cr.case_id = $${params.length}`);
+    }
+    if (filters.thread_id) {
+      params.push(filters.thread_id);
+      // Older root cases may omit thread_id; treat missing as case_id.
+      where.push(
+        `coalesce(nullif(cr.payload_json->>'thread_id', ''), cr.case_id) = $${params.length}`,
+      );
+    }
     if (filters.country_id) {
       params.push(filters.country_id);
       where.push(`cr.country_id = $${params.length}`);
@@ -127,6 +139,14 @@ export class PgCaseKosRepository implements ICaseKosRepository {
     if (filters.language) {
       params.push(filters.language);
       where.push(`coalesce(cr.payload_json->'advertisement'->'content'->>'language', '') = $${params.length}`);
+    }
+    if (filters.created_from) {
+      params.push(filters.created_from);
+      where.push(`cr.created_at >= $${params.length}::timestamptz`);
+    }
+    if (filters.created_to) {
+      params.push(filters.created_to);
+      where.push(`cr.created_at <= $${params.length}::timestamptz`);
     }
 
     const whereClause = where.join(' AND ');
@@ -286,6 +306,8 @@ export class PgCaseKosRepository implements ICaseKosRepository {
 
   private mapRowToManifest(row: CaseRecordRow): CaseManifestEntry {
     const record = this.mapRowToRecord(row);
+    const textPreview = buildCaseTextPreview(record);
+    const threadId = record.thread_id?.trim() || record.case_id;
     return {
       case_id: record.case_id,
       case_version: record.case_version,
@@ -301,6 +323,8 @@ export class PgCaseKosRepository implements ICaseKosRepository {
       content_hash: record.advertisement.content_hash,
       created_at: record.created_at,
       updated_at: record.updated_at,
+      thread_id: threadId,
+      ...(textPreview ? { text_preview: textPreview } : {}),
     };
   }
 }

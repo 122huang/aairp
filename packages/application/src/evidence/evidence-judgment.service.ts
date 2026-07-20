@@ -17,10 +17,14 @@ import {
   buildUnreadableJudgment,
   isEvidenceExpired,
   renderEvidenceJudgmentPrompt,
+  sliceEvidenceTextForPrompt,
   structuralScopeExcludes,
 } from './evidence-judgment-rules.js';
 import { parseEvidenceJudgmentResponse } from './evidence-judgment-response.parser.js';
-import { createDefaultEvidenceJudgmentLlmGateway } from './evidence-judgment-llm.gateway.js';
+import {
+  createDefaultEvidenceJudgmentLlmGateway,
+  resolveEvidenceJudgmentLlmMode,
+} from './evidence-judgment-llm.gateway.js';
 
 export type EvidenceJudgmentServiceConfig = {
   evidenceStore: IEvidenceStore;
@@ -46,6 +50,18 @@ export class EvidenceJudgmentService {
     return this.config.llmGateway ?? createDefaultEvidenceJudgmentLlmGateway();
   }
 
+  private stamp(
+    judgment: EvidenceAiJudgment,
+    llmModel?: string,
+  ): EvidenceAiJudgment {
+    const mode = resolveEvidenceJudgmentLlmMode();
+    return {
+      ...judgment,
+      judgment_mode: mode,
+      llm_model: llmModel ?? (mode === 'stub' ? 'stub' : llmModel),
+    };
+  }
+
   async judgeAttachedEvidence(
     evidence: EvidenceRecord,
     context: EvidenceJudgmentContext,
@@ -58,21 +74,27 @@ export class EvidenceJudgmentService {
     };
 
     if (structuralScopeExcludes(evidence, productContext)) {
-      return buildPrescreenJudgment(
-        `Evidence scope (${JSON.stringify(evidence.scope)}) does not overlap with case context (${context.country_id}/${context.category_id}/${context.product_sku ?? 'no SKU'}).`,
+      return this.stamp(
+        buildPrescreenJudgment(
+          `Evidence scope (${JSON.stringify(evidence.scope)}) does not overlap with case context (${context.country_id}/${context.category_id}/${context.product_sku ?? 'no SKU'}).`,
+        ),
       );
     }
 
     if (isEvidenceExpired(evidence.valid_until)) {
-      return buildExpiredJudgment(evidence.valid_until!);
+      return this.stamp(buildExpiredJudgment(evidence.valid_until!));
     }
 
     let evidenceText = options?.evidenceTextOverride;
     if (!evidenceText) {
       const fileBuffer = await this.config.evidenceStore.readEvidenceFile(evidence.file.storage_path);
-      const extracted = extractEvidenceText(fileBuffer, evidence.file.mime_type, evidence.file.filename);
+      const extracted = await extractEvidenceText(
+        fileBuffer,
+        evidence.file.mime_type,
+        evidence.file.filename,
+      );
       if (!extracted.ok) {
-        return buildUnreadableJudgment();
+        return this.stamp(buildUnreadableJudgment());
       }
       evidenceText = extracted.text;
     }
@@ -91,8 +113,20 @@ export class EvidenceJudgmentService {
       context.risk_type,
     );
     if (preSourceCheck.source_rule_applied && context.remediation_type === 'EXTERNAL_STATUS_VERIFICATION') {
-      return { ...preSourceCheck, prescreen_excluded: false };
+      return this.stamp({ ...preSourceCheck, prescreen_excluded: false });
     }
+
+    const textWindow = sliceEvidenceTextForPrompt(evidenceText);
+    console.info('[evidence-judgment] evidence_text_window', {
+      evidence_id: evidence.evidence_id,
+      filename: evidence.file.filename,
+      review_id: context.review_id,
+      finding_id: context.finding_id,
+      full_len: textWindow.full_len,
+      prompt_len: textWindow.prompt_len,
+      truncated: textWindow.truncated,
+      limit: textWindow.limit,
+    });
 
     const prompt = renderEvidenceJudgmentPrompt(this.promptTemplate, {
       ...context,
@@ -100,16 +134,22 @@ export class EvidenceJudgmentService {
       evidence_text: evidenceText,
     });
 
-    const { content } = await this.llm().complete(prompt);
+    const { content, model } = await this.llm().complete(prompt);
     const parsed = parseEvidenceJudgmentResponse(content);
 
     const withRules = applySourceTypeRules(
-      { ...parsed, judged_at: new Date().toISOString() },
+      {
+        ...parsed,
+        judged_at: new Date().toISOString(),
+        text_full_len: textWindow.full_len,
+        text_prompt_len: textWindow.prompt_len,
+        ...(textWindow.truncated ? { text_truncated: true } : {}),
+      },
       context.remediation_type as RemediationType | undefined,
       evidence.evidence_source_type,
       context.risk_type,
     );
 
-    return withRules;
+    return this.stamp(withRules, model);
   }
 }

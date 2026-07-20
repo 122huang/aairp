@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { toDemoReviewResponseDto } from './demo-review.dto.js';
+import { extractParentCaseId, toDemoReviewResponseDto } from './demo-review.dto.js';
 
 describe('demo-review.dto', () => {
   it('maps ReviewHappyPathResult to snake_case response', () => {
@@ -63,5 +63,58 @@ describe('demo-review.dto', () => {
       },
       generated_at: '2026-06-26T10:10:00.000Z',
     });
+  });
+
+  it('includes case thread fields when a CaseRecord is provided', () => {
+    const dto = toDemoReviewResponseDto(
+      {
+        reviewId: 'rev_test',
+        advertisementId: 'ad_test',
+        decision: {
+          reviewId: 'rev_test',
+          finalDecision: 'PASS',
+          confidence: 1,
+          rationale: 'ok',
+          findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 0 },
+          decidedAt: '2026-06-26T10:09:00.000Z',
+        },
+        report: {
+          reviewId: 'rev_test',
+          advertisementId: 'ad_test',
+          reportHtml: '<html>report</html>',
+          summary: {
+            finalDecision: 'PASS',
+            confidence: 1,
+            rationale: 'ok',
+            findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 0 },
+            advertisement: {
+              textPreview: 'Sample',
+              countryId: 'SG',
+              platformId: 'META',
+              categoryId: 'sa.rice_cooker',
+            },
+            findings: [],
+            openRiskSkipped: true,
+          },
+          generatedAt: '2026-06-26T10:10:00.000Z',
+        },
+      },
+      {
+        case_id: 'case_root',
+        thread_id: 'case_root',
+        reviewer_id: 'pilot-default',
+      } as never,
+    );
+
+    expect(dto.case_id).toBe('case_root');
+    expect(dto.thread_id).toBe('case_root');
+    expect(dto.reviewer_id).toBe('pilot-default');
+    expect(dto.parent_case_id).toBeUndefined();
+  });
+
+  it('extractParentCaseId reads optional parent_case_id from request body', () => {
+    expect(extractParentCaseId({ parent_case_id: ' case_abc ' })).toBe('case_abc');
+    expect(extractParentCaseId({ parent_case_id: '' })).toBeUndefined();
+    expect(extractParentCaseId(null)).toBeUndefined();
   });
 });

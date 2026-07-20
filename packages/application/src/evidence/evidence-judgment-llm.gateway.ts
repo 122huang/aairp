@@ -11,11 +11,63 @@ const defaultStubPath = join(
   '../../../../demo/evidence-judgment.stub.json',
 );
 
+/**
+ * Resolve evidence-judgment LLM mode.
+ *
+ * Explicit `AAIRP_EVIDENCE_JUDGMENT_MODE=live|stub` only — does NOT inherit
+ * `AAIRP_OPEN_RISK_MODE` (kept independent so open-risk toggles cannot silently
+ * change evidence judgment). Unset → stub (local/CI safe).
+ *
+ * Production Railway sets `AAIRP_EVIDENCE_JUDGMENT_MODE=live` in railway.toml
+ * startCommand so the process always sees an explicit value.
+ *
+ * Important: stub does NOT key off document IDs / PLACEHOLDER titles.
+ * Stub always returns demo/evidence-judgment.stub.json (strong/sufficient).
+ */
 export function resolveEvidenceJudgmentLlmMode(): 'live' | 'stub' {
   const raw = process.env.AAIRP_EVIDENCE_JUDGMENT_MODE?.trim().toLowerCase();
   if (raw === 'live') return 'live';
   if (raw === 'stub') return 'stub';
-  return resolveOpenRiskLlmMode();
+  return 'stub';
+}
+
+export type EvidenceJudgmentRuntimeInfo = {
+  evidence_judgment_mode: 'live' | 'stub';
+  evidence_judgment_mode_source:
+    | 'AAIRP_EVIDENCE_JUDGMENT_MODE'
+    | 'default_stub_when_unset';
+  open_risk_mode: 'live' | 'stub';
+  open_risk_provider: string | null;
+  has_deepseek_api_key: boolean;
+  /** True when live judgment can actually call a provider. */
+  live_ready: boolean;
+};
+
+export function getEvidenceJudgmentRuntimeInfo(): EvidenceJudgmentRuntimeInfo {
+  const explicit = process.env.AAIRP_EVIDENCE_JUDGMENT_MODE?.trim().toLowerCase();
+  const evidenceMode = resolveEvidenceJudgmentLlmMode();
+  const openRiskMode = resolveOpenRiskLlmMode();
+  const provider = process.env.OPEN_RISK_LLM_PROVIDER?.trim().toLowerCase() || null;
+  const hasDeepseek = Boolean(process.env.DEEPSEEK_API_KEY?.trim());
+  const hasAnthropic = Boolean(process.env.ANTHROPIC_API_KEY?.trim());
+  const hasOpenai = Boolean(process.env.OPENAI_API_KEY?.trim());
+  const providerReady =
+    (provider === 'deepseek' && hasDeepseek) ||
+    (provider === 'anthropic' && hasAnthropic) ||
+    (provider === 'openai' && hasOpenai) ||
+    (!provider && (hasDeepseek || hasAnthropic || hasOpenai));
+
+  return {
+    evidence_judgment_mode: evidenceMode,
+    evidence_judgment_mode_source:
+      explicit === 'live' || explicit === 'stub'
+        ? 'AAIRP_EVIDENCE_JUDGMENT_MODE'
+        : 'default_stub_when_unset',
+    open_risk_mode: openRiskMode,
+    open_risk_provider: provider,
+    has_deepseek_api_key: hasDeepseek,
+    live_ready: evidenceMode === 'live' && providerReady,
+  };
 }
 
 export function createDefaultEvidenceJudgmentLlmGateway(options?: {

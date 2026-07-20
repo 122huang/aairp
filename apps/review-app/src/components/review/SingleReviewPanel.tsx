@@ -1,10 +1,12 @@
-import { useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import {
   DEMO_REVIEW_PLATFORM_ID,
   type DemoReviewCountryId,
   type DemoSaCategoryId,
 } from '@aairp/shared-kernel';
+import { fetchCase } from '@/api/cases';
 import { submitReview, type DemoReviewResponse, type ReviewApiError } from '@/api/review';
+import { openCaseReport } from '@/api/case-report';
 import { SharedReviewDimensions } from '@/components/review/SharedReviewDimensions';
 import { DecisionBanner } from '@/components/review/DecisionBanner';
 import { FindingsList } from '@/components/review/FindingsList';
@@ -14,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { AD_TYPE_OPTIONS, type AdTypeValue } from '@/lib/ad-type-copy';
 import { mergeFindingsByRiskType, extractEvidenceSpans } from '@/lib/finding-merge';
 import { collectHighlightSpans, filesToBase64, severityRank } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -26,6 +29,8 @@ type SingleReviewPanelProps = {
   onCategoryChange: (value: DemoSaCategoryId) => void;
   onCountryRequired?: () => void;
   countryShake?: boolean;
+  /** Restore resubmit context from `#/?parent_case_id=` (survives refresh via URL). */
+  initialParentCaseId?: string;
 };
 
 export function SingleReviewPanel({
@@ -35,15 +40,22 @@ export function SingleReviewPanel({
   onCategoryChange,
   onCountryRequired,
   countryShake,
+  initialParentCaseId,
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
-  const [adType, setAdType] = useState<'' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC'>('');
+  const [adType, setAdType] = useState<AdTypeValue>('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<DemoReviewResponse | null>(null);
+  /** Next submit joins this parent case's thread (set via resubmit button or URL). */
+  const [pendingParentCaseId, setPendingParentCaseId] = useState<string | null>(
+    initialParentCaseId ?? null,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const restoredParentRef = useRef<string | null>(null);
 
   const mergedFindings = useMemo(() => {
     if (!result) return [];
@@ -79,6 +91,39 @@ export function SingleReviewPanel({
     setImagePreviews([]);
   }
 
+  useEffect(() => {
+    if (!initialParentCaseId) return;
+    if (restoredParentRef.current === initialParentCaseId) return;
+    restoredParentRef.current = initialParentCaseId;
+    setPendingParentCaseId(initialParentCaseId);
+    setResult(null);
+    setError(null);
+    void fetchCase(initialParentCaseId)
+      .then((record) => {
+        setText(record.advertisement.content.text ?? '');
+        const restoredAdType = record.advertisement.ad_type;
+        if (restoredAdType === 'BRAND_PRODUCT' || restoredAdType === 'INFLUENCER_UGC') {
+          setAdType(restoredAdType);
+        }
+        onCountryChange(record.dimensions.country_id as DemoReviewCountryId);
+        onCategoryChange(record.dimensions.category_id as DemoSaCategoryId);
+        setImagePreviews(record.advertisement.content.image_urls ?? []);
+        window.requestAnimationFrame(() => {
+          textAreaRef.current?.focus();
+          textAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      })
+      .catch(() => {
+        setError(`无法加载案例 ${initialParentCaseId}，仍可手动填写后重新提交（线程关联已就绪）。`);
+      });
+  }, [initialParentCaseId, onCountryChange, onCategoryChange]);
+
+  function handleResubmitFromCase() {
+    if (!result?.case_id) return;
+    // Persist via URL so refresh / later return can restore the same parent case.
+    window.location.hash = `#/?parent_case_id=${encodeURIComponent(result.case_id)}`;
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const trimmed = text.trim();
@@ -108,7 +153,9 @@ export function SingleReviewPanel({
         },
         ...(adType ? { context: { ad_type: adType } } : {}),
         tags: ['review-app:6u-1', `market:${countryId}`],
+        ...(pendingParentCaseId ? { parent_case_id: pendingParentCaseId } : {}),
       });
+      setPendingParentCaseId(null);
       setResult(response);
     } catch (caught) {
       const apiError = caught as ReviewApiError;
@@ -131,12 +178,18 @@ export function SingleReviewPanel({
         </CardHeader>
         <CardContent>
           <form className="space-y-4" onSubmit={handleSubmit}>
+            {pendingParentCaseId && (
+              <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900">
+                将基于上一案例重新提交（线程关联已就绪）。修改文案后点击审核即可。
+              </p>
+            )}
             <div className="space-y-2">
               <Label htmlFor="ad-text" className="font-medium text-ink">
                 文案内容
               </Label>
               <Textarea
                 id="ad-text"
+                ref={textAreaRef}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
                 placeholder="粘贴广告文案，支持中英文混排…"
@@ -154,20 +207,20 @@ export function SingleReviewPanel({
 
             <div className="space-y-2">
               <Label htmlFor="ad-type" className="font-medium text-ink">
-                内容类型（可选）
+                内容类型
               </Label>
               <select
                 id="ad-type"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="flex min-h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={adType}
                 disabled={loading}
-                onChange={(event) =>
-                  setAdType(event.target.value as '' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC')
-                }
+                onChange={(event) => setAdType(event.target.value as AdTypeValue)}
               >
-                <option value="">未标注（有赠送/合作等信号时才查披露）</option>
-                <option value="BRAND_PRODUCT">品牌产品文案（不强制披露）</option>
-                <option value="INFLUENCER_UGC">网红/合作内容（发布前需确认披露标签）</option>
+                {AD_TYPE_OPTIONS.map((opt) => (
+                  <option key={opt.value || 'unlabeled'} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -266,11 +319,40 @@ export function SingleReviewPanel({
           <>
             <DecisionBanner
               decision={result.final_decision}
-              confidence={result.confidence}
               rationale={result.rationale}
               refIds={refIds}
               findingsCount={findingsCount}
             />
+
+            {result.case_id && (
+              <div className="space-y-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+                <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => openCaseReport(result.case_id!, 'business_handoff')}
+                  >
+                    导出业务提醒摘要
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => openCaseReport(result.case_id!, 'legal_audit')}
+                  >
+                    导出完整审核报告
+                  </Button>
+                  <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleResubmitFromCase}>
+                    基于此案例修改后重新提交
+                  </Button>
+                </div>
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  业务提醒摘要仅在 PASS/WARN，或 REVIEW 且全部 REVIEW
+                  finding 已完成证据确认时可导出；完整审核报告始终可导出。重新提交将关联到同一审查线程。
+                </p>
+              </div>
+            )}
 
             <section>
               <h2 className="mb-3 text-sm font-semibold text-ink">

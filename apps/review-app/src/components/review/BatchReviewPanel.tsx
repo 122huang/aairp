@@ -6,6 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { useBatchReview } from '@/hooks/use-batch-review';
+import {
+  AD_TYPE_OPTIONS,
+  DISCLOSURE_REMINDER_TEXT,
+  type AdTypeValue,
+} from '@/lib/ad-type-copy';
 import { decisionBannerStyle } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
 import { Loader2, X } from 'lucide-react';
@@ -59,11 +64,11 @@ function BatchDetailPanel({ item, onClose }: { item: BatchReviewItem; onClose: (
               <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">结论</h3>
               <div className={cn('rounded-md border-l-4 px-3 py-2', banner.bar, banner.background)}>
                 <span className={cn('font-semibold', banner.verdict)}>{item.result.final_decision}</span>
-                <span className="ml-2 text-muted-foreground">
-                  决策档位基准 {(item.result.confidence * 100).toFixed(0)}%
-                </span>
               </div>
               <p className="mt-2 text-muted-foreground">{item.result.rationale}</p>
+              <p className="mt-3 rounded-md border border-gray-200/80 bg-white/60 px-3 py-2 text-xs leading-relaxed text-ink/75">
+                {DISCLOSURE_REMINDER_TEXT}
+              </p>
             </section>
 
             <section>
@@ -108,6 +113,7 @@ export function BatchReviewPanel({
   batchReview,
 }: BatchReviewPanelProps) {
   const [rawText, setRawText] = useState('');
+  const [adType, setAdType] = useState<AdTypeValue>('');
   const [formError, setFormError] = useState<string | null>(null);
 
   const { items, progress, running, selectedIndex, setSelectedIndex, startBatch, cancel, previewLines } =
@@ -126,7 +132,11 @@ export function BatchReviewPanel({
       return;
     }
     setFormError(null);
-    const outcome = await startBatch(rawText, { countryId, categoryId });
+    const outcome = await startBatch(rawText, {
+      countryId,
+      categoryId,
+      adType,
+    });
     if (!outcome.ok) {
       setFormError(outcome.error);
     }
@@ -165,6 +175,28 @@ export function BatchReviewPanel({
               disabled={running}
               countryShake={countryShake}
             />
+
+            <div className="space-y-2">
+              <Label htmlFor="batch-ad-type" className="font-medium text-ink">
+                内容类型（整批统一，默认未标注）
+              </Label>
+              <select
+                id="batch-ad-type"
+                className="flex min-h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                value={adType}
+                disabled={running}
+                onChange={(event) => setAdType(event.target.value as AdTypeValue)}
+              >
+                {AD_TYPE_OPTIONS.map((opt) => (
+                  <option key={opt.value || 'unlabeled'} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-muted-foreground">
+                对本批次全部文案生效，无需逐行选择。
+              </p>
+            </div>
 
             {showDraftPreview && (
               <div className="rounded-md border border-gray-200 bg-gray-50 p-3">

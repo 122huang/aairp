@@ -37,6 +37,23 @@ export type EvidenceAiJudgment = {
   source_rule_applied?: boolean;
   /** true when evidence text could not be extracted (no OCR in v1). */
   text_unreadable?: boolean;
+  /**
+   * true when extracted evidence text exceeded the judgment prompt window
+   * (prefix truncation). Reviewers must not treat the AI excerpt as full-doc.
+   */
+  text_truncated?: boolean;
+  /** Character length of extracted evidence text before prompt windowing. */
+  text_full_len?: number;
+  /** Character length actually placed into the judgment prompt. */
+  text_prompt_len?: number;
+  /**
+   * Which LLM path produced this judgment.
+   * stub = fixed demo/evidence-judgment.stub.json (ignores document text).
+   * live = real provider call. Always stamp so operators can audit misconfig.
+   */
+  judgment_mode?: 'live' | 'stub';
+  /** Concrete model id when live; "stub" when judgment_mode=stub. */
+  llm_model?: string;
   judged_at: string;
   prompt_pack_version?: string;
 };

@@ -142,4 +142,52 @@ describe('JsonCaseStore', () => {
       await rm(root, { recursive: true, force: true });
     }
   });
+
+  it('filters by case_id, thread_id, and created_from for history search', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'aairp-cases-'));
+    try {
+      const store = new JsonCaseStore({ rootPath: root });
+      await store.save(
+        sampleCase({
+          case_id: 'case_root',
+          review_id: 'rev_root',
+          thread_id: 'case_root',
+          created_at: '2026-07-10T00:00:00.000Z',
+          updated_at: '2026-07-10T00:00:00.000Z',
+        }),
+      );
+      await store.save(
+        sampleCase({
+          case_id: 'case_child',
+          review_id: 'rev_child',
+          thread_id: 'case_root',
+          parent_case_id: 'case_root',
+          created_at: '2026-07-18T00:00:00.000Z',
+          updated_at: '2026-07-18T00:00:00.000Z',
+          decision: {
+            ai_decision: 'WARN',
+            confidence: 0.7,
+            rationale: 'warn',
+            finding_counts: { rule: 0, playbook: 0, llm: 1 },
+            decided_at: '2026-07-18T00:00:00.000Z',
+            final_decision: 'WARN',
+          },
+        }),
+      );
+
+      const byCase = await store.search({ case_id: 'case_child' });
+      expect(byCase).toHaveLength(1);
+      expect(byCase[0]?.thread_id).toBe('case_root');
+      expect(byCase[0]?.text_preview).toContain('Clinically proven');
+
+      const byThread = await store.search({ thread_id: 'case_root' });
+      expect(byThread.map((e) => e.case_id).sort()).toEqual(['case_child', 'case_root']);
+
+      const byDate = await store.search({ created_from: '2026-07-15T00:00:00.000Z' });
+      expect(byDate).toHaveLength(1);
+      expect(byDate[0]?.case_id).toBe('case_child');
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  });
 });

@@ -76,10 +76,54 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
         >
           充分性: {judgment.sufficiency}
         </span>
+        {judgment.judgment_mode && (
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              judgment.judgment_mode === 'live'
+                ? 'bg-emerald-50 text-emerald-800'
+                : 'bg-rose-100 text-rose-900',
+            )}
+          >
+            模式: {judgment.judgment_mode}
+            {judgment.llm_model ? ` (${judgment.llm_model})` : ''}
+          </span>
+        )}
         {judgment.prescreen_excluded && (
           <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600">结构化预筛</span>
         )}
+        {judgment.text_unreadable && (
+          <span className="rounded-md bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-900">
+            文本层不可读
+          </span>
+        )}
+        {judgment.text_truncated && (
+          <span className="rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900">
+            文本已截断
+          </span>
+        )}
       </div>
+      {judgment.judgment_mode === 'stub' && (
+        <p className="text-xs leading-relaxed text-rose-800">
+          当前为 stub 模式：系统不会读取真实文档内容，返回的是固定演示结果。生产环境请设置
+          AAIRP_EVIDENCE_JUDGMENT_MODE=live。
+        </p>
+      )}
+      {judgment.text_unreadable && (
+        <p className="text-xs leading-relaxed text-rose-800">
+          未能从文件提取可读文本（PDF 使用标准文字层解析；扫描件/纯图片 PDF 仍需 OCR，v1
+          未覆盖）。请改传可选中文字的 PDF 或 .txt 后重试。
+        </p>
+      )}
+      {judgment.text_truncated &&
+        typeof judgment.text_prompt_len === 'number' &&
+        typeof judgment.text_full_len === 'number' && (
+          <p className="text-xs leading-relaxed text-amber-900">
+            证据文本较长，AI 判断仅基于前 {judgment.text_prompt_len.toLocaleString()} 字符（全文共{' '}
+            {judgment.text_full_len.toLocaleString()}{' '}
+            字符）。确认结论前请自行核对文档后部内容，勿把 AI 摘录当作全文覆盖。
+          </p>
+        )}
     </div>
   );
 }

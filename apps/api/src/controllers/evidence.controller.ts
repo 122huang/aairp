@@ -1,6 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 import { AppError, type EvidenceSourceType } from '@aairp/shared-kernel';
-import type { EvidenceService } from '@aairp/application';
+import {
+  getEvidenceJudgmentRuntimeInfo,
+  type EvidenceService,
+} from '@aairp/application';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
 
 export type EvidenceControllerDeps = {
@@ -50,6 +53,14 @@ export async function registerEvidenceController(
   deps: EvidenceControllerDeps,
 ): Promise<void> {
   const probePreHandler = createProbePreHandler();
+
+  /** Non-secret runtime modes — used to verify production is not stuck on stub. */
+  app.get('/demo/runtime-modes', { preHandler: probePreHandler }, async (_request, reply) => {
+    sendJson(reply, 200, {
+      ...getEvidenceJudgmentRuntimeInfo(),
+      checked_at: new Date().toISOString(),
+    });
+  });
 
   app.get<{ Params: { reviewId: string; findingId: string } }>(
     '/demo/reviews/:reviewId/findings/:findingId/evidence',

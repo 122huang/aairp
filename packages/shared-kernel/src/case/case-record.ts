@@ -3,6 +3,7 @@ import type { PlaybookFinding } from '../findings/playbook-finding.js';
 import type { RuleFinding } from '../findings/rule-finding.js';
 import type { VisionFinding } from '../findings/vision-finding.js';
 import type { ReviewContext } from '../context/review-context.js';
+import type { RemediationType } from '../knowledge/remediation-type.js';
 
 export const CASE_SCHEMA_VERSION = '1.0.0';
 
@@ -64,6 +65,8 @@ export type CaseMatchedFinding = {
   decision: string;
   summary: string;
   confidence: number;
+  /** Persisted from RuleFinding.remediationType when present. */
+  remediation_type?: RemediationType;
   evaluation_detail?:
     | RuleFinding['evaluationDetail']
     | PlaybookFinding['evaluationDetail']
@@ -162,6 +165,18 @@ export type CaseRecord = {
   case_id: string;
   review_id: string;
   advertisement_id: string;
+  /**
+   * Shared across resubmits of the same ad copy thread. Root case: equals case_id.
+   * Child cases inherit from parent.thread_id (or parent.case_id when older parents lack it).
+   */
+  thread_id?: string;
+  /** Previous case in the thread; omitted for the first submission. */
+  parent_case_id?: string;
+  /**
+   * Submitter placeholder until real auth exists. Written at case creation so later
+   * account systems need no backfill for new cases.
+   */
+  reviewer_id?: string;
   lifecycle_status: CaseLifecycleStatus;
   dimensions: CaseDimensions;
   advertisement: CaseAdvertisement;
@@ -196,9 +211,17 @@ export type CaseManifestEntry = {
   content_hash: string;
   created_at: string;
   updated_at: string;
+  /** Present when the case was saved with submission-thread fields. */
+  thread_id?: string;
+  /** Short advertisement text preview for list UIs. */
+  text_preview?: string;
 };
 
 export type CaseSearchFilters = {
+  /** Exact case id match. */
+  case_id?: string;
+  /** Exact thread id match (falls back to case_id for older root cases). */
+  thread_id?: string;
   country_id?: string;
   category_id?: string;
   platform_id?: string;
@@ -208,6 +231,10 @@ export type CaseSearchFilters = {
   lifecycle_status?: CaseLifecycleStatus;
   review_id?: string;
   content_hash?: string;
+  /** Inclusive lower bound on created_at (ISO-8601). */
+  created_from?: string;
+  /** Inclusive upper bound on created_at (ISO-8601). */
+  created_to?: string;
   limit?: number;
   offset?: number;
 };

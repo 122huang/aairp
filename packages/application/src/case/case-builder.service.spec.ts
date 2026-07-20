@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type { ICaseStore } from '@aairp/shared-kernel';
 import type { IAdvertisementRepository, NormalizedAdvertisement } from '@aairp/domain';
 import { AdvertisementUploadService } from '../advertisement/advertisement-upload.service.js';
-import { CaseBuilderService } from './case-builder.service.js';
+import { CaseBuilderService, DEFAULT_CASE_REVIEWER_ID } from './case-builder.service.js';
 import { CaseRecorderService } from './case-recorder.service.js';
 import { ContextBuilderService } from '../review/context-builder.service.js';
 import { DecisionEngineService } from '../review/decision-engine.service.js';
@@ -79,17 +79,129 @@ describe('CaseBuilderService + CaseRecorderService', () => {
     const caseRecord = builder.build(run);
 
     expect(caseRecord.case_id).toBe('case_18181818-1818-1818-1818-181818181818');
+    expect(caseRecord.thread_id).toBe(caseRecord.case_id);
+    expect(caseRecord.parent_case_id).toBeUndefined();
+    expect(caseRecord.reviewer_id).toBe(DEFAULT_CASE_REVIEWER_ID);
     expect(caseRecord.schema_version).toBe('1.0.0');
     expect(caseRecord.case_version).toBe(1);
     expect(caseRecord.dimensions.country_id).toBe('SG');
     expect(caseRecord.dimensions.legal_reviewed_market).toBe(true);
     expect(caseRecord.advertisement.content.text).toContain('cure');
     expect(caseRecord.matched_rules.length).toBeGreaterThan(0);
+    expect(caseRecord.matched_rules.some((finding) => finding.remediation_type)).toBe(true);
     expect(caseRecord.decision.ai_decision).toBe('REJECT');
     expect(caseRecord.decision.final_decision).toBe('REJECT');
     expect(caseRecord.llm_analysis.skipped).toBe(true);
     expect(caseRecord.reference_regulations.length).toBeGreaterThan(0);
     expect(caseRecord.created_at).toBeTruthy();
+  });
+
+  it('inherits thread_id and sets parent_case_id on resubmit', () => {
+    const builder = new CaseBuilderService({
+      createCaseId: () => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+      now: () => new Date('2026-06-26T10:11:00.000Z'),
+    });
+
+    const caseRecord = builder.build({
+      reviewId: 'rev_child',
+      advertisementId: 'ad_child',
+      decision: {
+        finalDecision: 'WARN',
+        confidence: 0.8,
+        rationale: 'test',
+        findingCounts: { blocker: 0, high: 0, medium: 1, low: 0, info: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      report: {
+        summary: { openRiskSkipped: false },
+      } as never,
+      caseSnapshot: {
+        context: {
+          reviewId: 'rev_child',
+          contentHash: 'hash',
+          contentVersion: 1,
+          dimensions: {
+            tenantId: 'demo',
+            countryId: 'SG',
+            platformId: 'tiktok',
+            categoryId: 'health.supplement',
+          },
+          normalizedContent: {
+            text: 'Revised copy for up to 8-10 people.',
+            imageUrls: [],
+          },
+          resolvedKnowledgeVersions: {},
+          advertisementContext: {},
+          tags: [],
+          builtAt: '2026-06-26T10:05:00.000Z',
+        },
+        ruleResult: { findings: [], hasBlocker: false, evaluatedAt: '2026-06-26T10:06:00.000Z' },
+        playbookResult: { findings: [], evaluatedAt: '2026-06-26T10:07:00.000Z' },
+        openRiskResult: {
+          promptPackVersion: 'demo-open-risk-1.5.4',
+          skipped: true,
+          skipReason: 'HAS_BLOCKER',
+          findings: [],
+          evaluatedAt: '2026-06-26T10:08:00.000Z',
+        },
+      } as never,
+      threadLink: {
+        parent_case_id: 'case_parent_root',
+        inherited_thread_id: 'case_parent_root',
+        reviewer_id: DEFAULT_CASE_REVIEWER_ID,
+      },
+    } as never);
+
+    expect(caseRecord.case_id).toBe('case_aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+    expect(caseRecord.thread_id).toBe('case_parent_root');
+    expect(caseRecord.parent_case_id).toBe('case_parent_root');
+    expect(caseRecord.reviewer_id).toBe(DEFAULT_CASE_REVIEWER_ID);
+  });
+
+  it('record() resolves parent thread when parent_case_id is provided', async () => {
+    const service = createHappyPathService();
+    const run = await service.run(JSON.parse(readFileSync(sampleAdPath, 'utf8')));
+
+    const parent: Awaited<ReturnType<ICaseStore['findByCaseId']>> = {
+      case_id: 'case_parent_root',
+      thread_id: 'case_parent_root',
+      reviewer_id: DEFAULT_CASE_REVIEWER_ID,
+    } as never;
+
+    const saved: Array<{ case_id: string; thread_id?: string; parent_case_id?: string }> = [];
+    const store: ICaseStore = {
+      save: async (record) => {
+        saved.push({
+          case_id: record.case_id,
+          thread_id: record.thread_id,
+          parent_case_id: record.parent_case_id,
+        });
+        return { case_id: record.case_id, path: 'mem', created: true };
+      },
+      findByCaseId: async (caseId) => (caseId === parent!.case_id ? parent : null),
+      findByReviewId: async () => null,
+      search: async () => [],
+      listManifest: async () => [],
+      exportAll: async () => [],
+    };
+
+    const recorder = new CaseRecorderService({
+      caseBuilderService: new CaseBuilderService({
+        createCaseId: () => 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+        now: () => new Date('2026-06-26T10:11:00.000Z'),
+      }),
+      caseStore: store,
+      enabled: true,
+    });
+
+    const recorded = await recorder.record(run, { parent_case_id: 'case_parent_root' });
+    expect(recorded?.thread_id).toBe('case_parent_root');
+    expect(recorded?.parent_case_id).toBe('case_parent_root');
+    expect(recorded?.reviewer_id).toBe(DEFAULT_CASE_REVIEWER_ID);
+    expect(saved[0]).toMatchObject({
+      thread_id: 'case_parent_root',
+      parent_case_id: 'case_parent_root',
+    });
   });
 
   it('maps Open Risk evidenceSpans into CaseRecord evidence TEXT_SPAN', () => {

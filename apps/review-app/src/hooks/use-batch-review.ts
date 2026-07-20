@@ -5,6 +5,7 @@ import {
   type DemoSaCategoryId,
 } from '@aairp/shared-kernel';
 import { submitReview, type ReviewUploadPayload } from '@/api/review';
+import type { AdTypeValue } from '@/lib/ad-type-copy';
 import {
   computeBatchProgress,
   createInitialBatchItems,
@@ -18,6 +19,8 @@ import {
 export type BatchReviewConfig = {
   countryId: DemoReviewCountryId;
   categoryId: DemoSaCategoryId;
+  /** Batch-level content type; applied to every line. Empty = unlabeled / auto. */
+  adType?: AdTypeValue;
   concurrency?: number;
   maxRetries?: number;
 };
@@ -68,6 +71,7 @@ export function useBatchReview() {
         platform_id: DEMO_REVIEW_PLATFORM_ID,
         category_id: config.categoryId,
         content: { text },
+        ...(config.adType ? { context: { ad_type: config.adType } } : {}),
         tags: ['review-app:batch', `market:${config.countryId}`, `batch-line:${index + 1}`],
       });
 

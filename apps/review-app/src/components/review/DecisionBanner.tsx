@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { ReviewResultHelp } from '@/components/review/ReviewResultHelp';
+import { DISCLOSURE_REMINDER_TEXT } from '@/lib/ad-type-copy';
 import { legalDecisionBannerText } from '@/lib/legal-copy';
 import { decisionBannerStyle } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -8,7 +9,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 
 type DecisionBannerProps = {
   decision: string;
-  confidence: number;
   rationale: string;
   refIds: string[];
   findingsCount: number;
@@ -16,7 +16,6 @@ type DecisionBannerProps = {
 
 export function DecisionBanner({
   decision,
-  confidence,
   rationale,
   refIds,
   findingsCount,
@@ -35,18 +34,16 @@ export function DecisionBanner({
     >
       <div className="flex flex-wrap items-center gap-3">
         <span className={cn('text-xl font-semibold', style.verdict)}>{decision}</span>
-        <span
-          className={cn('rounded-md px-2 py-0.5 text-xs font-medium', style.badge)}
-          title="决策档位基准值：由最终决策档（PASS/WARN/REVIEW/REJECT）映射的固定基准，不是针对本条文案的模型把握度；与 finding 来自 RULE 还是 LLM 无关。"
-        >
-          决策档位基准 {(confidence * 100).toFixed(0)}%
-        </span>
       </div>
 
       <ReviewResultHelp className="mt-2" />
 
       <p className="mt-2 text-sm leading-relaxed text-ink/80">
         {legalDecisionBannerText(decision, findingsCount)}
+      </p>
+
+      <p className="mt-3 rounded-md border border-gray-200/80 bg-white/60 px-3 py-2 text-xs leading-relaxed text-ink/75">
+        {DISCLOSURE_REMINDER_TEXT}
       </p>
 
       {hasDetails && (

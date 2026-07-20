@@ -13,6 +13,8 @@ export type ReviewUploadPayload = {
     ad_type?: 'BRAND_PRODUCT' | 'INFLUENCER_UGC';
   };
   tags?: string[];
+  /** When set, new case joins the parent's submission thread. */
+  parent_case_id?: string;
 };
 
 export type RewriteSuggestionDto = {
@@ -79,6 +81,10 @@ export type DemoReviewResponse = {
     open_risk_skip_reason?: string;
   };
   generated_at: string;
+  case_id?: string;
+  thread_id?: string;
+  parent_case_id?: string;
+  reviewer_id?: string;
 };
 
 export type ReviewApiError = {

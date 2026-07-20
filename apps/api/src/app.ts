@@ -10,8 +10,11 @@ import {
   CaseSearchService,
   CaseExportService,
   CaseKosAdminService,
+  CaseReportAssemblyService,
+  CaseReportService,
   EvidenceService,
   EvidenceJudgmentService,
+  getEvidenceJudgmentRuntimeInfo,
   resolveEvidenceLibraryRoot,
   KosSearchService,
   KosPublishService,
@@ -57,6 +60,8 @@ import { registerReviewReportController } from './controllers/review-report.cont
 import { registerDemoReviewController } from './controllers/demo-review.controller.js';
 import { registerEvidenceController } from './controllers/evidence.controller.js';
 import { registerCaseAdminController } from './controllers/case-admin.controller.js';
+import { registerDemoCasesController } from './controllers/demo-cases.controller.js';
+import { registerCaseReportController } from './controllers/case-report.controller.js';
 import { registerKosRoutes } from './kos/register-kos-routes.js';
 import { registerErrorHandler, registerTraceMiddleware } from './middleware/http.js';
 import { registerReviewBasicAuth } from './middleware/basic-auth.js';
@@ -273,7 +278,36 @@ export async function buildApp(config: ApiConfig) {
   const evidenceStore = new JsonEvidenceStore({ rootPath: resolveEvidenceLibraryRoot() });
   const evidenceJudgmentService = new EvidenceJudgmentService({ evidenceStore });
   const evidenceService = new EvidenceService(evidenceStore, evidenceJudgmentService);
+  const evidenceRuntime = getEvidenceJudgmentRuntimeInfo();
+  app.log.info(
+    {
+      evidence_judgment_mode: evidenceRuntime.evidence_judgment_mode,
+      evidence_judgment_mode_source: evidenceRuntime.evidence_judgment_mode_source,
+      open_risk_mode: evidenceRuntime.open_risk_mode,
+      live_ready: evidenceRuntime.live_ready,
+    },
+    'evidence judgment runtime modes',
+  );
+  if (evidenceRuntime.evidence_judgment_mode === 'stub') {
+    app.log.warn(
+      'AAIRP evidence judgment is in STUB mode — real documents will NOT be read by an LLM. Set AAIRP_EVIDENCE_JUDGMENT_MODE=live (and provider API key) for production.',
+    );
+  }
   await registerEvidenceController(app, { evidenceService });
+
+  const caseReportAssemblyService = new CaseReportAssemblyService({
+    caseStore,
+    evidenceService,
+  });
+  const caseReportService = new CaseReportService(caseReportAssemblyService);
+  await registerCaseReportController(app, { caseReportService });
+
+  // Register JSON case detail before /demo/cases/:caseId/report is already registered
+  // above; Fastify matches the more specific /report route first when both exist.
+  await registerDemoCasesController(app, {
+    caseSearchService,
+    caseStore,
+  });
 
   await registerCaseAdminController(app, {
     caseSearchService,
