@@ -219,6 +219,18 @@
       "category_id": "sa.air_fryer"
     },
     {
+      "case_id": "my-sa-info-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-my-sponsored-disclosure",
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "issue": "MY sponsored disclosure INFO reminder (MCMC/ASA)",
+      "text": "Tried this air fryer in partnership with the brand — crispy snacks for Malaysian families, limited promo this week.",
+      "country_id": "MY",
+      "category_id": "sa.air_fryer"
+    },
+    {
       "case_id": "th-sa-warn-social-proof",
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-social-proof-claim",

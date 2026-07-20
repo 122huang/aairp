@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.7",
+  "pack_version": "demo-rule-1.8.8",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -181,6 +181,68 @@
       "remediation_type": "EXTERNAL_STATUS_VERIFICATION",
       "summary_en": "Energy-using products under EECA typically need COE and labelling before advertising; confirm COE status offline (tool cannot verify SKU status). Non-blocking reminder.",
       "summary_zh": "受EECA管辖的用能产品在广告投放前通常需要完成COE认证及能效标签；请线下确认COE状态（工具无法核实具体SKU状态）。非阻塞提醒。"
+    },
+    {
+      "rule_id": "demo-my-sponsored-disclosure",
+      "rule_version_id": "demo-my-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm MCMC/ASA Malaysia advertising disclosure (#ad / #sponsored / Paid Partnership) is added before publish. Brands may bear vicarious liability for undisclosed paid content. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "kerjasama berbayar",
+        "iklan berbayar",
+        "dibiayai oleh"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "MY"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "MCMC Content Code / ASA Malaysia influencer disclosure practice (Demo)",
+        "article": "Sponsored content identification — #ad / #sponsored / Paid Partnership; brand vicarious liability (Content Code Revamp 2021 onward)"
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm MCMC/ASA Malaysia advertising disclosure (#ad / #sponsored / Paid Partnership) is added before publish. Brands may bear vicarious liability for undisclosed paid content. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加 MCMC/ASA Malaysia 要求的广告披露标签（#ad / #sponsored / Paid Partnership）。品牌方可能对未标注的付费内容承担连带责任。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-apac-sa-health-claim-blocker",

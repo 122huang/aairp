@@ -265,11 +265,12 @@
         "risk_id": "sponsored-disclosure",
         "label_zh": "赞助披露缺失",
         "label_en": "Sponsored Disclosure Missing",
-        "definition": "促销或 KOL 内容缺少市场要求的赞助披露标识（如 SG #ad、ID #iklan、PH #ad 或 Tagalog bayad na nilalaman）。",
+        "definition": "促销或 KOL 内容缺少市场要求的赞助披露标识（如 SG #ad、MY #ad/#sponsored、ID #iklan、PH #ad 或 Tagalog bayad na nilalaman）。",
         "default_severity": "LOW",
         "default_decision": "WARN",
         "rule_ids": [
           "demo-sg-sponsored-disclosure",
+          "demo-my-sponsored-disclosure",
           "demo-id-sponsored-disclosure",
           "demo-ph-sponsored-disclosure"
         ],
@@ -687,6 +688,7 @@
       },
       "applicable_rules": [
         "demo-sg-sponsored-disclosure",
+        "demo-my-sponsored-disclosure",
         "demo-id-sponsored-disclosure",
         "demo-ph-sponsored-disclosure",
         "demo-apac-sa-ai-image-disclaimer",
