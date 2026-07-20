@@ -480,6 +480,27 @@
           "default_expected_severity": "MEDIUM",
           "suggested_rewrite": "State specific environmental attributes with evidence or use neutral product-feature wording.",
           "rewrite_template_id": "qualify-performance"
+        },
+        {
+          "pattern_id": "sg-asas-substantiation-guidance",
+          "purpose": "ASAS substantiation / survey-citation hygiene for Singapore ads.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "注明调研机构、时间、样本与方法；未经调研方确认勿引用具体结论。",
+          "rewrite_template_id": "cite-evidence"
+        },
+        {
+          "pattern_id": "id-epi-comparative-honesty",
+          "purpose": "EPI comparative advertising honesty for Indonesia.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "删除贬低竞品措辞；改为同维可核验技术对比并披露方法与来源。",
+          "rewrite_template_id": "qualify-comparative"
+        },
+        {
+          "pattern_id": "jp-jaro-ranking-method-guidance",
+          "purpose": "JP ranking/survey method disclosure guidance aligned with JARO practice notes.",
+          "default_expected_severity": "MEDIUM",
+          "suggested_rewrite": "改为「根据[机构][年月]对[样本]的调查，在[范围]中…」并确保可出证明。",
+          "rewrite_template_id": "cite-evidence"
         }
       ]
     },

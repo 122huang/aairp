@@ -110,6 +110,9 @@ export type EvidenceReportView = {
     | 'extracted_key_facts'
     | 'prescreen_excluded'
     | 'source_rule_applied'
+    | 'text_truncated'
+    | 'text_full_len'
+    | 'text_prompt_len'
   >;
   override_reason?: string;
   confirmed_at?: string;

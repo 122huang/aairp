@@ -142,4 +142,96 @@ describe('EvidenceJudgmentService judgment_mode stamp', () => {
     expect(judgment.judgment_mode).toBe('live');
     expect(judgment.extracted_key_facts).toBe('');
   });
+
+  it('stamps text window lengths and text_truncated when evidence exceeds prompt limit', async () => {
+    process.env.AAIRP_EVIDENCE_JUDGMENT_MODE = 'stub';
+    const longBody = `${'Recipe table row. '.repeat(900)}HIDDEN_LATE_RECIPE`;
+    expect(longBody.length).toBeGreaterThan(12_000);
+
+    const logs: unknown[] = [];
+    const originalInfo = console.info;
+    console.info = (...args: unknown[]) => {
+      logs.push(args);
+    };
+
+    try {
+      const store = {
+        readEvidenceFile: async () => Buffer.from(longBody, 'utf8'),
+      } as Pick<IEvidenceStore, 'readEvidenceFile'>;
+
+      let seenPrompt = '';
+      const service = new EvidenceJudgmentService({
+        evidenceStore: store as IEvidenceStore,
+        llmGateway: {
+          complete: async (prompt: string) => {
+            seenPrompt = prompt;
+            return {
+              content: JSON.stringify({
+                relevance: 'partial',
+                relevance_reasoning: 'saw early recipes',
+                sufficiency: 'insufficient',
+                sufficiency_reasoning: 'most recipes exceed 30 minutes',
+                extracted_key_facts: 'Mexican chilli 35 min',
+              }),
+              model: 'stub',
+            };
+          },
+        },
+        readTextFile: () => 'body:{evidence_text}',
+      });
+
+      const judgment = await service.judgeAttachedEvidence(evidence, context);
+      expect(judgment.text_truncated).toBe(true);
+      expect(judgment.text_full_len).toBe(longBody.length);
+      expect(judgment.text_prompt_len).toBe(12_000);
+      expect(seenPrompt.includes('HIDDEN_LATE_RECIPE')).toBe(false);
+      expect(seenPrompt.length).toBeLessThan(longBody.length);
+
+      const windowLog = logs.find(
+        (entry) =>
+          Array.isArray(entry) &&
+          entry[0] === '[evidence-judgment] evidence_text_window',
+      ) as unknown[] | undefined;
+      expect(windowLog).toBeTruthy();
+      expect(windowLog?.[1]).toMatchObject({
+        evidence_id: 'ev1',
+        full_len: longBody.length,
+        prompt_len: 12_000,
+        truncated: true,
+        limit: 12_000,
+      });
+    } finally {
+      console.info = originalInfo;
+    }
+  });
+
+  it('stamps lengths without text_truncated when evidence fits the window', async () => {
+    process.env.AAIRP_EVIDENCE_JUDGMENT_MODE = 'stub';
+    const shortBody = 'Short memo with methodology and 245g reference.';
+    const store = {
+      readEvidenceFile: async () => Buffer.from(shortBody, 'utf8'),
+    } as Pick<IEvidenceStore, 'readEvidenceFile'>;
+
+    const service = new EvidenceJudgmentService({
+      evidenceStore: store as IEvidenceStore,
+      llmGateway: {
+        complete: async () => ({
+          content: JSON.stringify({
+            relevance: 'strong',
+            relevance_reasoning: 'matches',
+            sufficiency: 'sufficient',
+            sufficiency_reasoning: 'method present',
+            extracted_key_facts: '245g',
+          }),
+          model: 'stub',
+        }),
+      },
+      readTextFile: () => 'body:{evidence_text}',
+    });
+
+    const judgment = await service.judgeAttachedEvidence(evidence, context);
+    expect(judgment.text_truncated).toBeUndefined();
+    expect(judgment.text_full_len).toBe(shortBody.length);
+    expect(judgment.text_prompt_len).toBe(shortBody.length);
+  });
 });

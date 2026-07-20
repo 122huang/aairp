@@ -1,9 +1,10 @@
-import { useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import {
   DEMO_REVIEW_PLATFORM_ID,
   type DemoReviewCountryId,
   type DemoSaCategoryId,
 } from '@aairp/shared-kernel';
+import { fetchCase } from '@/api/cases';
 import { submitReview, type DemoReviewResponse, type ReviewApiError } from '@/api/review';
 import { openCaseReport } from '@/api/case-report';
 import { SharedReviewDimensions } from '@/components/review/SharedReviewDimensions';
@@ -28,6 +29,8 @@ type SingleReviewPanelProps = {
   onCategoryChange: (value: DemoSaCategoryId) => void;
   onCountryRequired?: () => void;
   countryShake?: boolean;
+  /** Restore resubmit context from `#/?parent_case_id=` (survives refresh via URL). */
+  initialParentCaseId?: string;
 };
 
 export function SingleReviewPanel({
@@ -37,6 +40,7 @@ export function SingleReviewPanel({
   onCategoryChange,
   onCountryRequired,
   countryShake,
+  initialParentCaseId,
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
   const [adType, setAdType] = useState<AdTypeValue>('');
@@ -45,10 +49,13 @@ export function SingleReviewPanel({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<DemoReviewResponse | null>(null);
-  /** Next submit joins this parent case's thread (set only via explicit resubmit button). */
-  const [pendingParentCaseId, setPendingParentCaseId] = useState<string | null>(null);
+  /** Next submit joins this parent case's thread (set via resubmit button or URL). */
+  const [pendingParentCaseId, setPendingParentCaseId] = useState<string | null>(
+    initialParentCaseId ?? null,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const restoredParentRef = useRef<string | null>(null);
 
   const mergedFindings = useMemo(() => {
     if (!result) return [];
@@ -84,15 +91,37 @@ export function SingleReviewPanel({
     setImagePreviews([]);
   }
 
-  function handleResubmitFromCase() {
-    if (!result?.case_id) return;
-    setPendingParentCaseId(result.case_id);
+  useEffect(() => {
+    if (!initialParentCaseId) return;
+    if (restoredParentRef.current === initialParentCaseId) return;
+    restoredParentRef.current = initialParentCaseId;
+    setPendingParentCaseId(initialParentCaseId);
     setResult(null);
     setError(null);
-    window.requestAnimationFrame(() => {
-      textAreaRef.current?.focus();
-      textAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
+    void fetchCase(initialParentCaseId)
+      .then((record) => {
+        setText(record.advertisement.content.text ?? '');
+        const restoredAdType = record.advertisement.ad_type;
+        if (restoredAdType === 'BRAND_PRODUCT' || restoredAdType === 'INFLUENCER_UGC') {
+          setAdType(restoredAdType);
+        }
+        onCountryChange(record.dimensions.country_id as DemoReviewCountryId);
+        onCategoryChange(record.dimensions.category_id as DemoSaCategoryId);
+        setImagePreviews(record.advertisement.content.image_urls ?? []);
+        window.requestAnimationFrame(() => {
+          textAreaRef.current?.focus();
+          textAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      })
+      .catch(() => {
+        setError(`无法加载案例 ${initialParentCaseId}，仍可手动填写后重新提交（线程关联已就绪）。`);
+      });
+  }, [initialParentCaseId, onCountryChange, onCategoryChange]);
+
+  function handleResubmitFromCase() {
+    if (!result?.case_id) return;
+    // Persist via URL so refresh / later return can restore the same parent case.
+    window.location.hash = `#/?parent_case_id=${encodeURIComponent(result.case_id)}`;
   }
 
   async function handleSubmit(event: FormEvent) {

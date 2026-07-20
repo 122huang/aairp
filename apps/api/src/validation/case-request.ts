@@ -8,6 +8,12 @@ export type CaseRollbackBody = {
 export function parseCaseSearchQuery(query: Record<string, unknown>): CaseSearchFilters {
   const filters: CaseSearchFilters = {};
 
+  if (typeof query.case_id === 'string' && query.case_id.trim()) {
+    filters.case_id = query.case_id.trim();
+  }
+  if (typeof query.thread_id === 'string' && query.thread_id.trim()) {
+    filters.thread_id = query.thread_id.trim();
+  }
   if (typeof query.country_id === 'string') filters.country_id = query.country_id;
   if (typeof query.category_id === 'string') filters.category_id = query.category_id;
   if (typeof query.platform_id === 'string') filters.platform_id = query.platform_id;
@@ -23,6 +29,12 @@ export function parseCaseSearchQuery(query: Record<string, unknown>): CaseSearch
   }
   if (typeof query.review_id === 'string') filters.review_id = query.review_id;
   if (typeof query.content_hash === 'string') filters.content_hash = query.content_hash;
+  if (typeof query.created_from === 'string' && query.created_from.trim()) {
+    filters.created_from = query.created_from.trim();
+  }
+  if (typeof query.created_to === 'string' && query.created_to.trim()) {
+    filters.created_to = query.created_to.trim();
+  }
   if (typeof query.limit === 'string') filters.limit = Number(query.limit);
   if (typeof query.offset === 'string') filters.offset = Number(query.offset);
 

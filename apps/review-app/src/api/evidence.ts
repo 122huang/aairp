@@ -9,6 +9,9 @@ export type EvidenceAiJudgmentDto = {
   prescreen_excluded?: boolean;
   source_rule_applied?: boolean;
   text_unreadable?: boolean;
+  text_truncated?: boolean;
+  text_full_len?: number;
+  text_prompt_len?: number;
   judgment_mode?: 'live' | 'stub';
   llm_model?: string;
   judged_at: string;
