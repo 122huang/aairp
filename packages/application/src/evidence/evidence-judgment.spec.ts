@@ -104,4 +104,36 @@ describe('evidence judgment rules', () => {
       expect(excluded, c.case_id).toBe(true);
     }
   });
+
+  it('adversarial claim-echo fixture locks sufficiency=insufficient', () => {
+    const c = fixture.cases.find((x) => x.case_id === 'adversarial-claim-echo-no-methodology')!;
+    expect(c).toBeTruthy();
+    expect(c.expect.sufficiency).toBe('insufficient');
+    expect(c.llm_stub_response?.sufficiency).toBe('insufficient');
+    expect(c.evidence.evidence_text.toLowerCase()).toContain('feed up to 8 people');
+    expect(c.evidence.evidence_text.toLowerCase()).not.toMatch(/method|weighed|calculation|fda/i);
+  });
+
+  it('numeric containment fixtures: covered vs exceeded stay separate from hollow-echo', () => {
+    const covered = fixture.cases.find(
+      (x) => x.case_id === 'numeric-containment-claim-covered-by-higher-evidence',
+    )!;
+    const exceeded = fixture.cases.find(
+      (x) => x.case_id === 'numeric-containment-claim-exceeds-evidence-upper-bound',
+    )!;
+    const hollow = fixture.cases.find((x) => x.case_id === 'adversarial-claim-echo-no-methodology')!;
+
+    expect(covered.expect).toEqual({
+      relevance: 'strong',
+      sufficiency: 'sufficient',
+      skip_llm: false,
+    });
+    expect(exceeded.expect.sufficiency).toBe('insufficient');
+    expect(exceeded.expect.relevance === 'none' || exceeded.expect.sufficiency === 'insufficient').toBe(
+      true,
+    );
+    // Covered/exceeded use real methodology text; hollow must not.
+    expect(covered.evidence.evidence_text).toMatch(/245g|calibrated scale/i);
+    expect(hollow.evidence.evidence_text).not.toMatch(/245g|calibrated scale/i);
+  });
 });

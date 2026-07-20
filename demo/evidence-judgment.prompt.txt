@@ -43,3 +43,13 @@ Rules:
 - For capacity/serving-size claims, check conversion methodology (e.g. total weight ÷ per-person reference) when judging sufficiency.
 - Do NOT infer facts not present in evidence text.
 - v1 is binary: no "partially sufficient" — map borderline cases to insufficient.
+
+### Hollow / circular evidence (do not weaken)
+If the evidence mainly restates, paraphrases, or "certifies" the claim wording itself without independent test method, measured data, calculation, date, or issuing institution, set sufficiency=insufficient — even when the wording and numbers match the claim exactly.
+Matching numbers alone are not substantiation. Example: a memo that only repeats "can feed up to 8 people" / "confirmed accurate" / "certified for marketing use" with no method or data → insufficient.
+
+### Quantitative containment (capacity / serving / numeric upper-bound)
+Compare the claimed numeric upper bound to the range supported by evidence measurements (not by claim-echo text).
+- If evidence measurements support a value/range whose upper bound is ≥ the claimed value (e.g. claim "up to 6 people", evidence supports 8–10 under a documented method), relevance must be at least partial (typically strong when same product/method). Sufficiency may be sufficient only when methodology and data are present.
+- If the claimed value exceeds the evidence-supported upper bound (e.g. claim 12, evidence supports 8–10), do not treat as substantiated: sufficiency must be insufficient (relevance may be none or partial).
+- Numeric containment NEVER overrides the hollow-evidence rule: restating the claim number without method/data remains insufficient even when numbers match or would otherwise "cover" the claim.
