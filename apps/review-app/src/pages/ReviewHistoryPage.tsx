@@ -6,6 +6,7 @@ import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { buildHistorySearchParams } from '@/lib/history-filters';
 import { hrefForRoute } from '@/lib/hash-route';
 import { decisionBannerStyle } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -19,16 +20,6 @@ function formatTime(iso: string): string {
   } catch {
     return iso;
   }
-}
-
-function toCreatedFrom(dateLocal: string): string | undefined {
-  if (!dateLocal) return undefined;
-  return new Date(`${dateLocal}T00:00:00`).toISOString();
-}
-
-function toCreatedTo(dateLocal: string): string | undefined {
-  if (!dateLocal) return undefined;
-  return new Date(`${dateLocal}T23:59:59.999`).toISOString();
 }
 
 export function ReviewHistoryPage() {
@@ -46,16 +37,16 @@ export function ReviewHistoryPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await searchCases({
-        ...(caseId.trim() ? { case_id: caseId.trim() } : {}),
-        ...(threadId.trim() ? { thread_id: threadId.trim() } : {}),
-        ...(countryId ? { country_id: countryId } : {}),
-        ...(decision ? { final_decision: decision } : {}),
-        ...(dateFrom ? { created_from: toCreatedFrom(dateFrom) } : {}),
-        ...(dateTo ? { created_to: toCreatedTo(dateTo) } : {}),
-        limit: 50,
-        offset: 0,
-      });
+      const response = await searchCases(
+        buildHistorySearchParams({
+          caseId,
+          threadId,
+          countryId,
+          decision,
+          dateFrom,
+          dateTo,
+        }),
+      );
       setCases(response.cases);
     } catch (caught) {
       const apiError = caught as CasesApiError;
