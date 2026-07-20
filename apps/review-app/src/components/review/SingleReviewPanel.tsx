@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { AD_TYPE_OPTIONS, type AdTypeValue } from '@/lib/ad-type-copy';
 import { mergeFindingsByRiskType, extractEvidenceSpans } from '@/lib/finding-merge';
 import { collectHighlightSpans, filesToBase64, severityRank } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -42,7 +43,7 @@ export function SingleReviewPanel({
   initialParentCaseId,
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
-  const [adType, setAdType] = useState<'' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC'>('');
+  const [adType, setAdType] = useState<AdTypeValue>('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -206,20 +207,20 @@ export function SingleReviewPanel({
 
             <div className="space-y-2">
               <Label htmlFor="ad-type" className="font-medium text-ink">
-                内容类型（可选）
+                内容类型
               </Label>
               <select
                 id="ad-type"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="flex min-h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={adType}
                 disabled={loading}
-                onChange={(event) =>
-                  setAdType(event.target.value as '' | 'BRAND_PRODUCT' | 'INFLUENCER_UGC')
-                }
+                onChange={(event) => setAdType(event.target.value as AdTypeValue)}
               >
-                <option value="">未标注（有赠送/合作等信号时才查披露）</option>
-                <option value="BRAND_PRODUCT">品牌产品文案（不强制披露）</option>
-                <option value="INFLUENCER_UGC">网红/合作内容（发布前需确认披露标签）</option>
+                {AD_TYPE_OPTIONS.map((opt) => (
+                  <option key={opt.value || 'unlabeled'} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </div>
 

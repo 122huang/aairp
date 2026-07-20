@@ -1,17 +1,18 @@
-import type {
-  CaseFinding,
-  CasePrecedent,
-  ContextualRewriteBatchResult,
-  LlmFinding,
-  OpenRiskDiscoveryResult,
-  PlaybookFinding,
-  ReviewContext,
-  ReviewDecisionResult,
-  ReviewReportFindingSummary,
-  ReviewReportResult,
-  RewriteSuggestion,
-  RuleFinding,
-  VisionFinding,
+import {
+  resolveFindingRemediationType,
+  type CaseFinding,
+  type CasePrecedent,
+  type ContextualRewriteBatchResult,
+  type LlmFinding,
+  type OpenRiskDiscoveryResult,
+  type PlaybookFinding,
+  type ReviewContext,
+  type ReviewDecisionResult,
+  type ReviewReportFindingSummary,
+  type ReviewReportResult,
+  type RewriteSuggestion,
+  type RuleFinding,
+  type VisionFinding,
 } from '@aairp/shared-kernel';
 
 export type ReviewReportConfig = {
@@ -70,6 +71,17 @@ function toFindingSummary(
   finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding,
 ): ReviewReportFindingSummary {
   const evidenceSpans = mapFindingEvidenceSpans(finding);
+  const ruleRemediation =
+    finding.module === 'RULE' ? (finding as RuleFinding).remediationType : undefined;
+  const detail = finding.evaluationDetail as
+    | { riskType?: string; patternId?: string }
+    | undefined;
+  const riskType = detail?.riskType ?? detail?.patternId;
+  const remediationType = resolveFindingRemediationType({
+    remediationType: ruleRemediation,
+    riskType,
+    refId: finding.refId,
+  });
   return {
     findingId: finding.findingId,
     module: finding.module,
@@ -77,9 +89,7 @@ function toFindingSummary(
     severity: finding.severity,
     decision: finding.decision,
     summary: finding.summary,
-    ...(finding.module === 'RULE' && finding.remediationType
-      ? { remediationType: finding.remediationType }
-      : {}),
+    ...(remediationType ? { remediationType } : {}),
     ...(evidenceSpans?.length ? { evidenceSpans } : {}),
   };
 }
