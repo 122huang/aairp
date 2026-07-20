@@ -1,5 +1,12 @@
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
-import { AlertTriangle, Check, FileText, Loader2, Paperclip } from 'lucide-react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type DragEvent,
+  type FormEvent,
+} from 'react';
+import { AlertTriangle, Check, FileText, Loader2, Paperclip, Upload } from 'lucide-react';
 import type { ReviewFindingDto } from '@/api/review';
 import {
   attachFindingEvidence,
@@ -19,6 +26,15 @@ import { Label } from '@/components/ui/label';
 
 const inputClassName =
   'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm';
+
+/** Keep in sync with the hidden file input `accept` attribute. */
+const EVIDENCE_FILE_ACCEPT = '.pdf,.txt,.md';
+const EVIDENCE_FILE_EXTENSIONS = ['.pdf', '.txt', '.md'] as const;
+
+function isAcceptedEvidenceFile(file: File): boolean {
+  const lowerName = file.name.toLowerCase();
+  return EVIDENCE_FILE_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
+}
 
 type FindingEvidencePanelProps = {
   reviewId: string;
@@ -57,54 +73,10 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
         >
           充分性: {judgment.sufficiency}
         </span>
-        {judgment.judgment_mode && (
-          <span
-            className={cn(
-              'rounded-md px-2 py-0.5 text-xs font-medium',
-              judgment.judgment_mode === 'live'
-                ? 'bg-emerald-50 text-emerald-800'
-                : 'bg-rose-100 text-rose-900',
-            )}
-          >
-            模式: {judgment.judgment_mode}
-            {judgment.llm_model ? ` (${judgment.llm_model})` : ''}
-          </span>
-        )}
         {judgment.prescreen_excluded && (
           <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600">结构化预筛</span>
         )}
-        {judgment.text_unreadable && (
-          <span className="rounded-md bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-900">
-            文本层不可读
-          </span>
-        )}
-        {judgment.text_truncated && (
-          <span className="rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900">
-            文本已截断
-          </span>
-        )}
       </div>
-      {judgment.judgment_mode === 'stub' && (
-        <p className="text-xs leading-relaxed text-rose-800">
-          当前为 stub 模式：系统不会读取真实文档内容，返回的是固定演示结果。生产环境请设置
-          AAIRP_EVIDENCE_JUDGMENT_MODE=live。
-        </p>
-      )}
-      {judgment.text_unreadable && (
-        <p className="text-xs leading-relaxed text-rose-800">
-          未能从文件提取可读文本（PDF 使用标准文字层解析；扫描件/纯图片 PDF 仍需 OCR，v1
-          未覆盖）。请改传可选中文字的 PDF 或 .txt 后重试。
-        </p>
-      )}
-      {judgment.text_truncated &&
-        typeof judgment.text_prompt_len === 'number' &&
-        typeof judgment.text_full_len === 'number' && (
-          <p className="text-xs leading-relaxed text-amber-900">
-            证据文本较长，AI 判断仅基于前 {judgment.text_prompt_len.toLocaleString()} 字符（全文共{' '}
-            {judgment.text_full_len.toLocaleString()}{' '}
-            字符）。确认结论前请自行核对文档后部内容，勿把 AI 摘录当作全文覆盖。
-          </p>
-        )}
     </div>
   );
 }
@@ -159,7 +131,59 @@ function FindingEvidenceItem({
   const [sourceType, setSourceType] = useState<(typeof EVIDENCE_SOURCE_TYPE_OPTIONS)[number]['value']>('INTERNAL_TEST');
   const [scopeSkus, setScopeSkus] = useState(productSku ?? '');
   const [file, setFile] = useState<File | null>(null);
+  const [dragActive, setDragActive] = useState(false);
+  const dragDepthRef = useRef(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function applySelectedFile(next: File | null) {
+    if (!next) {
+      setFile(null);
+      return;
+    }
+    if (!isAcceptedEvidenceFile(next)) {
+      setError('仅支持 PDF / TXT / MD 文件');
+      return;
+    }
+    setError(null);
+    setFile(next);
+  }
+
+  function handleDragEnter(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    dragDepthRef.current += 1;
+    if (event.dataTransfer.types.includes('Files')) {
+      setDragActive(true);
+    }
+  }
+
+  function handleDragLeave(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    dragDepthRef.current -= 1;
+    if (dragDepthRef.current <= 0) {
+      dragDepthRef.current = 0;
+      setDragActive(false);
+    }
+  }
+
+  function handleDragOver(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer.types.includes('Files')) {
+      event.dataTransfer.dropEffect = 'copy';
+    }
+  }
+
+  function handleDrop(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    dragDepthRef.current = 0;
+    setDragActive(false);
+    if (submitting) return;
+    const dropped = event.dataTransfer.files?.[0] ?? null;
+    applySelectedFile(dropped);
+  }
 
   const riskType = resolveFindingRiskType(finding);
   const claimAnchor = finding.evidence_spans?.[0]?.text?.trim() ?? finding.summary;
@@ -429,11 +453,68 @@ function FindingEvidenceItem({
             </div>
             <div className="space-y-1.5">
               <Label>证据文件（PDF 需有可选文字层）</Label>
-              <input ref={fileInputRef} type="file" accept=".pdf,.txt,.md" className="hidden" onChange={(e) => { setFile(e.target.files?.[0] ?? null); e.target.value = ''; }} />
-              <Button type="button" variant="outline" size="sm" disabled={submitting} onClick={() => fileInputRef.current?.click()}>
-                <Paperclip className="h-3.5 w-3.5" /> 选择文件
-              </Button>
-              {file && <span className="ml-2 text-xs">{file.name}</span>}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={EVIDENCE_FILE_ACCEPT}
+                className="hidden"
+                onChange={(e) => {
+                  applySelectedFile(e.target.files?.[0] ?? null);
+                  e.target.value = '';
+                }}
+              />
+              <div
+                role="button"
+                tabIndex={submitting ? -1 : 0}
+                aria-label="拖拽文件到此处或点击选择"
+                aria-disabled={submitting}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                onClick={() => {
+                  if (!submitting) fileInputRef.current?.click();
+                }}
+                onKeyDown={(event) => {
+                  if (submitting) return;
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    fileInputRef.current?.click();
+                  }
+                }}
+                className={cn(
+                  'flex flex-col items-center justify-center gap-2 rounded-md border border-dashed px-4 py-6 text-center transition-colors',
+                  submitting ? 'cursor-not-allowed opacity-60' : 'cursor-pointer',
+                  dragActive
+                    ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+                    : 'border-gray-300 bg-gray-50/60 hover:border-gray-400 hover:bg-gray-50',
+                )}
+              >
+                <Upload
+                  className={cn('h-5 w-5', dragActive ? 'text-blue-600' : 'text-ink/50')}
+                />
+                <p className={cn('text-xs leading-relaxed', dragActive ? 'text-blue-800' : 'text-muted-foreground')}>
+                  {dragActive ? '释放以上传文件' : '拖拽文件到此处或点击选择'}
+                </p>
+                <p className="text-[11px] text-gray-400">支持 PDF / TXT / MD</p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled={submitting}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    fileInputRef.current?.click();
+                  }}
+                >
+                  <Paperclip className="h-3.5 w-3.5" /> 选择文件
+                </Button>
+                {file && (
+                  <p className="max-w-full truncate text-xs font-medium text-ink" title={file.name}>
+                    已选：{file.name}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex gap-2">
               <Button type="submit" variant="brand" size="sm" disabled={submitting}>
