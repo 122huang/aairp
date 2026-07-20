@@ -40,6 +40,7 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 
 ## Advertisement
 - Text: {ad_text}
+- Disclaimer / footnote (explicit field; may be empty): {disclaimer_text}
 - Country: {country_id}
 - Platform: {platform_id}
 - Category: {category_id}

@@ -67,6 +67,9 @@ export class AdvertisementUploadService {
       ...(input.content.ocrText !== undefined
         ? { ocrText: input.content.ocrText }
         : {}),
+      ...(input.content.disclaimerText
+        ? { disclaimerText: input.content.disclaimerText }
+        : {}),
     });
 
     return createHash('sha256').update(canonical).digest('hex');

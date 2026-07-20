@@ -70,6 +70,9 @@ export class ContextBuilderService {
       ...(advertisement.content.ocrText
         ? { ocrText: advertisement.content.ocrText }
         : {}),
+      ...(advertisement.content.disclaimerText
+        ? { disclaimerText: advertisement.content.disclaimerText }
+        : {}),
       ...(advertisement.content.landingUrl
         ? { landingUrl: advertisement.content.landingUrl }
         : {}),

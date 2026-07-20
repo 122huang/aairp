@@ -64,6 +64,9 @@ export function searchableFields(context: ReviewContext): SearchableField[] {
   if (context.normalizedContent.ocrText) {
     fields.push({ field: 'ocr_text', value: context.normalizedContent.ocrText });
   }
+  if (context.normalizedContent.disclaimerText) {
+    fields.push({ field: 'disclaimer_text', value: context.normalizedContent.disclaimerText });
+  }
   return fields;
 }
 

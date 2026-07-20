@@ -25,6 +25,7 @@ Your job is to produce **copy-ready rewrite drafts** that address a single WARN 
 ## Advertisement context
 
 - Full ad text: {ad_text}
+- Disclaimer / footnote (explicit field): {disclaimer_text}
 - Country: {country_id}
 - Platform: {platform_id}
 - Category: {category_id}

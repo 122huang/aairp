@@ -3,6 +3,12 @@ export type AdvertisementContent = {
   images: string[];
   landingUrl?: string;
   ocrText?: string;
+  /**
+   * Explicit footnote / disclaimer / claim-qualifier copy (e.g. "*Compared with…").
+   * Persisted separately from `text` so compliance judgment does not rely on
+   * parsing hidden structure out of the main headline blob.
+   */
+  disclaimerText?: string;
 };
 
 export type AdvertisementContext = {

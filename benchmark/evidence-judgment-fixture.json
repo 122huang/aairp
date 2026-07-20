@@ -410,6 +410,36 @@
         "sufficiency_reasoning": "Evidence upper bound (10) does not cover claim of 12 people.",
         "extracted_key_facts": "Evidence supports 8–10 servings; claim asks for 12."
       }
+    },
+    {
+      "case_id": "hyperheat-70pct-footnote-three-methods-evidence-covers-one",
+      "source": "production-diagnosis",
+      "notes": "Claim uses asterisk footnote disclosing three cooking baselines (slow cooking, simmering, braising). Evidence CLM-013789-style only tests vs slow cooker. On-topic → relevance strong; incomplete comparator coverage → sufficiency insufficient. Do NOT map this to partial merely because coverage is incomplete.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "1200W Power to Cook Up to 70% faster* with HyperHeat technology.",
+        "disclaimer_text": "*Compared with slow cooking, simmering or braising",
+        "claim_anchor_text": "Cook Up to 70% faster",
+        "finding_summary": "Quantitative speed claim requires substantiation against disclosed baselines",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim"
+      },
+      "evidence": {
+        "title": "CLM-013789 HyperHeat vs slow cooker timing memo",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201"] },
+        "evidence_text": "Internal timing test CLM-013789 for PC201 HyperHeat. Compared with a conventional slow cooker (slow cooking) on the same beef stew recipe: slow cooker 180 minutes vs HyperHeat 54 minutes → about 70% faster (2.0x+ time reduction covers the 70% claim). Method: same ingredients, same fill weight, wall-clock cook time. No simmering or braising baseline runs were performed."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "insufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Evidence measures HyperHeat cook time vs slow cooking for the same PC201 speed claim; topical match is strong.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "Footnote discloses three baselines (slow cooking, simmering, braising) but evidence only tested vs slow cooking; missing simmering and braising coverage.",
+        "extracted_key_facts": "vs slow cooker 180→54 min (~70% faster); simmering and braising not tested."
+      }
     }
   ]
 }

@@ -75,6 +75,9 @@ function toContext(c: EvidenceJudgmentFixtureCase): EvidenceJudgmentContext {
     category_id: c.context.category_id,
     product_sku: c.context.product_sku,
     ad_text: c.context.ad_text,
+    ...(c.context.disclaimer_text
+      ? { disclaimer_text: c.context.disclaimer_text }
+      : {}),
     finding_summary: c.context.finding_summary,
     remediation_type: c.context.remediation_type,
     risk_type: c.context.risk_type,

@@ -18,6 +18,7 @@ export type ReviewContextResponseDto = {
   normalized_content: {
     text: string;
     ocr_text?: string;
+    disclaimer_text?: string;
     landing_page_text?: string;
     image_urls: string[];
     language?: string;
@@ -59,6 +60,9 @@ export function toReviewContextResponseDto(
       image_urls: context.normalizedContent.imageUrls,
       ...(context.normalizedContent.ocrText
         ? { ocr_text: context.normalizedContent.ocrText }
+        : {}),
+      ...(context.normalizedContent.disclaimerText
+        ? { disclaimer_text: context.normalizedContent.disclaimerText }
         : {}),
       ...(context.normalizedContent.landingPageText
         ? { landing_page_text: context.normalizedContent.landingPageText }

@@ -20,6 +20,7 @@ export type AdvertisementUploadPayload = {
     images?: string[];
     landing_url?: string;
     ocr_text?: string;
+    disclaimer_text?: string;
   };
   context?: {
     campaign_type?: string;
@@ -125,6 +126,17 @@ function normalizeContent(raw: AdvertisementUploadPayload['content']): {
     issues.push({ field: 'content.ocr_text', message: 'must be a string' });
   }
 
+  const disclaimerText =
+    typeof raw.disclaimer_text === 'string' ? raw.disclaimer_text.trim() : undefined;
+  if (raw.disclaimer_text !== undefined && typeof raw.disclaimer_text !== 'string') {
+    issues.push({ field: 'content.disclaimer_text', message: 'must be a string' });
+  } else if (disclaimerText && disclaimerText.length > UPLOAD_LIMITS.MAX_TEXT_LENGTH) {
+    issues.push({
+      field: 'content.disclaimer_text',
+      message: `must not exceed ${UPLOAD_LIMITS.MAX_TEXT_LENGTH} characters`,
+    });
+  }
+
   if (issues.length > 0) {
     return { issues };
   }
@@ -135,6 +147,7 @@ function normalizeContent(raw: AdvertisementUploadPayload['content']): {
       images,
       ...(raw.landing_url ? { landingUrl: raw.landing_url.trim() } : {}),
       ...(raw.ocr_text !== undefined ? { ocrText: raw.ocr_text.trim() } : {}),
+      ...(disclaimerText ? { disclaimerText } : {}),
     },
     issues: [],
   };

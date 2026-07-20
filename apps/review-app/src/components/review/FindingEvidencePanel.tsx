@@ -24,6 +24,7 @@ type FindingEvidencePanelProps = {
   reviewId: string;
   findings: ReviewFindingDto[];
   adText: string;
+  disclaimerText?: string;
   countryId: string;
   categoryId: string;
   productSku?: string;
@@ -136,6 +137,7 @@ function FindingEvidenceItem({
   reviewId,
   finding,
   adText,
+  disclaimerText,
   countryId,
   categoryId,
   productSku,
@@ -143,6 +145,7 @@ function FindingEvidenceItem({
   reviewId: string;
   finding: ReviewFindingDto;
   adText: string;
+  disclaimerText?: string;
   countryId: string;
   categoryId: string;
   productSku?: string;
@@ -220,6 +223,7 @@ function FindingEvidenceItem({
           category_id: categoryId,
           product_sku: productSku,
           ad_text: adText,
+          ...(disclaimerText?.trim() ? { disclaimer_text: disclaimerText.trim() } : {}),
           finding_summary: finding.summary,
           remediation_type: finding.remediation_type,
           risk_type: riskType,
@@ -456,6 +460,7 @@ export function FindingEvidencePanel({
   reviewId,
   findings,
   adText,
+  disclaimerText,
   countryId,
   categoryId,
   productSku,
@@ -485,6 +490,7 @@ export function FindingEvidencePanel({
             reviewId={reviewId}
             finding={finding}
             adText={adText}
+            disclaimerText={disclaimerText}
             countryId={countryId}
             categoryId={categoryId}
             productSku={productSku}

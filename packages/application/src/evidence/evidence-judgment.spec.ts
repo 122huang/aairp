@@ -139,6 +139,25 @@ describe('evidence judgment rules', () => {
     expect(covered.evidence.evidence_text).toMatch(/245g|calibrated scale/i);
     expect(hollow.evidence.evidence_text).not.toMatch(/245g|calibrated scale/i);
   });
+
+  it('locks hyperheat footnote three-methods / evidence-covers-one as strong+insufficient', () => {
+    const c = fixture.cases.find(
+      (x) => x.case_id === 'hyperheat-70pct-footnote-three-methods-evidence-covers-one',
+    )!;
+    expect(c.context.disclaimer_text).toMatch(/slow cooking,\s*simmering or braising/i);
+    expect(c.evidence.evidence_text.toLowerCase()).toContain('slow cooker');
+    expect(c.evidence.evidence_text.toLowerCase()).toMatch(/no simmering or braising/);
+    expect(c.expect).toEqual({
+      relevance: 'strong',
+      sufficiency: 'insufficient',
+      skip_llm: false,
+    });
+    expect(c.llm_stub_response?.relevance).toBe('strong');
+    expect(c.llm_stub_response?.sufficiency).toBe('insufficient');
+    expect(c.llm_stub_response?.sufficiency_reasoning.toLowerCase()).toMatch(
+      /simmering|braising/,
+    );
+  });
 });
 
 describe('evidence judgment prompt text window', () => {
@@ -163,8 +182,7 @@ describe('evidence judgment prompt text window', () => {
 
   it('renderEvidenceJudgmentPrompt only injects the windowed prefix', () => {
     const marker = 'MARKER_AFTER_WINDOW';
-    const evidenceText =
-      `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}${marker}`;
+    const evidenceText = `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}${marker}`;
     const prompt = renderEvidenceJudgmentPrompt('{evidence_text}', {
       review_id: 'r1',
       finding_id: 'f1',
@@ -183,5 +201,32 @@ describe('evidence judgment prompt text window', () => {
     });
     expect(prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
     expect(prompt.includes(marker)).toBe(false);
+  });
+
+  it('renderEvidenceJudgmentPrompt injects explicit disclaimer_text slot', () => {
+    const prompt = renderEvidenceJudgmentPrompt(
+      'anchor={claim_anchor_text}; disclaimer={disclaimer_text}; ad={ad_text}',
+      {
+        review_id: 'r1',
+        finding_id: 'f1',
+        country_id: 'SG',
+        category_id: 'sa.rice_cooker',
+        ad_text: '1200W Power to Cook Up to 70% faster*',
+        disclaimer_text: '*Compared with slow cooking, simmering or braising',
+        finding_summary: 'timing claim',
+        risk_type: 'unsubstantiated-quantitative-claim',
+        claim_anchor_text: '70% faster',
+        evidence: stubEvidence({
+          evidence_source_type: 'INTERNAL_TEST',
+          scope: {},
+          title: 'memo',
+        }),
+        evidence_text: 'tested vs slow cooking only',
+      },
+    );
+    expect(prompt).toContain(
+      'disclaimer=*Compared with slow cooking, simmering or braising',
+    );
+    expect(prompt).toContain('ad=1200W Power to Cook Up to 70% faster*');
   });
 });

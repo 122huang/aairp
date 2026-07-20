@@ -73,6 +73,7 @@ export type CaseRecordDto = {
     content: {
       text: string;
       ocr_text?: string;
+      disclaimer_text?: string;
       language?: string;
       image_urls: string[];
       landing_url?: string;

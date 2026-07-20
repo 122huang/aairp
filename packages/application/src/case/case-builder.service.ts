@@ -263,6 +263,9 @@ export class CaseBuilderService {
         content: {
           text: normalized.text,
           ...(normalized.ocrText ? { ocr_text: normalized.ocrText } : {}),
+          ...(normalized.disclaimerText
+            ? { disclaimer_text: normalized.disclaimerText }
+            : {}),
           ...(normalized.language ? { language: normalized.language } : {}),
           image_urls: normalized.imageUrls,
           ...(normalized.landingUrl ? { landing_url: normalized.landingUrl } : {}),

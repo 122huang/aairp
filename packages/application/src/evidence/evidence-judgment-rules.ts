@@ -234,6 +234,10 @@ export function renderEvidenceJudgmentPrompt(
     .replaceAll('{prompt_pack_version}', 'evidence-judgment-v1')
     .replaceAll('{claim_anchor_text}', ctx.claim_anchor_text)
     .replaceAll('{ad_text}', ctx.ad_text)
+    .replaceAll(
+      '{disclaimer_text}',
+      ctx.disclaimer_text?.trim() || '(none provided)',
+    )
     .replaceAll('{finding_summary}', ctx.finding_summary)
     .replaceAll('{risk_type}', ctx.risk_type)
     .replaceAll('{remediation_type}', ctx.remediation_type ?? 'EVIDENCE_SUPPLEMENT')

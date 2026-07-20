@@ -5,10 +5,13 @@ prompt_pack_version: evidence-judgment-v1
 You judge whether uploaded evidence substantiates ONE specific advertising claim fragment.
 
 ## Scope rule (critical)
-Judge ONLY the claim anchor below. Full ad copy is background for resolving product model / pronouns — do NOT expand judgment to other claims in the ad.
+Judge ONLY the claim anchor below, including any claim-qualifying disclaimer / footnote that narrows or scopes that same claim (comparators, baselines, test conditions, asterisk footnotes). Full ad copy is background for resolving product model / pronouns — do NOT expand judgment to unrelated other claims in the ad.
 
 ## Claim anchor (primary)
 {claim_anchor_text}
+
+## Claim disclaimer / footnote (explicit field)
+{disclaimer_text}
 
 ## Full ad copy (background only)
 {ad_text}
@@ -53,3 +56,12 @@ Compare the claimed numeric upper bound to the range supported by evidence measu
 - If evidence measurements support a value/range whose upper bound is ≥ the claimed value (e.g. claim "up to 6 people", evidence supports 8–10 under a documented method), relevance must be at least partial (typically strong when same product/method). Sufficiency may be sufficient only when methodology and data are present.
 - If the claimed value exceeds the evidence-supported upper bound (e.g. claim 12, evidence supports 8–10), do not treat as substantiated: sufficiency must be insufficient (relevance may be none or partial).
 - Numeric containment NEVER overrides the hollow-evidence rule: restating the claim number without method/data remains insufficient even when numbers match or would otherwise "cover" the claim.
+- Numeric containment NEVER overrides the comparator-coverage rule below: beating the claimed percentage against ONE disclosed method does not substantiate a claim whose footnote discloses multiple methods.
+
+### Claim-qualifier / multi-comparator coverage (critical)
+When the disclaimer / footnote (or an asterisk qualifier tied to the claim anchor) lists multiple comparison baselines, methods, or subjects (e.g. "Compared with slow cooking, simmering or braising"), treat that list as the FULL disclosed comparison scope of the claim.
+- Extract the set of disclosed comparators from the disclaimer field first; if the disclaimer field is "(none provided)", only use comparators that are explicitly part of the claim anchor itself.
+- Extract the set of comparators actually tested / measured in the evidence text.
+- If evidence covers ALL disclosed comparators (and methodology + data support the numeric/comparative claim), sufficiency may be sufficient.
+- If evidence covers only a SUBSET of the disclosed comparators: relevance may be strong when the tested comparator is clearly on-topic for this claim; sufficiency MUST be insufficient. In sufficiency_reasoning, explicitly state that the footnote/disclosed comparison scope is wider than the evidence coverage and list the missing comparator(s).
+- Do NOT collapse this case into relevance=partial merely because coverage is incomplete — partial is for off-topic / weak topical match. On-topic but incomplete coverage → strong + insufficient (remediation signal: add tests for the missing baselines). Off-topic evidence → partial or none + insufficient (remediation signal: replace the evidence).
