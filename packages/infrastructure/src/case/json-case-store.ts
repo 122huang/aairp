@@ -7,7 +7,7 @@ import type {
   CaseSearchFilters,
   ICaseStore,
 } from '@aairp/shared-kernel';
-import { CASE_SCHEMA_VERSION } from '@aairp/shared-kernel';
+import { buildCaseTextPreview, CASE_SCHEMA_VERSION } from '@aairp/shared-kernel';
 
 export type JsonCaseStoreConfig = {
   rootPath: string;
@@ -78,6 +78,9 @@ export class JsonCaseStore implements ICaseStore {
     const manifest = await this.readManifest();
     let results = [...manifest.entries];
 
+    if (filters.case_id) {
+      results = results.filter((e) => e.case_id === filters.case_id);
+    }
     if (filters.country_id) {
       results = results.filter((e) => e.country_id === filters.country_id);
     }
@@ -104,6 +107,22 @@ export class JsonCaseStore implements ICaseStore {
     }
     if (filters.content_hash) {
       results = results.filter((e) => e.content_hash === filters.content_hash);
+    }
+    if (filters.created_from) {
+      results = results.filter((e) => e.created_at >= filters.created_from!);
+    }
+    if (filters.created_to) {
+      results = results.filter((e) => e.created_at <= filters.created_to!);
+    }
+    if (filters.thread_id) {
+      const matched: CaseManifestEntry[] = [];
+      for (const entry of results) {
+        const threadId = entry.thread_id ?? (await this.resolveThreadId(entry));
+        if (threadId === filters.thread_id) {
+          matched.push({ ...entry, ...(threadId ? { thread_id: threadId } : {}) });
+        }
+      }
+      results = matched;
     }
 
     results.sort((a, b) => b.created_at.localeCompare(a.created_at));
@@ -178,6 +197,7 @@ export class JsonCaseStore implements ICaseStore {
 
   private async appendManifest(record: CaseRecord, relativePath: string): Promise<void> {
     const manifest = await this.readManifest();
+    const textPreview = buildCaseTextPreview(record);
     const entry: CaseManifestEntry = {
       case_id: record.case_id,
       case_version: record.case_version,
@@ -193,6 +213,8 @@ export class JsonCaseStore implements ICaseStore {
       content_hash: record.advertisement.content_hash,
       created_at: record.created_at,
       updated_at: record.updated_at,
+      ...(record.thread_id ? { thread_id: record.thread_id } : {}),
+      ...(textPreview ? { text_preview: textPreview } : {}),
     };
     manifest.entries.push(entry);
     await this.writeManifestAtomic(manifest);
@@ -217,6 +239,12 @@ export class JsonCaseStore implements ICaseStore {
     const tempPath = `${path}.tmp`;
     await writeFile(tempPath, `${JSON.stringify(index, null, 2)}\n`, 'utf8');
     await rename(tempPath, path);
+  }
+
+  private async resolveThreadId(entry: CaseManifestEntry): Promise<string | undefined> {
+    if (entry.thread_id) return entry.thread_id;
+    const record = await this.readCaseFile(entry.path);
+    return record?.thread_id?.trim() || record?.case_id;
   }
 
   private async readCaseFile(relativePath: string): Promise<CaseRecord | null> {

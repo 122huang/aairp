@@ -211,9 +211,17 @@ export type CaseManifestEntry = {
   content_hash: string;
   created_at: string;
   updated_at: string;
+  /** Present when the case was saved with submission-thread fields. */
+  thread_id?: string;
+  /** Short advertisement text preview for list UIs. */
+  text_preview?: string;
 };
 
 export type CaseSearchFilters = {
+  /** Exact case id match. */
+  case_id?: string;
+  /** Exact thread id match (falls back to case_id for older root cases). */
+  thread_id?: string;
   country_id?: string;
   category_id?: string;
   platform_id?: string;
@@ -223,6 +231,10 @@ export type CaseSearchFilters = {
   lifecycle_status?: CaseLifecycleStatus;
   review_id?: string;
   content_hash?: string;
+  /** Inclusive lower bound on created_at (ISO-8601). */
+  created_from?: string;
+  /** Inclusive upper bound on created_at (ISO-8601). */
+  created_to?: string;
   limit?: number;
   offset?: number;
 };

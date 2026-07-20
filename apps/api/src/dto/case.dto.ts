@@ -15,6 +15,8 @@ export type CaseManifestDto = {
   content_hash: string;
   created_at: string;
   updated_at: string;
+  thread_id?: string;
+  text_preview?: string;
 };
 
 export function toCaseManifestDto(entry: CaseManifestEntry): CaseManifestDto {
@@ -33,5 +35,7 @@ export function toCaseManifestDto(entry: CaseManifestEntry): CaseManifestDto {
     content_hash: entry.content_hash,
     created_at: entry.created_at,
     updated_at: entry.updated_at,
+    ...(entry.thread_id ? { thread_id: entry.thread_id } : {}),
+    ...(entry.text_preview ? { text_preview: entry.text_preview } : {}),
   };
 }

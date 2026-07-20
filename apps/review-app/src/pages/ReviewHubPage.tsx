@@ -9,9 +9,14 @@ import { useBatchReview } from '@/hooks/use-batch-review';
 
 type ReviewHubPageProps = {
   initialMode?: ReviewMode;
+  /** When set (from `#/?parent_case_id=`), single review restores that case for resubmit. */
+  initialParentCaseId?: string;
 };
 
-export function ReviewHubPage({ initialMode = 'single' }: ReviewHubPageProps) {
+export function ReviewHubPage({
+  initialMode = 'single',
+  initialParentCaseId,
+}: ReviewHubPageProps) {
   const [mode, setMode] = useState<ReviewMode>(initialMode);
   const [countryId, setCountryId] = useState<DemoReviewCountryId | ''>('');
   const [categoryId, setCategoryId] = useState<DemoSaCategoryId>('sa.other');
@@ -59,6 +64,7 @@ export function ReviewHubPage({ initialMode = 'single' }: ReviewHubPageProps) {
             onCategoryChange={setCategoryId}
             onCountryRequired={triggerCountryShake}
             countryShake={countryShake}
+            initialParentCaseId={initialParentCaseId}
           />
         ) : (
           <BatchReviewPanel
