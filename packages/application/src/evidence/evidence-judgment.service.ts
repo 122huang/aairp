@@ -17,6 +17,7 @@ import {
   buildUnreadableJudgment,
   isEvidenceExpired,
   renderEvidenceJudgmentPrompt,
+  sliceEvidenceTextForPrompt,
   structuralScopeExcludes,
 } from './evidence-judgment-rules.js';
 import { parseEvidenceJudgmentResponse } from './evidence-judgment-response.parser.js';
@@ -115,6 +116,18 @@ export class EvidenceJudgmentService {
       return this.stamp({ ...preSourceCheck, prescreen_excluded: false });
     }
 
+    const textWindow = sliceEvidenceTextForPrompt(evidenceText);
+    console.info('[evidence-judgment] evidence_text_window', {
+      evidence_id: evidence.evidence_id,
+      filename: evidence.file.filename,
+      review_id: context.review_id,
+      finding_id: context.finding_id,
+      full_len: textWindow.full_len,
+      prompt_len: textWindow.prompt_len,
+      truncated: textWindow.truncated,
+      limit: textWindow.limit,
+    });
+
     const prompt = renderEvidenceJudgmentPrompt(this.promptTemplate, {
       ...context,
       evidence,
@@ -125,7 +138,13 @@ export class EvidenceJudgmentService {
     const parsed = parseEvidenceJudgmentResponse(content);
 
     const withRules = applySourceTypeRules(
-      { ...parsed, judged_at: new Date().toISOString() },
+      {
+        ...parsed,
+        judged_at: new Date().toISOString(),
+        text_full_len: textWindow.full_len,
+        text_prompt_len: textWindow.prompt_len,
+        ...(textWindow.truncated ? { text_truncated: true } : {}),
+      },
       context.remediation_type as RemediationType | undefined,
       evidence.evidence_source_type,
       context.risk_type,

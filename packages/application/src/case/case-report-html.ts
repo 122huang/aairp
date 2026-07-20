@@ -228,6 +228,9 @@ function toEvidenceViews(links: CaseReportEvidenceLink[]): EvidenceReportView[] 
               extracted_key_facts: judgment.extracted_key_facts,
               prescreen_excluded: judgment.prescreen_excluded,
               source_rule_applied: judgment.source_rule_applied,
+              text_truncated: judgment.text_truncated,
+              text_full_len: judgment.text_full_len,
+              text_prompt_len: judgment.text_prompt_len,
             },
           }
         : {}),
@@ -238,9 +241,17 @@ function toEvidenceViews(links: CaseReportEvidenceLink[]): EvidenceReportView[] 
 }
 
 function renderEvidenceView(view: EvidenceReportView): string {
+  const truncationNotice =
+    view.ai_judgment?.text_truncated &&
+    typeof view.ai_judgment.text_prompt_len === 'number' &&
+    typeof view.ai_judgment.text_full_len === 'number'
+      ? `<p class="meta" style="color:#92400e"><strong>文本已截断：</strong>AI 判断仅基于前 ${view.ai_judgment.text_prompt_len} 字符（全文共 ${view.ai_judgment.text_full_len} 字符）；确认前请核对文档后部。</p>`
+      : '';
+
   const judgmentBlock =
     view.disclosure === 'judgment_excerpt' && view.ai_judgment
       ? `<p class="meta"><strong>相关性：</strong>${escapeHtml(view.ai_judgment.relevance)} · <strong>充分性：</strong>${escapeHtml(view.ai_judgment.sufficiency)}</p>
+         ${truncationNotice}
          <p class="excerpt">${escapeHtml(view.ai_judgment.relevance_reasoning)}</p>
          <p class="excerpt">${escapeHtml(view.ai_judgment.sufficiency_reasoning)}</p>
          <p class="excerpt"><strong>关键事实摘录：</strong>${escapeHtml(
