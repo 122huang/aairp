@@ -3,6 +3,7 @@ export * from './context/normalized-content.js';
 export * from './context/resolved-knowledge-versions.js';
 export * from './context/review-context.js';
 export * from './findings/finding-types.js';
+export * from './findings/claim-anchor.js';
 export * from './findings/rule-finding.js';
 export * from './findings/playbook-finding.js';
 export * from './findings/case-finding.js';

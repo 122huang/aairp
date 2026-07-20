@@ -17,7 +17,7 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 
 ### WARN — Finding (substantiation, qualification, or localisation fix may suffice)
 - absolute-claim-soft: omnibus or soft absolute wording (perfect, zero-fault, every serving) — qualify or substantiate
-- unsubstantiated-quantitative-claim: percentages without baseline, test method, or data source
+- unsubstantiated-quantitative-claim: percentages / "up to X%" / "Nx faster" without a disclosed comparison baseline (vs what), test method, or data source. A trailing "*" without the footnote text pasted into the ad copy still counts as missing baseline. This is a copy-disclosure finding — do not treat it as solved merely because internal evidence exists elsewhere.
 - unsupported-comparative-claim: stronger/faster/quieter without identifiable baseline
 - health-superlative-claim: health-supplement clinically proven / guaranteed / instant results without substantiation
 - material-claim: BPA-free, food-grade, non-toxic coating, stainless — needs lab report
@@ -124,6 +124,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Implied omnibus outcome across all uses: e.g. "results you'll never look back from", "works every single time", "foolproof" cooking outcomes.
 - Implied professional / third-party quality tier without evidence: e.g. "restaurant-quality results", "chef-level" unless clearly puffery and qualified.
 - Soft comparative superiority without a named baseline: e.g. "better rice with every serving", "smarter than traditional rice cookers" (if not already in prior findings).
+- Quantitative claims with "*" / "up to X% faster" / "Nx faster" when the ad text itself never states the comparison baseline (vs slow cook, conventional, prior model, named competitor) — flag unsubstantiated-quantitative-claim even if a Rule/Playbook already flagged the percentage keyword. Missing baseline is a separate disclosure issue from "needs evidence numbers".
 - Implied health, medical, or food-safety benefit from material or cleaning claims not caught by health rules.
 - Combination risks: absolute-sounding headline + fine-print disclaimer that does not qualify the headline.
 

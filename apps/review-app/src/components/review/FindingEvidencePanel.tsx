@@ -1,5 +1,12 @@
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
-import { AlertTriangle, Check, FileText, Loader2, Paperclip } from 'lucide-react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type DragEvent,
+  type FormEvent,
+} from 'react';
+import { AlertTriangle, Check, FileText, Loader2, Paperclip, Upload } from 'lucide-react';
 import type { ReviewFindingDto } from '@/api/review';
 import {
   attachFindingEvidence,
@@ -9,7 +16,10 @@ import {
   type EvidenceAiJudgmentDto,
   type FindingEvidenceLinkDto,
 } from '@/api/evidence';
-import { supportsEvidenceAttachment } from '@aairp/shared-kernel';
+import {
+  groupFindingsByClaimAnchor,
+  supportsEvidenceAttachment,
+} from '@aairp/shared-kernel';
 import { resolveLegalSummaryZh } from '@/lib/legal-copy';
 import { resolveFindingRiskType } from '@/lib/finding-merge';
 import { findingDecisionBadgeClass, severityBadgeClass } from '@/lib/review-ui';
@@ -19,6 +29,15 @@ import { Label } from '@/components/ui/label';
 
 const inputClassName =
   'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm';
+
+/** Keep in sync with the hidden file input `accept` attribute. */
+const EVIDENCE_FILE_ACCEPT = '.pdf,.txt,.md';
+const EVIDENCE_FILE_EXTENSIONS = ['.pdf', '.txt', '.md'] as const;
+
+function isAcceptedEvidenceFile(file: File): boolean {
+  const lowerName = file.name.toLowerCase();
+  return EVIDENCE_FILE_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
+}
 
 type FindingEvidencePanelProps = {
   reviewId: string;
@@ -134,19 +153,30 @@ function SideBySideReview({
 
 function FindingEvidenceItem({
   reviewId,
-  finding,
+  findings,
+  claimAnchor,
   adText,
   countryId,
   categoryId,
   productSku,
 }: {
   reviewId: string;
-  finding: ReviewFindingDto;
+  findings: ReviewFindingDto[];
+  claimAnchor: string;
   adText: string;
   countryId: string;
   categoryId: string;
   productSku?: string;
 }) {
+  const primaryFinding =
+    findings.find((f) => f.module === 'RULE') ??
+    findings.find((f) => f.module === 'PLAYBOOK') ??
+    findings[0]!;
+  const findingIds = findings.map((f) => f.finding_id);
+  const findingIdsKey = findingIds.slice().sort().join('|');
+  const refIds = [...new Set(findings.map((f) => f.ref_id))];
+  const riskTypes = [...new Set(findings.map((f) => resolveFindingRiskType(f)))];
+
   const [links, setLinks] = useState<FindingEvidenceLinkDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -159,31 +189,93 @@ function FindingEvidenceItem({
   const [sourceType, setSourceType] = useState<(typeof EVIDENCE_SOURCE_TYPE_OPTIONS)[number]['value']>('INTERNAL_TEST');
   const [scopeSkus, setScopeSkus] = useState(productSku ?? '');
   const [file, setFile] = useState<File | null>(null);
+  const [dragActive, setDragActive] = useState(false);
+  const dragDepthRef = useRef(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const riskType = resolveFindingRiskType(finding);
-  const claimAnchor = finding.evidence_spans?.[0]?.text?.trim() ?? finding.summary;
+  function applySelectedFile(next: File | null) {
+    if (!next) {
+      setFile(null);
+      return;
+    }
+    if (!isAcceptedEvidenceFile(next)) {
+      setError('仅支持 PDF / TXT / MD 文件');
+      return;
+    }
+    setError(null);
+    setFile(next);
+  }
+
+  function handleDragEnter(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    dragDepthRef.current += 1;
+    if (event.dataTransfer.types.includes('Files')) {
+      setDragActive(true);
+    }
+  }
+
+  function handleDragLeave(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    dragDepthRef.current -= 1;
+    if (dragDepthRef.current <= 0) {
+      dragDepthRef.current = 0;
+      setDragActive(false);
+    }
+  }
+
+  function handleDragOver(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer.types.includes('Files')) {
+      event.dataTransfer.dropEffect = 'copy';
+    }
+  }
+
+  function handleDrop(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    dragDepthRef.current = 0;
+    setDragActive(false);
+    if (submitting) return;
+    const dropped = event.dataTransfer.files?.[0] ?? null;
+    applySelectedFile(dropped);
+  }
+
+  const primaryRiskType = resolveFindingRiskType(primaryFinding);
   const legalSummaryZh = resolveLegalSummaryZh({
-    riskType,
-    modules: [finding.module],
-    severity: finding.severity,
-    decision: finding.decision,
-    summary: finding.summary,
-    refIds: [finding.ref_id],
-    rewriteSuggestions: finding.rewrite_suggestions ?? [],
-    evidenceSpans: finding.evidence_spans ?? [],
+    riskType: primaryRiskType,
+    modules: findings.map((f) => f.module),
+    severity: primaryFinding.severity,
+    decision: primaryFinding.decision,
+    summary: primaryFinding.summary,
+    refIds,
+    rewriteSuggestions: findings.flatMap((f) => f.rewrite_suggestions ?? []),
+    evidenceSpans: findings.flatMap((f) => f.evidence_spans ?? []),
   });
 
   const refresh = useCallback(async () => {
     setLoading(true);
     try {
-      setLinks(await listFindingEvidence(reviewId, finding.finding_id));
+      const lists = await Promise.all(
+        findingIds.map((id) => listFindingEvidence(reviewId, id)),
+      );
+      const merged = new Map<string, FindingEvidenceLinkDto>();
+      for (const list of lists) {
+        for (const link of list) {
+          merged.set(link.link_id, link);
+        }
+      }
+      setLinks([...merged.values()]);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : '加载证据失败');
     } finally {
       setLoading(false);
     }
-  }, [reviewId, finding.finding_id]);
+    // findingIdsKey keeps the callback stable while covering the full fan-out set.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewId, findingIdsKey]);
 
   useEffect(() => {
     void refresh();
@@ -199,37 +291,55 @@ function FindingEvidenceItem({
     setSubmitting(true);
     setError(null);
     try {
-      await attachFindingEvidence({
-        review_id: reviewId,
-        finding_id: finding.finding_id,
-        title: title.trim(),
-        evidence_source_type: sourceType,
-        scope: {
-          countries: [countryId],
-          categories: [categoryId],
-          skus: scopeSkus.trim() ? scopeSkus.split(/[,;，；\s]+/).filter(Boolean) : undefined,
-        },
-        claim_risk_types: [riskType],
-        file: {
-          filename: file.name,
-          mime_type: file.type || 'application/octet-stream',
-          content_base64: await fileToBase64(file),
-        },
-        judgment_context: {
-          country_id: countryId,
-          category_id: categoryId,
-          product_sku: productSku,
-          ad_text: adText,
-          finding_summary: finding.summary,
-          remediation_type: finding.remediation_type,
-          risk_type: riskType,
-          claim_anchor_text: claimAnchor,
-          matched_spans: finding.evidence_spans,
-        },
-      });
+      const contentBase64 = await fileToBase64(file);
+      const scope = {
+        countries: [countryId],
+        categories: [categoryId],
+        skus: scopeSkus.trim() ? scopeSkus.split(/[,;，；\s]+/).filter(Boolean) : undefined,
+      };
+      const errors: string[] = [];
+      for (const finding of findings) {
+        try {
+          await attachFindingEvidence({
+            review_id: reviewId,
+            finding_id: finding.finding_id,
+            title: title.trim(),
+            evidence_source_type: sourceType,
+            scope,
+            claim_risk_types: [resolveFindingRiskType(finding)],
+            file: {
+              filename: file.name,
+              mime_type: file.type || 'application/octet-stream',
+              content_base64: contentBase64,
+            },
+            judgment_context: {
+              country_id: countryId,
+              category_id: categoryId,
+              product_sku: productSku,
+              ad_text: adText,
+              finding_summary: finding.summary,
+              remediation_type: finding.remediation_type,
+              risk_type: resolveFindingRiskType(finding),
+              claim_anchor_text: claimAnchor,
+              matched_spans: finding.evidence_spans,
+            },
+          });
+        } catch (caught) {
+          errors.push(
+            `${finding.ref_id}: ${caught instanceof Error ? caught.message : '上传失败'}`,
+          );
+        }
+      }
+      if (errors.length === findings.length) {
+        setError(errors.join('；'));
+        return;
+      }
       setTitle('');
       setFile(null);
       setShowForm(false);
+      if (errors.length > 0) {
+        setError(`部分 finding 同步失败：${errors.join('；')}`);
+      }
       await refresh();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : '上传失败');
@@ -253,26 +363,48 @@ function FindingEvidenceItem({
     }
   }
 
-  const trigger = finding.evidence_spans?.[0]?.text?.trim();
+  const trigger = claimAnchor.trim();
 
   return (
     <div className="rounded-lg border border-blue-200 bg-blue-50/40 p-4">
       <div className="space-y-3">
         <div className="flex flex-wrap items-start gap-2">
-          <span className="rounded-md bg-white px-2 py-0.5 font-mono text-xs text-ink">{riskType}</span>
-          {finding.remediation_type && (
+          {riskTypes.map((rt) => (
+            <span key={rt} className="rounded-md bg-white px-2 py-0.5 font-mono text-xs text-ink">
+              {rt}
+            </span>
+          ))}
+          {primaryFinding.remediation_type && (
             <span className="rounded-md bg-white px-2 py-0.5 font-mono text-xs text-gray-500">
-              {finding.remediation_type}
+              {primaryFinding.remediation_type}
             </span>
           )}
-          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', findingDecisionBadgeClass(finding.decision))}>
-            {finding.decision}
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              findingDecisionBadgeClass(primaryFinding.decision),
+            )}
+          >
+            {primaryFinding.decision}
           </span>
-          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', severityBadgeClass(finding.severity))}>
-            {finding.severity}
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              severityBadgeClass(primaryFinding.severity),
+            )}
+          >
+            {primaryFinding.severity}
           </span>
+          {findings.length > 1 && (
+            <span className="rounded-md bg-white px-2 py-0.5 text-xs text-gray-500">
+              一次上传同步 {findings.length} 条 finding
+            </span>
+          )}
           <div className="min-w-0 flex-1">
             <p className="text-sm leading-relaxed text-ink">{legalSummaryZh}</p>
+            {refIds.length > 1 && (
+              <p className="mt-1 font-mono text-[11px] text-gray-500">{refIds.join(' · ')}</p>
+            )}
           </div>
         </div>
 
@@ -429,11 +561,68 @@ function FindingEvidenceItem({
             </div>
             <div className="space-y-1.5">
               <Label>证据文件（PDF 需有可选文字层）</Label>
-              <input ref={fileInputRef} type="file" accept=".pdf,.txt,.md" className="hidden" onChange={(e) => { setFile(e.target.files?.[0] ?? null); e.target.value = ''; }} />
-              <Button type="button" variant="outline" size="sm" disabled={submitting} onClick={() => fileInputRef.current?.click()}>
-                <Paperclip className="h-3.5 w-3.5" /> 选择文件
-              </Button>
-              {file && <span className="ml-2 text-xs">{file.name}</span>}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={EVIDENCE_FILE_ACCEPT}
+                className="hidden"
+                onChange={(e) => {
+                  applySelectedFile(e.target.files?.[0] ?? null);
+                  e.target.value = '';
+                }}
+              />
+              <div
+                role="button"
+                tabIndex={submitting ? -1 : 0}
+                aria-label="拖拽文件到此处或点击选择"
+                aria-disabled={submitting}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                onClick={() => {
+                  if (!submitting) fileInputRef.current?.click();
+                }}
+                onKeyDown={(event) => {
+                  if (submitting) return;
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    fileInputRef.current?.click();
+                  }
+                }}
+                className={cn(
+                  'flex flex-col items-center justify-center gap-2 rounded-md border border-dashed px-4 py-6 text-center transition-colors',
+                  submitting ? 'cursor-not-allowed opacity-60' : 'cursor-pointer',
+                  dragActive
+                    ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+                    : 'border-gray-300 bg-gray-50/60 hover:border-gray-400 hover:bg-gray-50',
+                )}
+              >
+                <Upload
+                  className={cn('h-5 w-5', dragActive ? 'text-blue-600' : 'text-ink/50')}
+                />
+                <p className={cn('text-xs leading-relaxed', dragActive ? 'text-blue-800' : 'text-muted-foreground')}>
+                  {dragActive ? '释放以上传文件' : '拖拽文件到此处或点击选择'}
+                </p>
+                <p className="text-[11px] text-gray-400">支持 PDF / TXT / MD</p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled={submitting}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    fileInputRef.current?.click();
+                  }}
+                >
+                  <Paperclip className="h-3.5 w-3.5" /> 选择文件
+                </Button>
+                {file && (
+                  <p className="max-w-full truncate text-xs font-medium text-ink" title={file.name}>
+                    已选：{file.name}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex gap-2">
               <Button type="submit" variant="brand" size="sm" disabled={submitting}>
@@ -467,7 +656,9 @@ export function FindingEvidencePanel({
     ),
   );
 
-  if (evidenceFindings.length === 0) return null;
+  const evidenceGroups = groupFindingsByClaimAnchor(evidenceFindings);
+
+  if (evidenceGroups.length === 0) return null;
 
   return (
     <section>
@@ -476,14 +667,15 @@ export function FindingEvidencePanel({
         <span className="ml-1.5 text-xs font-normal text-muted-foreground">Evidence + AI Judgment</span>
       </h2>
       <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-        上传材料后系统将先做结构化预筛，再运行 AI 关联性/充分性判断。请对照原文片段与证据摘录后确认或覆写，避免自动化偏见。
+        同一原文片段（claim anchor）只展示一张上传卡；上传一次会同步到该片段下的全部相关 finding。系统将先做结构化预筛，再运行 AI 关联性/充分性判断。
       </p>
       <div className="space-y-3">
-        {evidenceFindings.map((finding) => (
+        {evidenceGroups.map((group) => (
           <FindingEvidenceItem
-            key={finding.finding_id}
+            key={group.groupKey}
             reviewId={reviewId}
-            finding={finding}
+            findings={group.findings}
+            claimAnchor={group.claimAnchor}
             adText={adText}
             countryId={countryId}
             categoryId={categoryId}

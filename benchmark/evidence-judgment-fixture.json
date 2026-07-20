@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "fixture_id": "evidence-judgment-v1",
-  "description": "Phase 2 evidence AI judgment eval — structural prescreen + per-case LLM stubs (includes adversarial claim-echo + numeric containment regression cases)",
+  "description": "Phase 2 evidence AI judgment eval — structural prescreen + per-case LLM stubs (includes adversarial claim-echo + numeric containment for capacity and %/Nx performance, plus missing-baseline disclosure cases)",
   "cases": [
     {
       "case_id": "CLM-012884-internal-capacity",
@@ -409,6 +409,121 @@
         "sufficiency": "insufficient",
         "sufficiency_reasoning": "Evidence upper bound (10) does not cover claim of 12 people.",
         "extracted_key_facts": "Evidence supports 8–10 servings; claim asks for 12."
+      }
+    },
+    {
+      "case_id": "numeric-containment-70pct-faster-covered-by-2x",
+      "source": "production-diagnosis",
+      "notes": "Claim 'up to 70% faster' covered by evidence 'up to 2x faster'. Locked conversion: 2x faster = 100% faster (NOT 200%). Must NOT be relevance=none from digit/unit mismatch (70 vs 2x/100).",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "1200W Power to Cook Up to 70% faster* with HyperHeat technology. *Compared with slow cooking, simmering or braising.",
+        "claim_anchor_text": "Up to 70% faster",
+        "finding_summary": "Quantitative performance claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim"
+      },
+      "evidence": {
+        "title": "CLM-013789 HyperHeat cook-time comparison",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201"] },
+        "evidence_text": "HyperHeat cook-time study vs conventional slow cooking / simmering / braising under controlled fill. Aggregate result: up to 2x faster (100% relative improvement). Selected recipes measured up to 3.82x and 6.74x. Method: timed cook cycles with calibrated timer; same ingredient load; baseline = slow cook / simmer / braise modes."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Same cook-time faster metric vs slow cook/simmer/braise. Evidence up to 2x faster converts to 100% faster ((2-1)×100%), which covers the claimed 70% upper bound — not a digit mismatch.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Documented timed comparison vs disclosed baseline; 2x=100% covers 70%.",
+        "extracted_key_facts": "Up to 2x faster (=100% faster) vs slow cook/simmer/braise; some recipes 3.82x / 6.74x."
+      }
+    },
+    {
+      "case_id": "numeric-containment-70pct-faster-missing-baseline",
+      "source": "production-diagnosis",
+      "notes": "Same magnitude coverage as 2x=100%≥70%, but ad omits comparison baseline footnote. Must be relevance=partial + sufficiency=insufficient (missing disclosed baseline) — NOT relevance=none from 70 vs 100/2x digit mismatch.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "1200W Power to Cook Up to 70% faster* with HyperHeat technology",
+        "claim_anchor_text": "Up to 70% faster",
+        "finding_summary": "Quantitative performance claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim"
+      },
+      "evidence": {
+        "title": "CLM-013789 HyperHeat cook-time comparison",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201"] },
+        "evidence_text": "HyperHeat cook-time study vs conventional slow cooking / simmering / braising under controlled fill. Aggregate result: up to 2x faster (100% relative improvement). Selected recipes measured up to 3.82x and 6.74x. Method: timed cook cycles with calibrated timer; same ingredient load; baseline = slow cook / simmer / braise modes."
+      },
+      "expect": { "relevance": "partial", "sufficiency": "insufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "partial",
+        "relevance_reasoning": "Evidence covers cook-time faster magnitude (2x=100% ≥ 70%) on the same metric, but the ad text has '*' without disclosing the comparison baseline — not a numeric mismatch.",
+        "sufficiency": "insufficient",
+        "sufficiency_reasoning": "Ad lacks a disclosed comparison baseline (vs slow cook / simmer / braise). Evidence numbers alone cannot clear the disclosure gap.",
+        "extracted_key_facts": "Evidence up to 2x faster (=100% faster) vs slow cook; ad omits baseline footnote text."
+      }
+    },
+    {
+      "case_id": "model-alias-no-case-sku-pc20x-covers-capacity",
+      "source": "production-diagnosis",
+      "notes": "No case product_sku; ad/claim do not name a model. Evidence self-declares 'PC20X | PC201/PC200' alias and supports 8–10 people under documented method. Must NOT be relevance=none / insufficient solely for literal PC20X vs missing ad model. Numeric containment (6 ≤ 8–10) + alias rule → strong+sufficient.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "ad_text": "Family-sized capacity - feed up to 6 people",
+        "claim_anchor_text": "feed up to 6 people",
+        "finding_summary": "Capacity claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "capacity-claim"
+      },
+      "evidence": {
+        "title": "CLM-012884 Internal capacity test memo",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC20X", "PC201", "PC200"] },
+        "evidence_text": "Product: PC20X | PC201/PC200 (alias map for marketing SKU vs test units). Total stew weight measured 1.96–2.45 kg under standard fill test. Per FDA reference single-serving weight 245g/person. Calculation: 2450g ÷ 245g = 10 servings (conservative lower bound 8 servings). Method: full pot load, drained yield weighed on calibrated scale."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Case SKU not provided; ad/claim name no conflicting model. Evidence self-declares PC20X | PC201/PC200 alias, so literal PC20X is not a product mismatch. Capacity 8–10 covers claimed up to 6 (numeric containment).",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Documented weight ÷ 245g methodology yields 8–10 servings; covers claim of up to 6 people. Alias map is in the evidence text.",
+        "extracted_key_facts": "PC20X | PC201/PC200 alias; measured 1.96–2.45 kg → 8–10 servings; claim asks for 6."
+      }
+    },
+    {
+      "case_id": "multiplier-conversion-2x-is-100-percent-faster",
+      "source": "prompt-lock",
+      "notes": "Locks the conversion rule itself: stub must treat 2x faster as 100% faster, never 200%. Claim 90% is still covered by 100%.",
+      "context": {
+        "country_id": "SG",
+        "category_id": "sa.rice_cooker",
+        "product_sku": "PC201",
+        "ad_text": "Cook up to 90% faster* than conventional slow cooking with HyperHeat.",
+        "claim_anchor_text": "up to 90% faster",
+        "finding_summary": "Quantitative performance claim requires substantiation",
+        "remediation_type": "EVIDENCE_SUPPLEMENT",
+        "risk_type": "unsubstantiated-quantitative-claim"
+      },
+      "evidence": {
+        "title": "Internal timed cook study",
+        "evidence_source_type": "INTERNAL_TEST",
+        "scope": { "skus": ["PC201"] },
+        "evidence_text": "Timed comparison vs conventional slow cooking: up to 2x faster under standard load. Method: calibrated timer; identical ingredients; baseline slow-cook mode."
+      },
+      "expect": { "relevance": "strong", "sufficiency": "sufficient", "skip_llm": false },
+      "llm_stub_response": {
+        "relevance": "strong",
+        "relevance_reasoning": "Convert 2x faster → (2-1)×100% = 100% faster; covers claimed 90%. Do not interpret 2x as 200% faster.",
+        "sufficiency": "sufficient",
+        "sufficiency_reasoning": "Documented method vs disclosed conventional slow-cooking baseline; 100% covers 90%.",
+        "extracted_key_facts": "Up to 2x faster = 100% faster (not 200%) vs conventional slow cooking."
       }
     }
   ]

@@ -48,8 +48,31 @@ Rules:
 If the evidence mainly restates, paraphrases, or "certifies" the claim wording itself without independent test method, measured data, calculation, date, or issuing institution, set sufficiency=insufficient — even when the wording and numbers match the claim exactly.
 Matching numbers alone are not substantiation. Example: a memo that only repeats "can feed up to 8 people" / "confirmed accurate" / "certified for marketing use" with no method or data → insufficient.
 
-### Quantitative containment (capacity / serving / numeric upper-bound)
-Compare the claimed numeric upper bound to the range supported by evidence measurements (not by claim-echo text).
-- If evidence measurements support a value/range whose upper bound is ≥ the claimed value (e.g. claim "up to 6 people", evidence supports 8–10 under a documented method), relevance must be at least partial (typically strong when same product/method). Sufficiency may be sufficient only when methodology and data are present.
-- If the claimed value exceeds the evidence-supported upper bound (e.g. claim 12, evidence supports 8–10), do not treat as substantiated: sufficiency must be insufficient (relevance may be none or partial).
+### Multiplier / percentage conversion (mandatory; do not invent alternate arithmetic)
+When converting speed/performance multipliers to relative percentage improvement:
+- "Nx faster" / "up to Nx faster" means a relative improvement of (N − 1) × 100% versus the baseline.
+- Example (locked): "2x faster" = 100% faster (NOT 200% faster). "3x faster" = 200% faster.
+- Never equate "Nx" with "N × 100%" as a relative-faster claim.
+- Apply the same conversion when comparing claim percentages to evidence multipliers (or vice versa) before judging containment.
+
+### Model / SKU alias when case SKU is absent (same tier as numeric containment)
+Case context SKU may be `(not provided)`. That alone is NOT a product mismatch.
+- If the claim anchor and full ad copy do NOT name a conflicting product model/SKU, and the evidence self-declares a model alias map (e.g. "PC20X | PC201/PC200", "also known as", "alias:", "等同型号", "对应型号"), treat those aliases as the same product family for relevance — do NOT set relevance=none / sufficiency=insufficient solely because a literal model string in the evidence (PC20X) does not appear in the ad.
+- Still require numeric containment + methodology for sufficiency when the claim is quantitative (capacity / % / Nx).
+- Still set relevance=none when the ad/claim explicitly names a different model that conflicts with the evidence subject (true SKU mismatch), or when evidence is clearly for an unrelated product with no alias bridge.
+- Do not invent aliases that are not written in the evidence text.
+
+### Quantitative containment (capacity / serving / % / Nx performance)
+Compare the claimed numeric upper bound to the range supported by evidence measurements (not by claim-echo text), after converting units with the rule above when needed.
+Applies to capacity/serving bounds AND same-direction performance claims (e.g. "% faster", "% less", "Nx faster") when the metric and comparison direction match.
+- If evidence measurements support a value/range whose upper bound is ≥ the claimed value (e.g. claim "up to 6 people", evidence supports 8–10 under a documented method; OR claim "up to 70% faster", evidence supports "up to 2x faster" = 100% faster under a documented method), relevance must be at least partial (typically strong when same product/method). Sufficiency may be sufficient only when methodology and data are present.
+- NEVER set relevance=none solely because the digits/units are written differently (70 vs 100, "%" vs "2x") when conversion shows evidence covers the claim.
+- NEVER set relevance=none / sufficiency=insufficient solely for literal model-string mismatch when the model-alias rule above applies (no case SKU; no conflicting model named in ad/claim; evidence self-declares the alias).
+- If the claimed value exceeds the evidence-supported upper bound (e.g. claim 12 people vs evidence 8–10; OR claim 150% faster vs evidence up to 2x = 100% faster), do not treat as substantiated: sufficiency must be insufficient (relevance may be none or partial).
 - Numeric containment NEVER overrides the hollow-evidence rule: restating the claim number without method/data remains insufficient even when numbers match or would otherwise "cover" the claim.
+
+### Missing comparison baseline in the ad (separate from numeric coverage)
+If the claim uses a comparative/quantitative cue (%, Nx faster/less, "*", "up to") but the full ad copy does NOT disclose a comparison baseline (vs what: slow cook / conventional / prior model / named competitor), treat this as a disclosure gap — not as "numbers don't match":
+- When evidence measurements otherwise cover the claimed magnitude on the same metric/direction: relevance=partial (or strong only if baseline is clear in evidence AND ad), sufficiency=insufficient, and sufficiency_reasoning must say the ad lacks a disclosed comparison baseline.
+- Do NOT use relevance=none for "70% vs 100%/2x" digit mismatch in this situation.
+- Open-risk review separately flags missing baseline; your job here is evidence vs claim magnitude + whether the ad itself discloses the baseline.

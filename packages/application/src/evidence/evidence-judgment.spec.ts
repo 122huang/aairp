@@ -139,6 +139,66 @@ describe('evidence judgment rules', () => {
     expect(covered.evidence.evidence_text).toMatch(/245g|calibrated scale/i);
     expect(hollow.evidence.evidence_text).not.toMatch(/245g|calibrated scale/i);
   });
+
+  it('locks 2x faster = 100% faster containment (not 200%)', () => {
+    const covered = fixture.cases.find(
+      (x) => x.case_id === 'numeric-containment-70pct-faster-covered-by-2x',
+    )!;
+    const conversion = fixture.cases.find(
+      (x) => x.case_id === 'multiplier-conversion-2x-is-100-percent-faster',
+    )!;
+
+    expect(covered.expect).toEqual({
+      relevance: 'strong',
+      sufficiency: 'sufficient',
+      skip_llm: false,
+    });
+    expect(covered.llm_stub_response?.relevance_reasoning.toLowerCase()).toMatch(/100%\s*faster/);
+    expect(covered.llm_stub_response?.relevance_reasoning.toLowerCase()).not.toMatch(
+      /200%\s*faster/,
+    );
+    expect(conversion.llm_stub_response?.relevance_reasoning).toMatch(/\(2-1\)×100%|100% faster/i);
+    expect(conversion.llm_stub_response?.relevance_reasoning.toLowerCase()).toMatch(
+      /not .*200%|never .*200%|≠\s*200%/,
+    );
+  });
+
+  it('missing ad baseline stays partial+insufficient, not relevance=none digit mismatch', () => {
+    const missing = fixture.cases.find(
+      (x) => x.case_id === 'numeric-containment-70pct-faster-missing-baseline',
+    )!;
+    expect(missing.expect).toEqual({
+      relevance: 'partial',
+      sufficiency: 'insufficient',
+      skip_llm: false,
+    });
+    expect(missing.context.ad_text).not.toMatch(/compared with|vs\.|versus/i);
+    expect(missing.llm_stub_response?.sufficiency_reasoning.toLowerCase()).toMatch(
+      /baseline|脚注|disclos/,
+    );
+    expect(missing.llm_stub_response?.relevance).toBe('partial');
+  });
+
+  it('no case SKU + evidence self-declared model alias is not a product mismatch', () => {
+    const alias = fixture.cases.find(
+      (x) => x.case_id === 'model-alias-no-case-sku-pc20x-covers-capacity',
+    )!;
+    expect(alias.context.product_sku).toBeUndefined();
+    expect(alias.context.ad_text).not.toMatch(/PC20|PC201|PC200/i);
+    expect(alias.context.claim_anchor_text).not.toMatch(/PC20|PC201|PC200/i);
+    expect(alias.evidence.evidence_text).toMatch(/PC20X\s*\|\s*PC201\/PC200/i);
+    expect(alias.expect).toEqual({
+      relevance: 'strong',
+      sufficiency: 'sufficient',
+      skip_llm: false,
+    });
+    expect(alias.llm_stub_response?.relevance_reasoning.toLowerCase()).toMatch(
+      /alias|not a product mismatch|not provided/,
+    );
+    expect(alias.llm_stub_response?.relevance_reasoning.toLowerCase()).not.toMatch(
+      /different product|wrong model|sku mismatch/,
+    );
+  });
 });
 
 describe('evidence judgment prompt text window', () => {

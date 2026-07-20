@@ -105,6 +105,13 @@ function orderModules(modules: string[]): string[] {
   );
 }
 
+export {
+  claimAnchorGroupKey,
+  groupFindingsByClaimAnchor,
+  resolveClaimAnchorText,
+  type ClaimAnchorEvidenceGroup,
+} from '@aairp/shared-kernel';
+
 export function mergeFindingsByRiskType(findings: ReviewFindingDto[]): MergedFinding[] {
   const groups = new Map<string, ReviewFindingDto[]>();
 

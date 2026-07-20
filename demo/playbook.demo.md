@@ -186,12 +186,12 @@ expected_severity: MEDIUM
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: 80% less oil, up to 80%, 80%, 75% less oil, up to 75%, 75%, 70% less oil, up to 70%, 70%, 减少高达, 用油量, 节能高达
+trigger_keywords: 80% less oil, 75% less oil, 70% less oil, less oil, 用油量, 减少用油, 少油烹饪, 节能高达, energy saving, less energy, 节电高达
 severity_hint: HIGH
 decision: WARN
-guidance: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing.
-guidance_en: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing.
-guidance_zh: 减少用油量/节能等量化宣称（如「减少高达70%/75%/80%用油量」「节能高达30%」）须持有可核验的测试数据（对照方法、机型、测算口径）后方可发布。
+guidance: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing. Bare percentages without oil/energy context belong to performance/quantitative patterns — do not trigger this oil-reduction pattern.
+guidance_en: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing. Bare percentages without oil/energy context belong to performance/quantitative patterns — do not trigger this oil-reduction pattern.
+guidance_zh: 减少用油量/节能等量化宣称（如「减少高达70%/75%/80%用油量」「节能高达30%」）须持有可核验的测试数据（对照方法、机型、测算口径）后方可发布。裸百分比无油/能耗语境时不命中本模式。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Quantified oil-use reduction claims requiring test data substantiation.
