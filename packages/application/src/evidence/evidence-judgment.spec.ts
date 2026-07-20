@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest';
 import type { EvidenceRecord } from '@aairp/shared-kernel';
 import {
   applySourceTypeRules,
+  EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
+  renderEvidenceJudgmentPrompt,
+  sliceEvidenceTextForPrompt,
   structuralScopeExcludes,
 } from './evidence-judgment-rules.js';
 import { loadEvidenceJudgmentFixture } from '../evaluation/load-evidence-judgment-fixture.js';
@@ -135,5 +138,50 @@ describe('evidence judgment rules', () => {
     // Covered/exceeded use real methodology text; hollow must not.
     expect(covered.evidence.evidence_text).toMatch(/245g|calibrated scale/i);
     expect(hollow.evidence.evidence_text).not.toMatch(/245g|calibrated scale/i);
+  });
+});
+
+describe('evidence judgment prompt text window', () => {
+  it('reports full_len vs prompt_len and truncates over the limit', () => {
+    const short = sliceEvidenceTextForPrompt('abc');
+    expect(short).toEqual({
+      text_for_prompt: 'abc',
+      full_len: 3,
+      prompt_len: 3,
+      truncated: false,
+      limit: EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
+    });
+
+    const long = 'x'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT + 500);
+    const window = sliceEvidenceTextForPrompt(long);
+    expect(window.full_len).toBe(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT + 500);
+    expect(window.prompt_len).toBe(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+    expect(window.truncated).toBe(true);
+    expect(window.text_for_prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+    expect(window.text_for_prompt).toBe('x'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT));
+  });
+
+  it('renderEvidenceJudgmentPrompt only injects the windowed prefix', () => {
+    const marker = 'MARKER_AFTER_WINDOW';
+    const evidenceText =
+      `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}${marker}`;
+    const prompt = renderEvidenceJudgmentPrompt('{evidence_text}', {
+      review_id: 'r1',
+      finding_id: 'f1',
+      country_id: 'SG',
+      category_id: 'sa.rice_cooker',
+      ad_text: 'Family meals in 30 minutes',
+      finding_summary: 'timing claim',
+      risk_type: 'unsubstantiated-quantitative-claim',
+      claim_anchor_text: '30 minutes',
+      evidence: stubEvidence({
+        evidence_source_type: 'INTERNAL_TEST',
+        scope: {},
+        title: 'QSG',
+      }),
+      evidence_text: evidenceText,
+    });
+    expect(prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+    expect(prompt.includes(marker)).toBe(false);
   });
 });

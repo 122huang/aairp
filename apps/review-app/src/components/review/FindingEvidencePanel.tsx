@@ -78,6 +78,11 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
             文本层不可读
           </span>
         )}
+        {judgment.text_truncated && (
+          <span className="rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900">
+            文本已截断
+          </span>
+        )}
       </div>
       {judgment.judgment_mode === 'stub' && (
         <p className="text-xs leading-relaxed text-rose-800">
@@ -91,6 +96,15 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
           未覆盖）。请改传可选中文字的 PDF 或 .txt 后重试。
         </p>
       )}
+      {judgment.text_truncated &&
+        typeof judgment.text_prompt_len === 'number' &&
+        typeof judgment.text_full_len === 'number' && (
+          <p className="text-xs leading-relaxed text-amber-900">
+            证据文本较长，AI 判断仅基于前 {judgment.text_prompt_len.toLocaleString()} 字符（全文共{' '}
+            {judgment.text_full_len.toLocaleString()}{' '}
+            字符）。确认结论前请自行核对文档后部内容，勿把 AI 摘录当作全文覆盖。
+          </p>
+        )}
     </div>
   );
 }
