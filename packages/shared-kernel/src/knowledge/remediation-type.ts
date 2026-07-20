@@ -40,3 +40,42 @@ export function isBusinessHandoffRemediationType(
 ): boolean {
   return type === 'EXTERNAL_STATUS_VERIFICATION' || type === 'NOT_APPLICABLE_DISCLOSURE';
 }
+
+/**
+ * Open Risk / playbook risk_type (or pattern id) values that should open the
+ * evidence-supplement path even when the finding did not come from a tagged RULE.
+ * Start small: comparative / performance / capacity family only.
+ */
+export const EVIDENCE_SUPPLEMENT_RISK_TYPES: readonly string[] = [
+  'unsupported-comparative-claim',
+  'capacity-claim',
+  'unsubstantiated-quantitative-claim',
+  'sa-comparative-claim',
+  'sa-comparative-superiority',
+  'sa-performance-claim',
+  'sa-capacity-claim',
+  'sa-oil-reduction-quantified',
+] as const;
+
+const evidenceSupplementRiskTypeSet = new Set<string>(EVIDENCE_SUPPLEMENT_RISK_TYPES);
+
+/** Map a risk_type / playbook pattern id to remediation when no RULE tag exists. */
+export function remediationTypeFromRiskType(
+  riskType: string | undefined,
+): RemediationType | undefined {
+  if (!riskType) return undefined;
+  return evidenceSupplementRiskTypeSet.has(riskType) ? 'EVIDENCE_SUPPLEMENT' : undefined;
+}
+
+/**
+ * Resolve remediation for any finding module.
+ * RULE tags win; otherwise fall back to risk_type / refId whitelist.
+ */
+export function resolveFindingRemediationType(input: {
+  remediationType?: RemediationType;
+  riskType?: string;
+  refId?: string;
+}): RemediationType | undefined {
+  if (input.remediationType) return input.remediationType;
+  return remediationTypeFromRiskType(input.riskType ?? input.refId);
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { ReviewResultHelp } from '@/components/review/ReviewResultHelp';
+import { DISCLOSURE_REMINDER_TEXT } from '@/lib/ad-type-copy';
 import { legalDecisionBannerText } from '@/lib/legal-copy';
 import { decisionBannerStyle } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -39,6 +40,10 @@ export function DecisionBanner({
 
       <p className="mt-2 text-sm leading-relaxed text-ink/80">
         {legalDecisionBannerText(decision, findingsCount)}
+      </p>
+
+      <p className="mt-3 rounded-md border border-gray-200/80 bg-white/60 px-3 py-2 text-xs leading-relaxed text-ink/75">
+        {DISCLOSURE_REMINDER_TEXT}
       </p>
 
       {hasDetails && (

@@ -212,4 +212,90 @@ describe('ReviewReportService', () => {
     expect(result.reportHtml).toContain('Rule Findings');
     expect(result.summary.findings).toEqual([]);
   });
+
+  it('resolves EVIDENCE_SUPPLEMENT for LLM comparative-claim via risk_type whitelist', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+
+    const result = service.render({
+      context: baseContext,
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'REVIEW',
+        confidence: 0.7,
+        rationale: 'Open-risk comparative claim needs evidence.',
+        findingCounts: { rule: 0, playbook: 0, llm: 1 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [],
+      playbookFindings: [],
+      openRiskResult: {
+        skipped: false,
+        findings: [
+          {
+            module: 'LLM',
+            findingId: 'lf_comp',
+            severity: 'MEDIUM',
+            decision: 'REVIEW',
+            refType: 'LLM_RISK',
+            refId: 'unsupported-comparative-claim',
+            refVersionId: 'open-risk-v1',
+            summary: 'Unsupported comparative claim',
+            confidence: 0.72,
+            evaluationDetail: {
+              riskType: 'unsupported-comparative-claim',
+              suggestedAction: 'MANUAL_REVIEW',
+            },
+          },
+        ],
+      },
+    });
+
+    expect(result.summary.findings).toHaveLength(1);
+    expect(result.summary.findings[0]?.remediationType).toBe('EVIDENCE_SUPPLEMENT');
+  });
+
+  it('resolves EVIDENCE_SUPPLEMENT for playbook sa-comparative-claim via pattern id', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+
+    const result = service.render({
+      context: baseContext,
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'WARN',
+        confidence: 0.8,
+        rationale: 'Playbook comparative pattern.',
+        findingCounts: { rule: 0, playbook: 1, llm: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [],
+      playbookFindings: [
+        {
+          module: 'PLAYBOOK',
+          findingId: 'pf_comp',
+          severity: 'MEDIUM',
+          decision: 'WARN',
+          refType: 'PLAYBOOK_PATTERN',
+          refId: 'sa-comparative-claim',
+          refVersionId: 'sa-comparative-claim-v1',
+          summary: 'Comparative claim pattern',
+          confidence: 0.8,
+          evaluationDetail: {
+            patternId: 'sa-comparative-claim',
+            checklistIds: [],
+            guidance: 'Require substantiation or rewrite.',
+            severityHint: 'MEDIUM',
+            playbookDecision: 'WARN',
+            typicalDecision: 'REVIEW',
+          },
+        },
+      ],
+      openRiskResult: {
+        skipped: true,
+        skipReason: 'HAS_BLOCKER',
+        findings: [],
+      },
+    });
+
+    expect(result.summary.findings[0]?.remediationType).toBe('EVIDENCE_SUPPLEMENT');
+  });
 });

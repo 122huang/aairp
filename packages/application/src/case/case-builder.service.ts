@@ -11,7 +11,11 @@ import type {
   ReviewHappyPathResult,
   RuleFinding,
 } from '@aairp/shared-kernel';
-import { CASE_SCHEMA_VERSION, isLegalReviewedMarket } from '@aairp/shared-kernel';
+import {
+  CASE_SCHEMA_VERSION,
+  isLegalReviewedMarket,
+  resolveFindingRemediationType,
+} from '@aairp/shared-kernel';
 
 export type CaseBuilderConfig = {
   pipelineVersion?: string;
@@ -25,8 +29,17 @@ function resolveAdType(snapshot: ReviewCaseSnapshot): string {
 }
 
 function mapFinding(finding: ModuleFinding): CaseMatchedFinding {
-  const remediationType =
+  const ruleRemediation =
     finding.module === 'RULE' ? (finding as RuleFinding).remediationType : undefined;
+  const detail = finding.evaluationDetail as
+    | { riskType?: string; patternId?: string }
+    | undefined;
+  const riskType = detail?.riskType ?? detail?.patternId;
+  const remediationType = resolveFindingRemediationType({
+    remediationType: ruleRemediation,
+    riskType,
+    refId: finding.refId,
+  });
   return {
     finding_id: finding.findingId,
     ref_id: finding.refId,
