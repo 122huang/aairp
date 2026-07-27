@@ -5,11 +5,7 @@ import type {
   EvidenceSourceType,
 } from '@aairp/shared-kernel';
 import type { RemediationType } from '@aairp/shared-kernel';
-import {
-  EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
-  selectEvidenceTextForPrompt,
-  type EvidenceTextPromptWindow,
-} from './evidence-text-retrieval.js';
+import { selectEvidenceTextForPrompt } from './evidence-text-retrieval.js';
 
 export {
   EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
