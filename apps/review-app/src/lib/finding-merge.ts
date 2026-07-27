@@ -1,4 +1,8 @@
 import type { ReviewFindingDto } from '@/api/review';
+import {
+  groupFindingsByClaimAnchor,
+  type ClaimAnchorEvidenceGroup,
+} from '@aairp/shared-kernel';
 import routesDoc from '../../../../docs/knowledge/risk-rewrite-routes.json';
 import skillDoc from '../../../../docs/knowledge/skill-modules.json';
 import { severityRank } from './review-ui';
@@ -10,8 +14,26 @@ export type EvidenceSpan = {
   text: string;
 };
 
-export type MergedFinding = {
+export type MergedFindingItem = {
   riskType: string;
+  modules: string[];
+  severity: string;
+  decision: string;
+  summary: string;
+  refIds: string[];
+  findingIds: string[];
+  rewriteSuggestions: NonNullable<ReviewFindingDto['rewrite_suggestions']>;
+  evidenceSpans: EvidenceSpan[];
+};
+
+/** One findings-list card per claim_anchor group; items hold per–risk-type rows. */
+export type MergedFinding = {
+  groupKey: string;
+  claimAnchor: string;
+  findingIds: string[];
+  items: MergedFindingItem[];
+  riskType: string;
+  riskTypes: string[];
   modules: string[];
   severity: string;
   decision: string;
@@ -105,7 +127,45 @@ function orderModules(modules: string[]): string[] {
   );
 }
 
-export function mergeFindingsByRiskType(findings: ReviewFindingDto[]): MergedFinding[] {
+export {
+  claimAnchorGroupKey,
+  groupFindingsByClaimAnchor,
+  resolveClaimAnchorText,
+  type ClaimAnchorEvidenceGroup,
+} from '@aairp/shared-kernel';
+
+function dedupeRewrites(
+  rewriteSuggestions: NonNullable<ReviewFindingDto['rewrite_suggestions']>,
+): NonNullable<ReviewFindingDto['rewrite_suggestions']> {
+  const seenSuggestionIds = new Set<string>();
+  return rewriteSuggestions.filter((s) => {
+    if (seenSuggestionIds.has(s.suggestion_id)) return false;
+    seenSuggestionIds.add(s.suggestion_id);
+    return true;
+  });
+}
+
+function mergeRiskTypeBucket(group: ReviewFindingDto[]): MergedFindingItem {
+  const severity = group.reduce(
+    (best, f) => (severityRank(f.severity) < severityRank(best) ? f.severity : best),
+    group[0]!.severity,
+  );
+
+  return {
+    riskType: resolveFindingRiskType(group[0]!),
+    modules: orderModules(group.map((f) => f.module)),
+    severity,
+    decision: pickDecision(group),
+    summary: pickSummary(group),
+    refIds: [...new Set(group.map((f) => f.ref_id))],
+    findingIds: group.map((f) => f.finding_id),
+    rewriteSuggestions: dedupeRewrites(group.flatMap((f) => f.rewrite_suggestions ?? [])),
+    evidenceSpans: group.flatMap(extractEvidenceSpans),
+  };
+}
+
+/** Merge findings that share a risk type (within one claim group). */
+export function mergeFindingsByRiskType(findings: ReviewFindingDto[]): MergedFindingItem[] {
   const groups = new Map<string, ReviewFindingDto[]>();
 
   for (const finding of findings) {
@@ -115,33 +175,41 @@ export function mergeFindingsByRiskType(findings: ReviewFindingDto[]): MergedFin
     groups.set(riskType, group);
   }
 
-  const merged = Array.from(groups.entries()).map(([riskType, group]) => {
-    const severity = group.reduce(
-      (best, f) => (severityRank(f.severity) < severityRank(best) ? f.severity : best),
-      group[0]!.severity,
-    );
+  return Array.from(groups.values())
+    .map(mergeRiskTypeBucket)
+    .sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
+}
 
-    const rewriteSuggestions = group.flatMap((f) => f.rewrite_suggestions ?? []);
-    const seenSuggestionIds = new Set<string>();
-    const uniqueRewrites = rewriteSuggestions.filter((s) => {
-      if (seenSuggestionIds.has(s.suggestion_id)) return false;
-      seenSuggestionIds.add(s.suggestion_id);
-      return true;
-    });
+function toMergedFinding(
+  group: ClaimAnchorEvidenceGroup<ReviewFindingDto>,
+): MergedFinding {
+  const items = mergeFindingsByRiskType(group.findings);
+  const primary = items[0]!;
+  const rewriteSuggestions = dedupeRewrites(items.flatMap((item) => item.rewriteSuggestions));
 
-    const evidenceSpans = group.flatMap(extractEvidenceSpans);
+  return {
+    groupKey: group.groupKey,
+    claimAnchor: group.claimAnchor,
+    findingIds: group.findings.map((f) => f.finding_id),
+    items,
+    riskTypes: items.map((item) => item.riskType),
+    riskType: primary.riskType,
+    modules: orderModules(items.flatMap((item) => item.modules)),
+    severity: items.reduce(
+      (best, item) => (severityRank(item.severity) < severityRank(best) ? item.severity : best),
+      primary.severity,
+    ),
+    decision: pickDecision(group.findings),
+    summary: primary.summary,
+    refIds: [...new Set(items.flatMap((item) => item.refIds))],
+    rewriteSuggestions,
+    evidenceSpans: items.flatMap((item) => item.evidenceSpans),
+  };
+}
 
-    return {
-      riskType,
-      modules: orderModules(group.map((f) => f.module)),
-      severity,
-      decision: pickDecision(group),
-      summary: pickSummary(group),
-      refIds: [...new Set(group.map((f) => f.ref_id))],
-      rewriteSuggestions: uniqueRewrites,
-      evidenceSpans,
-    };
-  });
-
-  return merged.sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
+/** One list card per claim_anchor; multiple risk types render as sub-rows. */
+export function mergeFindingsByClaimAnchor(findings: ReviewFindingDto[]): MergedFinding[] {
+  return groupFindingsByClaimAnchor(findings)
+    .map(toMergedFinding)
+    .sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
 }

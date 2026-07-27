@@ -4,6 +4,7 @@ import {
   applySourceTypeRules,
   EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
   renderEvidenceJudgmentPrompt,
+  selectEvidenceTextForPrompt,
   sliceEvidenceTextForPrompt,
   structuralScopeExcludes,
 } from './evidence-judgment-rules.js';
@@ -139,11 +140,71 @@ describe('evidence judgment rules', () => {
     expect(covered.evidence.evidence_text).toMatch(/245g|calibrated scale/i);
     expect(hollow.evidence.evidence_text).not.toMatch(/245g|calibrated scale/i);
   });
+
+  it('locks 2x faster = 100% faster containment (not 200%)', () => {
+    const covered = fixture.cases.find(
+      (x) => x.case_id === 'numeric-containment-70pct-faster-covered-by-2x',
+    )!;
+    const conversion = fixture.cases.find(
+      (x) => x.case_id === 'multiplier-conversion-2x-is-100-percent-faster',
+    )!;
+
+    expect(covered.expect).toEqual({
+      relevance: 'strong',
+      sufficiency: 'sufficient',
+      skip_llm: false,
+    });
+    expect(covered.llm_stub_response?.relevance_reasoning.toLowerCase()).toMatch(/100%\s*faster/);
+    expect(covered.llm_stub_response?.relevance_reasoning.toLowerCase()).not.toMatch(
+      /200%\s*faster/,
+    );
+    expect(conversion.llm_stub_response?.relevance_reasoning).toMatch(/\(2-1\)×100%|100% faster/i);
+    expect(conversion.llm_stub_response?.relevance_reasoning.toLowerCase()).toMatch(
+      /not .*200%|never .*200%|≠\s*200%/,
+    );
+  });
+
+  it('missing ad baseline stays partial+insufficient, not relevance=none digit mismatch', () => {
+    const missing = fixture.cases.find(
+      (x) => x.case_id === 'numeric-containment-70pct-faster-missing-baseline',
+    )!;
+    expect(missing.expect).toEqual({
+      relevance: 'partial',
+      sufficiency: 'insufficient',
+      skip_llm: false,
+    });
+    expect(missing.context.ad_text).not.toMatch(/compared with|vs\.|versus/i);
+    expect(missing.llm_stub_response?.sufficiency_reasoning.toLowerCase()).toMatch(
+      /baseline|脚注|disclos/,
+    );
+    expect(missing.llm_stub_response?.relevance).toBe('partial');
+  });
+
+  it('no case SKU + evidence self-declared model alias is not a product mismatch', () => {
+    const alias = fixture.cases.find(
+      (x) => x.case_id === 'model-alias-no-case-sku-pc20x-covers-capacity',
+    )!;
+    expect(alias.context.product_sku).toBeUndefined();
+    expect(alias.context.ad_text).not.toMatch(/PC20|PC201|PC200/i);
+    expect(alias.context.claim_anchor_text).not.toMatch(/PC20|PC201|PC200/i);
+    expect(alias.evidence.evidence_text).toMatch(/PC20X\s*\|\s*PC201\/PC200/i);
+    expect(alias.expect).toEqual({
+      relevance: 'strong',
+      sufficiency: 'sufficient',
+      skip_llm: false,
+    });
+    expect(alias.llm_stub_response?.relevance_reasoning.toLowerCase()).toMatch(
+      /alias|not a product mismatch|not provided/,
+    );
+    expect(alias.llm_stub_response?.relevance_reasoning.toLowerCase()).not.toMatch(
+      /different product|wrong model|sku mismatch/,
+    );
+  });
 });
 
 describe('evidence judgment prompt text window', () => {
-  it('reports full_len vs prompt_len and truncates over the limit', () => {
-    const short = sliceEvidenceTextForPrompt('abc');
+  it('selectEvidenceTextForPrompt passes through short text unchanged', () => {
+    const short = selectEvidenceTextForPrompt('abc', '30 minutes');
     expect(short).toEqual({
       text_for_prompt: 'abc',
       full_len: 3,
@@ -151,29 +212,43 @@ describe('evidence judgment prompt text window', () => {
       truncated: false,
       limit: EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
     });
+  });
 
+  it('selectEvidenceTextForPrompt retrieves claim-relevant tail content', () => {
+    const filler = `${'Recipe table row. '.repeat(900)}`;
+    const relevant = 'Total weight 1.96-2.45kg ÷ 245g = feed up to 8-10 people for PC201.';
+    const evidenceText = `${filler}${relevant}`;
+    expect(evidenceText.length).toBeGreaterThan(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+
+    const window = selectEvidenceTextForPrompt(evidenceText, 'up to 8-10 people');
+    expect(window.truncated).toBe(true);
+    expect(window.text_for_prompt).toContain('8-10 people');
+    expect(window.text_for_prompt).toContain('245g');
+    expect(window.prompt_len).toBeLessThanOrEqual(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+  });
+
+  it('sliceEvidenceTextForPrompt still prefix-truncates when used directly', () => {
     const long = 'x'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT + 500);
     const window = sliceEvidenceTextForPrompt(long);
     expect(window.full_len).toBe(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT + 500);
     expect(window.prompt_len).toBe(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
     expect(window.truncated).toBe(true);
-    expect(window.text_for_prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
     expect(window.text_for_prompt).toBe('x'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT));
   });
 
-  it('renderEvidenceJudgmentPrompt only injects the windowed prefix', () => {
-    const marker = 'MARKER_AFTER_WINDOW';
-    const evidenceText =
-      `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}${marker}`;
+  it('renderEvidenceJudgmentPrompt uses claim-relevant retrieval, not prefix only', () => {
+    const filler = `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}`;
+    const marker = 'MARKER_CAPACITY_8_10_PEOPLE';
+    const evidenceText = `${filler}${marker}`;
     const prompt = renderEvidenceJudgmentPrompt('{evidence_text}', {
       review_id: 'r1',
       finding_id: 'f1',
       country_id: 'SG',
       category_id: 'sa.rice_cooker',
-      ad_text: 'Family meals in 30 minutes',
-      finding_summary: 'timing claim',
+      ad_text: 'Cook for up to 8-10 people',
+      finding_summary: 'capacity claim',
       risk_type: 'unsubstantiated-quantitative-claim',
-      claim_anchor_text: '30 minutes',
+      claim_anchor_text: '8-10 people',
       evidence: stubEvidence({
         evidence_source_type: 'INTERNAL_TEST',
         scope: {},
@@ -181,7 +256,7 @@ describe('evidence judgment prompt text window', () => {
       }),
       evidence_text: evidenceText,
     });
-    expect(prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
-    expect(prompt.includes(marker)).toBe(false);
+    expect(prompt.includes(marker)).toBe(true);
+    expect(prompt.length).toBeLessThanOrEqual(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
   });
 });

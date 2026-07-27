@@ -16,7 +16,10 @@ import {
   type EvidenceAiJudgmentDto,
   type FindingEvidenceLinkDto,
 } from '@/api/evidence';
-import { supportsEvidenceAttachment } from '@aairp/shared-kernel';
+import {
+  groupFindingsByClaimAnchor,
+  supportsEvidenceAttachment,
+} from '@aairp/shared-kernel';
 import { resolveLegalSummaryZh } from '@/lib/legal-copy';
 import { resolveFindingRiskType } from '@/lib/finding-merge';
 import { findingDecisionBadgeClass, severityBadgeClass } from '@/lib/review-ui';
@@ -73,10 +76,54 @@ function JudgmentBadge({ judgment }: { judgment: EvidenceAiJudgmentDto }) {
         >
           充分性: {judgment.sufficiency}
         </span>
+        {judgment.judgment_mode && (
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              judgment.judgment_mode === 'live'
+                ? 'bg-emerald-50 text-emerald-800'
+                : 'bg-rose-100 text-rose-900',
+            )}
+          >
+            模式: {judgment.judgment_mode}
+            {judgment.llm_model ? ` (${judgment.llm_model})` : ''}
+          </span>
+        )}
         {judgment.prescreen_excluded && (
           <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600">结构化预筛</span>
         )}
+        {judgment.text_unreadable && (
+          <span className="rounded-md bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-900">
+            文本层不可读
+          </span>
+        )}
+        {judgment.text_truncated && (
+          <span className="rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900">
+            文本已截断
+          </span>
+        )}
       </div>
+      {judgment.judgment_mode === 'stub' && (
+        <p className="text-xs leading-relaxed text-rose-800">
+          当前为 stub 模式：系统不会读取真实文档内容，返回的是固定演示结果。生产环境请设置
+          AAIRP_EVIDENCE_JUDGMENT_MODE=live。
+        </p>
+      )}
+      {judgment.text_unreadable && (
+        <p className="text-xs leading-relaxed text-rose-800">
+          未能从文件提取可读文本（PDF 使用标准文字层解析；扫描件/纯图片 PDF 仍需 OCR，v1
+          未覆盖）。请改传可选中文字的 PDF 或 .txt 后重试。
+        </p>
+      )}
+      {judgment.text_truncated &&
+        typeof judgment.text_prompt_len === 'number' &&
+        typeof judgment.text_full_len === 'number' && (
+          <p className="text-xs leading-relaxed text-amber-900">
+            证据文本较长，AI 判断仅基于前 {judgment.text_prompt_len.toLocaleString()} 字符（全文共{' '}
+            {judgment.text_full_len.toLocaleString()}{' '}
+            字符）。确认结论前请自行核对文档后部内容，勿把 AI 摘录当作全文覆盖。
+          </p>
+        )}
     </div>
   );
 }
@@ -106,19 +153,30 @@ function SideBySideReview({
 
 function FindingEvidenceItem({
   reviewId,
-  finding,
+  findings,
+  claimAnchor,
   adText,
   countryId,
   categoryId,
   productSku,
 }: {
   reviewId: string;
-  finding: ReviewFindingDto;
+  findings: ReviewFindingDto[];
+  claimAnchor: string;
   adText: string;
   countryId: string;
   categoryId: string;
   productSku?: string;
 }) {
+  const primaryFinding =
+    findings.find((f) => f.module === 'RULE') ??
+    findings.find((f) => f.module === 'PLAYBOOK') ??
+    findings[0]!;
+  const findingIds = findings.map((f) => f.finding_id);
+  const findingIdsKey = findingIds.slice().sort().join('|');
+  const refIds = [...new Set(findings.map((f) => f.ref_id))];
+  const riskTypes = [...new Set(findings.map((f) => resolveFindingRiskType(f)))];
+
   const [links, setLinks] = useState<FindingEvidenceLinkDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -185,29 +243,34 @@ function FindingEvidenceItem({
     applySelectedFile(dropped);
   }
 
-  const riskType = resolveFindingRiskType(finding);
-  const claimAnchor = finding.evidence_spans?.[0]?.text?.trim() ?? finding.summary;
+  const primaryRiskType = resolveFindingRiskType(primaryFinding);
   const legalSummaryZh = resolveLegalSummaryZh({
-    riskType,
-    modules: [finding.module],
-    severity: finding.severity,
-    decision: finding.decision,
-    summary: finding.summary,
-    refIds: [finding.ref_id],
-    rewriteSuggestions: finding.rewrite_suggestions ?? [],
-    evidenceSpans: finding.evidence_spans ?? [],
+    riskType: primaryRiskType,
+    summary: primaryFinding.summary,
+    refIds,
   });
 
   const refresh = useCallback(async () => {
     setLoading(true);
     try {
-      setLinks(await listFindingEvidence(reviewId, finding.finding_id));
+      const lists = await Promise.all(
+        findingIds.map((id) => listFindingEvidence(reviewId, id)),
+      );
+      const merged = new Map<string, FindingEvidenceLinkDto>();
+      for (const list of lists) {
+        for (const link of list) {
+          merged.set(link.link_id, link);
+        }
+      }
+      setLinks([...merged.values()]);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : '加载证据失败');
     } finally {
       setLoading(false);
     }
-  }, [reviewId, finding.finding_id]);
+    // findingIdsKey keeps the callback stable while covering the full fan-out set.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewId, findingIdsKey]);
 
   useEffect(() => {
     void refresh();
@@ -223,37 +286,55 @@ function FindingEvidenceItem({
     setSubmitting(true);
     setError(null);
     try {
-      await attachFindingEvidence({
-        review_id: reviewId,
-        finding_id: finding.finding_id,
-        title: title.trim(),
-        evidence_source_type: sourceType,
-        scope: {
-          countries: [countryId],
-          categories: [categoryId],
-          skus: scopeSkus.trim() ? scopeSkus.split(/[,;，；\s]+/).filter(Boolean) : undefined,
-        },
-        claim_risk_types: [riskType],
-        file: {
-          filename: file.name,
-          mime_type: file.type || 'application/octet-stream',
-          content_base64: await fileToBase64(file),
-        },
-        judgment_context: {
-          country_id: countryId,
-          category_id: categoryId,
-          product_sku: productSku,
-          ad_text: adText,
-          finding_summary: finding.summary,
-          remediation_type: finding.remediation_type,
-          risk_type: riskType,
-          claim_anchor_text: claimAnchor,
-          matched_spans: finding.evidence_spans,
-        },
-      });
+      const contentBase64 = await fileToBase64(file);
+      const scope = {
+        countries: [countryId],
+        categories: [categoryId],
+        skus: scopeSkus.trim() ? scopeSkus.split(/[,;，；\s]+/).filter(Boolean) : undefined,
+      };
+      const errors: string[] = [];
+      for (const finding of findings) {
+        try {
+          await attachFindingEvidence({
+            review_id: reviewId,
+            finding_id: finding.finding_id,
+            title: title.trim(),
+            evidence_source_type: sourceType,
+            scope,
+            claim_risk_types: [resolveFindingRiskType(finding)],
+            file: {
+              filename: file.name,
+              mime_type: file.type || 'application/octet-stream',
+              content_base64: contentBase64,
+            },
+            judgment_context: {
+              country_id: countryId,
+              category_id: categoryId,
+              product_sku: productSku,
+              ad_text: adText,
+              finding_summary: finding.summary,
+              remediation_type: finding.remediation_type,
+              risk_type: resolveFindingRiskType(finding),
+              claim_anchor_text: claimAnchor,
+              matched_spans: finding.evidence_spans,
+            },
+          });
+        } catch (caught) {
+          errors.push(
+            `${finding.ref_id}: ${caught instanceof Error ? caught.message : '上传失败'}`,
+          );
+        }
+      }
+      if (errors.length === findings.length) {
+        setError(errors.join('；'));
+        return;
+      }
       setTitle('');
       setFile(null);
       setShowForm(false);
+      if (errors.length > 0) {
+        setError(`部分 finding 同步失败：${errors.join('；')}`);
+      }
       await refresh();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : '上传失败');
@@ -277,26 +358,48 @@ function FindingEvidenceItem({
     }
   }
 
-  const trigger = finding.evidence_spans?.[0]?.text?.trim();
+  const trigger = claimAnchor.trim();
 
   return (
     <div className="rounded-lg border border-blue-200 bg-blue-50/40 p-4">
       <div className="space-y-3">
         <div className="flex flex-wrap items-start gap-2">
-          <span className="rounded-md bg-white px-2 py-0.5 font-mono text-xs text-ink">{riskType}</span>
-          {finding.remediation_type && (
+          {riskTypes.map((rt) => (
+            <span key={rt} className="rounded-md bg-white px-2 py-0.5 font-mono text-xs text-ink">
+              {rt}
+            </span>
+          ))}
+          {primaryFinding.remediation_type && (
             <span className="rounded-md bg-white px-2 py-0.5 font-mono text-xs text-gray-500">
-              {finding.remediation_type}
+              {primaryFinding.remediation_type}
             </span>
           )}
-          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', findingDecisionBadgeClass(finding.decision))}>
-            {finding.decision}
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              findingDecisionBadgeClass(primaryFinding.decision),
+            )}
+          >
+            {primaryFinding.decision}
           </span>
-          <span className={cn('rounded-md px-2 py-0.5 text-xs font-medium', severityBadgeClass(finding.severity))}>
-            {finding.severity}
+          <span
+            className={cn(
+              'rounded-md px-2 py-0.5 text-xs font-medium',
+              severityBadgeClass(primaryFinding.severity),
+            )}
+          >
+            {primaryFinding.severity}
           </span>
+          {findings.length > 1 && (
+            <span className="rounded-md bg-white px-2 py-0.5 text-xs text-gray-500">
+              一次上传同步 {findings.length} 条 finding
+            </span>
+          )}
           <div className="min-w-0 flex-1">
             <p className="text-sm leading-relaxed text-ink">{legalSummaryZh}</p>
+            {refIds.length > 1 && (
+              <p className="mt-1 font-mono text-[11px] text-gray-500">{refIds.join(' · ')}</p>
+            )}
           </div>
         </div>
 
@@ -548,7 +651,9 @@ export function FindingEvidencePanel({
     ),
   );
 
-  if (evidenceFindings.length === 0) return null;
+  const evidenceGroups = groupFindingsByClaimAnchor(evidenceFindings);
+
+  if (evidenceGroups.length === 0) return null;
 
   return (
     <section>
@@ -557,14 +662,15 @@ export function FindingEvidencePanel({
         <span className="ml-1.5 text-xs font-normal text-muted-foreground">Evidence + AI Judgment</span>
       </h2>
       <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-        上传材料后系统将先做结构化预筛，再运行 AI 关联性/充分性判断。请对照原文片段与证据摘录后确认或覆写，避免自动化偏见。
+        同一原文片段（claim anchor）只展示一张上传卡；上传一次会同步到该片段下的全部相关 finding。系统将先做结构化预筛，再运行 AI 关联性/充分性判断。
       </p>
       <div className="space-y-3">
-        {evidenceFindings.map((finding) => (
+        {evidenceGroups.map((group) => (
           <FindingEvidenceItem
-            key={finding.finding_id}
+            key={group.groupKey}
             reviewId={reviewId}
-            finding={finding}
+            findings={group.findings}
+            claimAnchor={group.claimAnchor}
             adText={adText}
             countryId={countryId}
             categoryId={categoryId}

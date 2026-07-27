@@ -17,7 +17,7 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 
 ### WARN — Finding (substantiation, qualification, or localisation fix may suffice)
 - absolute-claim-soft: omnibus or soft absolute wording (perfect, zero-fault, every serving) — qualify or substantiate
-- unsubstantiated-quantitative-claim: percentages without baseline, test method, or data source
+- unsubstantiated-quantitative-claim: percentages / "up to X%" / "Nx faster" without a disclosed comparison baseline (vs what), test method, or data source. A trailing "*" without the footnote text pasted into the ad copy still counts as missing baseline. This is a copy-disclosure finding — do not treat it as solved merely because internal evidence exists elsewhere.
 - unsupported-comparative-claim: stronger/faster/quieter without identifiable baseline
 - health-superlative-claim: health-supplement clinically proven / guaranteed / instant results without substantiation
 - material-claim: BPA-free, food-grade, non-toxic coating, stainless — needs lab report
@@ -36,7 +36,7 @@ Classify any NEW risk against the canonical taxonomy below. Map each finding to 
 ### MANUAL_REVIEW — recall / semantic pre-screen only (ALWAYS suggested_action MANUAL_REVIEW; NEVER WARN; NEVER "safe to pass")
 - aana-children-code-risk: AU ads directed at / featuring children (under 15) that may touch AANA Children's Advertising Code body provisions — semantic pre-screen for human confirmation. Cite the suspected provision in description (e.g. 2.1 unsafe practices; 2.2 misleading about product/safety/nutrition; 2.3 sexualisation; 2.4 undermine parents; 2.5 pester power / urge children to ask parents to buy; 2.6 inappropriate use of popular personalities/characters with children; 2.7 food/beverage nutrition pressure). Does NOT replace human judgement. Cite `demo-au-children-code-review` in related_modules_checked / cited_rule_refs when applicable. Empty findings only when no child-directed or child-code cue is present.
 - sensitive-content-flag: CN marketing that may involve politics/history, ethnicity, religion, national symbols (beyond literal 国旗/国徽), or public emergencies/disasters (beyond literal 疫情/灾害) — recall-only flag for human confirmation. ALWAYS MANUAL_REVIEW. NEVER WARN. NEVER conclude the copy is clear to publish. Description must say the topic is suspected and needs human confirmation. Cite `demo-cn-sensitive-content-manual-review` when applicable. Empty findings only when no sensitive-topic cue is present.
-- health-implication: lighter/fresher/nutrient-retention feel without disease/organ claims — sits on an evidence boundary (context/data may or may not be on file) and must route to human confirmation, same tier as the Rule/Playbook `demo-apac-sa-health-implication` REVIEW pattern. ALWAYS MANUAL_REVIEW. NEVER WARN. Description should ask for confirmation that supporting context/data is on file, not conclude the claim is fine.
+- health-implication: lighter/fresher/nutrient-retention feel or a concrete health/nutrition mechanism without disease/organ claims — sits on an evidence boundary (context/data may or may not be on file) and must route to human confirmation, same tier as the Rule/Playbook `demo-apac-sa-health-implication` REVIEW pattern. ALWAYS MANUAL_REVIEW. NEVER WARN. Description should ask for confirmation that supporting context/data is on file, not conclude the claim is fine. Do NOT fire on bare lifestyle words alone (e.g. standalone "healthy" / "nutrition" / "wellness") when the sentence has no mechanism, retention, diet-benefit, or efficacy implication.
 
 ## Advertisement
 - Text: {ad_text}
@@ -119,11 +119,13 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Time-saving or lifestyle framing without measurable superiority: e.g. "Spend less time cleaning and more time living", "Simplify your morning routine", "A practical companion for busy households".
 - General ease-of-use or confidence wording without guaranteed outcomes: e.g. "Built for everyday confidence", "Designed to make cooking easier".
 - Aspirational scene-setting that does not claim testable performance, health benefit, certification, or ranking.
+- Bare or generic healthy/nutrition/wellness lifestyle wording with no mechanism or efficacy implication: e.g. "Healthy cooking made simple", "Enjoy healthy meals every day", "Everyday nutrition for the family", "Wellness packs for your kitchen". These are scene-setting only — return empty findings for health-implication. Contrast: DO flag when the same words attach a concrete mechanism or benefit (e.g. "healthy cooking process that removes fat", "preserves nutrients in every blend", "daily wellness ritual that supports your nutrition routine").
 
 ### Consider MANUAL_REVIEW or WARN when rules did not already flag
 - Implied omnibus outcome across all uses: e.g. "results you'll never look back from", "works every single time", "foolproof" cooking outcomes.
 - Implied professional / third-party quality tier without evidence: e.g. "restaurant-quality results", "chef-level" unless clearly puffery and qualified.
 - Soft comparative superiority without a named baseline: e.g. "better rice with every serving", "smarter than traditional rice cookers" (if not already in prior findings).
+- Quantitative claims with "*" / "up to X% faster" / "Nx faster" when the ad text itself never states the comparison baseline (vs slow cook, conventional, prior model, named competitor) — flag unsubstantiated-quantitative-claim even if a Rule/Playbook already flagged the percentage keyword. Missing baseline is a separate disclosure issue from "needs evidence numbers".
 - Implied health, medical, or food-safety benefit from material or cleaning claims not caught by health rules.
 - Combination risks: absolute-sounding headline + fine-print disclaimer that does not qualify the headline.
 

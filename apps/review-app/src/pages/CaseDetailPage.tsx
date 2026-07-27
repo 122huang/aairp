@@ -8,7 +8,7 @@ import { FindingsList } from '@/components/review/FindingsList';
 import { SourceMaterial } from '@/components/review/SourceMaterial';
 import { Button } from '@/components/ui/button';
 import { caseRecordToDemoReviewResponse } from '@/lib/case-to-review-result';
-import { extractEvidenceSpans, mergeFindingsByRiskType } from '@/lib/finding-merge';
+import { extractEvidenceSpans, mergeFindingsByClaimAnchor } from '@/lib/finding-merge';
 import { hrefForRoute } from '@/lib/hash-route';
 import { collectHighlightSpans, severityRank } from '@/lib/review-ui';
 import { ArrowLeft, Loader2 } from 'lucide-react';
@@ -56,7 +56,7 @@ export function CaseDetailPage({ caseId }: CaseDetailPageProps) {
     const sorted = [...result.summary.findings].sort(
       (a, b) => severityRank(a.severity) - severityRank(b.severity),
     );
-    return mergeFindingsByRiskType(sorted);
+    return mergeFindingsByClaimAnchor(sorted);
   }, [result]);
 
   const refIds = useMemo(() => {

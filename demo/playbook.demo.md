@@ -79,7 +79,7 @@ expected_severity: MEDIUM
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: lower sugar, healthier, health benefits, healthy choices, healthy, natural goodness, natural enzymes, natural enzymes preserved, natural vitamins, daily nutrition, nutrition, improved indoor air quality, indoor air quality, 室内空气品质, cleaner indoor air, 营养成分, 天然营养, 天然营养成分, 保留果蔬, 减少营养流失, 冷萃设计, 少油烹饪, 少油, 更少油脂, 吃得更轻盈, 更轻盈, 更清爽, 吃得更清爽, 每天吃得更清爽, 饮食轻松, 轻松无负担, 无负担的美食体验, wholesome meals, goodness locked in, lighter cooking, lighter living, 除螨, 螨虫, 过敏源, 每天喝得更健康, 活力满满, 留住食材天然, cleaner eating, feel the difference, guilt-free, guilt free, wellness, wellness ritual, daily wellness, better you, step towards a better you, 补充营养, 蔬菜营养, 每日所需, 让孩子也爱上, 深呼吸, eaten well, breathe easy, whole benefits, think about what they eat, deserves better, 坐月子
+trigger_keywords: lower sugar, healthier, health benefits, healthy choices, natural goodness, natural enzymes, natural enzymes preserved, natural vitamins, daily nutrition, nutrition routine, improved indoor air quality, indoor air quality, 室内空气品质, cleaner indoor air, 营养成分, 天然营养, 天然营养成分, 保留果蔬, 减少营养流失, 冷萃设计, 少油烹饪, 少油, 更少油脂, 吃得更轻盈, 更轻盈, 更清爽, 吃得更清爽, 每天吃得更清爽, 饮食轻松, 轻松无负担, 无负担的美食体验, wholesome meals, goodness locked in, lighter cooking, lighter living, 除螨, 螨虫, 过敏源, 每天喝得更健康, 活力满满, 留住食材天然, cleaner eating, feel the difference, guilt-free, guilt free, wellness ritual, daily wellness, better you, step towards a better you, 补充营养, 蔬菜营养, 每日所需, 让孩子也爱上, 深呼吸, eaten well, breathe easy, whole benefits, think about what they eat, deserves better, 坐月子
 severity_hint: MEDIUM
 decision: REVIEW
 guidance: Boundary: Health Implication refers to sensory/experiential wording; Medical Claim refers to disease and organ function. This pattern is a Health Implication — requires contextual qualification or softening, with supporting data where necessary; claims of reduced oil/nutrient retention require comparative or test data on file. Route to manual confirmation of whether external evidence/data is on file.
@@ -186,12 +186,12 @@ expected_severity: MEDIUM
 
 scope_countries: SG, MY, TH
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: 80% less oil, up to 80%, 80%, 75% less oil, up to 75%, 75%, 70% less oil, up to 70%, 70%, 减少高达, 用油量, 节能高达
+trigger_keywords: 80% less oil, 75% less oil, 70% less oil, less oil, 用油量, 减少用油, 少油烹饪, 节能高达, energy saving, less energy, 节电高达
 severity_hint: HIGH
 decision: WARN
-guidance: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing.
-guidance_en: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing.
-guidance_zh: 减少用油量/节能等量化宣称（如「减少高达70%/75%/80%用油量」「节能高达30%」）须持有可核验的测试数据（对照方法、机型、测算口径）后方可发布。
+guidance: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing. Bare percentages without oil/energy context belong to performance/quantitative patterns — do not trigger this oil-reduction pattern.
+guidance_en: Quantified claims such as reduced oil use/energy saving (e.g. "reduces oil use by up to 70%/75%/80%", "saves up to 30% energy") must be backed by verifiable test data on file (comparison method, model, and calculation basis) before publishing. Bare percentages without oil/energy context belong to performance/quantitative patterns — do not trigger this oil-reduction pattern.
+guidance_zh: 减少用油量/节能等量化宣称（如「减少高达70%/75%/80%用油量」「节能高达30%」）须持有可核验的测试数据（对照方法、机型、测算口径）后方可发布。裸百分比无油/能耗语境时不命中本模式。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Quantified oil-use reduction claims requiring test data substantiation.

@@ -564,6 +564,20 @@ describe('RuleEngineService', () => {
       });
 
       it.each([
+        ['D1', 'sa.air_fryer', 'Enjoy healthy meals every day.'],
+        ['D2', 'sa.blender_processor', 'Everyday nutrition for the family.'],
+        ['D3', 'sa.rice_cooker', 'Wellness packs for your kitchen.'],
+      ])('bare health lifestyle word %s stays PASS', (_id, categoryId, text) => {
+        const service = new RuleEngineService();
+        const result = service.evaluate(sgCase(categoryId, text));
+
+        expect(result.hasBlocker).toBe(false);
+        expect(
+          result.findings.some((f) => f.refId === 'demo-apac-sa-health-implication'),
+        ).toBe(false);
+      });
+
+      it.each([
         [
           'C1',
           'sa.air_fryer',

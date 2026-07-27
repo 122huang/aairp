@@ -8,6 +8,7 @@ import { fetchCase } from '@/api/cases';
 import { submitReview, type DemoReviewResponse, type ReviewApiError } from '@/api/review';
 import { openCaseReport } from '@/api/case-report';
 import { SharedReviewDimensions } from '@/components/review/SharedReviewDimensions';
+import { ReviewContextFields } from '@/components/review/ReviewContextFields';
 import { DecisionBanner } from '@/components/review/DecisionBanner';
 import { FindingsList } from '@/components/review/FindingsList';
 import { FindingEvidencePanel } from '@/components/review/FindingEvidencePanel';
@@ -16,8 +17,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { AD_TYPE_OPTIONS, type AdTypeValue } from '@/lib/ad-type-copy';
-import { mergeFindingsByRiskType, extractEvidenceSpans } from '@/lib/finding-merge';
+import { type AdTypeValue } from '@/lib/ad-type-copy';
+import { mergeFindingsByClaimAnchor, extractEvidenceSpans } from '@/lib/finding-merge';
+import { buildReviewUploadContext, resolveCaseProductSku } from '@/lib/review-upload-context';
 import { collectHighlightSpans, filesToBase64, severityRank } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
 import { Loader2, Upload, X } from 'lucide-react';
@@ -44,6 +46,7 @@ export function SingleReviewPanel({
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
   const [adType, setAdType] = useState<AdTypeValue>('');
+  const [productSku, setProductSku] = useState('');
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -62,7 +65,7 @@ export function SingleReviewPanel({
     const sorted = [...result.summary.findings].sort(
       (a, b) => severityRank(a.severity) - severityRank(b.severity),
     );
-    return mergeFindingsByRiskType(sorted);
+    return mergeFindingsByClaimAnchor(sorted);
   }, [result]);
 
   const refIds = useMemo(() => {
@@ -105,6 +108,7 @@ export function SingleReviewPanel({
         if (restoredAdType === 'BRAND_PRODUCT' || restoredAdType === 'INFLUENCER_UGC') {
           setAdType(restoredAdType);
         }
+        setProductSku(resolveCaseProductSku(record));
         onCountryChange(record.dimensions.country_id as DemoReviewCountryId);
         onCategoryChange(record.dimensions.category_id as DemoSaCategoryId);
         setImagePreviews(record.advertisement.content.image_urls ?? []);
@@ -143,6 +147,7 @@ export function SingleReviewPanel({
 
     try {
       const { imageDataUrls } = await filesToBase64(imageFiles);
+      const uploadContext = buildReviewUploadContext(adType, productSku);
       const response = await submitReview({
         country_id: countryId,
         platform_id: DEMO_REVIEW_PLATFORM_ID,
@@ -151,7 +156,7 @@ export function SingleReviewPanel({
           text: trimmed,
           ...(imageDataUrls.length > 0 ? { images: imageDataUrls } : {}),
         },
-        ...(adType ? { context: { ad_type: adType } } : {}),
+        ...(uploadContext ? { context: uploadContext } : {}),
         tags: ['review-app:6u-1', `market:${countryId}`],
         ...(pendingParentCaseId ? { parent_case_id: pendingParentCaseId } : {}),
       });
@@ -205,24 +210,13 @@ export function SingleReviewPanel({
               countryShake={countryShake}
             />
 
-            <div className="space-y-2">
-              <Label htmlFor="ad-type" className="font-medium text-ink">
-                内容类型
-              </Label>
-              <select
-                id="ad-type"
-                className="flex min-h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                value={adType}
-                disabled={loading}
-                onChange={(event) => setAdType(event.target.value as AdTypeValue)}
-              >
-                {AD_TYPE_OPTIONS.map((opt) => (
-                  <option key={opt.value || 'unlabeled'} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <ReviewContextFields
+              productSku={productSku}
+              adType={adType}
+              onProductSkuChange={setProductSku}
+              onAdTypeChange={setAdType}
+              disabled={loading}
+            />
 
             <div className="space-y-2">
               <Label className="font-medium text-ink">图片（可选）</Label>
@@ -368,6 +362,7 @@ export function SingleReviewPanel({
               adText={text}
               countryId={result.summary.advertisement.country_id}
               categoryId={result.summary.advertisement.category_id}
+              productSku={productSku.trim() || undefined}
             />
 
             <SourceMaterial text={text} highlightSpans={highlightSpans} imagePreviews={imagePreviews} />
