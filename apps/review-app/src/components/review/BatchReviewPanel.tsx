@@ -1,13 +1,13 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import type { DemoReviewCountryId, DemoSaCategoryId } from '@aairp/shared-kernel';
 import { SharedReviewDimensions } from '@/components/review/SharedReviewDimensions';
+import { ReviewContextFields } from '@/components/review/ReviewContextFields';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { useBatchReview } from '@/hooks/use-batch-review';
 import {
-  AD_TYPE_OPTIONS,
   DISCLOSURE_REMINDER_TEXT,
   type AdTypeValue,
 } from '@/lib/ad-type-copy';
@@ -114,6 +114,7 @@ export function BatchReviewPanel({
 }: BatchReviewPanelProps) {
   const [rawText, setRawText] = useState('');
   const [adType, setAdType] = useState<AdTypeValue>('');
+  const [productSku, setProductSku] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
 
   const { items, progress, running, selectedIndex, setSelectedIndex, startBatch, cancel, previewLines } =
@@ -136,6 +137,7 @@ export function BatchReviewPanel({
       countryId,
       categoryId,
       adType,
+      productSku,
     });
     if (!outcome.ok) {
       setFormError(outcome.error);
@@ -176,27 +178,14 @@ export function BatchReviewPanel({
               countryShake={countryShake}
             />
 
-            <div className="space-y-2">
-              <Label htmlFor="batch-ad-type" className="font-medium text-ink">
-                内容类型（整批统一，默认未标注）
-              </Label>
-              <select
-                id="batch-ad-type"
-                className="flex min-h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                value={adType}
-                disabled={running}
-                onChange={(event) => setAdType(event.target.value as AdTypeValue)}
-              >
-                {AD_TYPE_OPTIONS.map((opt) => (
-                  <option key={opt.value || 'unlabeled'} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              <p className="text-xs text-muted-foreground">
-                对本批次全部文案生效，无需逐行选择。
-              </p>
-            </div>
+            <ReviewContextFields
+              productSku={productSku}
+              adType={adType}
+              onProductSkuChange={setProductSku}
+              onAdTypeChange={setAdType}
+              disabled={running}
+              batchMode
+            />
 
             {showDraftPreview && (
               <div className="rounded-md border border-gray-200 bg-gray-50 p-3">

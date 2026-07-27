@@ -11,6 +11,7 @@ export type ReviewUploadPayload = {
   };
   context?: {
     ad_type?: 'BRAND_PRODUCT' | 'INFLUENCER_UGC';
+    product_sku?: string;
   };
   tags?: string[];
   /** When set, new case joins the parent's submission thread. */
