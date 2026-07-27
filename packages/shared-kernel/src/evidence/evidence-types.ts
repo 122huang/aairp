@@ -39,7 +39,7 @@ export type EvidenceAiJudgment = {
   text_unreadable?: boolean;
   /**
    * true when extracted evidence text exceeded the judgment prompt window
-   * (prefix truncation). Reviewers must not treat the AI excerpt as full-doc.
+   * (claim-relevant chunk retrieval). Reviewers must not treat the AI excerpt as full-doc.
    */
   text_truncated?: boolean;
   /** Character length of extracted evidence text before prompt windowing. */

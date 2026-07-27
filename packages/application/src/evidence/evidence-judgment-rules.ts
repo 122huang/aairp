@@ -5,6 +5,17 @@ import type {
   EvidenceSourceType,
 } from '@aairp/shared-kernel';
 import type { RemediationType } from '@aairp/shared-kernel';
+import {
+  EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
+  selectEvidenceTextForPrompt,
+  type EvidenceTextPromptWindow,
+} from './evidence-text-retrieval.js';
+
+export {
+  EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
+  selectEvidenceTextForPrompt,
+  type EvidenceTextPromptWindow,
+} from './evidence-text-retrieval.js';
 
 /** Risk types where INTERNAL_TEST cannot reach sufficient (health/comparative/ranking/social proof). */
 export const HIGH_SENSITIVITY_RISK_TYPES = new Set([
@@ -194,25 +205,11 @@ export type JudgmentPromptContext = EvidenceJudgmentContext & {
   evidence_text: string;
 };
 
-/**
- * Hard window for `{evidence_text}` in the judgment prompt.
- * Step-1 mitigation: stamp + UI when truncated. Step-2 will replace prefix
- * truncation with claim-relevant retrieval / chunk-then-merge.
- */
-export const EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT = 12_000;
-
-export type EvidenceTextPromptWindow = {
-  text_for_prompt: string;
-  full_len: number;
-  prompt_len: number;
-  truncated: boolean;
-  limit: number;
-};
-
+/** @deprecated Use selectEvidenceTextForPrompt with claim_anchor_text. */
 export function sliceEvidenceTextForPrompt(
   evidenceText: string,
-  limit = EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
-): EvidenceTextPromptWindow {
+  limit = 12_000,
+): import('./evidence-text-retrieval.js').EvidenceTextPromptWindow {
   const full_len = evidenceText.length;
   const text_for_prompt = evidenceText.slice(0, limit);
   const prompt_len = text_for_prompt.length;
@@ -229,7 +226,7 @@ export function renderEvidenceJudgmentPrompt(
   template: string,
   ctx: JudgmentPromptContext,
 ): string {
-  const window = sliceEvidenceTextForPrompt(ctx.evidence_text);
+  const window = selectEvidenceTextForPrompt(ctx.evidence_text, ctx.claim_anchor_text);
   return template
     .replaceAll('{prompt_pack_version}', 'evidence-judgment-v1')
     .replaceAll('{claim_anchor_text}', ctx.claim_anchor_text)
