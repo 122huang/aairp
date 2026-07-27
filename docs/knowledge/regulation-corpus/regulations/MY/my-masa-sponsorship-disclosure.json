@@ -3,17 +3,17 @@
   "corpus_type": "regulation",
   "regulation_id": "my-masa-sponsorship-disclosure",
   "country": "MY",
-  "authority": "MASA",
-  "regulation_name": "Malaysian Code of Advertising Practice",
-  "citation": "Malaysian Code of Advertising Practice — Rule 2 (Identification)",
-  "effective_date": "2018-01-01",
+  "authority": "MASA / MCMC / ASA Malaysia",
+  "regulation_name": "Malaysian Code of Advertising Practice + MCMC Content Code (influencer disclosure)",
+  "citation": "Malaysian Code of Advertising Practice — Rule 2 (Identification); MCMC Content Code Revamp 2021 — influencer marketing disclosures (#ad / #sponsored / Paid Partnership); brand vicarious liability for undisclosed paid content",
+  "effective_date": "2022-01-01",
   "category": "Mandatory Disclaimers",
   "mandatory": true,
   "risk_level": "LOW",
-  "summary": "Advertorial and sponsored social content must be clearly identified as paid advertising.",
-  "review_guidance": "TRIGGER: KOL posts, paid reviews, or branded editorial content. ACTION: REWRITE — add sponsorship identification. CHECK: Platform ad tools, #ad labels, and Bahasa/English disclosure. ESCALATE IF: Undisclosed paid promotion presented as organic opinion.",
+  "summary": "Advertorial and influencer/KOL sponsored social content must be clearly identified as paid advertising (#ad, #sponsored, Paid Partnership, or equivalent). Brands may bear vicarious liability for undisclosed paid partnerships.",
+  "review_guidance": "TRIGGER: KOL posts, paid reviews, or branded editorial content marked as influencer/partnership. ACTION: INFO reminder — confirm disclosure labels before publish (copy review does not verify tags). CHECK: Platform ad tools, #ad / #sponsored / Paid Partnership, and Bahasa/English disclosure. ESCALATE IF: Undisclosed paid promotion presented as organic opinion.",
   "related_rule_ids": [
-    "demo-apac-sa-ai-image-disclaimer"
+    "demo-my-sponsored-disclosure"
   ],
   "related_evidence_ids": [],
   "tags": [

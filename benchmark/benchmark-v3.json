@@ -29,7 +29,7 @@
     "user_lines_path": "benchmark/user-lines-14.json",
     "locale_expansion_path": "benchmark/locale-expansion.json"
   },
-  "case_count": 125,
+  "case_count": 126,
   "cases": [
     {
       "case_id": "AF-001",
@@ -4529,6 +4529,37 @@
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "ph-sa-warn-sponsored-disclosure",
         "v3_generated_at": "2026-07-02T08:08:57.770Z"
+      }
+    },
+    {
+      "case_id": "my-sa-info-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-my-sponsored-disclosure",
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "Tried this air fryer in partnership with the brand — crispy snacks for Malaysian families, limited promo this week.",
+      "risk": "Medium",
+      "issue": "MY sponsored disclosure INFO reminder (MCMC/ASA)",
+      "modality": "text",
+      "country_id": "MY",
+      "category_id": "sa.air_fryer",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "my-sa-info-sponsored-disclosure",
+        "v3_generated_at": "2026-07-20T01:29:28.170Z"
       }
     },
     {

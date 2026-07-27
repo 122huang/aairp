@@ -23,8 +23,17 @@
     "claim_types": ["disclosure-urgency"]
   },
   "linkage": {
-    "regulations": ["regulation:sg-scap-disclosure", "regulation:my-kpdnhep-pricing-representation"],
-    "rules": ["demo-sg-sponsored-disclosure"]
+    "regulations": [
+      "regulation:sg-scap-disclosure",
+      "regulation:my-masa-sponsorship-disclosure",
+      "regulation:my-kpdnhep-pricing-representation"
+    ],
+    "rules": [
+      "demo-sg-sponsored-disclosure",
+      "demo-my-sponsored-disclosure",
+      "demo-id-sponsored-disclosure",
+      "demo-ph-sponsored-disclosure"
+    ]
   },
   "rewrite_linkage_scope": "independent",
   "rewrite_independence_rationale": "Standalone urgency/disclosure rewrite guidance; not tied to a claim-class Skill Corpus entry.",

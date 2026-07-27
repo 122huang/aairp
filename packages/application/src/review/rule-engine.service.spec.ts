@@ -138,6 +138,82 @@ describe('RuleEngineService', () => {
     expect(finding?.decision).toBe('INFO');
   });
 
+  it('fires MY sponsored-disclosure INFO reminder for INFLUENCER_UGC', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Crispy snacks for Malaysian families with this air fryer.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-my-sponsored-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+    expect(finding?.remediationType).toBe('NOT_APPLICABLE_DISCLOSURE');
+  });
+
+  it('does not fire MY sponsored-disclosure for non-MY / brand-owned / unlabeled-without-activation', () => {
+    const service = new RuleEngineService();
+
+    const sgInfluencer = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'SG',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Crispy snacks for families with this air fryer.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    expect(
+      sgInfluencer.findings.some((f) => f.refId === 'demo-my-sponsored-disclosure'),
+    ).toBe(false);
+
+    const myBrandOwned = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Crispy snacks for Malaysian families with this air fryer.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'BRAND_PRODUCT' },
+    });
+    expect(
+      myBrandOwned.findings.some((f) => f.refId === 'demo-my-sponsored-disclosure'),
+    ).toBe(false);
+
+    const myUnlabeledNoActivation = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Crispy snacks for Malaysian families with this air fryer.',
+        imageUrls: [],
+      },
+      advertisementContext: {},
+    });
+    expect(
+      myUnlabeledNoActivation.findings.some((f) => f.refId === 'demo-my-sponsored-disclosure'),
+    ).toBe(false);
+  });
+
   it('fires JP stealth-marketing INFO reminder with CAA enforcement copy for INFLUENCER_UGC', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({
@@ -283,7 +359,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(74);
+    expect(asset.rules).toHaveLength(75);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {
