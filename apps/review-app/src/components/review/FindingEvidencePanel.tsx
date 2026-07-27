@@ -246,13 +246,8 @@ function FindingEvidenceItem({
   const primaryRiskType = resolveFindingRiskType(primaryFinding);
   const legalSummaryZh = resolveLegalSummaryZh({
     riskType: primaryRiskType,
-    modules: findings.map((f) => f.module),
-    severity: primaryFinding.severity,
-    decision: primaryFinding.decision,
     summary: primaryFinding.summary,
     refIds,
-    rewriteSuggestions: findings.flatMap((f) => f.rewrite_suggestions ?? []),
-    evidenceSpans: findings.flatMap((f) => f.evidence_spans ?? []),
   });
 
   const refresh = useCallback(async () => {

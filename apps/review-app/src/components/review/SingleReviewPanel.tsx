@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { type AdTypeValue } from '@/lib/ad-type-copy';
-import { mergeFindingsByRiskType, extractEvidenceSpans } from '@/lib/finding-merge';
+import { mergeFindingsByClaimAnchor, extractEvidenceSpans } from '@/lib/finding-merge';
 import { buildReviewUploadContext, resolveCaseProductSku } from '@/lib/review-upload-context';
 import { collectHighlightSpans, filesToBase64, severityRank } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
@@ -65,7 +65,7 @@ export function SingleReviewPanel({
     const sorted = [...result.summary.findings].sort(
       (a, b) => severityRank(a.severity) - severityRank(b.severity),
     );
-    return mergeFindingsByRiskType(sorted);
+    return mergeFindingsByClaimAnchor(sorted);
   }, [result]);
 
   const refIds = useMemo(() => {
