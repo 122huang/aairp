@@ -1,4 +1,6 @@
-import type { MergedFinding } from '@/lib/finding-merge';
+import type { MergedFindingItem } from '@/lib/finding-merge';
+
+type LegalSummarySource = Pick<MergedFindingItem, 'refIds' | 'riskType' | 'summary'>;
 
 /** rule_id / pattern_id → 法务简短中文摘要（标题式） */
 export const LEGAL_SUMMARY_ZH: Record<string, string> = {
@@ -64,7 +66,7 @@ export const SEVERITY_VS_DECISION_HELP = {
   ].join('\n'),
 } as const;
 
-export function resolveLegalSummaryZh(finding: MergedFinding): string {
+export function resolveLegalSummaryZh(finding: LegalSummarySource): string {
   for (const refId of finding.refIds) {
     const mapped = LEGAL_SUMMARY_ZH[refId];
     if (mapped) return mapped;
