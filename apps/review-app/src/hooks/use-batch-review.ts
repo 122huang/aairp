@@ -6,6 +6,7 @@ import {
 } from '@aairp/shared-kernel';
 import { submitReview, type ReviewUploadPayload } from '@/api/review';
 import type { AdTypeValue } from '@/lib/ad-type-copy';
+import { buildReviewUploadContext } from '@/lib/review-upload-context';
 import {
   computeBatchProgress,
   createInitialBatchItems,
@@ -21,6 +22,8 @@ export type BatchReviewConfig = {
   categoryId: DemoSaCategoryId;
   /** Batch-level content type; applied to every line. Empty = unlabeled / auto. */
   adType?: AdTypeValue;
+  /** Batch-level product SKU; applied to every line when set. */
+  productSku?: string;
   concurrency?: number;
   maxRetries?: number;
 };
@@ -66,14 +69,20 @@ export function useBatchReview() {
       const concurrency = config.concurrency ?? DEFAULT_BATCH_CONCURRENCY;
       const maxRetries = config.maxRetries ?? DEFAULT_BATCH_MAX_RETRIES;
 
-      const buildPayload = (text: string, index: number): ReviewUploadPayload => ({
-        country_id: config.countryId,
-        platform_id: DEMO_REVIEW_PLATFORM_ID,
-        category_id: config.categoryId,
-        content: { text },
-        ...(config.adType ? { context: { ad_type: config.adType } } : {}),
-        tags: ['review-app:batch', `market:${config.countryId}`, `batch-line:${index + 1}`],
-      });
+      const buildPayload = (text: string, index: number): ReviewUploadPayload => {
+        const uploadContext = buildReviewUploadContext(
+          config.adType ?? '',
+          config.productSku ?? '',
+        );
+        return {
+          country_id: config.countryId,
+          platform_id: DEMO_REVIEW_PLATFORM_ID,
+          category_id: config.categoryId,
+          content: { text },
+          ...(uploadContext ? { context: uploadContext } : {}),
+          tags: ['review-app:batch', `market:${config.countryId}`, `batch-line:${index + 1}`],
+        };
+      };
 
       await executeBatchReview({
         lines,

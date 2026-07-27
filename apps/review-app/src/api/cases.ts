@@ -105,6 +105,11 @@ export type CaseRecordDto = {
   };
   created_at: string;
   updated_at: string;
+  context_builder_output?: {
+    advertisement_context?: {
+      productSku?: string;
+    };
+  };
 };
 
 export type CasesApiError = {
