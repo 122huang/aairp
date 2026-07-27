@@ -11,6 +11,7 @@ export type CoincidenceKind = 'rule_covered_same_risk' | 'masked_by_unrelated';
 /** Explicit rule_id → taxonomy risk_type(s). Empty = not a semantic peer of gray-copy risks. */
 export const RULE_REF_TO_RISK_TYPES: Record<string, string[]> = {
   'demo-sg-sponsored-disclosure': ['sponsored-disclosure'],
+  'demo-my-sponsored-disclosure': ['sponsored-disclosure'],
   'demo-id-sponsored-disclosure': ['sponsored-disclosure'],
   'demo-ph-sponsored-disclosure': ['sponsored-disclosure'],
   'demo-cn-internet-ad-identifiable-tag': ['sponsored-disclosure'],

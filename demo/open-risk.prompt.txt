@@ -81,11 +81,11 @@ Correct finding:
 - Why: "换了三次才发现真正安静" implies other/prior products were inferiorly noisy and this one is the quiet benchmark — comparative without named baseline or measurement.
 
 ### Few-shot C — implied scarcity / FOMO without urgency keywords → scarcity-urgency-claim
-Ad: 产线换模前这一批做完会空档一阵，想入手的朋友这几天更关键。
+Ad: 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
 Correct finding:
 - risk_type: scarcity-urgency-claim
 - suggested_action: WARN
-- Why: production gap + "这几天更关键" pressures purchase via scarce/time-window framing without verifiable restock date or remaining stock; not excused merely because "buy now"/"limited time"/"别再犹豫" strings are absent.
+- Why: warehouse restock delay + "窗口其实不宽" pressures purchase via scarce/time-window framing without verifiable restock date or remaining stock; not excused merely because "buy now"/"limited time"/"别再犹豫" strings are absent.
 
 ### Few-shot D — unsubstantiated quantitative performance (history: CN kitchen SA enforcement) → unsubstantiated-quantitative-claim
 Ad: 这台炸锅比传统煎锅用油量减少一大截，耗电也少很多，天天用都省一笔。
@@ -183,7 +183,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 
 ## Output format (JSON only, no markdown)
 {
-  "prompt_pack_version": "demo-open-risk-1.5.4",
+  "prompt_pack_version": "demo-open-risk-1.5.5",
   "findings": [
     {
       "risk_type": "kebab-case-id",
