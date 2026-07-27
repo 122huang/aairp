@@ -17,7 +17,7 @@ import {
   buildUnreadableJudgment,
   isEvidenceExpired,
   renderEvidenceJudgmentPrompt,
-  sliceEvidenceTextForPrompt,
+  selectEvidenceTextForPrompt,
   structuralScopeExcludes,
 } from './evidence-judgment-rules.js';
 import { parseEvidenceJudgmentResponse } from './evidence-judgment-response.parser.js';
@@ -116,7 +116,7 @@ export class EvidenceJudgmentService {
       return this.stamp({ ...preSourceCheck, prescreen_excluded: false });
     }
 
-    const textWindow = sliceEvidenceTextForPrompt(evidenceText);
+    const textWindow = selectEvidenceTextForPrompt(evidenceText, context.claim_anchor_text);
     console.info('[evidence-judgment] evidence_text_window', {
       evidence_id: evidence.evidence_id,
       filename: evidence.file.filename,

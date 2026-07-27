@@ -4,6 +4,7 @@ import {
   applySourceTypeRules,
   EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
   renderEvidenceJudgmentPrompt,
+  selectEvidenceTextForPrompt,
   sliceEvidenceTextForPrompt,
   structuralScopeExcludes,
 } from './evidence-judgment-rules.js';
@@ -202,8 +203,8 @@ describe('evidence judgment rules', () => {
 });
 
 describe('evidence judgment prompt text window', () => {
-  it('reports full_len vs prompt_len and truncates over the limit', () => {
-    const short = sliceEvidenceTextForPrompt('abc');
+  it('selectEvidenceTextForPrompt passes through short text unchanged', () => {
+    const short = selectEvidenceTextForPrompt('abc', '30 minutes');
     expect(short).toEqual({
       text_for_prompt: 'abc',
       full_len: 3,
@@ -211,29 +212,43 @@ describe('evidence judgment prompt text window', () => {
       truncated: false,
       limit: EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT,
     });
+  });
 
+  it('selectEvidenceTextForPrompt retrieves claim-relevant tail content', () => {
+    const filler = `${'Recipe table row. '.repeat(900)}`;
+    const relevant = 'Total weight 1.96-2.45kg ÷ 245g = feed up to 8-10 people for PC201.';
+    const evidenceText = `${filler}${relevant}`;
+    expect(evidenceText.length).toBeGreaterThan(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+
+    const window = selectEvidenceTextForPrompt(evidenceText, 'up to 8-10 people');
+    expect(window.truncated).toBe(true);
+    expect(window.text_for_prompt).toContain('8-10 people');
+    expect(window.text_for_prompt).toContain('245g');
+    expect(window.prompt_len).toBeLessThanOrEqual(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
+  });
+
+  it('sliceEvidenceTextForPrompt still prefix-truncates when used directly', () => {
     const long = 'x'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT + 500);
     const window = sliceEvidenceTextForPrompt(long);
     expect(window.full_len).toBe(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT + 500);
     expect(window.prompt_len).toBe(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
     expect(window.truncated).toBe(true);
-    expect(window.text_for_prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
     expect(window.text_for_prompt).toBe('x'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT));
   });
 
-  it('renderEvidenceJudgmentPrompt only injects the windowed prefix', () => {
-    const marker = 'MARKER_AFTER_WINDOW';
-    const evidenceText =
-      `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}${marker}`;
+  it('renderEvidenceJudgmentPrompt uses claim-relevant retrieval, not prefix only', () => {
+    const filler = `${'a'.repeat(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT)}`;
+    const marker = 'MARKER_CAPACITY_8_10_PEOPLE';
+    const evidenceText = `${filler}${marker}`;
     const prompt = renderEvidenceJudgmentPrompt('{evidence_text}', {
       review_id: 'r1',
       finding_id: 'f1',
       country_id: 'SG',
       category_id: 'sa.rice_cooker',
-      ad_text: 'Family meals in 30 minutes',
-      finding_summary: 'timing claim',
+      ad_text: 'Cook for up to 8-10 people',
+      finding_summary: 'capacity claim',
       risk_type: 'unsubstantiated-quantitative-claim',
-      claim_anchor_text: '30 minutes',
+      claim_anchor_text: '8-10 people',
       evidence: stubEvidence({
         evidence_source_type: 'INTERNAL_TEST',
         scope: {},
@@ -241,7 +256,7 @@ describe('evidence judgment prompt text window', () => {
       }),
       evidence_text: evidenceText,
     });
-    expect(prompt).toHaveLength(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
-    expect(prompt.includes(marker)).toBe(false);
+    expect(prompt.includes(marker)).toBe(true);
+    expect(prompt.length).toBeLessThanOrEqual(EVIDENCE_JUDGMENT_PROMPT_TEXT_LIMIT);
   });
 });

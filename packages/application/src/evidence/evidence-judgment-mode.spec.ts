@@ -183,7 +183,7 @@ describe('EvidenceJudgmentService judgment_mode stamp', () => {
       const judgment = await service.judgeAttachedEvidence(evidence, context);
       expect(judgment.text_truncated).toBe(true);
       expect(judgment.text_full_len).toBe(longBody.length);
-      expect(judgment.text_prompt_len).toBe(12_000);
+      expect(judgment.text_prompt_len).toBeLessThan(longBody.length);
       expect(seenPrompt.includes('HIDDEN_LATE_RECIPE')).toBe(false);
       expect(seenPrompt.length).toBeLessThan(longBody.length);
 
@@ -196,13 +196,51 @@ describe('EvidenceJudgmentService judgment_mode stamp', () => {
       expect(windowLog?.[1]).toMatchObject({
         evidence_id: 'ev1',
         full_len: longBody.length,
-        prompt_len: 12_000,
         truncated: true,
         limit: 12_000,
       });
     } finally {
       console.info = originalInfo;
     }
+  });
+
+  it('includes late claim-relevant evidence in the prompt window', async () => {
+    process.env.AAIRP_EVIDENCE_JUDGMENT_MODE = 'stub';
+    const filler = `${'Recipe table row. '.repeat(900)}`;
+    const relevant = 'Total weight 1.96-2.45kg ÷ 245g = feed up to 8-10 people for PC201.';
+    const longBody = `${filler}${relevant}`;
+    expect(longBody.length).toBeGreaterThan(12_000);
+
+    const store = {
+      readEvidenceFile: async () => Buffer.from(longBody, 'utf8'),
+    } as Pick<IEvidenceStore, 'readEvidenceFile'>;
+
+    let seenPrompt = '';
+    const service = new EvidenceJudgmentService({
+      evidenceStore: store as IEvidenceStore,
+      llmGateway: {
+        complete: async (prompt: string) => {
+          seenPrompt = prompt;
+          return {
+            content: JSON.stringify({
+              relevance: 'strong',
+              relevance_reasoning: 'capacity methodology present',
+              sufficiency: 'sufficient',
+              sufficiency_reasoning: '245g reference supports 8-10',
+              extracted_key_facts: '8-10 people',
+            }),
+            model: 'stub',
+          };
+        },
+      },
+      readTextFile: () => 'body:{evidence_text}',
+    });
+
+    const judgment = await service.judgeAttachedEvidence(evidence, context);
+    expect(judgment.text_truncated).toBe(true);
+    expect(seenPrompt).toContain('8-10 people');
+    expect(seenPrompt).toContain('245g');
+    expect(seenPrompt.length).toBeLessThan(longBody.length);
   });
 
   it('stamps lengths without text_truncated when evidence fits the window', async () => {
