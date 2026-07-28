@@ -1,4 +1,12 @@
-export type ImageSliceType = 'hero' | 'claims' | 'specs' | 'certification' | 'unknown';
+export type ImageSliceType =
+  | 'hero'
+  | 'claims'
+  | 'lifestyle'
+  | 'specs'
+  | 'comparison'
+  | 'certification'
+  | 'footer'
+  | 'unknown';
 
 export type ImageSliceBBox = {
   x: number;

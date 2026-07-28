@@ -1,6 +1,8 @@
 import type {
   CaseFinding,
+  ConsistencyFinding,
   DecisionFusionInput,
+  FinalDecision,
   LlmFinding,
   PlaybookFinding,
   ReviewDecisionResult,
@@ -21,8 +23,20 @@ export type DecisionFusionSources = {
   playbookFindings: PlaybookFinding[];
   llmFindings: LlmFinding[];
   visionFindings?: VisionFinding[];
+  consistencyFindings?: ConsistencyFinding[];
   caseFindings?: CaseFinding[];
 };
+
+const DECISION_ORDER: Record<FinalDecision, number> = {
+  PASS: 0,
+  WARN: 1,
+  REVIEW: 2,
+  REJECT: 3,
+};
+
+function maxDecision(a: FinalDecision, b: FinalDecision): FinalDecision {
+  return DECISION_ORDER[a] >= DECISION_ORDER[b] ? a : b;
+}
 
 export function computeCombinedHasBlocker(sources: {
   ruleHasBlocker: boolean;
@@ -32,7 +46,7 @@ export function computeCombinedHasBlocker(sources: {
 }
 
 function formatFindingLabel(
-  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding,
+  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding | ConsistencyFinding,
 ): string {
   return `${finding.module}/${finding.refId} (${finding.severity})`;
 }
@@ -44,12 +58,14 @@ function isInformationalRuleDecision(decision: RuleFinding['decision']): boolean
 function summarizeTopFindings(sources: DecisionFusionSources, limit = 3): string[] {
   const caseFindings = sources.caseFindings ?? [];
   const visionFindings = sources.visionFindings ?? [];
+  const consistencyFindings = sources.consistencyFindings ?? [];
   const ranked = [
     ...sources.ruleFindings.filter((finding) => finding.severity === 'BLOCKER'),
     ...visionFindings.filter((finding) => finding.severity === 'BLOCKER'),
     ...sources.ruleFindings.filter(
       (finding) => finding.severity !== 'BLOCKER' && !isInformationalRuleDecision(finding.decision),
     ),
+    ...consistencyFindings,
     ...caseFindings.filter((finding) => finding.decision === 'WARN'),
     ...sources.playbookFindings,
     ...sources.llmFindings,
@@ -61,6 +77,72 @@ function summarizeTopFindings(sources: DecisionFusionSources, limit = 3): string
   return ranked.slice(0, limit).map(formatFindingLabel);
 }
 
+function computeTextBranchVerdict(input: DecisionFusionInput): FinalDecision {
+  if (input.hasBlocker) {
+    return 'REJECT';
+  }
+  if (
+    input.hasRuleReview ||
+    input.hasPlaybookReviewSignal ||
+    input.hasLlmManualReviewSignal
+  ) {
+    return 'REVIEW';
+  }
+  if (
+    input.hasRuleWarn ||
+    input.hasPlaybookConditionalSignal ||
+    input.hasCaseConfirmedSignal ||
+    input.playbookFindingCount > 0 ||
+    input.llmFindingCount > 0 ||
+    input.caseFindingCount > 0
+  ) {
+    return 'WARN';
+  }
+  return 'PASS';
+}
+
+function computeImageBranchVerdict(
+  visionFindings: VisionFinding[],
+  hasBlocker: boolean,
+): FinalDecision {
+  if (hasBlocker && visionFindingHasBlocker(visionFindings)) {
+    return 'REJECT';
+  }
+  if (
+    visionFindings.some(
+      (finding) =>
+        finding.decision === 'REVIEW' ||
+        finding.evaluationDetail?.suggestedAction === 'MANUAL_REVIEW',
+    )
+  ) {
+    return 'REVIEW';
+  }
+  if (visionFindings.some((finding) => finding.decision === 'WARN' || finding.decision === 'FAIL')) {
+    return 'WARN';
+  }
+  return 'PASS';
+}
+
+function computeConsistencyBranchVerdict(consistencyFindings: ConsistencyFinding[]): FinalDecision {
+  if (consistencyFindings.some((finding) => finding.decision === 'WARN')) {
+    return 'WARN';
+  }
+  return 'PASS';
+}
+
+export function buildBranchVerdicts(
+  input: DecisionFusionInput,
+  sources: DecisionFusionSources,
+): import('@aairp/shared-kernel').BranchVerdicts {
+  const visionFindings = sources.visionFindings ?? [];
+  const consistencyFindings = sources.consistencyFindings ?? [];
+  return {
+    text: computeTextBranchVerdict(input),
+    image: computeImageBranchVerdict(visionFindings, input.hasBlocker),
+    consistency: computeConsistencyBranchVerdict(consistencyFindings),
+  };
+}
+
 function hasElevatingWarnSignal(input: DecisionFusionInput): boolean {
   return (
     input.hasRuleWarn ||
@@ -69,7 +151,8 @@ function hasElevatingWarnSignal(input: DecisionFusionInput): boolean {
     input.playbookFindingCount > 0 ||
     input.llmFindingCount > 0 ||
     input.caseFindingCount > 0 ||
-    input.visionFindingCount > 0
+    input.visionFindingCount > 0 ||
+    Boolean(input.hasConsistencyWarn)
   );
 }
 
@@ -111,12 +194,13 @@ export function buildDecisionRationale(
     return `Passed with informational notices: ${summary}. These do not block publish; confirm registration/certification or related obligations offline where noted.`;
   }
 
-  return 'No blocking or warning findings across Rule, Playbook, Case, Open Risk, or Vision modules.';
+  return 'No blocking or warning findings across Rule, Playbook, Case, Open Risk, Vision, or Consistency modules.';
 }
 
 export function buildDecisionFusionInput(sources: DecisionFusionSources): DecisionFusionInput {
   const caseFindings = sources.caseFindings ?? [];
   const visionFindings = sources.visionFindings ?? [];
+  const consistencyFindings = sources.consistencyFindings ?? [];
 
   return {
     reviewId: sources.reviewId,
@@ -126,6 +210,7 @@ export function buildDecisionFusionInput(sources: DecisionFusionSources): Decisi
     llmFindingCount: sources.llmFindings.length,
     caseFindingCount: caseFindings.filter((finding) => finding.decision === 'WARN').length,
     visionFindingCount: visionFindings.length,
+    consistencyFindingCount: consistencyFindings.length,
     hasRuleWarn: sources.ruleFindings.some(
       (finding) => finding.decision === 'WARN' || finding.decision === 'FAIL',
     ),
@@ -151,6 +236,7 @@ export function buildDecisionFusionInput(sources: DecisionFusionSources): Decisi
         finding.decision === 'REVIEW' ||
         finding.evaluationDetail?.suggestedAction === 'MANUAL_REVIEW',
     ),
+    hasConsistencyWarn: consistencyFindings.some((finding) => finding.decision === 'WARN'),
   };
 }
 
@@ -184,13 +270,6 @@ export class DecisionEngineService {
 
   fuse(input: DecisionFusionInput, sources?: DecisionFusionSources): ReviewDecisionResult {
     const decidedAt = (this.config.now ?? (() => new Date()))().toISOString();
-    const findingCounts = {
-      rule: input.ruleFindingCount,
-      playbook: input.playbookFindingCount,
-      llm: input.llmFindingCount,
-      case: input.caseFindingCount,
-      vision: input.visionFindingCount,
-    };
     const rationaleSources = sources ?? {
       reviewId: input.reviewId,
       countryId: undefined,
@@ -199,7 +278,19 @@ export class DecisionEngineService {
       playbookFindings: [],
       llmFindings: [],
       visionFindings: [],
+      consistencyFindings: [],
       caseFindings: [],
+    };
+    const branchVerdicts = buildBranchVerdicts(input, rationaleSources);
+    const findingCounts = {
+      rule: input.ruleFindingCount,
+      playbook: input.playbookFindingCount,
+      llm: input.llmFindingCount,
+      case: input.caseFindingCount,
+      vision: input.visionFindingCount,
+      ...((input.consistencyFindingCount ?? 0) > 0
+        ? { consistency: input.consistencyFindingCount }
+        : {}),
     };
 
     if (input.hasBlocker) {
@@ -209,6 +300,7 @@ export class DecisionEngineService {
         confidence: 1,
         rationale: buildDecisionRationale(input, rationaleSources),
         findingCounts,
+        branchVerdicts,
         decidedAt,
       };
     }
@@ -219,7 +311,6 @@ export class DecisionEngineService {
       input.hasLlmManualReviewSignal ||
       input.hasVisionManualReviewSignal;
 
-    // Precedence: PASS < WARN < REVIEW < REJECT. Review-route findings must not collapse to WARN.
     if (hasReviewSignal) {
       const confidence = applyCountryConfidenceModifier(0.78, rationaleSources.countryId ?? '');
       return {
@@ -228,6 +319,7 @@ export class DecisionEngineService {
         confidence,
         rationale: buildDecisionRationale(input, rationaleSources),
         findingCounts,
+        branchVerdicts,
         decidedAt,
       };
     }
@@ -237,7 +329,8 @@ export class DecisionEngineService {
       input.playbookFindingCount > 0 ||
       input.llmFindingCount > 0 ||
       input.caseFindingCount > 0 ||
-      input.visionFindingCount > 0;
+      input.visionFindingCount > 0 ||
+      (input.consistencyFindingCount ?? 0) > 0;
 
     if (input.hasRuleWarn || hasAnyFinding) {
       let confidence = 0.75;
@@ -250,13 +343,13 @@ export class DecisionEngineService {
       }
 
       if (!hasElevatingWarnSignal(input)) {
-        // Rule findings with decision PASS / INFO should not invent WARN.
         return {
           reviewId: input.reviewId,
           finalDecision: 'PASS',
           confidence: 0.95,
           rationale: buildDecisionRationale(input, rationaleSources),
           findingCounts,
+          branchVerdicts,
           decidedAt,
         };
       }
@@ -266,12 +359,18 @@ export class DecisionEngineService {
         rationaleSources.countryId ?? '',
       );
 
+      const finalDecision = maxDecision(
+        maxDecision(branchVerdicts.text, branchVerdicts.image),
+        branchVerdicts.consistency,
+      );
+
       return {
         reviewId: input.reviewId,
-        finalDecision: 'WARN',
+        finalDecision,
         confidence,
         rationale: buildDecisionRationale(input, rationaleSources),
         findingCounts,
+        branchVerdicts,
         decidedAt,
       };
     }
@@ -282,6 +381,7 @@ export class DecisionEngineService {
       confidence: 0.95,
       rationale: buildDecisionRationale(input, rationaleSources),
       findingCounts,
+      branchVerdicts,
       decidedAt,
     };
   }

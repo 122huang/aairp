@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { findPatternMatch, findTermMatch, hasAnyTerm } from './content-matching.js';
+import type { ReviewContext } from '@aairp/shared-kernel';
+import {
+  findPatternMatch,
+  findTermMatch,
+  hasAnyTerm,
+  joinVisionExtractedText,
+  searchableFields,
+} from './content-matching.js';
 
 describe('content-matching word boundaries', () => {
   const textField = [{ field: 'text', value: 'Secure checkout for wellness supplements.' }];
@@ -92,5 +99,49 @@ describe('content-matching word boundaries', () => {
       },
     ];
     expect(findPatternMatch(fields, servingCapacityPatterns)).toBeNull();
+  });
+
+  it('matches nonstick orthography variants', () => {
+    expect(findTermMatch([{ field: 'text', value: 'Ceramic nonstick pot' }], ['non-stick'])).toMatchObject({
+      text: 'nonstick',
+    });
+    expect(findTermMatch([{ field: 'text', value: 'Non-Stick coating' }], ['nonstick'])).toMatchObject({
+      text: 'Non-Stick',
+    });
+    expect(findTermMatch([{ field: 'text', value: 'non stick inner pot' }], ['non-stick'])).toMatchObject({
+      text: 'non stick',
+    });
+  });
+
+  it('matches kg unit with or without space', () => {
+    expect(findTermMatch([{ field: 'text', value: 'Stew up to 2 kg beef' }], ['up to 2kg'])).toMatchObject({
+      text: 'up to 2 kg',
+    });
+    expect(findTermMatch([{ field: 'text', value: 'Stew up to 2kg beef' }], ['up to 2 kg'])).toMatchObject({
+      text: 'up to 2kg',
+    });
+  });
+
+  it('includes vision_text in searchable fields', () => {
+    const context = {
+      normalizedContent: {
+        text: '',
+        imageUrls: [],
+        visionText: 'Non-stick\nTender beef stew in 30 minutes',
+      },
+    } as ReviewContext;
+    const fields = searchableFields(context);
+    expect(fields).toContainEqual({
+      field: 'vision_text',
+      value: 'Non-stick\nTender beef stew in 30 minutes',
+    });
+    expect(findTermMatch(fields, ['in 30 minutes', 'non-stick'])).toMatchObject({
+      field: 'vision_text',
+    });
+  });
+
+  it('joins vision extracted text lines', () => {
+    expect(joinVisionExtractedText(['  Non-stick ', '', 'up to 2 kg'])).toBe('Non-stick\nup to 2 kg');
+    expect(joinVisionExtractedText([])).toBeUndefined();
   });
 });

@@ -23,10 +23,16 @@ You MUST evaluate all four scan dimensions below. Do not skip dimensions or inve
 - Flag food-safety hazards (raw meat left unrefrigerated), competitor logos/trademarks, AI-rendered imagery without disclaimer.
 - risk_type examples: `food-safety-hazard`, `unauthorised-competitor-trademark`, `ai-image-disclaimer`
 
-### 4. visible_text — Full visible text extraction
+### 4. visible_text — Full visible text extraction + claim scan
 - Extract ALL readable text: headlines, specs, footnotes, disclaimers, annotations, badge labels.
 - Use `[unreadable@region]` for illegible areas; never hallucinate Thai or certification body names.
 - Findings from extracted text must cite verbatim substrings in evidence_spans.
+- **Always** put every readable marketing/spec string into top-level `extracted_text` (even small body copy). This text is re-fed to the rule engine.
+- Also flag visible substantiation-needed claims when printed in the image (image-only submissions especially):
+  - Coating / cleanability: `non-stick`, `nonstick`, `non stick` → `risk_type` `performance-claim` (severity HIGH, suggested_action WARN)
+  - Cook-time claims: `in 30 minutes`, `not 3 hours`, `cook faster` with a quantified duration → `performance-claim` (HIGH / WARN)
+  - Capacity / load claims: `stew up to`, `up to X kg`, `up to X bowls` → `risk_type` `capacity-claim` (MEDIUM / WARN)
+  - Cite the verbatim claim in `evidence_spans.text`. Still include the same strings in `extracted_text`.
 
 ## Image context
 - Country: {country_id}

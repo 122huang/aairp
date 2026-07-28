@@ -6,6 +6,13 @@ export type ReviewFindingCounts = {
   llm: number;
   case: number;
   vision: number;
+  consistency?: number;
+};
+
+export type BranchVerdicts = {
+  text: FinalDecision;
+  image: FinalDecision;
+  consistency: FinalDecision;
 };
 
 export type ReviewDecisionResult = {
@@ -15,6 +22,8 @@ export type ReviewDecisionResult = {
   rationale: string;
   findingCounts: ReviewFindingCounts;
   decidedAt: string;
+  /** Optional multimodal branch breakdown (ADR-005 §7.3). */
+  branchVerdicts?: BranchVerdicts;
 };
 
 export type DecisionFusionInput = {
@@ -35,4 +44,6 @@ export type DecisionFusionInput = {
   hasCaseConfirmedSignal: boolean;
   visionFindingCount: number;
   hasVisionManualReviewSignal: boolean;
+  consistencyFindingCount?: number;
+  hasConsistencyWarn?: boolean;
 };

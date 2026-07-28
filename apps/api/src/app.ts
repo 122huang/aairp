@@ -58,6 +58,7 @@ import { registerOpenRiskDiscoveryController } from './controllers/open-risk-dis
 import { registerDecisionController } from './controllers/decision.controller.js';
 import { registerReviewReportController } from './controllers/review-report.controller.js';
 import { registerDemoReviewController } from './controllers/demo-review.controller.js';
+import { registerImageReviewExtractController } from './controllers/image-review-extract.controller.js';
 import { registerEvidenceController } from './controllers/evidence.controller.js';
 import { registerCaseAdminController } from './controllers/case-admin.controller.js';
 import { registerDemoCasesController } from './controllers/demo-cases.controller.js';
@@ -192,6 +193,7 @@ export async function buildApp(config: ApiConfig) {
     ruleEngineService,
     playbookEngineService,
     reviewPipelineService,
+    visionComplianceService,
   } = reviewRuntime;
 
   const reviewHappyPathService = new ReviewHappyPathService({
@@ -273,6 +275,9 @@ export async function buildApp(config: ApiConfig) {
   await registerDemoReviewController(app, {
     reviewHappyPathService,
     caseRecorderService,
+  });
+  await registerImageReviewExtractController(app, {
+    visionComplianceService,
   });
 
   const evidenceStore = new JsonEvidenceStore({ rootPath: resolveEvidenceLibraryRoot() });

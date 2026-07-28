@@ -9,8 +9,11 @@ import type {
 const CONTENT_BLOCK_ORDER: Exclude<ImageSliceType, 'unknown'>[] = [
   'hero',
   'claims',
+  'lifestyle',
   'specs',
+  'comparison',
   'certification',
+  'footer',
 ];
 
 const DEFAULT_FIXED_HEIGHT_RATIO = 0.25;
@@ -18,6 +21,9 @@ const MAX_FIXED_HEIGHT_SLICES = 8;
 const LONG_IMAGE_ASPECT_RATIO = 2;
 const DEFAULT_SLICE_HEIGHT_PX = 2000;
 const MIN_HEIGHT_FOR_PIXEL_SLICING_PX = 2000;
+/** Sprint 6A / ADR-005: ~10% vertical overlap so badges/claims are not cut at band edges. */
+const DEFAULT_SLICE_OVERLAP_RATIO = 0.1;
+const DEFAULT_MAX_PIXEL_HEIGHT_SLICES = 8;
 
 export type ImageSlicePlannerConfig = {
   fixedHeightRatio?: number;
@@ -25,16 +31,21 @@ export type ImageSlicePlannerConfig = {
   longImageAspectRatio?: number;
   sliceHeightPx?: number;
   minHeightForPixelSlicingPx?: number;
+  /** Overlap as a fraction of each band height (0–0.5). Default 0.1. */
+  sliceOverlapRatio?: number;
+  /** Cap for fixed-pixel long-image bands (`VISION_MAX_SLICES_PER_IMAGE`). Default 8. */
+  maxPixelHeightSlices?: number;
   createSliceId?: () => string;
 };
 
 function defaultProportionalBlocks(): ImageContentBlockHint[] {
-  return [
-    { blockType: 'hero', yStart: 0, yEnd: 0.25 },
-    { blockType: 'claims', yStart: 0.25, yEnd: 0.5 },
-    { blockType: 'specs', yStart: 0.5, yEnd: 0.75 },
-    { blockType: 'certification', yStart: 0.75, yEnd: 1 },
-  ];
+  const n = CONTENT_BLOCK_ORDER.length;
+  const step = 1 / n;
+  return CONTENT_BLOCK_ORDER.map((blockType, index) => ({
+    blockType,
+    yStart: index * step,
+    yEnd: Math.min(1, (index + 1) * step),
+  }));
 }
 
 function toSlice(
@@ -67,17 +78,32 @@ function buildContentBlockSlices(
   );
 }
 
+function clampOverlapRatio(ratio: number): number {
+  if (!Number.isFinite(ratio) || ratio <= 0) {
+    return 0;
+  }
+  return Math.min(0.5, ratio);
+}
+
+/**
+ * Fixed-ratio bands with optional overlap. When capping, stride shrinks so the
+ * full [0,1] height is still covered.
+ */
 function buildFixedHeightFallbackSlices(
   sourceImageIndex: number,
   ratio: number,
   maxSlices: number,
+  overlapRatio: number,
 ): ImageSlice[] {
+  const overlap = clampOverlapRatio(overlapRatio);
+  const band = Math.min(1, Math.max(ratio, 1 / maxSlices));
+  const stride = Math.max(band * (1 - overlap), band / maxSlices);
   const slices: ImageSlice[] = [];
   let yStart = 0;
   let sliceIndex = 0;
 
   while (yStart < 1 && sliceIndex < maxSlices) {
-    const yEnd = Math.min(1, yStart + ratio);
+    const yEnd = Math.min(1, yStart + band);
     slices.push(
       toSlice(
         sourceImageIndex,
@@ -85,30 +111,63 @@ function buildFixedHeightFallbackSlices(
         'unknown',
         yStart,
         yEnd,
-        'fixed_height_band',
+        overlap > 0 ? 'fixed_height_band_overlap' : 'fixed_height_band',
       ),
     );
     if (yEnd >= 1) {
       break;
     }
-    yStart = yEnd;
+    yStart = yStart + stride;
+    if (sliceIndex === maxSlices - 2 && yStart + band < 1) {
+      yStart = Math.max(0, 1 - band);
+    }
     sliceIndex += 1;
   }
 
   return slices;
 }
 
+/**
+ * Fixed pixel-height windows with overlap + max-slice cap (ADR-005 / Sprint 6A-2).
+ */
 function buildFixedPixelHeightSlices(
   sourceImageIndex: number,
   heightPx: number,
   sliceHeightPx: number,
+  overlapRatio: number,
+  maxSlices: number,
 ): ImageSlice[] {
+  if (heightPx <= 0) {
+    return [toSlice(sourceImageIndex, 0, 'unknown', 0, 1, 'fixed_pixel_height_band')];
+  }
+
+  const overlapFrac = clampOverlapRatio(overlapRatio);
+  let bandPx = Math.max(1, Math.min(sliceHeightPx, heightPx));
+  let overlapPx = Math.floor(bandPx * overlapFrac);
+  let stridePx = Math.max(1, bandPx - overlapPx);
+
+  const uncappedCount = Math.ceil(Math.max(0, heightPx - bandPx) / stridePx) + 1;
+  if (uncappedCount > maxSlices && maxSlices >= 1) {
+    if (overlapFrac >= 1) {
+      bandPx = heightPx;
+      overlapPx = 0;
+      stridePx = heightPx;
+    } else {
+      bandPx = Math.max(
+        1,
+        Math.ceil(heightPx / (maxSlices * (1 - overlapFrac) + overlapFrac)),
+      );
+      overlapPx = Math.floor(bandPx * overlapFrac);
+      stridePx = Math.max(1, bandPx - overlapPx);
+    }
+  }
+
   const slices: ImageSlice[] = [];
   let yStartPx = 0;
   let sliceIndex = 0;
 
-  while (yStartPx < heightPx) {
-    const yEndPx = Math.min(heightPx, yStartPx + sliceHeightPx);
+  while (yStartPx < heightPx && sliceIndex < maxSlices) {
+    const yEndPx = Math.min(heightPx, yStartPx + bandPx);
     slices.push(
       toSlice(
         sourceImageIndex,
@@ -116,10 +175,16 @@ function buildFixedPixelHeightSlices(
         'unknown',
         yStartPx / heightPx,
         yEndPx / heightPx,
-        'fixed_pixel_height_band',
+        overlapFrac > 0 ? 'fixed_pixel_height_band_overlap' : 'fixed_pixel_height_band',
       ),
     );
-    yStartPx = yEndPx;
+    if (yEndPx >= heightPx) {
+      break;
+    }
+    yStartPx += stridePx;
+    if (sliceIndex === maxSlices - 2 && yStartPx + bandPx < heightPx) {
+      yStartPx = Math.max(0, heightPx - bandPx);
+    }
     sliceIndex += 1;
   }
 
@@ -136,6 +201,17 @@ function isLongImage(
   return dimensions.height / dimensions.width >= longImageAspectRatio;
 }
 
+function resolveMaxPixelHeightSlices(config: ImageSlicePlannerConfig): number {
+  if (config.maxPixelHeightSlices !== undefined) {
+    return Math.max(1, config.maxPixelHeightSlices);
+  }
+  const fromEnv = Number(process.env.VISION_MAX_SLICES_PER_IMAGE);
+  if (Number.isFinite(fromEnv) && fromEnv >= 1) {
+    return Math.floor(fromEnv);
+  }
+  return DEFAULT_MAX_PIXEL_HEIGHT_SLICES;
+}
+
 export class ImageSlicePlannerService {
   constructor(private readonly config: ImageSlicePlannerConfig = {}) {}
 
@@ -146,6 +222,8 @@ export class ImageSlicePlannerService {
     const sliceHeightPx = this.config.sliceHeightPx ?? DEFAULT_SLICE_HEIGHT_PX;
     const minHeightForPixelSlicingPx =
       this.config.minHeightForPixelSlicingPx ?? MIN_HEIGHT_FOR_PIXEL_SLICING_PX;
+    const sliceOverlapRatio = this.config.sliceOverlapRatio ?? DEFAULT_SLICE_OVERLAP_RATIO;
+    const maxPixelHeightSlices = resolveMaxPixelHeightSlices(this.config);
 
     return request.imageUrls.map((imageUrl, sourceImageIndex) => {
       const dimensions = request.dimensionsByImage?.[sourceImageIndex];
@@ -189,6 +267,8 @@ export class ImageSlicePlannerService {
             sourceImageIndex,
             dimensions.height,
             sliceHeightPx,
+            sliceOverlapRatio,
+            maxPixelHeightSlices,
           ),
         };
       }
@@ -216,6 +296,7 @@ export class ImageSlicePlannerService {
             sourceImageIndex,
             fixedHeightRatio,
             maxFixedHeightSlices,
+            sliceOverlapRatio,
           ),
         };
       }
@@ -248,5 +329,7 @@ export {
   CONTENT_BLOCK_ORDER,
   DEFAULT_FIXED_HEIGHT_RATIO,
   DEFAULT_SLICE_HEIGHT_PX,
+  DEFAULT_SLICE_OVERLAP_RATIO,
+  DEFAULT_MAX_PIXEL_HEIGHT_SLICES,
   MAX_FIXED_HEIGHT_SLICES,
 };

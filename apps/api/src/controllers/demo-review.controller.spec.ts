@@ -130,6 +130,62 @@ describe('DemoReviewController', () => {
     expect(response.statusCode).toBe(400);
     await app.close();
   });
+
+  it('POST /demo/review rejects entry_mode=image without images', async () => {
+    const app = await buildTestApp(deps);
+
+    const response = await app.inject({
+      method: 'POST',
+      url: '/demo/review',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      payload: {
+        country_id: 'SG',
+        platform_id: 'META',
+        category_id: 'sa.other',
+        entry_mode: 'image',
+        content: { text: 'confirmed extract only' },
+      },
+    });
+
+    expect(response.statusCode).toBe(400);
+    expect(deps.reviewHappyPathService.run).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('POST /demo/review tags entry_mode:image when images are present', async () => {
+    const app = await buildTestApp(deps);
+
+    const response = await app.inject({
+      method: 'POST',
+      url: '/demo/review',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      payload: {
+        country_id: 'SG',
+        platform_id: 'META',
+        category_id: 'sa.other',
+        entry_mode: 'image',
+        content: {
+          text: 'confirmed extract',
+          images: ['data:image/jpeg;base64,aaaa'],
+        },
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+    expect(deps.reviewHappyPathService.run).toHaveBeenCalledWith(
+      expect.objectContaining({
+        entry_mode: 'image',
+        tags: expect.arrayContaining(['entry_mode:image']),
+      }),
+    );
+    await app.close();
+  });
 });
 
 describe('DemoReviewController integration', () => {

@@ -91,4 +91,41 @@ describe('review-report.dto', () => {
 
     expect(dto.summary.advertisement.legal_reviewed_market).toBe(false);
   });
+
+  it('maps branch_verdicts and vision_mode when present', () => {
+    const dto = toReviewReportResponseDto({
+      reviewId: 'rev_branch',
+      advertisementId: 'ad_branch',
+      reportHtml: '<html>report</html>',
+      summary: {
+        finalDecision: 'WARN',
+        confidence: 0.8,
+        rationale: 'Vision and consistency warnings.',
+        findingCounts: { rule: 0, playbook: 0, llm: 0, vision: 1, consistency: 1 },
+        branchVerdicts: {
+          text: 'PASS',
+          image: 'WARN',
+          consistency: 'WARN',
+        },
+        visionMode: 'stub',
+        advertisement: {
+          textPreview: 'Sample ad text',
+          countryId: 'SG',
+          platformId: 'META',
+          categoryId: 'sa.air_fryer',
+        },
+        findings: [],
+        openRiskSkipped: false,
+      },
+      generatedAt: '2026-06-26T10:10:00.000Z',
+    });
+
+    expect(dto.summary.branch_verdicts).toEqual({
+      text: 'PASS',
+      image: 'WARN',
+      consistency: 'WARN',
+    });
+    expect(dto.summary.vision_mode).toBe('stub');
+    expect(dto.summary.finding_counts.consistency).toBe(1);
+  });
 });

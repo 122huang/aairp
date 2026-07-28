@@ -140,3 +140,22 @@ export const EVIDENCE_SOURCE_TYPE_OPTIONS: { value: EvidenceSourceType; label: s
   { value: 'INTERNAL_TEST', label: '内部测试记录' },
   { value: 'THIRD_PARTY_SURVEY', label: '第三方调研/排名' },
 ];
+
+export type RuntimeModesDto = {
+  image_review_entry?: 'off' | 'on';
+  image_review_entry_source?: string;
+  evidence_judgment_mode?: string;
+  open_risk_mode?: string;
+  checked_at?: string;
+};
+
+/** Non-secret runtime flags (e.g. whether Image Review tab is enabled). */
+export async function fetchRuntimeModes(): Promise<RuntimeModesDto> {
+  const response = await fetch('/demo/runtime-modes', {
+    headers: { Accept: 'application/json' },
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to load runtime modes (${response.status})`);
+  }
+  return (await response.json()) as RuntimeModesDto;
+}

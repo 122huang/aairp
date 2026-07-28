@@ -1,6 +1,7 @@
 export type AppRoute =
   | { name: 'single'; parentCaseId?: string }
   | { name: 'batch' }
+  | { name: 'image' }
   | { name: 'history' }
   | { name: 'case'; caseId: string };
 
@@ -16,6 +17,7 @@ export function resolveAppRoute(hash = window.location.hash): AppRoute {
   const query = parseHashQuery(raw);
 
   if (path === '/batch') return { name: 'batch' };
+  if (path === '/image') return { name: 'image' };
   if (path === '/history') return { name: 'history' };
 
   const caseMatch = path.match(/^\/cases\/([^/]+)$/);
@@ -31,6 +33,8 @@ export function hrefForRoute(route: AppRoute): string {
   switch (route.name) {
     case 'batch':
       return '#/batch';
+    case 'image':
+      return '#/image';
     case 'history':
       return '#/history';
     case 'case':
@@ -40,4 +44,10 @@ export function hrefForRoute(route: AppRoute): string {
         ? `#/?parent_case_id=${encodeURIComponent(route.parentCaseId)}`
         : '#/';
   }
+}
+
+export function hashForReviewMode(mode: 'single' | 'batch' | 'image'): string {
+  if (mode === 'batch') return '#/batch';
+  if (mode === 'image') return '#/image';
+  return '#/';
 }

@@ -389,6 +389,22 @@ describe('RuleEngineService', () => {
       normalizedContent: { text, imageUrls: [] },
     });
 
+    it('matches SA performance/capacity claims from vision_text only', () => {
+      const service = new RuleEngineService();
+      const result = service.evaluate({
+        ...saContext('SG', ''),
+        normalizedContent: {
+          text: '',
+          imageUrls: ['https://demo/pdp.jpg'],
+          visionText:
+            'Nonstick coating\nTender beef stew in 30 minutes, not 3 hours\nStew up to 2 kg beef',
+        },
+      });
+
+      expect(result.findings.some((f) => f.refId === 'demo-apac-sa-performance-claim')).toBe(true);
+      expect(result.findings.some((f) => f.refId === 'demo-apac-sa-capacity-claim')).toBe(true);
+    });
+
     it('REJECT on every time absolute claim (rice cooker ad)', () => {
       const service = new RuleEngineService();
       const result = service.evaluate(
@@ -1118,6 +1134,7 @@ describe('RuleEngineService', () => {
       ['PC-002', 'Large Capacity', 'demo-apac-sa-comparative-claim'],
       ['PC-003', 'Cook Faster', 'demo-apac-sa-comparative-claim'],
       ['PC-006', 'Stew up to 2kg beef', 'demo-apac-sa-capacity-claim'],
+      ['PC-006-spaced', 'Stew up to 2 kg beef', 'demo-apac-sa-capacity-claim'],
       [
         'PC-006b',
         'PC201/PC200 - Cook for up to 8-10 people. 6.5 qt nonstick cooking pot.',

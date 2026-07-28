@@ -33,6 +33,7 @@ Write-Host "Review pipeline modes:"
 Write-Host "  OPEN_RISK:  $(if ($env:AAIRP_OPEN_RISK_MODE) { $env:AAIRP_OPEN_RISK_MODE } else { 'stub (default)' })"
 Write-Host "  REWRITE:    $(if ($env:AAIRP_REWRITE_MODE) { $env:AAIRP_REWRITE_MODE } else { 'off (default)' })"
 Write-Host "  VISION:     $(if ($env:AAIRP_VISION_MODE) { $env:AAIRP_VISION_MODE } else { 'off/stub (default)' })"
+Write-Host "  IMAGE_UI:   $(if ($env:AAIRP_IMAGE_REVIEW_ENTRY) { $env:AAIRP_IMAGE_REVIEW_ENTRY } else { 'off (default)' })  (图片审查 tab)"
 Write-Host "  CASE_SAVE:  $(if ($env:AAIRP_CASE_STORAGE) { $env:AAIRP_CASE_STORAGE } else { 'json (default)' })"
 Write-Host ""
 

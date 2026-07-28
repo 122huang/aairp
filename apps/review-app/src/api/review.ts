@@ -1,6 +1,8 @@
 import type { DemoReviewCountryId, DemoSaCategoryId } from '@aairp/shared-kernel';
 import { DEMO_REVIEW_PLATFORM_ID } from '@aairp/shared-kernel';
 
+export type ReviewEntryMode = 'single' | 'batch' | 'image';
+
 export type ReviewUploadPayload = {
   country_id: DemoReviewCountryId;
   platform_id: typeof DEMO_REVIEW_PLATFORM_ID;
@@ -14,8 +16,24 @@ export type ReviewUploadPayload = {
     product_sku?: string;
   };
   tags?: string[];
+  /** Review UI entry mode; defaults to single on the API when omitted. */
+  entry_mode?: ReviewEntryMode;
   /** When set, new case joins the parent's submission thread. */
   parent_case_id?: string;
+};
+
+export type ImageExtractTextPayload = {
+  image_base64: string;
+  mime_type?: string;
+  country_id?: string;
+  category_id?: string;
+};
+
+export type ImageExtractTextResponse = {
+  text: string;
+  lines: string[];
+  slice_count: number;
+  vision_skipped: boolean;
 };
 
 export type RewriteSuggestionDto = {
@@ -94,6 +112,58 @@ export type ReviewApiError = {
   details?: unknown;
 };
 
+function readApiErrorMessage(body: unknown, fallback: string): string {
+  if (
+    body &&
+    typeof body === 'object' &&
+    'detail' in body &&
+    typeof (body as { detail: unknown }).detail === 'string'
+  ) {
+    return (body as { detail: string }).detail;
+  }
+  return fallback;
+}
+
+export async function extractImageReviewText(
+  payload: ImageExtractTextPayload,
+): Promise<ImageExtractTextResponse> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 180_000);
+
+  try {
+    const response = await fetch('/demo/image-review/extract-text', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+
+    const body: unknown = await response.json().catch(() => null);
+    if (!response.ok) {
+      throw {
+        message: readApiErrorMessage(body, `Image text extract failed (${response.status})`),
+        status: response.status,
+        details: body,
+      } satisfies ReviewApiError;
+    }
+
+    return body as ImageExtractTextResponse;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw {
+        message: '识别请求超时（180秒），请稍后重试或缩小图片',
+        status: 408,
+      } satisfies ReviewApiError;
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 export async function submitReview(payload: ReviewUploadPayload): Promise<DemoReviewResponse> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 180_000);
@@ -112,11 +182,11 @@ export async function submitReview(payload: ReviewUploadPayload): Promise<DemoRe
     const body: unknown = await response.json().catch(() => null);
 
     if (!response.ok) {
-      const message =
-        body && typeof body === 'object' && 'detail' in body && typeof (body as { detail: unknown }).detail === 'string'
-          ? (body as { detail: string }).detail
-          : `Review request failed (${response.status})`;
-      throw { message, status: response.status, details: body } satisfies ReviewApiError;
+      throw {
+        message: readApiErrorMessage(body, `Review request failed (${response.status})`),
+        status: response.status,
+        details: body,
+      } satisfies ReviewApiError;
     }
 
     return body as DemoReviewResponse;

@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { ImageContentBlockHint } from '@aairp/shared-kernel';
-import { ImageSlicePlannerService } from './image-slice-planner.service.js';
+import {
+  DEFAULT_SLICE_OVERLAP_RATIO,
+  ImageSlicePlannerService,
+} from './image-slice-planner.service.js';
 
 describe('ImageSlicePlannerService', () => {
   const planner = new ImageSlicePlannerService();
@@ -17,7 +20,7 @@ describe('ImageSlicePlannerService', () => {
     expect(manifests[0]?.slices[0]?.sliceType).toBe('hero');
   });
 
-  it('uses fixed pixel height bands for very tall images', () => {
+  it('uses overlapping fixed pixel height bands for very tall images', () => {
     const manifests = planner.plan({
       imageUrls: ['https://example.com/pdp.jpg'],
       dimensionsByImage: [{ width: 800, height: 3200 }],
@@ -26,18 +29,41 @@ describe('ImageSlicePlannerService', () => {
     expect(manifests[0]?.plannerMode).toBe('fixed_height_fallback');
     expect(manifests[0]?.fallbackReason).toBe('pixel_height_band_for_long_image');
     expect(manifests[0]?.slices).toHaveLength(2);
+    expect(manifests[0]?.slices[0]?.plannerHint).toBe('fixed_pixel_height_band_overlap');
     expect(manifests[0]?.slices[0]?.yEnd).toBeCloseTo(2000 / 3200);
-    expect(manifests[0]?.slices[1]?.yStart).toBeCloseTo(2000 / 3200);
+    expect(manifests[0]?.slices[1]?.yStart).toBeCloseTo((2000 - 2000 * DEFAULT_SLICE_OVERLAP_RATIO) / 3200);
   });
 
-  it('slices ultra-long narrow images into ~2000px bands', () => {
+  it('slices ultra-long narrow images into overlapping ~2000px bands', () => {
     const manifests = planner.plan({
       imageUrls: ['https://example.com/long.jpg'],
       dimensionsByImage: [{ width: 400, height: 9651 }],
     });
 
-    expect(manifests[0]?.slices).toHaveLength(5);
-    expect(manifests[0]?.slices[0]?.plannerHint).toBe('fixed_pixel_height_band');
+    expect(manifests[0]?.slices).toHaveLength(6);
+    expect(manifests[0]?.slices[0]?.plannerHint).toBe('fixed_pixel_height_band_overlap');
+    expect(manifests[0]?.slices[1]?.yStart).toBeLessThan(manifests[0]?.slices[0]?.yEnd ?? 0);
+  });
+
+  it('respects VISION_MAX_SLICES_PER_IMAGE cap', () => {
+    const previous = process.env.VISION_MAX_SLICES_PER_IMAGE;
+    process.env.VISION_MAX_SLICES_PER_IMAGE = '4';
+
+    try {
+      const cappedPlanner = new ImageSlicePlannerService();
+      const manifests = cappedPlanner.plan({
+        imageUrls: ['https://example.com/very-long.jpg'],
+        dimensionsByImage: [{ width: 400, height: 9651 }],
+      });
+
+      expect(manifests[0]?.slices.length).toBeLessThanOrEqual(4);
+    } finally {
+      if (previous === undefined) {
+        delete process.env.VISION_MAX_SLICES_PER_IMAGE;
+      } else {
+        process.env.VISION_MAX_SLICES_PER_IMAGE = previous;
+      }
+    }
   });
 
   it('uses content block bands for moderately long images', () => {
@@ -50,8 +76,11 @@ describe('ImageSlicePlannerService', () => {
     expect(manifests[0]?.slices.map((slice) => slice.sliceType)).toEqual([
       'hero',
       'claims',
+      'lifestyle',
       'specs',
+      'comparison',
       'certification',
+      'footer',
     ]);
   });
 
@@ -87,11 +116,11 @@ describe('ImageSlicePlannerService', () => {
     expect(manifests[0]?.slices.length).toBeGreaterThan(1);
   });
 
-  it('uses provided content block hints', () => {
+  it('uses provided content block hints including lifestyle blocks', () => {
     const hints: ImageContentBlockHint[] = [
       { blockType: 'hero', yStart: 0, yEnd: 0.2 },
-      { blockType: 'claims', yStart: 0.2, yEnd: 0.6 },
-      { blockType: 'specs', yStart: 0.6, yEnd: 1 },
+      { blockType: 'lifestyle', yStart: 0.2, yEnd: 0.6 },
+      { blockType: 'footer', yStart: 0.6, yEnd: 1 },
     ];
 
     const manifests = planner.plan({
@@ -101,6 +130,7 @@ describe('ImageSlicePlannerService', () => {
 
     expect(manifests[0]?.plannerMode).toBe('content_blocks');
     expect(manifests[0]?.slices).toHaveLength(3);
+    expect(manifests[0]?.slices[1]?.sliceType).toBe('lifestyle');
     expect(manifests[0]?.slices[0]?.plannerHint).toBe('provided_content_blocks');
   });
 });

@@ -4,8 +4,9 @@ import {
   AdvertisementUploadValidationError,
   ReviewHappyPathService,
   CaseRecorderService,
+  entryModeTag,
 } from '@aairp/application';
-import { extractParentCaseId, toDemoReviewResponseDto } from '../dto/demo-review.dto.js';
+import { extractEntryMode, extractParentCaseId, toDemoReviewResponseDto } from '../dto/demo-review.dto.js';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
 import { logReviewPipelineTimings } from '../middleware/review-logging.js';
 
@@ -13,6 +14,24 @@ export type DemoReviewControllerDeps = {
   reviewHappyPathService: ReviewHappyPathService;
   caseRecorderService?: CaseRecorderService;
 };
+
+function withEntryModeTag(body: unknown, entryMode: 'single' | 'batch' | 'image' | undefined): unknown {
+  if (!entryMode || !body || typeof body !== 'object' || Array.isArray(body)) {
+    return body;
+  }
+  const record = body as { tags?: unknown };
+  const existing = Array.isArray(record.tags)
+    ? record.tags.filter((tag): tag is string => typeof tag === 'string')
+    : [];
+  const tag = entryModeTag(entryMode);
+  if (existing.includes(tag)) {
+    return body;
+  }
+  return {
+    ...record,
+    tags: [...existing.filter((item) => !item.startsWith('entry_mode:')), tag],
+  };
+}
 
 export async function registerDemoReviewController(
   app: FastifyInstance,
@@ -26,7 +45,26 @@ export async function registerDemoReviewController(
     async (request, reply) => {
       try {
         const parentCaseId = extractParentCaseId(request.body);
-        const result = await deps.reviewHappyPathService.run(request.body);
+        const entryMode = extractEntryMode(request.body);
+        if (entryMode === 'image') {
+          const images = (
+            request.body as { content?: { images?: unknown } } | null
+          )?.content?.images;
+          const hasImage =
+            Array.isArray(images) &&
+            images.some((item) => typeof item === 'string' && item.trim().length > 0);
+          if (!hasImage) {
+            throw new AppError(
+              'INVALID_REQUEST',
+              400,
+              'Bad Request',
+              'entry_mode=image requires at least one image in content.images',
+            );
+          }
+        }
+        const result = await deps.reviewHappyPathService.run(
+          withEntryModeTag(request.body, entryMode),
+        );
 
         let caseRecord = null;
         if (deps.caseRecorderService) {

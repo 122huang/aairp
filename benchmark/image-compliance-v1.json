@@ -140,6 +140,53 @@
         "image_dimensions": [{ "width": 900, "height": 2400 }]
       },
       "notes": "Negative control — plated cooked food only, no raw-meat prep scene."
+    },
+    {
+      "scenario_id": "cn-pdp-long-image",
+      "label": "Long PDP with localisation + cross-slice pressure conflict",
+      "polarity": "positive",
+      "case_id": "IMG-CN-PDP-LONG-POS-01",
+      "expected_decision": "WARN",
+      "expected_risk_types": ["localisation-error"],
+      "expected_consistency": true,
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.pressure_cooker",
+        "text": "Fast pressure cooking for Singapore homes",
+        "image_urls": ["fixture://image-compliance/cn-pdp-pressure-cooker-pos.jpg"],
+        "image_dimensions": [{ "width": 750, "height": 15000 }],
+        "image_content_block_hints": [
+          [
+            { "blockType": "hero", "yStart": 0, "yEnd": 0.08 },
+            { "blockType": "claims", "yStart": 0.08, "yEnd": 0.18 },
+            { "blockType": "specs", "yStart": 0.18, "yEnd": 0.33 },
+            { "blockType": "lifestyle", "yStart": 0.33, "yEnd": 0.46 },
+            { "blockType": "comparison", "yStart": 0.46, "yEnd": 0.58 },
+            { "blockType": "certification", "yStart": 0.58, "yEnd": 0.74 },
+            { "blockType": "footer", "yStart": 0.74, "yEnd": 1 }
+          ]
+        ]
+      },
+      "notes": "Positive control — Chinese panel on slice 2 plus 112kPa vs 80kPa consistency conflict."
+    },
+    {
+      "scenario_id": "cn-pdp-long-image",
+      "label": "Long PDP clean English/local panels",
+      "polarity": "negative",
+      "case_id": "IMG-CN-PDP-LONG-NEG-01",
+      "expected_decision": "PASS",
+      "expected_risk_types": [],
+      "expected_consistency": false,
+      "fixture": {
+        "country_id": "SG",
+        "platform_id": "SHOPEE",
+        "category_id": "sa.pressure_cooker",
+        "text": "Fast pressure cooking for Singapore homes",
+        "image_urls": ["fixture://image-compliance/cn-pdp-pressure-cooker-neg.jpg"],
+        "image_dimensions": [{ "width": 750, "height": 15000 }]
+      },
+      "notes": "Negative control — same long scaffold without slice-level defects."
     }
   ]
 }

@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { AppError, type EvidenceSourceType } from '@aairp/shared-kernel';
 import {
   getEvidenceJudgmentRuntimeInfo,
+  getImageReviewRuntimeInfo,
   type EvidenceService,
 } from '@aairp/application';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
@@ -58,6 +59,7 @@ export async function registerEvidenceController(
   app.get('/demo/runtime-modes', { preHandler: probePreHandler }, async (_request, reply) => {
     sendJson(reply, 200, {
       ...getEvidenceJudgmentRuntimeInfo(),
+      ...getImageReviewRuntimeInfo(),
       checked_at: new Date().toISOString(),
     });
   });

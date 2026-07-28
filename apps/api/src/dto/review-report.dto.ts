@@ -18,7 +18,15 @@ export type ReviewReportResponseDto = {
       playbook: number;
       llm: number;
       case?: number;
+      vision?: number;
+      consistency?: number;
     };
+    branch_verdicts?: {
+      text: string;
+      image: string;
+      consistency: string;
+    };
+    vision_mode?: 'off' | 'stub' | 'live';
     advertisement: {
       text_preview: string;
       country_id: string;
@@ -83,7 +91,24 @@ export function toReviewReportResponseDto(result: ReviewReportResult): ReviewRep
         ...(result.summary.findingCounts.case && result.summary.findingCounts.case > 0
           ? { case: result.summary.findingCounts.case }
           : {}),
+        ...(result.summary.findingCounts.vision && result.summary.findingCounts.vision > 0
+          ? { vision: result.summary.findingCounts.vision }
+          : {}),
+        ...(result.summary.findingCounts.consistency &&
+        result.summary.findingCounts.consistency > 0
+          ? { consistency: result.summary.findingCounts.consistency }
+          : {}),
       },
+      ...(result.summary.branchVerdicts
+        ? {
+            branch_verdicts: {
+              text: result.summary.branchVerdicts.text,
+              image: result.summary.branchVerdicts.image,
+              consistency: result.summary.branchVerdicts.consistency,
+            },
+          }
+        : {}),
+      ...(result.summary.visionMode ? { vision_mode: result.summary.visionMode } : {}),
       advertisement: {
         text_preview: result.summary.advertisement.textPreview,
         country_id: result.summary.advertisement.countryId,

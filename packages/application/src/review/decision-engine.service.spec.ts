@@ -429,4 +429,39 @@ describe('DecisionEngineService', () => {
     expect(rejectResult.finalDecision).toBe('REJECT');
     expect(rejectResult.confidence).toBe(1);
   });
+
+  it('returns WARN when consistency findings exist without other modules', () => {
+    const service = createService();
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_consistency',
+      hasBlocker: false,
+      ruleFindings: [],
+      playbookFindings: [],
+      llmFindings: [],
+      consistencyFindings: [
+        {
+          module: 'CONSISTENCY',
+          findingId: 'cf_1',
+          severity: 'MEDIUM',
+          decision: 'WARN',
+          refType: 'CONSISTENCY_FIELD',
+          refId: 'cross-slice-capacity',
+          refVersionId: 'demo-consistency-1.0.0-capacity-v1',
+          summary: 'Inconsistent capacity across slices',
+          confidence: 0.88,
+          evaluationDetail: {
+            field: 'capacity',
+            conflict: '112kpa vs 80kpa',
+            slicesInvolved: ['s0', 's1'],
+            values: ['112kpa', '80kpa'],
+          },
+        },
+      ],
+    });
+
+    expect(result.finalDecision).toBe('WARN');
+    expect(result.findingCounts.consistency).toBe(1);
+    expect(result.branchVerdicts?.consistency).toBe('WARN');
+    expect(result.branchVerdicts?.text).toBe('PASS');
+  });
 });

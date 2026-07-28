@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import type {
+  ImageContentBlockHint,
   ImageSlice,
   ImageSliceManifest,
   ReviewContext,
@@ -19,7 +20,18 @@ import {
   type VisionFindingPayload,
 } from './vision-response.parser.js';
 import { ImageSlicePlannerService } from './image-slice-planner.service.js';
-import { cropImageDataUrlForSlice, probeImageDimensions } from './image-slice-crop.js';
+import {
+  createSliceThumbnailDataUrl,
+  cropImageDataUrlForSlice,
+  probeImageDimensions,
+} from './image-slice-crop.js';
+import { detectContentBlocksFromImage } from './image-section-segmenter.js';
+import { FieldExtractService } from './field-extract.service.js';
+import { ConsistencyCompareService } from './consistency-compare.service.js';
+import {
+  enhanceVisionSliceImage,
+  enhanceVisionSourceImages,
+} from './vision-image-prepare.js';
 
 export type VisionComplianceConfig = {
   promptPath?: string;
@@ -28,7 +40,13 @@ export type VisionComplianceConfig = {
   stubResponsePath?: string;
   llmGateway?: ILlmGateway | null;
   slicePlanner?: ImageSlicePlannerService;
+  fieldExtractService?: FieldExtractService;
+  consistencyCompareService?: ConsistencyCompareService;
   cropImageForSlice?: (imageUrl: string, slice: ImageSlice) => Promise<string>;
+  createSliceThumbnail?: (imageUrl: string, slice: ImageSlice) => Promise<string>;
+  disableHeuristicSegmentation?: boolean;
+  /** Skip upscale/sharpen preprocess (tests / already-enhanced inputs). */
+  disableImageEnhance?: boolean;
   now?: () => Date;
   createFindingId?: () => string;
   readTextFile?: (path: string) => string;
@@ -38,6 +56,8 @@ const defaultPromptPath = join(
   dirname(fileURLToPath(import.meta.url)),
   '../../../../demo/vision.prompt.txt',
 );
+
+const LONG_IMAGE_ASPECT_RATIO = 2;
 
 function mapSuggestedAction(action: string): VisionSuggestedAction {
   if (action === 'REJECT') {
@@ -165,11 +185,57 @@ export function renderVisionPrompt(
     .replaceAll('{image_url}', describeVisionImageReference(sourceImageUrl));
 }
 
+function isLongImage(dimensions: { width: number; height: number }): boolean {
+  return dimensions.width > 0 && dimensions.height / dimensions.width >= LONG_IMAGE_ASPECT_RATIO;
+}
+
+async function resolveContentBlockHints(
+  context: ReviewContext,
+  imageUrls: string[],
+  imageDimensions: Array<{ width: number; height: number } | undefined>,
+  config: VisionComplianceConfig,
+): Promise<ImageContentBlockHint[][] | undefined> {
+  if (context.normalizedContent.imageContentBlockHints?.length) {
+    return context.normalizedContent.imageContentBlockHints;
+  }
+  if (config.disableHeuristicSegmentation) {
+    return undefined;
+  }
+
+  const hintsByImage: ImageContentBlockHint[][] = [];
+  let anyDetected = false;
+
+  for (let index = 0; index < imageUrls.length; index += 1) {
+    const dimensions = imageDimensions[index];
+    const imageUrl = imageUrls[index] ?? '';
+    if (!dimensions || !isLongImage(dimensions)) {
+      hintsByImage.push([]);
+      continue;
+    }
+    const detected = await detectContentBlocksFromImage(imageUrl, {
+      maxSegments: Number(process.env.VISION_MAX_SLICES_PER_IMAGE ?? 8),
+    });
+    if (detected?.length) {
+      hintsByImage.push(detected);
+      anyDetected = true;
+    } else {
+      hintsByImage.push([]);
+    }
+  }
+
+  return anyDetected ? hintsByImage : undefined;
+}
+
 export class VisionComplianceService {
   private readonly slicePlanner: ImageSlicePlannerService;
+  private readonly fieldExtractService: FieldExtractService;
+  private readonly consistencyCompareService: ConsistencyCompareService;
 
   constructor(private readonly config: VisionComplianceConfig = {}) {
     this.slicePlanner = config.slicePlanner ?? new ImageSlicePlannerService();
+    this.fieldExtractService = config.fieldExtractService ?? new FieldExtractService();
+    this.consistencyCompareService =
+      config.consistencyCompareService ?? new ConsistencyCompareService();
   }
 
   async discover(context: ReviewContext): Promise<VisionDiscoveryResult> {
@@ -227,16 +293,77 @@ export class VisionComplianceService {
       });
     }
 
-    const imageDimensions = await this.resolveImageDimensions(context, imageUrls);
+    // Narrow/chat-compressed sources get a capped full-canvas enhance for segment/plan.
+    // Every slice crop is enhanced again before the LLM (cheap, high-ROI for small text).
+    const probed = await this.resolveImageDimensions(context, imageUrls);
+    const needsFullEnhance =
+      !this.config.disableImageEnhance &&
+      probed.some((dim) => dim !== undefined && dim.width > 0 && dim.width < 600);
+
+    const enhanced = this.config.disableImageEnhance
+      ? imageUrls.map(() => undefined)
+      : needsFullEnhance
+        ? await enhanceVisionSourceImages(imageUrls)
+        : imageUrls.map(() => undefined);
+
+    const workingUrls = imageUrls.map((url, index) => enhanced[index]?.dataUrl ?? url);
+    const imagePreprocess = enhanced
+      .map((item, sourceImageIndex) =>
+        item
+          ? {
+              sourceImageIndex,
+              upscaled: item.upscaled,
+              sharpened: item.sharpened,
+              sourceWidth: item.sourceWidth,
+              sourceHeight: item.sourceHeight,
+              width: item.width,
+              height: item.height,
+            }
+          : undefined,
+      )
+      .filter((item): item is NonNullable<typeof item> => item !== undefined);
+
+    const workingContext: ReviewContext = {
+      ...context,
+      normalizedContent: {
+        ...context.normalizedContent,
+        imageUrls: workingUrls,
+        imageDimensions: workingUrls.map((_, index) => {
+          const prep = enhanced[index];
+          if (prep) {
+            return { width: prep.width, height: prep.height };
+          }
+          return probed[index] ?? context.normalizedContent.imageDimensions?.[index];
+        }),
+      },
+    };
+
+    const imageDimensions = await this.resolveImageDimensions(workingContext, workingUrls);
+    const contentBlockHints = await resolveContentBlockHints(
+      workingContext,
+      workingUrls,
+      imageDimensions,
+      this.config,
+    );
 
     const manifests = this.slicePlanner.planFromNormalizedContent({
-      imageUrls,
+      imageUrls: workingUrls,
       imageDimensions,
-      imageContentBlockHints: context.normalizedContent.imageContentBlockHints,
+      imageContentBlockHints: contentBlockHints,
       sliceManifestOverrides: context.normalizedContent.sliceManifestOverrides,
     });
 
-    return this.evaluateManifests(context, manifests, promptTemplate, gateway, evaluatedAt);
+    const result = await this.evaluateManifests(
+      workingContext,
+      manifests,
+      promptTemplate,
+      gateway,
+      evaluatedAt,
+    );
+    return {
+      ...result,
+      ...(imagePreprocess.length > 0 ? { imagePreprocess } : {}),
+    };
   }
 
   private async resolveImageDimensions(
@@ -263,24 +390,37 @@ export class VisionComplianceService {
   ): Promise<VisionDiscoveryResult> {
     const findings: VisionFinding[] = [];
     const extractedText: string[] = [];
+    const extractedTextBySlice: Record<string, string[]> = {};
+    const sliceThumbnails: Record<string, string> = {};
+    const allSlices: ImageSlice[] = [];
     const seenFindingKeys = new Set<string>();
     let promptPackVersion = this.config.promptPackVersion ?? 'demo-vision-1.0.0';
     let model: string | undefined;
     const cropImageForSlice = this.config.cropImageForSlice ?? cropImageDataUrlForSlice;
+    const createSliceThumbnail =
+      this.config.createSliceThumbnail ?? createSliceThumbnailDataUrl;
 
     for (const manifest of manifests) {
       const sliceResults = await Promise.all(
         manifest.slices.map(async (slice) => {
+          allSlices.push(slice);
           const sourceImageUrl = context.normalizedContent.imageUrls[slice.sourceImageIndex] ?? '';
           const croppedImageUrl = await cropImageForSlice(sourceImageUrl, slice);
+          const enhancedCrop = this.config.disableImageEnhance
+            ? croppedImageUrl
+            : await enhanceVisionSliceImage(croppedImageUrl);
+          const thumbnail = await createSliceThumbnail(sourceImageUrl, slice);
+          if (thumbnail) {
+            sliceThumbnails[slice.sliceId] = thumbnail;
+          }
           const prompt = renderVisionPrompt(promptTemplate, context, slice);
-          const tokensEstimate = estimateVisionInputTokens(prompt, croppedImageUrl);
+          const tokensEstimate = estimateVisionInputTokens(prompt, enhancedCrop);
 
           console.info(
-            `vision slice call: sliceIndex=${slice.sliceIndex}, tokensEstimate=${tokensEstimate}, croppedBytes=${croppedImageUrl.startsWith('data:image/') ? (croppedImageUrl.split(',')[1]?.length ?? 0) : 0}`,
+            `vision slice call: sliceIndex=${slice.sliceIndex}, tokensEstimate=${tokensEstimate}, croppedBytes=${enhancedCrop.startsWith('data:image/') ? (enhancedCrop.split(',')[1]?.length ?? 0) : 0}`,
           );
 
-          const response = await gateway.complete(prompt, { imageUrl: croppedImageUrl });
+          const response = await gateway.complete(prompt, { imageUrl: enhancedCrop });
           const tokensActual = response.usage?.total_tokens;
           if (tokensActual !== undefined) {
             console.info(
@@ -303,11 +443,13 @@ export class VisionComplianceService {
         if (parsed.prompt_pack_version) {
           promptPackVersion = parsed.prompt_pack_version;
         }
-        if (parsed.extracted_text) {
+        if (parsed.extracted_text?.length) {
           extractedText.push(...parsed.extracted_text);
+          extractedTextBySlice[slice.sliceId] = parsed.extracted_text;
         }
         for (const payload of parsed.findings) {
-          const dedupeKey = `${slice.sourceImageIndex}:${slice.sliceIndex}:${payload.risk_type}`;
+          const scanDimension = payload.scan_dimension ?? '';
+          const dedupeKey = `${slice.sourceImageIndex}:${payload.risk_type}:${scanDimension}`;
           if (seenFindingKeys.has(dedupeKey)) {
             continue;
           }
@@ -316,6 +458,22 @@ export class VisionComplianceService {
         }
       }
     }
+
+    const fieldExtracts = this.fieldExtractService.extractFromSliceTexts(
+      allSlices.map((slice) => ({
+        sliceId: slice.sliceId,
+        sourceImageIndex: slice.sourceImageIndex,
+        sliceIndex: slice.sliceIndex,
+        texts: extractedTextBySlice[slice.sliceId] ?? [],
+      })),
+    );
+    const consistencyResult = await this.consistencyCompareService.compareWithOptionalLlmAssist({
+      reviewId: context.reviewId,
+      fieldExtracts,
+      countryId: context.dimensions.countryId,
+      platformId: context.dimensions.platformId,
+      categoryId: context.dimensions.categoryId,
+    });
 
     return {
       reviewId: context.reviewId,
@@ -326,6 +484,19 @@ export class VisionComplianceService {
       hasBlocker: visionFindingHasBlocker(findings),
       skipped: false,
       ...(extractedText.length > 0 ? { extractedText } : {}),
+      ...(Object.keys(extractedTextBySlice).length > 0
+        ? {
+            extractedTextBySlice: Object.entries(extractedTextBySlice).map(([sliceId, texts]) => ({
+              sliceId,
+              texts,
+            })),
+          }
+        : {}),
+      ...(fieldExtracts.length > 0 ? { fieldExtracts } : {}),
+      ...(consistencyResult.findings.length > 0
+        ? { consistencyFindings: consistencyResult.findings }
+        : {}),
+      ...(Object.keys(sliceThumbnails).length > 0 ? { sliceThumbnails } : {}),
       evaluatedAt,
     };
   }

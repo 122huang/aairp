@@ -2,7 +2,9 @@ import {
   resolveFindingRemediationType,
   type CaseFinding,
   type CasePrecedent,
+  type ConsistencyFinding,
   type ContextualRewriteBatchResult,
+  type FinalDecision,
   type LlmFinding,
   type OpenRiskDiscoveryResult,
   type PlaybookFinding,
@@ -14,6 +16,7 @@ import {
   type RuleFinding,
   type VisionFinding,
 } from '@aairp/shared-kernel';
+import { readEntryModeFromTags } from './image-review-entry.js';
 
 export type ReviewReportConfig = {
   now?: () => Date;
@@ -27,6 +30,9 @@ export type ReviewReportSources = {
   playbookFindings: PlaybookFinding[];
   openRiskResult: Pick<OpenRiskDiscoveryResult, 'findings' | 'skipped' | 'skipReason'>;
   visionFindings?: VisionFinding[];
+  consistencyFindings?: ConsistencyFinding[];
+  visionMode?: 'off' | 'stub' | 'live';
+  sliceThumbnails?: Record<string, string>;
   casePrecedents?: CasePrecedent[];
   caseFindings?: CaseFinding[];
   contextualRewrites?: ContextualRewriteBatchResult;
@@ -49,7 +55,7 @@ function buildTextPreview(text: string | undefined, maxLength: number): string {
 }
 
 function mapFindingEvidenceSpans(
-  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding,
+  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding | ConsistencyFinding,
 ): ReviewReportFindingSummary['evidenceSpans'] {
   if (finding.module === 'LLM') {
     return finding.evaluationDetail?.evidenceSpans;
@@ -68,7 +74,7 @@ function mapFindingEvidenceSpans(
 }
 
 function toFindingSummary(
-  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding,
+  finding: RuleFinding | PlaybookFinding | LlmFinding | CaseFinding | VisionFinding | ConsistencyFinding,
 ): ReviewReportFindingSummary {
   const evidenceSpans = mapFindingEvidenceSpans(finding);
   const ruleRemediation =
@@ -100,6 +106,7 @@ function toFindingSummaries(
   llmFindings: LlmFinding[],
   caseFindings: CaseFinding[] = [],
   visionFindings: VisionFinding[] = [],
+  consistencyFindings: ConsistencyFinding[] = [],
 ): ReviewReportFindingSummary[] {
   return [
     ...ruleFindings.map(toFindingSummary),
@@ -107,6 +114,7 @@ function toFindingSummaries(
     ...playbookFindings.map(toFindingSummary),
     ...llmFindings.map(toFindingSummary),
     ...visionFindings.map(toFindingSummary),
+    ...consistencyFindings.map(toFindingSummary),
   ];
 }
 
@@ -147,13 +155,54 @@ function decisionCssClass(finalDecision: ReviewDecisionResult['finalDecision']):
       return 'decision-reject';
     case 'WARN':
       return 'decision-warn';
+    case 'REVIEW':
+      return 'decision-review';
     default:
       return 'decision-pass';
   }
 }
 
+function branchChipClass(decision: FinalDecision): string {
+  switch (decision) {
+    case 'REJECT':
+      return 'branch-reject';
+    case 'WARN':
+      return 'branch-warn';
+    case 'REVIEW':
+      return 'branch-review';
+    default:
+      return 'branch-pass';
+  }
+}
+
 function isWarnLikeDecision(decision: string): boolean {
   return decision === 'WARN' || decision === 'REVIEW' || decision === 'CONDITIONAL';
+}
+
+function resolveSliceThumbnail(
+  finding: VisionFinding | ConsistencyFinding,
+  sliceThumbnails?: Record<string, string>,
+): string | undefined {
+  if (!sliceThumbnails) {
+    return undefined;
+  }
+  if (finding.module === 'VISION' && finding.sliceId) {
+    return sliceThumbnails[finding.sliceId];
+  }
+  if (finding.module === 'CONSISTENCY') {
+    const firstSlice = finding.evaluationDetail.slicesInvolved[0];
+    if (firstSlice) {
+      return sliceThumbnails[firstSlice];
+    }
+  }
+  return undefined;
+}
+
+function renderSliceThumbnail(thumbnail?: string): string {
+  if (!thumbnail) {
+    return '';
+  }
+  return `<img class="slice-thumb" src="${escapeHtml(thumbnail)}" alt="slice" />`;
 }
 
 function renderRewriteSuggestionsBlock(suggestion: RewriteSuggestion): string {
@@ -173,11 +222,37 @@ function renderRewriteSuggestionsBlock(suggestion: RewriteSuggestion): string {
   </div>`;
 }
 
-function renderFindingDetail(finding: ReviewReportFindingSummary): string {
+function renderFindingDetail(
+  finding: ReviewReportFindingSummary,
+  options?: {
+    sliceThumbnails?: Record<string, string>;
+    visionFindings?: VisionFinding[];
+    consistencyFindings?: ConsistencyFinding[];
+  },
+): string {
   const rewriteBlock =
     isWarnLikeDecision(finding.decision) && finding.rewriteSuggestions?.length
       ? finding.rewriteSuggestions.map(renderRewriteSuggestionsBlock).join('\n')
       : '';
+
+  let thumbnailBlock = '';
+  if (finding.module === 'VISION') {
+    const visionFinding = options?.visionFindings?.find((item) => item.findingId === finding.findingId);
+    if (visionFinding) {
+      thumbnailBlock = renderSliceThumbnail(
+        resolveSliceThumbnail(visionFinding, options?.sliceThumbnails),
+      );
+    }
+  } else if (finding.module === 'CONSISTENCY') {
+    const consistencyFinding = options?.consistencyFindings?.find(
+      (item) => item.findingId === finding.findingId,
+    );
+    if (consistencyFinding) {
+      thumbnailBlock = renderSliceThumbnail(
+        resolveSliceThumbnail(consistencyFinding, options?.sliceThumbnails),
+      );
+    }
+  }
 
   return `<article class="finding-detail">
     <header class="finding-header">
@@ -185,6 +260,7 @@ function renderFindingDetail(finding: ReviewReportFindingSummary): string {
       <span class="finding-severity">${escapeHtml(finding.severity)}</span>
       <span class="finding-decision">${escapeHtml(finding.decision)}</span>
     </header>
+    ${thumbnailBlock}
     <p class="finding-summary">${escapeHtml(finding.summary)}</p>
     ${rewriteBlock}
   </article>`;
@@ -193,14 +269,33 @@ function renderFindingDetail(finding: ReviewReportFindingSummary): string {
 function renderFindingSection(
   title: string,
   findings: ReviewReportFindingSummary[],
+  options?: {
+    sliceThumbnails?: Record<string, string>;
+    visionFindings?: VisionFinding[];
+    consistencyFindings?: ConsistencyFinding[];
+  },
 ): string {
   if (findings.length === 0) {
     return `<h2>${escapeHtml(title)}</h2><p class="meta">No findings</p>`;
   }
 
-  const items = findings.map(renderFindingDetail).join('\n');
+  const items = findings
+    .map((finding) => renderFindingDetail(finding, options))
+    .join('\n');
   return `<h2>${escapeHtml(title)}</h2>
   <div class="finding-list">${items}</div>`;
+}
+
+function renderBranchVerdictChips(branchVerdicts?: ReviewDecisionResult['branchVerdicts']): string {
+  if (!branchVerdicts) {
+    return '';
+  }
+
+  return `<div class="branch-verdicts">
+    <span class="branch-chip ${branchChipClass(branchVerdicts.text)}">文案 ${escapeHtml(branchVerdicts.text)}</span>
+    <span class="branch-chip ${branchChipClass(branchVerdicts.image)}">图片 ${escapeHtml(branchVerdicts.image)}</span>
+    <span class="branch-chip ${branchChipClass(branchVerdicts.consistency)}">一致性 ${escapeHtml(branchVerdicts.consistency)}</span>
+  </div>`;
 }
 
 function renderPrecedentSection(precedents: CasePrecedent[]): string {
@@ -251,17 +346,34 @@ function renderReportHtml(
     openRiskResult,
     ruleFindings,
     playbookFindings,
+    visionFindings = [],
+    consistencyFindings = [],
+    visionMode,
+    sliceThumbnails,
     casePrecedents = [],
   } = sources;
   const openRiskNote = openRiskResult.skipped
     ? `<p class="note"><strong>Open Risk:</strong> skipped (${escapeHtml(openRiskResult.skipReason ?? 'UNKNOWN')}) — deterministic blocker or policy path already decisive.</p>`
     : '';
+  const visionModeLine = visionMode
+    ? `<p class="meta"><strong>Vision mode:</strong> ${escapeHtml(visionMode)}</p>`
+    : '';
+  const entryMode = readEntryModeFromTags(context.tags);
+  const entryModeNote =
+    entryMode === 'image'
+      ? `<p class="note"><strong>Entry:</strong> Image review — text below is human-confirmed extract / OCR-aligned copy from the uploaded image (not a separate marketing draft).</p>`
+      : '';
+  const textLabel = entryMode === 'image' ? 'Text (confirmed extract)' : 'Text';
 
   const ruleSummaries = findings.filter((finding) => finding.module === 'RULE');
   const caseSummaries = findings.filter((finding) => finding.module === 'CASE');
   const playbookSummaries = findings.filter((finding) => finding.module === 'PLAYBOOK');
   const llmSummaries = findings.filter((finding) => finding.module === 'LLM');
   const visionSummaries = findings.filter((finding) => finding.module === 'VISION');
+  const consistencySummaries = findings.filter((finding) => finding.module === 'CONSISTENCY');
+  const consistencyCount = decision.findingCounts.consistency ?? consistencySummaries.length;
+
+  const findingOptions = { sliceThumbnails, visionFindings, consistencyFindings };
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -279,7 +391,14 @@ function renderReportHtml(
     .decision { font-size: 22px; font-weight: bold; padding: 8px 12px; border-radius: 6px; display: inline-block; }
     .decision-pass { background: #e8f5e9; color: #1b5e20; }
     .decision-warn { background: #fff3e0; color: #e65100; }
+    .decision-review { background: #e3f2fd; color: #0d47a1; }
     .decision-reject { background: #ffebee; color: #b71c1c; }
+    .branch-verdicts { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    .branch-chip { border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: bold; }
+    .branch-pass { background: #e8f5e9; color: #1b5e20; }
+    .branch-warn { background: #fff3e0; color: #e65100; }
+    .branch-review { background: #e3f2fd; color: #0d47a1; }
+    .branch-reject { background: #ffebee; color: #b71c1c; }
     .meta { color: #555; font-size: 14px; }
     .note { background: #f9f9f9; border-left: 4px solid #999; padding: 8px 12px; }
     .counts { margin-top: 8px; }
@@ -289,6 +408,7 @@ function renderReportHtml(
     .finding-ref { font-weight: bold; }
     .finding-severity, .finding-decision { background: #eee; border-radius: 4px; padding: 2px 8px; }
     .finding-summary { margin: 0 0 4px; }
+    .slice-thumb { display: block; max-height: 120px; width: auto; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
     .rewrite-suggestions { margin-top: 10px; padding: 10px 12px; background: #e3f2fd; border-left: 4px solid #1976d2; border-radius: 4px; }
     .rewrite-variants { margin: 8px 0 0 18px; padding: 0; }
     .rewrite-variant-label { font-weight: bold; margin-right: 6px; }
@@ -302,21 +422,25 @@ function renderReportHtml(
 
   <h2>Decision</h2>
   <p class="decision ${decisionCssClass(decision.finalDecision)}">${escapeHtml(decision.finalDecision)}</p>
+  ${renderBranchVerdictChips(decision.branchVerdicts)}
   <p><strong>Rationale:</strong> ${escapeHtml(decision.rationale)}</p>
-  <p class="counts"><strong>Finding counts:</strong> Rule ${ruleFindings.length}, Case ${caseSummaries.length}, Playbook ${playbookFindings.length}, LLM ${openRiskResult.findings.length}, Vision ${visionSummaries.length}</p>
+  <p class="counts"><strong>Finding counts:</strong> Rule ${ruleFindings.length}, Case ${caseSummaries.length}, Playbook ${playbookFindings.length}, LLM ${openRiskResult.findings.length}, Vision ${visionSummaries.length}, Consistency ${consistencyCount}</p>
+  ${visionModeLine}
+  ${entryModeNote}
   ${openRiskNote}
 
   <h2>Advertisement</h2>
   <p><strong>Country:</strong> ${escapeHtml(context.dimensions.countryId)}</p>
   <p><strong>Platform:</strong> ${escapeHtml(context.dimensions.platformId)}</p>
   <p><strong>Category:</strong> ${escapeHtml(context.dimensions.categoryId)}</p>
-  <p><strong>Text:</strong> ${escapeHtml(textPreview)}</p>
+  <p><strong>${textLabel}:</strong> ${escapeHtml(textPreview)}</p>
 
-  ${renderFindingSection('Rule Findings', ruleSummaries)}
-  ${renderFindingSection('Case Findings', caseSummaries)}
-  ${renderFindingSection('Playbook Findings', playbookSummaries)}
-  ${renderFindingSection('Open Risk (LLM) Findings', llmSummaries)}
-  ${renderFindingSection('Vision Findings', visionSummaries)}
+  ${renderFindingSection('Rule Findings', ruleSummaries, findingOptions)}
+  ${renderFindingSection('Case Findings', caseSummaries, findingOptions)}
+  ${renderFindingSection('Playbook Findings', playbookSummaries, findingOptions)}
+  ${renderFindingSection('Open Risk (LLM) Findings', llmSummaries, findingOptions)}
+  ${renderFindingSection('Vision Findings', visionSummaries, findingOptions)}
+  ${renderFindingSection('Consistency Findings', consistencySummaries, findingOptions)}
   ${renderPrecedentSection(casePrecedents)}
 </body>
 </html>`;
@@ -335,6 +459,8 @@ export class ReviewReportService {
       playbookFindings,
       openRiskResult,
       visionFindings = [],
+      consistencyFindings = [],
+      visionMode,
       casePrecedents = [],
       caseFindings = [],
       contextualRewrites,
@@ -346,6 +472,7 @@ export class ReviewReportService {
         openRiskResult.findings,
         caseFindings,
         visionFindings,
+        consistencyFindings,
       ),
       contextualRewrites,
     );
@@ -361,6 +488,8 @@ export class ReviewReportService {
         confidence: decision.confidence,
         rationale: decision.rationale,
         findingCounts: { ...decision.findingCounts },
+        ...(decision.branchVerdicts ? { branchVerdicts: decision.branchVerdicts } : {}),
+        ...(visionMode ? { visionMode } : {}),
         advertisement: {
           textPreview,
           countryId: context.dimensions.countryId,
@@ -376,3 +505,4 @@ export class ReviewReportService {
     };
   }
 }
+
