@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
-import type { ReviewContext, VisionComplianceService } from '@aairp/application';
+import type { VisionComplianceService } from '@aairp/application';
 import { DEMO_KNOWLEDGE_VERSIONS, joinVisionExtractedText } from '@aairp/application';
-import { AppError } from '@aairp/shared-kernel';
+import { AppError, type ReviewContext } from '@aairp/shared-kernel';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
 
 export type ImageReviewExtractControllerDeps = {
