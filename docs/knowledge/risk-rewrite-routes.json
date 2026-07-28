@@ -105,7 +105,12 @@
       "risk_type": "sponsored-disclosure",
       "rewrite_template_id": "disclose-urgency",
       "strategy": "append",
-      "rule_ids": ["demo-sg-sponsored-disclosure"]
+      "rule_ids": [
+        "demo-sg-sponsored-disclosure",
+        "demo-my-sponsored-disclosure",
+        "demo-id-sponsored-disclosure",
+        "demo-ph-sponsored-disclosure"
+      ]
     }
   ]
 }
