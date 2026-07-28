@@ -33,6 +33,8 @@ type SingleReviewPanelProps = {
   countryShake?: boolean;
   /** Restore resubmit context from `#/?parent_case_id=` (survives refresh via URL). */
   initialParentCaseId?: string;
+  /** When Image Review tab is enabled, hint users away from treating attachments as full image review. */
+  showImageReviewHint?: boolean;
 };
 
 export function SingleReviewPanel({
@@ -43,6 +45,7 @@ export function SingleReviewPanel({
   onCountryRequired,
   countryShake,
   initialParentCaseId,
+  showImageReviewHint = false,
 }: SingleReviewPanelProps) {
   const [text, setText] = useState('');
   const [adType, setAdType] = useState<AdTypeValue>('');
@@ -220,6 +223,11 @@ export function SingleReviewPanel({
 
             <div className="space-y-2">
               <Label className="font-medium text-ink">图片（可选）</Label>
+              {showImageReviewHint && (
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  附图不会替代完整审图流程。完整审图请改用「图片审查」入口（识别 → 核对 → 审查）。
+                </p>
+              )}
               <input
                 ref={fileInputRef}
                 type="file"

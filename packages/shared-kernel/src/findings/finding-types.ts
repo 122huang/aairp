@@ -1,4 +1,11 @@
-export type FindingModule = 'RULE' | 'POLICY' | 'PLAYBOOK' | 'CASE' | 'LLM' | 'VISION';
+export type FindingModule =
+  | 'RULE'
+  | 'POLICY'
+  | 'PLAYBOOK'
+  | 'CASE'
+  | 'LLM'
+  | 'VISION'
+  | 'CONSISTENCY';
 
 export type FindingSeverity = 'BLOCKER' | 'HIGH' | 'MEDIUM' | 'LOW';
 

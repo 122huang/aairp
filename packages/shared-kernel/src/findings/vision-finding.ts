@@ -1,5 +1,9 @@
 import type { ModuleFinding } from './finding-types.js';
 import type { ImageSliceManifest } from './image-slice.js';
+import type {
+  AssetFieldExtract,
+  ConsistencyFinding,
+} from './consistency-finding.js';
 
 /** Image-grounded evidence span; supports slice index and region description for visual findings. */
 export type ImageEvidenceSpan = {
@@ -48,6 +52,22 @@ export type VisionDiscoveryResult = {
   skipped: boolean;
   skipReason?: 'VISION_MODE_OFF' | 'NO_IMAGES';
   extractedText?: string[];
+  /** Per-slice OCR/vision text used by the consistency branch. */
+  extractedTextBySlice?: Array<{ sliceId: string; texts: string[] }>;
+  fieldExtracts?: AssetFieldExtract[];
+  consistencyFindings?: ConsistencyFinding[];
+  /** sliceId -> JPEG data URL thumbnail for report UI. */
+  sliceThumbnails?: Record<string, string>;
+  /** Per-source preprocess stats (upscale/sharpen) applied before slicing. */
+  imagePreprocess?: Array<{
+    sourceImageIndex: number;
+    upscaled: boolean;
+    sharpened: boolean;
+    sourceWidth: number;
+    sourceHeight: number;
+    width: number;
+    height: number;
+  }>;
   evaluatedAt: string;
 };
 

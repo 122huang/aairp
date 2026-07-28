@@ -1,5 +1,5 @@
 import type { CasePrecedent } from '../case/case-retrieval.js';
-import type { FinalDecision } from '../decision/review-decision.js';
+import type { BranchVerdicts, FinalDecision } from '../decision/review-decision.js';
 import type { RewriteSuggestion } from '../findings/rewrite-suggestion.js';
 import type { RemediationType } from '../knowledge/remediation-type.js';
 
@@ -36,7 +36,13 @@ export type ReviewReportSummary = {
     playbook: number;
     llm: number;
     case?: number;
+    vision?: number;
+    consistency?: number;
   };
+  /** Multimodal branch breakdown when available (ADR-005 / Sprint 6A-6). */
+  branchVerdicts?: BranchVerdicts;
+  /** Vision gateway mode used for this review. */
+  visionMode?: 'off' | 'stub' | 'live';
   advertisement: ReviewReportAdvertisementSummary;
   findings: ReviewReportFindingSummary[];
   openRiskSkipped: boolean;

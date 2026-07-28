@@ -12,6 +12,7 @@ type ImageComplianceCase = {
   polarity: 'positive' | 'negative';
   expected_decision: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
   expected_risk_types: string[];
+  expected_consistency?: boolean;
   fixture: {
     country_id: string;
     platform_id: string;
@@ -19,6 +20,9 @@ type ImageComplianceCase = {
     text: string;
     image_urls: string[];
     image_dimensions?: Array<{ width: number; height: number }>;
+    image_content_block_hints?: Array<
+      Array<{ blockType: string; yStart: number; yEnd: number }>
+    >;
     ai_rendered_image?: boolean;
   };
 };
@@ -56,6 +60,11 @@ function toReviewContext(testCase: ImageComplianceCase): ReviewContext {
       ...(testCase.fixture.image_dimensions
         ? { imageDimensions: testCase.fixture.image_dimensions }
         : {}),
+      ...(testCase.fixture.image_content_block_hints
+        ? {
+            imageContentBlockHints: testCase.fixture.image_content_block_hints as ReviewContext['normalizedContent']['imageContentBlockHints'],
+          }
+        : {}),
     },
     resolvedKnowledgeVersions: DEMO_KNOWLEDGE_VERSIONS,
     advertisementContext: {
@@ -71,14 +80,15 @@ function toReviewContext(testCase: ImageComplianceCase): ReviewContext {
 describe('image-compliance-v1 benchmark (stub fixtures)', () => {
   const manifest = loadManifest();
 
-  it('loads eight cases across four scenario families', () => {
-    expect(manifest.scenarios).toHaveLength(8);
-    expect(new Set(manifest.scenarios.map((item) => item.scenario_id)).size).toBe(4);
+  it('loads ten cases across five scenario families', () => {
+    expect(manifest.scenarios).toHaveLength(10);
+    expect(new Set(manifest.scenarios.map((item) => item.scenario_id)).size).toBe(5);
     for (const scenarioId of [
       'cn-panel-unreplaced',
       'competitor-logo',
       'ai-image-no-disclaimer',
       'food-safety-raw-meat',
+      'cn-pdp-long-image',
     ]) {
       const cases = manifest.scenarios.filter((item) => item.scenario_id === scenarioId);
       expect(cases.map((item) => item.polarity).sort()).toEqual(['negative', 'positive']);
@@ -90,7 +100,8 @@ describe('image-compliance-v1 benchmark (stub fixtures)', () => {
     process.env.AAIRP_VISION_MODE = 'stub';
 
     try {
-      const service = new VisionComplianceService();
+      // Enhance is covered by vision-image-prepare + pressure-cooker specs; skip here for speed.
+      const service = new VisionComplianceService({ disableImageEnhance: true });
 
       for (const testCase of manifest.scenarios) {
         const result = await service.discover(toReviewContext(testCase));
@@ -99,8 +110,6 @@ describe('image-compliance-v1 benchmark (stub fixtures)', () => {
         expect(result.skipped, testCase.case_id).toBe(false);
         expect(result.promptPackVersion, testCase.case_id).toBe('demo-vision-1.0.0');
 
-        // Tall fixtures may yield the same risk_type across multiple slices;
-        // benchmark expectations are about which risk types appear, not multiplicity.
         const uniqueRiskTypes = [...new Set(riskTypes)].sort();
 
         if (testCase.polarity === 'positive') {
@@ -112,9 +121,15 @@ describe('image-compliance-v1 benchmark (stub fixtures)', () => {
           } else {
             expect(result.hasBlocker, testCase.case_id).toBe(false);
           }
+          if (testCase.expected_consistency) {
+            expect((result.consistencyFindings ?? []).length, testCase.case_id).toBeGreaterThan(0);
+          }
         } else {
           expect(uniqueRiskTypes, testCase.case_id).toEqual([]);
           expect(result.hasBlocker, testCase.case_id).toBe(false);
+          if (testCase.expected_consistency === false) {
+            expect((result.consistencyFindings ?? []).length, testCase.case_id).toBe(0);
+          }
         }
       }
     } finally {
@@ -124,5 +139,47 @@ describe('image-compliance-v1 benchmark (stub fixtures)', () => {
         process.env.AAIRP_VISION_MODE = previous;
       }
     }
-  });
+  }, 30_000);
+
+  it('auto-segments long images without manual hints when heuristic succeeds', async () => {
+    const previous = process.env.AAIRP_VISION_MODE;
+    process.env.AAIRP_VISION_MODE = 'stub';
+
+    try {
+      const service = new VisionComplianceService({
+        disableHeuristicSegmentation: false,
+        disableImageEnhance: true,
+      });
+      const result = await service.discover({
+        reviewId: 'rev_auto_segment',
+        advertisementId: 'ad_auto_segment',
+        contentHash: 'hash_auto',
+        contentVersion: 1,
+        dimensions: {
+          tenantId: 'demo',
+          countryId: 'SG',
+          platformId: 'SHOPEE',
+          categoryId: 'sa.pressure_cooker',
+        },
+        normalizedContent: {
+          text: '',
+          imageUrls: ['fixture://image-compliance/cn-pdp-pressure-cooker-pos.jpg'],
+          imageDimensions: [{ width: 750, height: 15000 }],
+        },
+        resolvedKnowledgeVersions: DEMO_KNOWLEDGE_VERSIONS,
+        advertisementContext: {},
+        tags: [],
+        builtAt: '2026-06-29T00:00:00.000Z',
+      });
+
+      expect(result.manifests[0]?.plannerMode).toBe('content_blocks');
+      expect(result.manifests[0]?.slices.length).toBeGreaterThanOrEqual(3);
+    } finally {
+      if (previous === undefined) {
+        delete process.env.AAIRP_VISION_MODE;
+      } else {
+        process.env.AAIRP_VISION_MODE = previous;
+      }
+    }
+  }, 20_000);
 });

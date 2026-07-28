@@ -448,6 +448,7 @@
       "trigger_terms": [
         "non-stick",
         "non stick",
+        "nonstick",
         "enhanced noise reduction",
         "juice yield",
         "purer juice",
@@ -830,6 +831,7 @@
       "trigger_terms": [
         "stew up to",
         "up to 2kg",
+        "up to 2 kg",
         "up to 16 bowls"
       ],
       "scopes": {
@@ -857,7 +859,10 @@
       },
       "trigger_patterns": [
         "\\bfeed(?:s)?\\s+up to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b",
-        "\\bup to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b"
+        "\\bup to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b",
+        "\\bstew\\s+up\\s+to\\b",
+        "\\bup to\\s+\\d+(?:\\.\\d+)?\\s*kg\\b",
+        "\\bup to\\s+\\d+(?:\\.\\d+)?\\s*bowls?\\b"
       ],
       "remediation_type": "EVIDENCE_SUPPLEMENT",
       "summary_en": "Capacity or volume claims (e.g. up to X kg/bowls) require substantiation and clear test conditions",

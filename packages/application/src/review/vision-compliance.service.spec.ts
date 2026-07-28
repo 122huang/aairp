@@ -35,7 +35,7 @@ const sampleSlice: ImageSlice = {
   sliceId: 'slice_0',
   sourceImageIndex: 0,
   sliceIndex: 0,
-  sliceType: 'full',
+  sliceType: 'hero',
   yStart: 0,
   yEnd: 1,
 };
@@ -92,6 +92,8 @@ describe('VisionComplianceService', () => {
       },
       cropImageForSlice: async (_source, slice) =>
         `data:image/jpeg;base64,slice-${slice.sliceIndex}`,
+      createSliceThumbnail: async (_source, slice) =>
+        `data:image/jpeg;base64,thumb-${slice.sliceIndex}`,
       promptTemplate: 'Slice index: {slice_index}\nImage URL: {image_url}',
     });
 
@@ -105,8 +107,8 @@ describe('VisionComplianceService', () => {
         },
       });
 
-      expect(calls).toHaveLength(5);
-      expect(calls.map((call) => call.sliceIndex)).toEqual([0, 1, 2, 3, 4]);
+      expect(calls).toHaveLength(6);
+      expect(calls.map((call) => call.sliceIndex)).toEqual([0, 1, 2, 3, 4, 5]);
       for (const call of calls) {
         expect(call.imageUrl).toMatch(/^data:image\/jpeg;base64,slice-\d+$/);
         expect(call.prompt).toContain('attached-inline-slice');
@@ -197,7 +199,15 @@ describe('VisionComplianceService', () => {
     process.env.AAIRP_VISION_MODE = 'stub';
 
     try {
-      const service = new VisionComplianceService();
+      const service = new VisionComplianceService({
+        // Avoid remote fetch hangs on example.com URLs in unit tests.
+        disableHeuristicSegmentation: true,
+        disableImageEnhance: true,
+        cropImageForSlice: async (_source, slice) =>
+          `data:image/jpeg;base64,slice-${slice.sliceIndex}`,
+        createSliceThumbnail: async (_source, slice) =>
+          `data:image/jpeg;base64,thumb-${slice.sliceIndex}`,
+      });
       const result = await service.discover(baseContext);
 
       expect(result.skipped).toBe(false);
@@ -212,5 +222,44 @@ describe('VisionComplianceService', () => {
         process.env.AAIRP_VISION_MODE = previous;
       }
     }
-  });
+  }, 15_000);
+
+  it('returns slice thumbnails and consistency findings for multi-slice pressure cooker fixture', async () => {
+    const previous = process.env.AAIRP_VISION_MODE;
+    process.env.AAIRP_VISION_MODE = 'stub';
+
+    try {
+      const service = new VisionComplianceService();
+      const result = await service.discover({
+        ...baseContext,
+        normalizedContent: {
+          text: '',
+          imageUrls: ['fixture://image-compliance/cn-pdp-pressure-cooker-pos.jpg'],
+          imageDimensions: [{ width: 750, height: 15000 }],
+          imageContentBlockHints: [
+            [
+              { blockType: 'hero', yStart: 0, yEnd: 0.08 },
+              { blockType: 'claims', yStart: 0.08, yEnd: 0.18 },
+              { blockType: 'specs', yStart: 0.18, yEnd: 0.33 },
+              { blockType: 'lifestyle', yStart: 0.33, yEnd: 0.46 },
+              { blockType: 'comparison', yStart: 0.46, yEnd: 0.58 },
+              { blockType: 'certification', yStart: 0.58, yEnd: 0.74 },
+              { blockType: 'footer', yStart: 0.74, yEnd: 1 },
+            ],
+          ],
+        },
+      });
+
+      expect(result.skipped).toBe(false);
+      expect(Object.keys(result.sliceThumbnails ?? {}).length).toBeGreaterThan(0);
+      expect(result.consistencyFindings?.length).toBeGreaterThan(0);
+      // 750px width uses per-slice enhance (not full-canvas); preprocess may be empty.
+    } finally {
+      if (previous === undefined) {
+        delete process.env.AAIRP_VISION_MODE;
+      } else {
+        process.env.AAIRP_VISION_MODE = previous;
+      }
+    }
+  }, 20_000);
 });

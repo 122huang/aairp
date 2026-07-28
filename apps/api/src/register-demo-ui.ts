@@ -14,7 +14,16 @@ const legacyDemoUiRoot = join(apiRoot, 'demo-ui/public');
 
 /** User review UI (6U React app when built) + admin UI + legacy demo-ui redirect. */
 export async function registerDemoUi(app: FastifyInstance): Promise<void> {
-  const reviewStaticRoot = existsSync(join(reviewAppDist, 'index.html')) ? reviewAppDist : reviewUiRoot;
+  const usingReviewApp = existsSync(join(reviewAppDist, 'index.html'));
+  const reviewStaticRoot = usingReviewApp ? reviewAppDist : reviewUiRoot;
+  if (usingReviewApp) {
+    app.log.info({ root: reviewAppDist }, 'Serving review-app dist at /review/');
+  } else {
+    app.log.warn(
+      { fallback: reviewUiRoot, expected: reviewAppDist },
+      'review-app dist missing — /review/ falls back to legacy review-ui (no Image Review tab). Run: pnpm build:review-app',
+    );
+  }
 
   await app.register(fastifyStatic, {
     root: reviewStaticRoot,

@@ -157,6 +157,8 @@ export type CaseMetadata = {
   review_id: string;
   embedding_id: null;
   similar_case_ids: string[];
+  /** Review UI entry: single | batch | image */
+  entry_mode?: string;
 };
 
 export type CaseRecord = {

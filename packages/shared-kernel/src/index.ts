@@ -10,6 +10,7 @@ export * from './findings/case-finding.js';
 export * from './findings/llm-finding.js';
 export * from './findings/image-slice.js';
 export * from './findings/vision-finding.js';
+export * from './findings/consistency-finding.js';
 export * from './findings/rewrite-suggestion.js';
 export * from './decision/review-decision.js';
 export * from './report/review-report.js';

@@ -24,7 +24,9 @@ function App() {
 
   return (
     <ReviewHubPage
-      initialMode={route.name === 'batch' ? 'batch' : 'single'}
+      initialMode={
+        route.name === 'batch' ? 'batch' : route.name === 'image' ? 'image' : 'single'
+      }
       initialParentCaseId={route.name === 'single' ? route.parentCaseId : undefined}
     />
   );

@@ -298,4 +298,107 @@ describe('ReviewReportService', () => {
 
     expect(result.summary.findings[0]?.remediationType).toBe('EVIDENCE_SUPPLEMENT');
   });
+
+  it('renders branch verdict chips, vision mode, and consistency findings', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+    const thumb = 'data:image/jpeg;base64,thumb';
+
+    const result = service.render({
+      context: baseContext,
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'WARN',
+        confidence: 0.8,
+        rationale: 'Vision localisation and consistency conflict.',
+        findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 1, consistency: 1 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+        branchVerdicts: {
+          text: 'PASS',
+          image: 'WARN',
+          consistency: 'WARN',
+        },
+      },
+      ruleFindings: [],
+      playbookFindings: [],
+      openRiskResult: { skipped: false, findings: [] },
+      visionFindings: [
+        {
+          module: 'VISION',
+          findingId: 'vf_loc',
+          severity: 'MEDIUM',
+          decision: 'WARN',
+          refType: 'VISION_RISK',
+          refId: 'localisation-error',
+          refVersionId: 'demo-vision-1.0.0-localisation-error-v1',
+          summary: 'Chinese panel visible',
+          confidence: 0.9,
+          sliceId: 'img0-s2-specs',
+        },
+      ],
+      consistencyFindings: [
+        {
+          module: 'CONSISTENCY',
+          findingId: 'cf_pressure',
+          severity: 'MEDIUM',
+          decision: 'WARN',
+          refType: 'CONSISTENCY_FIELD',
+          refId: 'cross-slice-quantitativeClaims',
+          refVersionId: 'demo-consistency-1.0.0-quantitativeClaims-v1',
+          summary: '112kPa vs 80kPa',
+          confidence: 0.88,
+          evaluationDetail: {
+            field: 'quantitativeClaims',
+            conflict: '112kPa vs 80kPa',
+            slicesInvolved: ['img0-s2-specs', 'img0-s5-comparison'],
+            values: ['112kPa', '80kPa'],
+          },
+        },
+      ],
+      visionMode: 'stub',
+      sliceThumbnails: {
+        'img0-s2-specs': thumb,
+        'img0-s5-comparison': thumb,
+      },
+    });
+
+    expect(result.summary.branchVerdicts?.consistency).toBe('WARN');
+    expect(result.summary.visionMode).toBe('stub');
+    expect(result.reportHtml).toContain('branch-chip');
+    expect(result.reportHtml).toContain('文案 PASS');
+    expect(result.reportHtml).toContain('图片 WARN');
+    expect(result.reportHtml).toContain('一致性 WARN');
+    expect(result.reportHtml).toContain('Vision mode');
+    expect(result.reportHtml).toContain('Consistency Findings');
+    expect(result.reportHtml).toContain('slice-thumb');
+    expect(result.reportHtml).toContain(thumb);
+  });
+
+  it('annotates image-entry reviews as confirmed extract text', () => {
+    const service = new ReviewReportService({ now: () => fixedDate });
+    const result = service.render({
+      context: {
+        ...baseContext,
+        tags: ['entry_mode:image'],
+        normalizedContent: {
+          text: 'Non-stick coating\n112kPa',
+          imageUrls: ['data:image/jpeg;base64,abc'],
+        },
+      },
+      decision: {
+        reviewId: 'rev_test',
+        finalDecision: 'PASS',
+        confidence: 1,
+        rationale: 'ok',
+        findingCounts: { rule: 0, playbook: 0, llm: 0, case: 0, vision: 0 },
+        decidedAt: '2026-06-26T10:09:00.000Z',
+      },
+      ruleFindings: [],
+      playbookFindings: [],
+      openRiskResult: { skipped: true, findings: [], skipReason: 'NO_FINDINGS' },
+    });
+
+    expect(result.reportHtml).toContain('Image review');
+    expect(result.reportHtml).toContain('Text (confirmed extract)');
+    expect(result.reportHtml).toContain('Non-stick coating');
+  });
 });

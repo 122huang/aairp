@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { extractParentCaseId, toDemoReviewResponseDto } from './demo-review.dto.js';
+import { extractParentCaseId, extractEntryMode, toDemoReviewResponseDto } from './demo-review.dto.js';
 
 describe('demo-review.dto', () => {
   it('maps ReviewHappyPathResult to snake_case response', () => {
@@ -116,5 +116,14 @@ describe('demo-review.dto', () => {
     expect(extractParentCaseId({ parent_case_id: ' case_abc ' })).toBe('case_abc');
     expect(extractParentCaseId({ parent_case_id: '' })).toBeUndefined();
     expect(extractParentCaseId(null)).toBeUndefined();
+  });
+
+  it('extractEntryMode reads optional entry_mode and ignores invalid values', () => {
+    expect(extractEntryMode({ entry_mode: 'image' })).toBe('image');
+    expect(extractEntryMode({ entry_mode: ' BATCH ' })).toBe('batch');
+    expect(extractEntryMode({ entry_mode: 'single' })).toBe('single');
+    expect(extractEntryMode({})).toBeUndefined();
+    expect(extractEntryMode({ entry_mode: 'other' })).toBeUndefined();
+    expect(extractEntryMode(null)).toBeUndefined();
   });
 });

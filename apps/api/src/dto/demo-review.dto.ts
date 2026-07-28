@@ -13,6 +13,12 @@ export type DemoReviewResponseDto = {
     llm: number;
     case?: number;
     vision?: number;
+    consistency?: number;
+  };
+  branch_verdicts?: {
+    text: string;
+    image: string;
+    consistency: string;
   };
   report_html: string;
   summary: ReturnType<typeof toReviewReportResponseDto>['summary'];
@@ -46,7 +52,14 @@ export function toDemoReviewResponseDto(
       ...(result.decision.findingCounts.vision > 0
         ? { vision: result.decision.findingCounts.vision }
         : {}),
+      ...(result.decision.findingCounts.consistency &&
+      result.decision.findingCounts.consistency > 0
+        ? { consistency: result.decision.findingCounts.consistency }
+        : {}),
     },
+    ...(result.decision.branchVerdicts
+      ? { branch_verdicts: result.decision.branchVerdicts }
+      : {}),
     report_html: reportDto.report_html,
     summary: reportDto.summary,
     generated_at: reportDto.generated_at,
@@ -72,4 +85,20 @@ export function extractParentCaseId(body: unknown): string | undefined {
   }
   const trimmed = raw.trim();
   return trimmed.length > 0 ? trimmed : undefined;
+}
+
+/** Extract optional entry_mode without failing advertisement upload validation. */
+export function extractEntryMode(body: unknown): 'single' | 'batch' | 'image' | undefined {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return undefined;
+  }
+  const raw = (body as { entry_mode?: unknown }).entry_mode;
+  if (typeof raw !== 'string') {
+    return undefined;
+  }
+  const trimmed = raw.trim().toLowerCase();
+  if (trimmed === 'single' || trimmed === 'batch' || trimmed === 'image') {
+    return trimmed;
+  }
+  return undefined;
 }

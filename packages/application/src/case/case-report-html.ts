@@ -147,17 +147,24 @@ function caseHeader(
   const ad = caseRecord.advertisement.content;
   const preview = ad.text.length > 280 ? `${ad.text.slice(0, 280)}...` : ad.text;
   const showDecision = options?.showDecisionBadge !== false;
+  const imageEntryNote =
+    caseRecord.metadata.entry_mode === 'image'
+      ? `<p class="meta"><strong>入口：</strong>图片审查 — 文案摘录来自识别后人工核对文本</p>`
+      : '';
+  const excerptLabel =
+    caseRecord.metadata.entry_mode === 'image' ? '识别核对文案摘录' : '广告文案摘录';
   return `<p class="brand">AAIRP Case Report</p>
   <h1>${escapeHtml(subtitle)}</h1>
   <p class="meta">案例 ${escapeHtml(caseRecord.case_id)} · 审查 ${escapeHtml(caseRecord.review_id)} · 生成于 ${escapeHtml(generatedAt)}</p>
   <p class="meta">${escapeHtml(caseRecord.dimensions.country_id)} / ${escapeHtml(caseRecord.dimensions.category_id)} / ${escapeHtml(caseRecord.advertisement.ad_type)}</p>
+  ${imageEntryNote}
   ${
     showDecision
       ? `<p><span class="${decisionClass(caseRecord.decision.final_decision)}">${escapeHtml(caseRecord.decision.final_decision)}</span></p>
   <p class="meta"><strong>结论说明：</strong>${escapeHtml(caseRecord.decision.rationale)}</p>`
       : ''
   }
-  <div class="card"><p class="muted">广告文案摘录</p><p class="excerpt">${escapeHtml(preview)}</p></div>`;
+  <div class="card"><p class="muted">${excerptLabel}</p><p class="excerpt">${escapeHtml(preview)}</p></div>`;
 }
 
 function renderHandoffFinding(finding: CaseReportFinding): string {

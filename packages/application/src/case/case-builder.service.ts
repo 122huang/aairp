@@ -16,6 +16,7 @@ import {
   isLegalReviewedMarket,
   resolveFindingRemediationType,
 } from '@aairp/shared-kernel';
+import { readEntryModeFromTags } from '../review/image-review-entry.js';
 
 export type CaseBuilderConfig = {
   pipelineVersion?: string;
@@ -334,6 +335,9 @@ export class CaseBuilderService {
         review_id: input.reviewId,
         embedding_id: null,
         similar_case_ids: [],
+        ...(readEntryModeFromTags(context.tags)
+          ? { entry_mode: readEntryModeFromTags(context.tags) }
+          : {}),
       },
       created_at: now,
       updated_at: now,

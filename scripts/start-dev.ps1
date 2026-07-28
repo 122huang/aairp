@@ -17,5 +17,14 @@ if (-not (Test-Path ".env")) {
   }
 }
 
+# pnpm/tsx do not auto-load .env — inject into this session first.
+. "$PSScriptRoot\load-env.ps1"
+
+Write-Host "AAIRP_IMAGE_REVIEW_ENTRY=$(if ($env:AAIRP_IMAGE_REVIEW_ENTRY) { $env:AAIRP_IMAGE_REVIEW_ENTRY } else { 'off (default)' })"
+if (-not (Test-Path "apps\review-app\dist\index.html")) {
+  Write-Host "WARN: apps/review-app/dist missing — /review/ will serve legacy review-ui (no Image tab)." -ForegroundColor Yellow
+  Write-Host "      Run: pnpm build:review-app   then restart API" -ForegroundColor Yellow
+}
+
 Write-Host "Starting API (pnpm dev:api)..."
 pnpm dev:api

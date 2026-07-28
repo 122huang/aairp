@@ -5,6 +5,9 @@ import type {
   CaseReviewContext,
   ContextualRewriteBatchResult,
   ReviewContext,
+  RuleEvaluationResult,
+  RuleFinding,
+  VisionDiscoveryResult,
 } from '@aairp/shared-kernel';
 import {
   buildPriorFindingsSummary,
@@ -24,12 +27,55 @@ import {
   type WarnFinding,
 } from './contextual-rewrite.service.js';
 import { mapWithConcurrency } from './async-concurrency.js';
+import { joinVisionExtractedText } from './content-matching.js';
+import { applyImageReadabilityGate } from './image-readability-gate.js';
 import { DecisionEngineService, computeCombinedHasBlocker } from './decision-engine.service.js';
 import { OpenRiskDiscoveryService } from './open-risk-discovery.service.js';
 import { PlaybookEngineService } from './playbook-engine.service.js';
 import { ReviewReportService } from './review-report.service.js';
 import { RuleEngineService } from './rule-engine.service.js';
 import { VisionComplianceService } from './vision-compliance.service.js';
+import { resolveVisionLlmMode } from './vision-llm.gateway.js';
+
+/** Merge post-vision rule hits without duplicating the same rule ref. */
+export function mergeRuleEvaluationResults(
+  primary: RuleEvaluationResult,
+  secondary: RuleEvaluationResult,
+): RuleEvaluationResult {
+  const seen = new Set(primary.findings.map((finding) => finding.refId));
+  const added: RuleFinding[] = [];
+  for (const finding of secondary.findings) {
+    if (!seen.has(finding.refId)) {
+      seen.add(finding.refId);
+      added.push(finding);
+    }
+  }
+  if (added.length === 0) {
+    return primary;
+  }
+  return {
+    ...primary,
+    findings: [...primary.findings, ...added],
+    hasBlocker: primary.hasBlocker || secondary.hasBlocker,
+  };
+}
+
+export function withVisionTextContext(
+  context: ReviewContext,
+  visionResult?: VisionDiscoveryResult,
+): ReviewContext {
+  const visionText = joinVisionExtractedText(visionResult?.extractedText);
+  if (!visionText) {
+    return context;
+  }
+  return {
+    ...context,
+    normalizedContent: {
+      ...context.normalizedContent,
+      visionText,
+    },
+  };
+}
 
 export type ReviewPipelineServiceDeps = {
   ruleEngineService: RuleEngineService;
@@ -110,6 +156,7 @@ export class ReviewPipelineService {
       ? openRiskStage.caseFindings
       : [];
     const visionFindings = openRiskStage.visionResult?.findings ?? [];
+    const consistencyFindings = openRiskStage.visionResult?.consistencyFindings ?? [];
 
     return this.deps.decisionEngineService.fuseFromFindings({
       reviewId,
@@ -122,6 +169,7 @@ export class ReviewPipelineService {
       playbookFindings: openRiskStage.playbookResult.findings,
       llmFindings: openRiskStage.openRiskResult.findings,
       visionFindings,
+      consistencyFindings,
       caseFindings: decisionCaseFindings,
     });
   }
@@ -156,6 +204,7 @@ export class ReviewPipelineService {
         findings.push(finding);
       }
     }
+    // Consistency findings are decision-fused but not rewrite targets yet.
     for (const finding of stage.caseFindings) {
       if (finding.decision === 'WARN') {
         findings.push(finding);
@@ -239,15 +288,31 @@ export class ReviewPipelineService {
       this.resolveVisionStage(context),
     );
 
+    // Force REVIEW when images are present but text/pixels are not auditable.
+    const gatedVisionResult = applyImageReadabilityGate(context, visionResult);
+
+    // Re-run rules against Vision-extracted visible text so image-only / OCR-miss
+    // claims (non-stick, cook-time, capacity) still produce RULE findings.
+    let mergedRuleResult = ruleResult;
+    let ruleMsTotal = ruleMs;
+    const visionTextContext = withVisionTextContext(context, gatedVisionResult);
+    if (visionTextContext.normalizedContent.visionText) {
+      const { result: visionRuleResult, durationMs: visionRuleMs } = await measureStage(() =>
+        this.deps.ruleEngineService.evaluate(visionTextContext),
+      );
+      mergedRuleResult = mergeRuleEvaluationResults(ruleResult, visionRuleResult);
+      ruleMsTotal += visionRuleMs;
+    }
+
     return {
-      ruleResult,
+      ruleResult: mergedRuleResult,
       playbookResult,
       openRiskResult,
-      ...(visionResult ? { visionResult } : {}),
+      ...(gatedVisionResult ? { visionResult: gatedVisionResult } : {}),
       caseRetrieval,
       caseFindings,
       timings: {
-        ruleMs,
+        ruleMs: ruleMsTotal,
         playbookMs,
         openRiskMs,
         visionMs,
@@ -296,6 +361,9 @@ export class ReviewPipelineService {
         playbookFindings: openRiskStage.playbookResult.findings,
         openRiskResult: openRiskStage.openRiskResult,
         visionFindings: openRiskStage.visionResult?.findings ?? [],
+        consistencyFindings: openRiskStage.visionResult?.consistencyFindings ?? [],
+        visionMode: resolveVisionLlmMode(),
+        sliceThumbnails: openRiskStage.visionResult?.sliceThumbnails,
         caseFindings: openRiskStage.caseFindings,
         casePrecedents,
         contextualRewrites,
