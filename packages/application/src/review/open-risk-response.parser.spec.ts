@@ -8,7 +8,7 @@ describe('parseOpenRiskResponseContent', () => {
   it('parses a normal findings payload', () => {
     const payload = parseOpenRiskResponseContent(
       JSON.stringify({
-        prompt_pack_version: 'demo-open-risk-1.5.5',
+        prompt_pack_version: 'demo-open-risk-1.5.6',
         findings: [
           {
             risk_type: 'health-implication',
@@ -26,7 +26,7 @@ describe('parseOpenRiskResponseContent', () => {
 
   it('salvages truncated JSON with a complete leading finding', () => {
     const truncated =
-      '{"prompt_pack_version":"demo-open-risk-1.5.5","findings":[{"risk_type":"scarcity-urgency-claim","description":"Implied FOMO","severity":"LOW","suggested_action":"WARN","confidence":0.7';
+      '{"prompt_pack_version":"demo-open-risk-1.5.6","findings":[{"risk_type":"scarcity-urgency-claim","description":"Implied FOMO","severity":"LOW","suggested_action":"WARN","confidence":0.7';
     const payload = parseOpenRiskResponseContent(truncated);
     expect(payload.findings).toHaveLength(1);
     expect(payload.findings[0]?.risk_type).toBe('scarcity-urgency-claim');
