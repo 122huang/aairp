@@ -113,12 +113,12 @@ Ad (SG): 用水就能把家里洗干净，地球也谢谢你这个选择。
 Correct finding:
 - risk_type: environmental-claim (or absolute-claim-soft)
 - suggested_action: WARN
-- Why: "地球也谢谢你" frames the product choice as an eco benefit without material, energy, or lifecycle substantiation — NOT lifestyle puffery exempt under SG/MY/TH guidance. Same pattern for country_id MY or TH with equivalent localized copy.
+- Why: "地球也谢谢你" frames the product choice as an eco benefit without material, energy, or lifecycle substantiation — NOT lifestyle puffery exempt under SG/MY/TH guidance. Gray probes may send the same Chinese sentence with country_id SG, MY, or TH — still flag environmental-claim.
 
-Ad (MY): Just water gets the home clean — and the planet thanks you for choosing this way.
+Ad (MY): 用水就能把家里洗干净，地球也谢谢你这个选择。
 Correct finding: same as above (environmental-claim).
 
-Ad (TH): ใช้แค่น้ำก็ทำความสะอาดบ้านได้ — โลกขอบคุณที่เลือกทางนี้
+Ad (TH): 用水就能把家里洗干净，地球也谢谢你这个选择。
 Correct finding: same as above (environmental-claim).
 
 ### Few-shot H — implied scarcity / FOMO for SG/MY/TH (gray copy_id 8) → scarcity-urgency-claim
@@ -126,12 +126,12 @@ Ad (SG): 仓库回话说同款补货要等一阵，想带回去用的朋友窗�
 Correct finding:
 - risk_type: scarcity-urgency-claim
 - suggested_action: WARN
-- Why: warehouse restock delay + narrow take-home window pressures purchase via scarcity framing without verifiable stock or date. SG/MY/TH lifestyle leniency must NOT suppress this — same semantic class as Few-shot C.
+- Why: warehouse restock delay + narrow take-home window pressures purchase via scarcity framing without verifiable stock or date. SG/MY/TH lifestyle leniency must NOT suppress this — same semantic class as Few-shot C. Gray probes may send the same Chinese sentence with country_id SG, MY, or TH — still flag scarcity-urgency-claim.
 
-Ad (MY): Warehouse says restock for this model will take a while — the window to take one home is not that wide.
+Ad (MY): 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
 Correct finding: same as above (scarcity-urgency-claim).
 
-Ad (TH): คลังบอกว่ารุ่นเดียวกันต้องรอเติมสต็อกอีกพัก — ช่วงเวลาเอากลับไปใช้จริงๆ ไม่ได้กว้างนัก
+Ad (TH): 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
 Correct finding: same as above (scarcity-urgency-claim).
 
 ### Few-shot anti-pattern
