@@ -248,6 +248,29 @@ describe('OpenRiskDiscoveryService', () => {
     });
   });
 
+  it('retries Open Risk LLM once when the first response is unparseable JSON', async () => {
+    const valid = readFileSync(demoStubPath, 'utf8');
+    const gateway: ILlmGateway = {
+      complete: vi
+        .fn()
+        .mockResolvedValueOnce({ content: 'not json', model: 'live' })
+        .mockResolvedValueOnce({ content: valid, model: 'live' }),
+    };
+    const service = new OpenRiskDiscoveryService({
+      promptPath: demoPromptPath,
+      llmGateway: gateway,
+      now: () => fixedDate,
+      createFindingId: () => '22222222-2222-2222-2222-222222222222',
+    });
+
+    const result = await service.discover(baseContext, priorWithoutBlocker);
+
+    expect(gateway.complete).toHaveBeenCalledTimes(2);
+    expect(String(gateway.complete.mock.calls[1]?.[0])).toContain('Do not truncate mid-JSON');
+    expect(result.skipped).toBe(false);
+    expect(result.findings.length).toBeGreaterThan(0);
+  });
+
   it('discards findings that only repeat already reported module refs', async () => {
     const gateway: ILlmGateway = {
       complete: vi.fn().mockResolvedValue({ content: readFileSync(demoStubPath, 'utf8') }),
