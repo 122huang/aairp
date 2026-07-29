@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.8",
+  "pack_version": "demo-rule-1.8.9",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -242,6 +242,70 @@
       },
       "summary_en": "This content is marked as influencer/partnership — confirm MCMC/ASA Malaysia advertising disclosure (#ad / #sponsored / Paid Partnership) is added before publish. Brands may bear vicarious liability for undisclosed paid content. Non-blocking reminder (copy review does not verify disclosure tags).",
       "summary_zh": "该内容标注为网红/合作，发布前需确认已添加 MCMC/ASA Malaysia 要求的广告披露标签（#ad / #sponsored / Paid Partnership）。品牌方可能对未标注的付费内容承担连带责任。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
+    },
+    {
+      "rule_id": "demo-th-sponsored-disclosure",
+      "rule_version_id": "demo-th-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm OCPB advertising identification (clear ad labels in Thai/English, platform ad tags) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "ขอบคุณแบรนด์",
+        "ได้รับจาก",
+        "สปอนเซอร์",
+        "โฆษณา",
+        "แนะนำให้"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "TH"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "OCPB Guidelines on Identification of Advertisements (Demo)",
+        "article": "Sponsored online and social media content must be clearly labeled as advertising — Article 3"
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm OCPB advertising identification (clear ad labels in Thai/English, platform ad tags) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加 OCPB 要求的广告标识（泰文/英文清晰标注、平台广告标签）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
       "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {

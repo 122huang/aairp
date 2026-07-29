@@ -231,6 +231,18 @@
       "category_id": "sa.air_fryer"
     },
     {
+      "case_id": "th-sa-info-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-th-sponsored-disclosure",
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "issue": "TH sponsored disclosure INFO reminder (OCPB)",
+      "text": "谢谢品牌送的这台咖啡机，这几天真的爱不释手，忍不住天天安利给姐妹们。",
+      "country_id": "TH",
+      "category_id": "sa.coffee_espresso"
+    },
+    {
       "case_id": "th-sa-warn-social-proof",
       "expected_skill": "Claim Review",
       "expected_pattern": "sa-social-proof-claim",

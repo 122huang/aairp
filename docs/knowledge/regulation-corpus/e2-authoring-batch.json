@@ -467,6 +467,30 @@
       ]
     },
     {
+      "knowledge_id": "regulation:th-ocpb-ad-identification-sponsored",
+      "corpus_type": "regulation",
+      "regulation_id": "th-ocpb-ad-identification-sponsored",
+      "country": "TH",
+      "authority": "OCPB",
+      "regulation_name": "Guidelines on Identification of Advertisements (influencer/sponsored)",
+      "citation": "Guidelines on Identification of Advertisements — Article 3 (sponsored social content)",
+      "effective_date": "2020-06-01",
+      "category": "Mandatory Disclaimers",
+      "mandatory": true,
+      "risk_level": "LOW",
+      "summary": "Sponsored influencer and paid social posts must be clearly labeled as advertising in Thai or English before publish.",
+      "review_guidance": "TRIGGER: Influencer/partnership copy with gifted/sponsored activation language. ACTION: INFO reminder — confirm ad identification labels before publish (copy review does not verify tags). CHECK: Thai/English ad labels and platform ad tools. ESCALATE IF: Covert paid promotion presented as organic opinion.",
+      "related_rule_ids": [
+        "demo-th-sponsored-disclosure"
+      ],
+      "related_evidence_ids": [],
+      "tags": [
+        "confidence:high",
+        "evidence:none",
+        "disclosure"
+      ]
+    },
+    {
       "regulation_id": "my-sirim-performance-claims",
       "country": "MY",
       "authority": "KPDNHEP",

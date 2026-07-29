@@ -214,6 +214,82 @@ describe('RuleEngineService', () => {
     ).toBe(false);
   });
 
+  it('fires TH sponsored-disclosure INFO reminder for activation language (gray-copy case 7)', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'TH',
+        categoryId: 'sa.coffee_espresso',
+      },
+      normalizedContent: {
+        text: '谢谢品牌送的这台咖啡机，这几天真的爱不释手，忍不住天天安利给姐妹们。',
+        imageUrls: [],
+      },
+      advertisementContext: {},
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-th-sponsored-disclosure');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+    expect(finding?.remediationType).toBe('NOT_APPLICABLE_DISCLOSURE');
+  });
+
+  it('does not fire TH sponsored-disclosure for non-TH / brand-owned / unlabeled-without-activation', () => {
+    const service = new RuleEngineService();
+
+    const myActivation = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'sa.coffee_espresso',
+      },
+      normalizedContent: {
+        text: '谢谢品牌送的这台咖啡机，这几天真的爱不释手，忍不住天天安利给姐妹们。',
+        imageUrls: [],
+      },
+      advertisementContext: {},
+    });
+    expect(
+      myActivation.findings.some((f) => f.refId === 'demo-th-sponsored-disclosure'),
+    ).toBe(false);
+
+    const thBrandOwned = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'TH',
+        categoryId: 'sa.coffee_espresso',
+      },
+      normalizedContent: {
+        text: 'Fresh espresso at home with this compact machine.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'BRAND_PRODUCT' },
+    });
+    expect(
+      thBrandOwned.findings.some((f) => f.refId === 'demo-th-sponsored-disclosure'),
+    ).toBe(false);
+
+    const thNoActivation = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'TH',
+        categoryId: 'sa.coffee_espresso',
+      },
+      normalizedContent: {
+        text: 'Fresh espresso at home with this compact machine.',
+        imageUrls: [],
+      },
+      advertisementContext: {},
+    });
+    expect(
+      thNoActivation.findings.some((f) => f.refId === 'demo-th-sponsored-disclosure'),
+    ).toBe(false);
+  });
+
   it('fires JP stealth-marketing INFO reminder with CAA enforcement copy for INFLUENCER_UGC', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({
@@ -359,7 +435,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(75);
+    expect(asset.rules).toHaveLength(76);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {
