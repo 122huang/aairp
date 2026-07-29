@@ -94,9 +94,6 @@ Correct finding:
 - suggested_action: WARN
 - Why: oil/power-savings implication without baseline, method, or period — same risk class as handbook §8.3 public kitchen-appliance mismatch fine; map to `demo-cn-performance-data-mismatch-risk` when in CN even if exact percent keywords differ.
 
-### Few-shot anti-pattern
-Do NOT miss A–D by classifying them as lifestyle puffery. Empty findings on those patterns is incorrect.
-
 ### Few-shot E — AU child pester / urge-to-buy cue → aana-children-code-risk (MANUAL_REVIEW only)
 Ad (AU): Tell mum you need this air fryer so snack time is always ready after school.
 Correct finding:
@@ -110,6 +107,35 @@ Correct finding:
 - risk_type: sensitive-content-flag
 - suggested_action: MANUAL_REVIEW
 - Why: political-history / ethnicity framing without 国旗/国徽/疫情/灾害 keywords. Recall-only — never WARN, never conclude safe to publish.
+
+### Few-shot G — implied environmental / planet-thanks (SG/MY/TH gray copy_id 5) → environmental-claim
+Ad (SG): 用水就能把家里洗干净，地球也谢谢你这个选择。
+Correct finding:
+- risk_type: environmental-claim (or absolute-claim-soft)
+- suggested_action: WARN
+- Why: "地球也谢谢你" frames the product choice as an eco benefit without material, energy, or lifecycle substantiation — NOT lifestyle puffery exempt under SG/MY/TH guidance. Gray probes may send the same Chinese sentence with country_id SG, MY, or TH — still flag environmental-claim.
+
+Ad (MY): 用水就能把家里洗干净，地球也谢谢你这个选择。
+Correct finding: same as above (environmental-claim).
+
+Ad (TH): 用水就能把家里洗干净，地球也谢谢你这个选择。
+Correct finding: same as above (environmental-claim).
+
+### Few-shot H — implied scarcity / FOMO for SG/MY/TH (gray copy_id 8) → scarcity-urgency-claim
+Ad (SG): 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
+Correct finding:
+- risk_type: scarcity-urgency-claim
+- suggested_action: WARN
+- Why: warehouse restock delay + narrow take-home window pressures purchase via scarcity framing without verifiable stock or date. SG/MY/TH lifestyle leniency must NOT suppress this — same semantic class as Few-shot C. Gray probes may send the same Chinese sentence with country_id SG, MY, or TH — still flag scarcity-urgency-claim.
+
+Ad (MY): 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
+Correct finding: same as above (scarcity-urgency-claim).
+
+Ad (TH): 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
+Correct finding: same as above (scarcity-urgency-claim).
+
+### Few-shot anti-pattern
+Do NOT miss A–H by classifying them as lifestyle puffery. Empty findings on those patterns is incorrect — especially for SG/MY/TH when country_id is SG, MY, or TH.
 
 ## SG / MY / TH small-appliance semantic guidance
 
@@ -128,6 +154,8 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Quantitative claims with "*" / "up to X% faster" / "Nx faster" when the ad text itself never states the comparison baseline (vs slow cook, conventional, prior model, named competitor) — flag unsubstantiated-quantitative-claim even if a Rule/Playbook already flagged the percentage keyword. Missing baseline is a separate disclosure issue from "needs evidence numbers".
 - Implied health, medical, or food-safety benefit from material or cleaning claims not caught by health rules.
 - Combination risks: absolute-sounding headline + fine-print disclaimer that does not qualify the headline.
+- Implied environmental / planet-thanks without substantiation (see Few-shot G — gray copy_id 5).
+- Implied scarcity / restock-delay / narrow-window pressure without verifiable stock or end date (see Few-shot H — gray copy_id 8; same class as Few-shot C).
 
 ### Do NOT flag
 - A risk_type already fully covered by prior rule/playbook findings (omit that risk_type only — still report other uncovered risks).
@@ -183,7 +211,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 
 ## Output format (JSON only, no markdown)
 {
-  "prompt_pack_version": "demo-open-risk-1.5.5",
+  "prompt_pack_version": "demo-open-risk-1.5.6",
   "findings": [
     {
       "risk_type": "kebab-case-id",

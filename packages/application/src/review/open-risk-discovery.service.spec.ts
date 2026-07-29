@@ -433,7 +433,11 @@ describe('OpenRiskDiscoveryService', () => {
     expect(prompt).toContain('aana-children-code-risk');
     expect(prompt).toContain('sensitive-content-flag');
     expect(prompt).toContain('## AU / CN guidance');
-    expect(prompt).toContain('demo-open-risk-1.5.5');
+    expect(prompt).toContain('demo-open-risk-1.5.6');
+    expect(prompt).toContain('Few-shot G');
+    expect(prompt).toContain('Few-shot H');
+    expect(prompt).toContain('gray copy_id 5');
+    expect(prompt).toContain('gray copy_id 8');
     expect(prompt).toContain('NEVER WARN');
   });
 
