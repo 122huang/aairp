@@ -19,6 +19,7 @@ import { LlmGatewayTimeoutError } from './llm-gateway.utils.js';
 import { searchableFields } from './content-matching.js';
 import { createDefaultOpenRiskLlmGateway } from './open-risk-llm.gateway.js';
 import {
+  isOpenRiskParseError,
   parseOpenRiskResponseContent,
   type OpenRiskFindingPayload,
 } from './open-risk-response.parser.js';
@@ -150,7 +151,19 @@ function createLlmFinding(
   };
 }
 
-export { parseOpenRiskResponseContent, parseOpenRiskStubResponse } from './open-risk-response.parser.js';
+export { parseOpenRiskResponseContent, parseOpenRiskStubResponse, isOpenRiskParseError } from './open-risk-response.parser.js';
+
+function resolveOpenRiskParseAttempts(): number {
+  const configured = Number(process.env.OPEN_RISK_PARSE_RETRIES ?? 1);
+  if (!Number.isFinite(configured) || configured < 0) {
+    return 2;
+  }
+  return configured + 1;
+}
+
+function buildOpenRiskParseRetryPrompt(prompt: string): string {
+  return `${prompt}\n\nIMPORTANT: Return one complete JSON object with a "findings" array (use [] if none). No markdown fences. Do not truncate mid-JSON.`;
+}
 
 function collectPriorRefIds(prior: PriorFindingsSummary): Set<string> {
   return new Set([
@@ -300,7 +313,25 @@ export class OpenRiskDiscoveryService {
       }
       throw error;
     }
-    const stubPayload = parseOpenRiskResponseContent(completion.content);
+
+    const parseAttempts = resolveOpenRiskParseAttempts();
+    let stubPayload: ReturnType<typeof parseOpenRiskResponseContent> | undefined;
+    for (let attempt = 1; attempt <= parseAttempts; attempt += 1) {
+      if (attempt > 1) {
+        completion = await gateway.complete(buildOpenRiskParseRetryPrompt(prompt));
+      }
+      try {
+        stubPayload = parseOpenRiskResponseContent(completion.content);
+        break;
+      } catch (error) {
+        if (!isOpenRiskParseError(error) || attempt >= parseAttempts) {
+          throw error;
+        }
+      }
+    }
+    if (!stubPayload) {
+      throw new Error('invalid open risk LLM response: parse failed after retries');
+    }
     const promptPackVersion =
       stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.4';
 
