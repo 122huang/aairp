@@ -9,7 +9,8 @@
     "demo-my-eeca-coe-prerequisite",
     "demo-my-sponsored-disclosure",
     "demo-id-sponsored-disclosure",
-    "demo-ph-sponsored-disclosure"
+    "demo-ph-sponsored-disclosure",
+    "demo-th-sponsored-disclosure"
   ],
   "countries": ["CN", "SG", "MY", "TH"],
   "cases": [

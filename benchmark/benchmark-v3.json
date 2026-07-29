@@ -29,7 +29,7 @@
     "user_lines_path": "benchmark/user-lines-14.json",
     "locale_expansion_path": "benchmark/locale-expansion.json"
   },
-  "case_count": 126,
+  "case_count": 127,
   "cases": [
     {
       "case_id": "AF-001",
@@ -4560,6 +4560,37 @@
         "upstream": "benchmark/locale-expansion.json",
         "dataset_case_id": "my-sa-info-sponsored-disclosure",
         "v3_generated_at": "2026-07-20T01:29:28.170Z"
+      }
+    },
+    {
+      "case_id": "th-sa-info-sponsored-disclosure",
+      "expected_skill": "Disclaimer Review",
+      "expected_pattern": "urgency-cta",
+      "expected_rule": "demo-th-sponsored-disclosure",
+      "expected_decision": "PASS",
+      "expected_severity": "LOW",
+      "expected_action": "PASS",
+      "expected_rewrite": {
+        "strategy": "qualify",
+        "must_remove_terms": [],
+        "must_include_concepts": []
+      },
+      "evaluation_weight": 0.75,
+      "tier": "locale-expansion",
+      "lifecycle_status": "MAINTAINED",
+      "verified_by_legal": true,
+      "exclude_from_strict_linkage": false,
+      "text": "谢谢品牌送的这台咖啡机，这几天真的爱不释手，忍不住天天安利给姐妹们。",
+      "risk": "Medium",
+      "issue": "TH sponsored disclosure INFO reminder (OCPB)",
+      "modality": "text",
+      "country_id": "TH",
+      "category_id": "sa.coffee_espresso",
+      "provenance": {
+        "source": "locale-expansion",
+        "upstream": "benchmark/locale-expansion.json",
+        "dataset_case_id": "th-sa-info-sponsored-disclosure",
+        "v3_generated_at": "2026-07-29T02:30:00.000Z"
       }
     },
     {

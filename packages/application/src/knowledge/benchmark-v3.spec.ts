@@ -25,7 +25,7 @@ describe('Benchmark V3 (E3)', () => {
 
   it('includes locale-expansion tier cases from 6B-2f', () => {
     const localeExpansion = selectBenchmarkV3Cases(manifest, { tier: 'locale-expansion' });
-    expect(localeExpansion).toHaveLength(20);
+    expect(localeExpansion).toHaveLength(21);
     expect(localeExpansion.every((c) => c.tier === 'locale-expansion')).toBe(true);
     expect(localeExpansion.map((c) => c.case_id)).toContain('id-sa-warn-category-boundary');
     expect(localeExpansion.map((c) => c.case_id)).toContain('vn-sa-review-foreign-brand');

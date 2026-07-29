@@ -13,7 +13,8 @@
   "summary": "Sponsored online and social media content must be clearly labeled as advertising to consumers.",
   "review_guidance": "TRIGGER: Influencer, live commerce, or paid social posts. ACTION: REWRITE — add clear ad identification in Thai. CHECK: Caption labels, on-screen text, and platform ad tags. ESCALATE IF: Covert sponsorship without ad marker.",
   "related_rule_ids": [
-    "demo-apac-sa-ai-image-disclaimer"
+    "demo-apac-sa-ai-image-disclaimer",
+    "demo-th-sponsored-disclosure"
   ],
   "related_evidence_ids": [],
   "tags": [

@@ -11,6 +11,12 @@ describe('mapRuleRefToRiskTypes', () => {
     ]);
   });
 
+  it('maps TH sponsored disclosure to sponsored-disclosure', () => {
+    expect(mapRuleRefToRiskTypes('demo-th-sponsored-disclosure')).toEqual([
+      'sponsored-disclosure',
+    ]);
+  });
+
   it('maps CPSR/COE to empty (orthogonal registration risks)', () => {
     expect(mapRuleRefToRiskTypes('demo-sg-cpsr-registration-prerequisite')).toEqual(
       [],

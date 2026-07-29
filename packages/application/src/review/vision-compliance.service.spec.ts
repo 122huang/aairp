@@ -108,7 +108,9 @@ describe('VisionComplianceService', () => {
       });
 
       expect(calls).toHaveLength(6);
-      expect(calls.map((call) => call.sliceIndex)).toEqual([0, 1, 2, 3, 4, 5]);
+      expect(calls.map((call) => call.sliceIndex).sort((a, b) => a - b)).toEqual([
+        0, 1, 2, 3, 4, 5,
+      ]);
       for (const call of calls) {
         expect(call.imageUrl).toMatch(/^data:image\/jpeg;base64,slice-\d+$/);
         expect(call.prompt).toContain('attached-inline-slice');

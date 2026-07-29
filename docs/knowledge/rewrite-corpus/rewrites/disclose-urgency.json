@@ -26,11 +26,13 @@
     "regulations": [
       "regulation:sg-scap-disclosure",
       "regulation:my-masa-sponsorship-disclosure",
+      "regulation:th-ocpb-ad-identification",
       "regulation:my-kpdnhep-pricing-representation"
     ],
     "rules": [
       "demo-sg-sponsored-disclosure",
       "demo-my-sponsored-disclosure",
+      "demo-th-sponsored-disclosure",
       "demo-id-sponsored-disclosure",
       "demo-ph-sponsored-disclosure"
     ]

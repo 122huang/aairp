@@ -32,6 +32,7 @@ describe('Knowledge Linkage Validator (E4)', () => {
       'demo-ph-sponsored-disclosure',
       'demo-ph-sa-market-claim',
       'demo-my-sponsored-disclosure',
+      'demo-th-sponsored-disclosure',
     ];
     for (const ruleId of localeExpansionRules) {
       expect(result.orphans.rules_without_benchmark).not.toContain(ruleId);

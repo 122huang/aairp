@@ -271,6 +271,7 @@
         "rule_ids": [
           "demo-sg-sponsored-disclosure",
           "demo-my-sponsored-disclosure",
+          "demo-th-sponsored-disclosure",
           "demo-id-sponsored-disclosure",
           "demo-ph-sponsored-disclosure"
         ],
@@ -710,6 +711,7 @@
       "applicable_rules": [
         "demo-sg-sponsored-disclosure",
         "demo-my-sponsored-disclosure",
+        "demo-th-sponsored-disclosure",
         "demo-id-sponsored-disclosure",
         "demo-ph-sponsored-disclosure",
         "demo-apac-sa-ai-image-disclaimer",
