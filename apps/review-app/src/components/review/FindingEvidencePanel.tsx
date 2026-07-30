@@ -22,6 +22,7 @@ import {
 } from '@aairp/shared-kernel';
 import { resolveLegalSummaryZh } from '@/lib/legal-copy';
 import { resolveFindingRiskType } from '@/lib/finding-merge';
+import { evidenceTitleFromFilename } from '@/lib/evidence-title-from-filename';
 import { findingDecisionBadgeClass, severityBadgeClass } from '@/lib/review-ui';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -192,6 +193,7 @@ function FindingEvidenceItem({
   const [dragActive, setDragActive] = useState(false);
   const dragDepthRef = useRef(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const titleManuallyEditedRef = useRef(false);
 
   function applySelectedFile(next: File | null) {
     if (!next) {
@@ -204,6 +206,9 @@ function FindingEvidenceItem({
     }
     setError(null);
     setFile(next);
+    if (!titleManuallyEditedRef.current) {
+      setTitle(evidenceTitleFromFilename(next.name));
+    }
   }
 
   function handleDragEnter(event: DragEvent<HTMLDivElement>) {
@@ -278,8 +283,13 @@ function FindingEvidenceItem({
 
   async function handleAttach(event: FormEvent) {
     event.preventDefault();
-    if (!title.trim() || !file) {
-      setError('请填写证据标题并选择文件');
+    if (!file) {
+      setError('请选择证据文件');
+      return;
+    }
+    const resolvedTitle = title.trim() || evidenceTitleFromFilename(file.name);
+    if (!resolvedTitle) {
+      setError('无法从文件名生成证据标题，请手动填写');
       return;
     }
 
@@ -298,7 +308,7 @@ function FindingEvidenceItem({
           await attachFindingEvidence({
             review_id: reviewId,
             finding_id: finding.finding_id,
-            title: title.trim(),
+            title: resolvedTitle,
             evidence_source_type: sourceType,
             scope,
             claim_risk_types: [resolveFindingRiskType(finding)],
@@ -331,6 +341,7 @@ function FindingEvidenceItem({
       }
       setTitle('');
       setFile(null);
+      titleManuallyEditedRef.current = false;
       setShowForm(false);
       if (errors.length > 0) {
         setError(`部分 finding 同步失败：${errors.join('；')}`);
@@ -547,8 +558,17 @@ function FindingEvidenceItem({
               </select>
             </div>
             <div className="space-y-1.5">
-              <Label>证据标题</Label>
-              <input className={inputClassName} value={title} onChange={(e) => setTitle(e.target.value)} disabled={submitting} />
+              <Label>证据标题（可选，默认取文件名）</Label>
+              <input
+                className={inputClassName}
+                value={title}
+                placeholder={file ? evidenceTitleFromFilename(file.name) : '选择文件后自动填充'}
+                onChange={(e) => {
+                  titleManuallyEditedRef.current = true;
+                  setTitle(e.target.value);
+                }}
+                disabled={submitting}
+              />
             </div>
             <div className="space-y-1.5">
               <Label>适用 SKU（逗号分隔，用于结构化预筛）</Label>
@@ -627,7 +647,17 @@ function FindingEvidenceItem({
             </div>
           </form>
         ) : (
-          <Button type="button" variant="outline" size="sm" onClick={() => setShowForm(true)}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              titleManuallyEditedRef.current = false;
+              setTitle('');
+              setFile(null);
+              setShowForm(true);
+            }}
+          >
             <Paperclip className="h-3.5 w-3.5" /> 附上证据
           </Button>
         )}
