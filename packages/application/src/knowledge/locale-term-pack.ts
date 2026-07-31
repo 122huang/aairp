@@ -20,6 +20,12 @@ export type LocaleTermPack = {
 
 /** Maps locale pack risk_type → demo rule_id per market. */
 export const LOCALE_RISK_TYPE_RULE_MAP: Record<string, Record<string, string>> = {
+  CN: {
+    'absolute-claim-blocker': 'demo-cn-absolute-terms-blocker',
+    'unsourced-metrics': 'demo-cn-unsourced-metrics',
+    'medical-claim': 'demo-apac-sa-health-claim-blocker',
+    'health-implication': 'demo-apac-sa-health-implication',
+  },
   ID: {
     'sponsored-disclosure': 'demo-id-sponsored-disclosure',
     'localisation-error': 'demo-apac-sa-localization',
@@ -41,6 +47,8 @@ export const LOCALE_RISK_TYPE_RULE_MAP: Record<string, Record<string, string>> =
 };
 
 const DISCLOSURE_RISK_TYPES = new Set(['sponsored-disclosure']);
+/** Risk types whose locale terms must land on forbidden_terms (REWRITE_ONLY / FAIL blockers). */
+const FORBIDDEN_TERM_RISK_TYPES = new Set(['absolute-claim-blocker', 'medical-claim']);
 
 export function loadLocaleTermPack(countryId: string, localesDir?: string): LocaleTermPack | null {
   const dir = localesDir ?? join(resolveDemoKnowledgePaths().rulesJson, '..', 'locales');
@@ -90,6 +98,11 @@ export function mergeLocaleTermsIntoRules(
 
       if (DISCLOSURE_RISK_TYPES.has(row.risk_type)) {
         rule.required_any_terms = uniqueTerms([...(rule.required_any_terms ?? []), ...row.terms]);
+      } else if (
+        FORBIDDEN_TERM_RISK_TYPES.has(row.risk_type) ||
+        (rule.forbidden_terms?.length ?? 0) > 0
+      ) {
+        rule.forbidden_terms = uniqueTerms([...(rule.forbidden_terms ?? []), ...row.terms]);
       } else {
         rule.trigger_terms = uniqueTerms([...(rule.trigger_terms ?? []), ...row.terms]);
       }

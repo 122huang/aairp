@@ -432,6 +432,112 @@ describe('RuleEngineService', () => {
     expect(result.hasBlocker).toBe(false);
   });
 
+  describe('CN absolute-terms blocker recall (Art.9 lexicon expansion)', () => {
+    const cnCase = (text: string, categoryId = 'sa.other') => ({
+      ...baseContext,
+      dimensions: { ...baseContext.dimensions, countryId: 'CN', categoryId },
+      normalizedContent: { text, imageUrls: [] },
+    });
+
+    it.each([
+      ['全球领先的智能空气炸锅品牌。', 'sa.air_fryer'],
+      ['行业第一品质，千万家庭共同选择。', 'sa.other'],
+      ['全网最好用的破壁机，没有之一。', 'sa.blender_processor'],
+      ['顶级配置，全面超越同类产品。', 'sa.other'],
+      ['史上最强空气净化产品正式上市。', 'sa.other'],
+      ['厨房小家电领域领导品牌。', 'sa.other'],
+      ['全国销量第一，用户口碑第一。', 'sa.other'],
+      ['唯一能够满足全场景需求的料理机。', 'sa.blender_processor'],
+      ['同类产品中的终极解决方案。', 'sa.other'],
+      ['不容置疑的行业标杆产品。', 'sa.other'],
+      ['国家级品质认证，值得信赖。', 'sa.other'],
+      ['中国最佳厨房生活品牌。', 'sa.other'],
+      ['业内最先进加热技术。', 'sa.other'],
+      ['效果远超市场上所有竞品。', 'sa.other'],
+      ['登顶行业巅峰的旗舰新品。', 'sa.other'],
+      ['市场占有率稳居第一。', 'sa.other'],
+      ['性能表现无人能及。', 'sa.other'],
+      ['重新定义行业最高标准。', 'sa.other'],
+      ['用户满意度行业第一。', 'sa.other'],
+      ['真正意义上的全能王者。', 'sa.other'],
+    ])('REJECT on %s', (text, categoryId) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(cnCase(text, categoryId));
+      expect(result.hasBlocker).toBe(true);
+      expect(result.findings.some((f) => f.refId === 'demo-cn-absolute-terms-blocker')).toBe(true);
+    });
+
+    it.each([
+      ['一台机器解决常见厨房难题'],
+      ['优质优选，适合日常厨房使用'],
+      ['第一时间提醒您查看说明书'],
+      ['最高温度可达180℃，请勿空烧'],
+      ['领先一步的设计，操作更顺手'],
+      ['包装内含100%可回收纸质说明书'],
+      ['首次使用前请仔细阅读说明书'],
+    ])('does not absolute-block lifestyle/spec copy: %s', (text) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(cnCase(text));
+      expect(result.findings.some((f) => f.refId === 'demo-cn-absolute-terms-blocker')).toBe(
+        false,
+      );
+      expect(result.hasBlocker).toBe(false);
+    });
+  });
+
+  describe('CN social-proof / unsourced metrics (legal batch)', () => {
+    const cnCase = (text: string) => ({
+      ...baseContext,
+      dimensions: { ...baseContext.dimensions, countryId: 'CN', categoryId: 'sa.other' },
+      normalizedContent: { text, imageUrls: [] },
+    });
+
+    it.each([
+      ['用户好评率高达100%。'],
+      ['售后满意度连续十年保持100%。'],
+      ['用户推荐率达到99.99%。'],
+      ['零投诉、零差评、零退货。'],
+      ['用户满意率100%，退货率为0。'],
+      ['连续五年蝉联销量冠军。'],
+      ['连续365天稳居销量榜第一。'],
+      ['全平台复购率行业第一。'],
+      ['全网销量遥遥领先其他品牌。'],
+    ])('REJECT absolute / perfect-rate / champion: %s', (text) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(cnCase(text));
+      expect(result.hasBlocker).toBe(true);
+      expect(result.findings.some((f) => f.refId === 'demo-cn-absolute-terms-blocker')).toBe(true);
+    });
+
+    it.each([
+      ['全球累计销量突破1000万台。'],
+      ['每分钟售出100台。'],
+      ['已服务超过5000万家庭用户。'],
+      ['98%的用户使用后都会再次购买。'],
+      ['全国已有3000万消费者选择我们。'],
+      ['每10个家庭就有8个在使用本产品。'],
+      ['单日销售额突破亿元。'],
+      ['产品上市首月销量超百万台。'],
+      ['已获得超过1000万个五星好评。'],
+      ['平均每秒成交3单。'],
+      ['全国超过90%的消费者认可。'],
+    ])('WARN unsourced metrics: %s', (text) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(cnCase(text));
+      expect(result.hasBlocker).toBe(false);
+      expect(result.findings.some((f) => f.refId === 'demo-cn-unsourced-metrics')).toBe(true);
+    });
+
+    it('does not treat repurchase “使用后” as before/after imagery', () => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(cnCase('98%的用户使用后都会再次购买。'));
+      expect(result.findings.some((f) => f.refId === 'demo-apac-sa-before-after-imagery')).toBe(
+        false,
+      );
+      expect(result.findings.some((f) => f.refId === 'demo-cn-unsourced-metrics')).toBe(true);
+    });
+  });
+
   it('fires KR kol-disclosure-format as INFO for INFLUENCER_UGC, not for brand-owned copy', () => {
     const service = new RuleEngineService();
 
@@ -547,7 +653,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(82);
+    expect(asset.rules).toHaveLength(83);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {

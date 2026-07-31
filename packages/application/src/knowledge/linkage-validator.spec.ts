@@ -53,7 +53,7 @@ describe('Knowledge Linkage Validator (E4)', () => {
       (issue) => issue.rule_id === 'L7b' || issue.rule_id === 'L7c',
     );
     // B3 oil-trigger tighten adds one more rule↔playbook keyword drift warning vs the prior baseline of 10.
-    expect(l7Warnings.length).toBe(11);
+    expect(l7Warnings.length).toBe(12);
     expect(result.warn_count).toBeGreaterThan(0);
   });
 });

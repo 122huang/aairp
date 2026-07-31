@@ -1,6 +1,6 @@
 # Health Supplement Review Playbook (Demo)
 
-pack_version: demo-playbook-1.7.1
+pack_version: demo-playbook-1.7.3
 playbook_id: demo-health-supplement-playbook
 ## urgency-cta
 
@@ -34,7 +34,7 @@ expected_severity: HIGH
 
 scope_countries: SG, MY, TH, AU, CN, JP, KR
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: before and after, before/after, transformation, 前后对比, 使用前, 使用后, 对比图, 效果对比
+trigger_keywords: before and after, before/after, transformation, 前后对比, 使用前后, 使用前与使用后, 对比图, 效果对比
 linked_rules: demo-apac-sa-before-after-imagery
 severity_hint: LOW
 decision: WARN
@@ -80,33 +80,33 @@ suggested_rewrite: Replace broad popularity counts with qualified, substantiated
 expected_severity: MEDIUM
 ## sa-health-implication
 
-scope_countries: SG, MY, TH
+scope_countries: SG, MY, TH, CN, AU, JP, KR
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: lower sugar, healthier, health benefits, healthy choices, natural goodness, natural enzymes, natural enzymes preserved, natural vitamins, daily nutrition, nutrition routine, improved indoor air quality, indoor air quality, 室内空气品质, cleaner indoor air, 营养成分, 天然营养, 天然营养成分, 保留果蔬, 减少营养流失, 冷萃设计, 少油烹饪, 少油, 更少油脂, 吃得更轻盈, 更轻盈, 更清爽, 吃得更清爽, 每天吃得更清爽, 饮食轻松, 轻松无负担, 无负担的美食体验, wholesome meals, goodness locked in, lighter cooking, lighter living, 除螨, 螨虫, 过敏源, 每天喝得更健康, 活力满满, 留住食材天然, cleaner eating, feel the difference, guilt-free, guilt free, wellness ritual, daily wellness, better you, step towards a better you, 补充营养, 蔬菜营养, 每日所需, 让孩子也爱上, 深呼吸, eaten well, breathe easy, whole benefits, think about what they eat, deserves better, 坐月子
+trigger_keywords: lower sugar, healthier, health benefits, healthy choices, natural goodness, natural enzymes, natural enzymes preserved, natural vitamins, daily nutrition, nutrition routine, improved indoor air quality, indoor air quality, 室内空气品质, cleaner indoor air, 营养成分, 天然营养, 天然营养成分, 保留果蔬, 减少营养流失, 冷萃设计, 少油烹饪, 少油, 更少油脂, 吃得更轻盈, 更轻盈, 更清爽, 吃得更清爽, 每天吃得更清爽, 饮食轻松, 轻松无负担, 无负担的美食体验, wholesome meals, goodness locked in, lighter cooking, lighter living, 除螨, 螨虫, 过敏源, 每天喝得更健康, 活力满满, 留住食材天然, cleaner eating, feel the difference, guilt-free, guilt free, wellness ritual, daily wellness, better you, step towards a better you, 补充营养, 蔬菜营养, 每日所需, 让孩子也爱上, 深呼吸, eaten well, breathe easy, whole benefits, think about what they eat, deserves better, 坐月子, 身体轻盈, 轻盈起来, 气色好多了, 气色红润, 精力更充沛, 精神状态, 精神好多了, 睡眠质量, 睡得更好, 不那么容易醒, 深度睡眠时间, 第二天不困, 吃得更健康, 喝得更健康, 吃得更踏实, 肠胃更舒服, 养胃, 暖胃
 severity_hint: MEDIUM
 decision: REVIEW
 guidance: Boundary: Health Implication refers to sensory/experiential wording; Medical Claim refers to disease and organ function. This pattern is a Health Implication — requires contextual qualification or softening, with supporting data where necessary; claims of reduced oil/nutrient retention require comparative or test data on file. Route to manual confirmation of whether external evidence/data is on file.
-guidance_en: Boundary: Health Implication refers to sensory/experiential wording; Medical Claim refers to disease and organ function. This pattern is a Health Implication — requires contextual qualification or softening, with supporting data where necessary; claims of reduced oil/nutrient retention require comparative or test data on file. Route to manual confirmation of whether external evidence/data is on file.
-guidance_zh: 分界：健康暗示（Health Implication）说的是感受与体验；医疗宣称说的是疾病与器官功能。本条为健康暗示 — 须语境限定或软化，必要时附数据；少油/营养保留类须持有对比或测试数据。命中后路由人工确认外部证据/数据是否到位。
+guidance_en: Boundary: Health Implication refers to sensory/experiential wording; Medical Claim refers to disease and organ function. This pattern is a Health Implication — requires contextual qualification or softening, with supporting data where necessary; claims of reduced oil/nutrient retention require comparative or test data on file. Route to manual confirmation of whether external evidence/data is on file. CN DR04: 「深度睡眠」with no wearable/lab metrics stays REVIEW; if bound to wearable screenshots, sleep reports, or lab metrics claiming measurable change, route as medical/clinical REJECT.
+guidance_zh: 分界：健康暗示说的是感受与体验；医疗/功效硬拦说的是疾病、器官、临床指标、减重结果、延寿等。本条为健康暗示 — CN 按认簇锚点命中后 REVIEW，须语境限定或软化，必要时附数据；不得与第九条绝对化或 medical blocker 混级。CN·DR04：无手环/睡眠报告/化验数据绑定时，「深度睡眠」「第二天不困」归 sleep-spirit REVIEW；若绑定检测截图并宣称时长/比例变化，改判 clinical REJECT（证据不可放行）。负例：深度睡眠模式、深度除螨、睡眠定时。命中后路由人工确认证据是否到位。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Detect diet-wellness or nutrient-retention implications without specific disease or organ-function claims.
-suggested_rewrite: 改为中性烹调/功能描述，或附上证据后再使用少油、更轻盈、保留营养类表述。
+suggested_rewrite: 改为中性烹调/功能描述，或附上证据后再使用少油、更轻盈、睡眠/精神感受类表述；勿改写成体检指标变好、瘦了一圈、延长寿命。
 expected_severity: MEDIUM
 ## sa-medical-claim
 
-scope_countries: SG, MY, TH
+scope_countries: SG, MY, TH, CN, AU, JP, KR
 scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
-trigger_keywords: 肠胃消化, 免疫力, 心血管疾病, 糖尿病, 控糖, 临床验证, 临床认证, 肺部健康, 排毒, 净体, 改善体内环境, clinically proven, doctor-recommended, doctor recommended, nutrient absorption, blood sugar, high cholesterol, allergy symptoms, 过敏症状, 儿科医生, 儿科医生推荐, pediatrician, pediatrician recommended, cardiologist, your cardiologist, cardiologist would, would probably approve, pharmaceutical-grade, pharmaceutical grade, medically endorsed, heart disease, detox, cleanses your liver, boosts immunity, easy to digest, sterilize, sterilise, low-sugar, low sugar, medical-grade, medical grade, fat-reducing, fat reducing, less fat
+trigger_keywords: 肠胃消化, 免疫力, 心血管疾病, 糖尿病, 控糖, 临床验证, 临床认证, 肺部健康, 排毒, 净体, 改善体内环境, clinically proven, doctor-recommended, doctor recommended, nutrient absorption, blood sugar, high cholesterol, allergy symptoms, 过敏症状, 儿科医生, 儿科医生推荐, pediatrician, pediatrician recommended, cardiologist, your cardiologist, cardiologist would, would probably approve, pharmaceutical-grade, pharmaceutical grade, medically endorsed, heart disease, detox, cleanses your liver, boosts immunity, easy to digest, sterilize, sterilise, low-sugar, low sugar, medical-grade, medical grade, fat-reducing, fat reducing, less fat, 体检指标, 瘦了一圈, 延长寿命, 延年益寿, 血脂指标, 腰围小了
 severity_hint: HIGH
 decision: WARN
 guidance: Medical Claim: refers to disease, organ function, clinical metrics, or medical endorsement; small appliances have no authority to make medical claims — supplying evidence cannot cure this overreach, the offending wording must be removed.
 guidance_en: Medical Claim: refers to disease, organ function, clinical metrics, or medical endorsement; small appliances have no authority to make medical claims — supplying evidence cannot cure this overreach, the offending wording must be removed.
-guidance_zh: 医疗宣称（Medical Claim）：指向疾病、器官功能、临床指标或医疗背书；小家电无权作医疗声明，补证据不能解决越权，须删除越线表述。
+guidance_zh: 医疗/越权功效宣称：指向疾病、器官功能、临床指标、减重/体围结果、血脂等化验结果、延寿或医疗背书；小家电无权作此类声明，补证据不能解决越权，须删除越线表述（CN 硬拦清单 v1+v1.1）。「少生病」单锚暂列 Open Risk 观察池，不写入感受簇。
 typical_decision: REJECT
 skill_module: Claim Review
 purpose: Block medical or disease-specific claims and clinical or professional endorsements on non-health product categories.
-suggested_rewrite: 删除疾病、器官功能、临床验证及医生/机构背书表述；不得暗示治疗、预防或改善特定疾病。
+suggested_rewrite: 删除疾病、器官功能、临床验证、减重结果、延寿及医生/机构背书表述；不得暗示治疗、预防或改善特定疾病。
 expected_severity: HIGH
 ## sa-comparative-claim
 

@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-07-31T06:17:19.778Z",
   "handbook_edition": "全球广告合规法务审核规则手册_v0.9（外部 OneDrive；Ch.5 宣称类型按 taxonomy 近似映射）",
-  "rules_pack_version": "demo-rule-1.8.16",
+  "rules_pack_version": "demo-rule-1.8.19",
   "product_ui_markets": [
     "SG",
     "MY",
@@ -648,7 +648,9 @@
       "rule_ids": [
         "demo-apac-sa-performance-claim",
         "demo-apac-sa-capacity-claim",
-        "demo-cn-performance-data-mismatch-risk"
+        "demo-cn-performance-data-mismatch-risk",
+        "demo-cn-unsourced-metrics",
+        "demo-cn-data-citation-unsourced"
       ],
       "playbook_ids": [],
       "open_risk_types": [],

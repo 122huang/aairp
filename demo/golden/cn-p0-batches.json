@@ -1,0 +1,146 @@
+{
+  "gold_id": "cn-p0-batches-v2",
+  "decision_ref": "CN-HARD-BLOCK-LIST-v1 + v1.1; CN-DECISION-DR04-DR09-DR11 Batch B",
+  "country_id": "CN",
+  "batches": {
+    "absolute": {
+      "expect_decision": "REJECT",
+      "expect_rule_any": ["demo-cn-absolute-terms-blocker"],
+      "cases": [
+        { "id": "A01", "category_id": "sa.air_fryer", "text": "全球领先的智能空气炸锅品牌。" },
+        { "id": "A02", "category_id": "sa.other", "text": "行业第一品质，千万家庭共同选择。" },
+        { "id": "A03", "category_id": "sa.blender_processor", "text": "全网最好用的破壁机，没有之一。" },
+        { "id": "A04", "category_id": "sa.other", "text": "顶级配置，全面超越同类产品。" },
+        { "id": "A05", "category_id": "sa.other", "text": "史上最强空气净化产品正式上市。" },
+        { "id": "A06", "category_id": "sa.other", "text": "厨房小家电领域领导品牌。" },
+        { "id": "A07", "category_id": "sa.other", "text": "全国销量第一，用户口碑第一。" },
+        { "id": "A08", "category_id": "sa.blender_processor", "text": "唯一能够满足全场景需求的料理机。" },
+        { "id": "A09", "category_id": "sa.other", "text": "同类产品中的终极解决方案。" },
+        { "id": "A10", "category_id": "sa.other", "text": "不容置疑的行业标杆产品。" },
+        { "id": "A11", "category_id": "sa.other", "text": "国家级品质认证，值得信赖。" },
+        { "id": "A12", "category_id": "sa.other", "text": "中国最佳厨房生活品牌。" },
+        { "id": "A13", "category_id": "sa.other", "text": "业内最先进加热技术。" },
+        { "id": "A14", "category_id": "sa.other", "text": "效果远超市场上所有竞品。" },
+        { "id": "A15", "category_id": "sa.other", "text": "登顶行业巅峰的旗舰新品。" },
+        { "id": "A16", "category_id": "sa.other", "text": "市场占有率稳居第一。" },
+        { "id": "A17", "category_id": "sa.other", "text": "性能表现无人能及。" },
+        { "id": "A18", "category_id": "sa.other", "text": "重新定义行业最高标准。" },
+        { "id": "A19", "category_id": "sa.other", "text": "用户满意度行业第一。" },
+        { "id": "A20", "category_id": "sa.other", "text": "真正意义上的全能王者。" },
+        { "id": "A21", "category_id": "sa.vacuum_floor", "text": "全网口碑王，买家都说闭眼入。" }
+      ]
+    },
+    "social_proof": {
+      "cases": [
+        { "id": "S01", "category_id": "sa.other", "text": "全球累计销量突破1000万台。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S02", "category_id": "sa.other", "text": "每分钟售出100台。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S03", "category_id": "sa.other", "text": "已服务超过5000万家庭用户。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S04", "category_id": "sa.other", "text": "用户好评率高达100%。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S05", "category_id": "sa.other", "text": "售后满意度连续十年保持100%。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S06", "category_id": "sa.other", "text": "98%的用户使用后都会再次购买。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S07", "category_id": "sa.other", "text": "全国已有3000万消费者选择我们。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S08", "category_id": "sa.other", "text": "连续365天稳居销量榜第一。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S09", "category_id": "sa.other", "text": "每10个家庭就有8个在使用本产品。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S10", "category_id": "sa.other", "text": "用户推荐率达到99.99%。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S11", "category_id": "sa.other", "text": "单日销售额突破亿元。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S12", "category_id": "sa.other", "text": "全平台复购率行业第一。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S13", "category_id": "sa.other", "text": "产品上市首月销量超百万台。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S14", "category_id": "sa.other", "text": "零投诉、零差评、零退货。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S15", "category_id": "sa.other", "text": "已获得超过1000万个五星好评。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S16", "category_id": "sa.other", "text": "全网销量遥遥领先其他品牌。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S17", "category_id": "sa.other", "text": "平均每秒成交3单。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S18", "category_id": "sa.other", "text": "用户满意率100%，退货率为0。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S19", "category_id": "sa.other", "text": "全国超过90%的消费者认可。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] },
+        { "id": "S20", "category_id": "sa.other", "text": "连续五年蝉联销量冠军。", "expect_decision": "REJECT", "expect_rule_any": ["demo-cn-absolute-terms-blocker"] },
+        { "id": "S21", "category_id": "sa.air_fryer", "text": "首发三天卖爆 8 万台。", "expect_decision": "WARN", "expect_rule_any": ["demo-cn-unsourced-metrics"] }
+      ]
+    },
+    "health": {
+      "cases": [
+        {
+          "id": "H01",
+          "category_id": "sa.blender_processor",
+          "text": "喝了一段时间，体检指标明显比以前好看了。",
+          "expect_decision": "REJECT",
+          "expect_rule_any": ["demo-apac-sa-health-claim-blocker"]
+        },
+        {
+          "id": "H02",
+          "category_id": "sa.air_fryer",
+          "text": "最近感觉身体轻盈了不少。",
+          "expect_decision": "REVIEW",
+          "expect_rule_any": ["demo-apac-sa-health-implication"]
+        },
+        {
+          "id": "H03",
+          "category_id": "sa.blender_processor",
+          "text": "很多人反馈坚持使用后瘦了一圈。",
+          "expect_decision": "REJECT",
+          "expect_rule_any": ["demo-apac-sa-health-claim-blocker"]
+        },
+        {
+          "id": "H04",
+          "category_id": "sa.other",
+          "text": "家里老人用了以后精神状态好多了。",
+          "expect_decision": "REVIEW",
+          "expect_rule_any": ["demo-apac-sa-health-implication"]
+        },
+        {
+          "id": "H05",
+          "category_id": "sa.other",
+          "text": "不少用户反馈睡眠质量明显提升。",
+          "expect_decision": "REVIEW",
+          "expect_rule_any": ["demo-apac-sa-health-implication"]
+        },
+        {
+          "id": "H06",
+          "category_id": "sa.other",
+          "text": "长期使用可延长寿命。",
+          "expect_decision": "REJECT",
+          "expect_rule_any": ["demo-apac-sa-health-claim-blocker"]
+        },
+        {
+          "id": "H07",
+          "category_id": "sa.blender_processor",
+          "text": "三个月血脂指标下来了。",
+          "expect_decision": "REJECT",
+          "expect_rule_any": ["demo-apac-sa-health-claim-blocker"]
+        },
+        {
+          "id": "H08",
+          "category_id": "sa.blender_processor",
+          "text": "用了两个月，腰围小了两寸。",
+          "expect_decision": "REJECT",
+          "expect_rule_any": ["demo-apac-sa-health-claim-blocker"]
+        },
+        {
+          "id": "H09",
+          "category_id": "sa.blender_processor",
+          "text": "提升免疫力，全家少生病。",
+          "expect_decision": "REJECT",
+          "expect_rule_any": ["demo-apac-sa-health-claim-blocker"]
+        }
+      ]
+    },
+    "negatives": {
+      "expect_no_rules": [
+        "demo-cn-absolute-terms-blocker",
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-health-implication",
+        "demo-cn-unsourced-metrics"
+      ],
+      "cases": [
+        { "id": "N01", "category_id": "sa.other", "text": "首次使用前请仔细阅读说明书。" },
+        { "id": "N02", "category_id": "sa.other", "text": "请第一时间联系官方售后热线。" },
+        { "id": "N03", "category_id": "sa.air_fryer", "text": "本机最高加热温度可达180℃。" },
+        { "id": "N04", "category_id": "sa.other", "text": "包装内含100%可回收纸质说明书。" },
+        { "id": "N05", "category_id": "sa.air_fryer", "text": "空气炸锅容量1.5L，适合1–2人使用。" },
+        { "id": "N06", "category_id": "sa.other", "text": "轻盈的机身设计，单手即可挪动。" },
+        { "id": "N07", "category_id": "sa.other", "text": "支持睡眠定时，到点自动断电。" },
+        { "id": "N08", "category_id": "sa.blender_processor", "text": "使用后请及时清洗刀头，避免残渣残留。" },
+        { "id": "N09", "category_id": "sa.other", "text": "坚持使用后，清洁保养更省心。" },
+        { "id": "N10", "category_id": "sa.other", "text": "买家都说闭眼入，赶紧下单。" }
+      ]
+    }
+  }
+}
