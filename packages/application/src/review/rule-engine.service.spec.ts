@@ -432,6 +432,46 @@ describe('RuleEngineService', () => {
     expect(result.hasBlocker).toBe(false);
   });
 
+  describe('SEA EN soft social-proof P0 (legal batch)', () => {
+    const seaCase = (text: string, countryId: 'SG' | 'MY' | 'TH' = 'SG') => ({
+      ...baseContext,
+      dimensions: { ...baseContext.dimensions, countryId, categoryId: 'sa.other' },
+      normalizedContent: { text, imageUrls: [] },
+    });
+
+    it.each([
+      'Many users report noticeable changes over time.',
+      'The results speak for themselves.',
+      'User feedback has exceeded expectations.',
+      'Customers often recommend it to family and friends.',
+      'Experience the benefits for yourself.',
+    ])('WARN-path hit on soft social-proof: %s', (text) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(seaCase(text));
+      expect(result.hasBlocker).toBe(false);
+      expect(result.findings.some((f) => f.refId === 'demo-apac-sa-social-proof-claim')).toBe(
+        true,
+      );
+      expect(
+        result.findings.find((f) => f.refId === 'demo-apac-sa-social-proof-claim')?.decision,
+      ).toBe('WARN');
+    });
+
+    it.each([
+      'Small habits can make a meaningful difference.',
+      "Once you experience it, you'll understand the difference.",
+      'Consistency makes all the difference.',
+      'Turn ordinary evenings into moments of comfort.',
+    ])('does not social-proof lifestyle copy: %s', (text) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate(seaCase(text));
+      expect(result.findings.some((f) => f.refId === 'demo-apac-sa-social-proof-claim')).toBe(
+        false,
+      );
+      expect(result.hasBlocker).toBe(false);
+    });
+  });
+
   describe('CN absolute-terms blocker recall (Art.9 lexicon expansion)', () => {
     const cnCase = (text: string, categoryId = 'sa.other') => ({
       ...baseContext,

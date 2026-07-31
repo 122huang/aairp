@@ -1,0 +1,32 @@
+{
+  "gold_id": "sea-en-soft-social-proof-v1",
+  "decision_ref": "legal soft social-proof P0; PM freeze — WARN/REVIEW not REJECT; APAC shared terms",
+  "markets": ["SG", "MY", "TH"],
+  "batches": {
+    "soft_social_proof": {
+      "expect_decision_any": ["WARN", "REVIEW"],
+      "expect_rule_any": ["demo-apac-sa-social-proof-claim"],
+      "expect_not_decision": ["REJECT", "PASS"],
+      "cases": [
+        { "id": "SP01", "category_id": "sa.other", "text": "Many users report noticeable changes over time." },
+        { "id": "SP02", "category_id": "sa.other", "text": "The results speak for themselves." },
+        { "id": "SP04", "category_id": "sa.other", "text": "More people are embracing this lifestyle every day." },
+        { "id": "SP06", "category_id": "sa.other", "text": "User feedback has exceeded expectations." },
+        { "id": "SP07", "category_id": "sa.other", "text": "The popularity says a lot." },
+        { "id": "SP08", "category_id": "sa.other", "text": "Customers often recommend it to family and friends." },
+        { "id": "SP10", "category_id": "sa.other", "text": "Experience the benefits for yourself." }
+      ]
+    },
+    "lifestyle_pass": {
+      "expect_decision": "PASS",
+      "expect_no_rules": ["demo-apac-sa-social-proof-claim"],
+      "cases": [
+        { "id": "LP03", "category_id": "sa.other", "text": "Small habits can make a meaningful difference." },
+        { "id": "LP05", "category_id": "sa.other", "text": "Once you experience it, you'll understand the difference." },
+        { "id": "LP09", "category_id": "sa.other", "text": "Consistency makes all the difference." },
+        { "id": "LP11", "category_id": "sa.other", "text": "Turn ordinary evenings into moments of comfort." },
+        { "id": "LP12", "category_id": "sa.air_fryer", "text": "Healthy cooking made simple." }
+      ]
+    }
+  }
+}

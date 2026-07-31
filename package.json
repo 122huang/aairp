@@ -15,6 +15,7 @@
     "eval:golden": "pnpm --filter @aairp/application eval:golden",
     "eval:cn-p0-golden": "node scripts/run-cn-p0-golden.mjs",
     "eval:cn-p1-golden": "node scripts/run-cn-p1-golden.mjs",
+    "eval:sea-en-soft-social-proof": "node scripts/run-sea-en-soft-social-proof-golden.mjs",
     "eval:dataset": "pnpm --filter @aairp/application eval:dataset",
     "knowledge:build-benchmark-v2": "node scripts/build-benchmark-v2.mjs",
     "knowledge:validate-linkage": "pnpm --filter @aairp/application knowledge:validate-linkage",
