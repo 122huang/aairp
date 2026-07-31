@@ -1,0 +1,56 @@
+{
+  "gold_id": "apac-legal-p0-v1",
+  "markets": ["SG", "MY", "TH", "AU", "JP", "KR"],
+  "batches": {
+    "p0_1_cure_reject": {
+      "expect_decision": "REJECT",
+      "expect_rule_any": [
+        "demo-sg-health-forbidden-claim",
+        "demo-apac-health-forbidden-claim"
+      ],
+      "cases": [
+        {
+          "id": "D01",
+          "category_id": "health.supplement",
+          "text": "Clinically proven to cure diabetes in 7 days. Buy now!"
+        }
+      ]
+    },
+    "p0_2_disclosure_warn": {
+      "expect_decision": "WARN",
+      "expect_rule_any": ["demo-apac-brand-ad-disclosure"],
+      "cases": [
+        {
+          "id": "D03",
+          "category_id": "health.supplement",
+          "text": "Daily vitamins for general wellness. Supports your active lifestyle."
+        }
+      ]
+    },
+    "negatives": {
+      "expect_decision": "PASS",
+      "expect_no_rules": [
+        "demo-apac-health-forbidden-claim",
+        "demo-apac-brand-ad-disclosure",
+        "demo-sg-health-forbidden-claim"
+      ],
+      "cases": [
+        {
+          "id": "D02",
+          "category_id": "food",
+          "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad"
+        },
+        {
+          "id": "D05",
+          "category_id": "health.supplement",
+          "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad"
+        },
+        {
+          "id": "FP-secure",
+          "category_id": "health.supplement",
+          "text": "Secure checkout for wellness supplements. #ad"
+        }
+      ]
+    }
+  }
+}

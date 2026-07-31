@@ -1,0 +1,1182 @@
+{
+  "SG": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-sg-health-forbidden-claim:FAIL",
+          "demo-sg-health-superlative:WARN",
+          "demo-apac-brand-ad-disclosure:WARN",
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "清单主市场"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "清单主市场"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "清单主市场"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [
+          "demo-sg-health-superlative:WARN"
+        ],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "清单主市场"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "清单主市场"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "跨市场对照（CN 文案）"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "WARN",
+        "match": false,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "跨市场对照（CN 文案）"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  },
+  "MY": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-apac-health-forbidden-claim:FAIL",
+          "demo-apac-brand-ad-disclosure:WARN",
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "跨市场对照（CN 文案）"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "WARN",
+        "match": false,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "跨市场对照（CN 文案）"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  },
+  "TH": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-apac-health-forbidden-claim:FAIL",
+          "demo-apac-brand-ad-disclosure:WARN",
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "跨市场对照（CN 文案）"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "WARN",
+        "match": false,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "跨市场对照（CN 文案）"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  },
+  "AU": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-apac-health-forbidden-claim:FAIL",
+          "demo-apac-brand-ad-disclosure:WARN",
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "跨市场对照（CN 文案）"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "WARN",
+        "match": false,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "跨市场对照（CN 文案）"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  },
+  "CN": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "CN 粘贴冒烟"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-cn-absolute-terms-blocker:FAIL"
+        ],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "CN 粘贴冒烟"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "CN 粘贴冒烟"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "CN 粘贴冒烟"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  },
+  "JP": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-apac-health-forbidden-claim:FAIL",
+          "demo-apac-brand-ad-disclosure:WARN",
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "跨市场对照（CN 文案）"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "WARN",
+        "match": false,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "跨市场对照（CN 文案）"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  },
+  "KR": {
+    "demos": [
+      {
+        "id": "demo-01-reject-cure",
+        "title": "禁止「治愈」表述 → REJECT",
+        "expect": "REJECT",
+        "got": "REJECT",
+        "match": true,
+        "rules": [
+          "demo-apac-health-forbidden-claim:FAIL",
+          "demo-apac-brand-ad-disclosure:WARN",
+          "demo-apac-sa-urgency-scarcity-claim:WARN"
+        ],
+        "playbook": [
+          "urgency-cta:WARN",
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven to cure diabetes in 7 days. Buy now!",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-02-pass-food",
+        "title": "合规食品广告 + #ad → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Organic snacks for everyday enjoyment. No artificial colours. #ad",
+        "category_id": "food",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-03-warn-disclosure",
+        "title": "缺少 #ad 披露 → WARN",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Supports your active lifestyle.",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-04-warn-superlative",
+        "title": "最高级/绝对化表述 → WARN",
+        "expect": "WARN",
+        "got": "REVIEW",
+        "match": false,
+        "rules": [],
+        "playbook": [
+          "unsubstantiated-testimonial:REVIEW"
+        ],
+        "text": "Clinically proven daily vitamins. Guaranteed results. Shop now. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      },
+      {
+        "id": "demo-05-pass-wellness",
+        "title": "合规保健品文案 → PASS",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad",
+        "category_id": "health.supplement",
+        "note": "跨市场复跑 SG 演示资产"
+      }
+    ],
+    "cn": [
+      {
+        "id": "C1",
+        "expect": "REVIEW",
+        "got": "REVIEW",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-health-implication:REVIEW"
+        ],
+        "playbook": [
+          "sa-health-implication:REVIEW"
+        ],
+        "text": "深度睡眠时间更长了，第二天不困。",
+        "note": "跨市场对照（CN 文案）"
+      },
+      {
+        "id": "C2",
+        "expect": "REJECT",
+        "got": "PASS",
+        "match": false,
+        "rules": [],
+        "playbook": [],
+        "text": "全网口碑王，买家都说闭眼入。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C3",
+        "expect": "REJECT",
+        "got": "WARN",
+        "match": false,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "提升免疫力，全家少生病。",
+        "note": "跨市场对照（CN 本地化规则预期可不命中）"
+      },
+      {
+        "id": "C4",
+        "expect": "PASS",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-brand-ad-disclosure:WARN"
+        ],
+        "playbook": [],
+        "text": "全家少生病。",
+        "note": "跨市场对照（CN 文案）"
+      }
+    ],
+    "soft": [
+      {
+        "id": "SP01",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "Users report noticeable changes within weeks. Results speak for themselves."
+      },
+      {
+        "id": "SP02",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "The popularity says it all — more people are embracing this daily."
+      },
+      {
+        "id": "LP03",
+        "expect": "PASS",
+        "got": "PASS",
+        "match": true,
+        "rules": [],
+        "playbook": [],
+        "text": "Designed for busy mornings. Easy to clean after everyday use."
+      },
+      {
+        "id": "SP10",
+        "expect": "WARN",
+        "got": "WARN",
+        "match": true,
+        "rules": [
+          "demo-apac-sa-social-proof-claim:WARN"
+        ],
+        "playbook": [],
+        "text": "I recommend it to family and friends. Experience the benefits yourself."
+      }
+    ]
+  }
+}

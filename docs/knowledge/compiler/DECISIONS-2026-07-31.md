@@ -17,3 +17,14 @@
 **Citation pass 1（同日）**：按复核口径推进——去掉 A 批 Demo、硬化 B 批 article/领域错配；**不**强制七国 `rule_id` 拆分。处置说明见 `citation-signoff-disposition.md`；pack → `demo-rule-1.8.14`。Disclaimer 仍保留至法务签核。
 
 **发布 checklist 分层（同日）**：`demo-cn-internet-ad-identifiable-tag` 从 WARN 降为 INFO（pack → `demo-rule-1.8.15`），与「审核心创意、不管发布环节」及 sponsored-disclosure 一致——可识别性「广告」标识属发布清单，不抬最终决策。同口径续改 `demo-kr-kol-disclosure-format` → INFO + `influencer_or_activation`（pack → `demo-rule-1.8.16`）；AU 订阅/warranty、AI 图免责等仍保持 WARN（绑文案/素材内容）。
+
+### 附录 · 法务总监七市场复审（同日晚）
+
+| # | 决策 | 结论 |
+|---|------|------|
+| A1 | CN C1–C4 规则层是否进入下一阶段？ | **Yes** — 粘贴冒烟 / 规则+Playbook；不开 LLM；v1.1 §5 人审签字仍暂缓；不扩硬拦 |
+| A2 | APAC `health.supplement` cure 硬拦缺口（P0-1）？ | **必须修** — 新增 `demo-apac-health-forbidden-claim`（MY/TH/AU/JP/KR；**不含 CN**）→ pack `demo-rule-1.8.21` |
+| A3 | 品牌缺 `#ad` 漏检（P0-2）？ | **必须修** — 新增 `demo-apac-brand-ad-disclosure` WARN（品牌/缺 ad_type；网红 INFO 保留；**不含 CN**）。**例外覆盖**「文案审核不核验披露标签」口径，仅限付费品牌 health/food/cosmetic |
+| A4 | SG/MY/AU/JP/KR / TH 放行？ | P0 复测前 **否**（TH 仅附条件演示）；见 `docs/legal-pilot/LEGAL-DIRECTOR-GATE-2026-07-31.md` |
+
+复测：`pnpm eval:apac-legal-p0-golden`。

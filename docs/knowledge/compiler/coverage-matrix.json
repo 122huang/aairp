@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-07-31T06:17:19.778Z",
   "handbook_edition": "全球广告合规法务审核规则手册_v0.9（外部 OneDrive；Ch.5 宣称类型按 taxonomy 近似映射）",
-  "rules_pack_version": "demo-rule-1.8.20",
+  "rules_pack_version": "demo-rule-1.8.21",
   "product_ui_markets": [
     "SG",
     "MY",
@@ -49,6 +49,7 @@
       "market_tier": "product_ui",
       "status": "HARD",
       "rule_ids": [
+        "demo-apac-health-forbidden-claim",
         "demo-apac-sa-health-claim-blocker",
         "demo-apac-sa-food-safety-blocker"
       ],
@@ -69,6 +70,7 @@
       "market_tier": "product_ui",
       "status": "HARD",
       "rule_ids": [
+        "demo-apac-health-forbidden-claim",
         "demo-apac-sa-health-claim-blocker",
         "demo-apac-sa-food-safety-blocker"
       ],
@@ -89,6 +91,7 @@
       "market_tier": "product_ui",
       "status": "HARD",
       "rule_ids": [
+        "demo-apac-health-forbidden-claim",
         "demo-apac-sa-health-claim-blocker",
         "demo-apac-sa-food-safety-blocker"
       ],
@@ -123,6 +126,7 @@
       "market_tier": "product_ui",
       "status": "HARD",
       "rule_ids": [
+        "demo-apac-health-forbidden-claim",
         "demo-apac-sa-health-claim-blocker",
         "demo-apac-sa-food-safety-blocker",
         "demo-jp-yakukiho-efficacy-overclaim"
@@ -141,6 +145,7 @@
       "market_tier": "product_ui",
       "status": "HARD",
       "rule_ids": [
+        "demo-apac-health-forbidden-claim",
         "demo-apac-sa-health-claim-blocker",
         "demo-apac-sa-food-safety-blocker"
       ],
@@ -1614,7 +1619,8 @@
       "market_tier": "product_ui",
       "status": "RULE",
       "rule_ids": [
-        "demo-sg-sponsored-disclosure"
+        "demo-sg-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure"
       ],
       "playbook_ids": [],
       "open_risk_types": [
@@ -1630,7 +1636,8 @@
       "market_tier": "product_ui",
       "status": "RULE",
       "rule_ids": [
-        "demo-my-sponsored-disclosure"
+        "demo-my-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure"
       ],
       "playbook_ids": [],
       "open_risk_types": [
@@ -1646,7 +1653,8 @@
       "market_tier": "product_ui",
       "status": "RULE",
       "rule_ids": [
-        "demo-th-sponsored-disclosure"
+        "demo-th-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure"
       ],
       "playbook_ids": [],
       "open_risk_types": [
@@ -1662,7 +1670,8 @@
       "market_tier": "product_ui",
       "status": "RULE",
       "rule_ids": [
-        "demo-au-sponsored-disclosure"
+        "demo-au-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure"
       ],
       "playbook_ids": [],
       "open_risk_types": [
@@ -1694,7 +1703,8 @@
       "market_tier": "product_ui",
       "status": "RULE",
       "rule_ids": [
-        "demo-jp-sponsored-disclosure"
+        "demo-jp-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure"
       ],
       "playbook_ids": [],
       "open_risk_types": [
@@ -1710,7 +1720,8 @@
       "market_tier": "product_ui",
       "status": "RULE",
       "rule_ids": [
-        "demo-kr-sponsored-disclosure"
+        "demo-kr-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure"
       ],
       "playbook_ids": [],
       "open_risk_types": [

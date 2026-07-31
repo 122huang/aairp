@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.20",
+  "pack_version": "demo-rule-1.8.21",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -27,6 +27,38 @@
       },
       "summary_en": "Prohibited absolute health cure claims are not allowed",
       "summary_zh": "禁止使用绝对化的\"治愈/根治\"类健康宣称",
+      "remediation_type": "REWRITE_ONLY"
+    },
+    {
+      "rule_id": "demo-apac-health-forbidden-claim",
+      "rule_version_id": "demo-apac-health-forbidden-claim-v1",
+      "severity": "BLOCKER",
+      "decision": "FAIL",
+      "summary": "Prohibited absolute health cure claims are not allowed on supplements",
+      "forbidden_terms": [
+        "100% cure",
+        "100% effective",
+        "cure",
+        "miracle"
+      ],
+      "scopes": {
+        "countries": [
+          "MY",
+          "TH",
+          "AU",
+          "JP",
+          "KR"
+        ],
+        "categories": [
+          "health.supplement"
+        ]
+      },
+      "citation": {
+        "law_name": "MY: NPRA / medicinal products advertising; TH: Thai FDA supplement claims; AU: TGA complementary medicines; JP: 薬機法/景表法; KR: Fair Labeling / MFDS",
+        "article": "Prohibited cure/miracle/absolute efficacy claims on health supplements — regulation:my-npra-supplement-health, th-fda-supplement-claims, au-tga-complementary-medicines, jp-caa-health-foods (CN excluded — use CN hard-block pack)"
+      },
+      "summary_en": "Prohibited absolute health cure claims are not allowed on supplements",
+      "summary_zh": "保健品广告禁止使用绝对化的\"治愈/根治\"类宣称（CN 走本地硬拦包，本规则不含 CN）",
       "remediation_type": "REWRITE_ONLY"
     },
     {
@@ -110,6 +142,51 @@
       },
       "summary_en": "This content is marked as influencer/partnership — confirm advertising disclosure labels (#ad / sponsored) are added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
       "summary_zh": "该内容标注为网红/合作，发布前需确认已添加广告披露标签。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
+    },
+    {
+      "rule_id": "demo-apac-brand-ad-disclosure",
+      "rule_version_id": "demo-apac-brand-ad-disclosure-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Paid brand ad copy should include a clear advertising disclosure (#ad / sponsored / 广告)",
+      "required_any_terms": [
+        "#ad",
+        "sponsored",
+        "advertisement",
+        "paid partnership",
+        "广告",
+        "広告",
+        "#광고"
+      ],
+      "required_any_mode": "always",
+      "when": {
+        "ad_type_in": [
+          "BRAND_PRODUCT"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "SG",
+          "MY",
+          "TH",
+          "AU",
+          "JP",
+          "KR"
+        ],
+        "categories": [
+          "health.supplement",
+          "food",
+          "cosmetic"
+        ]
+      },
+      "citation": {
+        "law_name": "SG: SCAP 2.4; MY: MCMC/ASA; TH: OCPB ad identification; AU: AANA; JP: ステマ規制; KR: KFTC",
+        "article": "Identifiable advertising disclosure on paid brand content (influencer INFO reminders remain separate) — Legal Director P0-2 2026-07-31"
+      },
+      "summary_en": "Paid brand ad copy should include a clear advertising disclosure (#ad / sponsored)",
+      "summary_zh": "品牌付费广告文案应包含清晰的广告披露标识（#ad / sponsored / 广告）；网红场景仍走各国 INFO 提醒规则",
       "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {

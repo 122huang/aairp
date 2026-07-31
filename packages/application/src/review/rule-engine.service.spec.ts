@@ -661,6 +661,76 @@ describe('RuleEngineService', () => {
     ).toBe(false);
   });
 
+  it('rejects cure claims on MY via demo-apac-health-forbidden-claim', () => {
+    const service = new RuleEngineService();
+
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'health.supplement',
+      },
+      normalizedContent: {
+        text: 'Clinically proven to cure diabetes in 7 days. Buy now!',
+        imageUrls: [],
+      },
+    });
+
+    expect(result.hasBlocker).toBe(true);
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-apac-health-forbidden-claim'),
+    ).toBe(true);
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-sg-health-forbidden-claim'),
+    ).toBe(false);
+  });
+
+  it('warns on brand health copy missing #ad via demo-apac-brand-ad-disclosure', () => {
+    const service = new RuleEngineService();
+
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'SG',
+        categoryId: 'health.supplement',
+      },
+      normalizedContent: {
+        text: 'Daily vitamins for general wellness. Supports your active lifestyle.',
+        imageUrls: [],
+      },
+    });
+
+    expect(
+      result.findings.some(
+        (finding) =>
+          finding.refId === 'demo-apac-brand-ad-disclosure' && finding.decision === 'WARN',
+      ),
+    ).toBe(true);
+  });
+
+  it('does not fire brand disclosure WARN when #ad is present', () => {
+    const service = new RuleEngineService();
+
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'MY',
+        categoryId: 'health.supplement',
+      },
+      normalizedContent: {
+        text: 'Daily vitamins for general wellness. Not intended to diagnose or treat disease. #ad',
+        imageUrls: [],
+      },
+    });
+
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-apac-brand-ad-disclosure'),
+    ).toBe(false);
+  });
+
   it('returns no findings for clean compliant ad copy', () => {
     const service = new RuleEngineService();
 
@@ -693,7 +763,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(83);
+    expect(asset.rules).toHaveLength(85);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {
