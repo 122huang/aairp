@@ -10,10 +10,9 @@ describe('loadDemoRulePackSync', () => {
     expect(pack.rules.length).toBeGreaterThanOrEqual(18);
 
     const healthBlocker = pack.rules.find((r) => r.rule_id === 'demo-apac-sa-health-claim-blocker');
-    // Citation was upgraded from the "APAC Advertising Standards (Demo)" placeholder to real
-    // multi-market law references (see demo/rules.demo.json article note).
-    expect(healthBlocker?.citation?.lawName).toContain('Consumer Protection');
-    expect(healthBlocker?.citation?.lawName).not.toContain('APAC Advertising Standards (Demo)');
+    // Citation pass 1: multi-market health-claim hygiene (not Demo placeholder).
+    expect(healthBlocker?.citation?.lawName).toMatch(/CPFTA|SCAP|广告法/);
+    expect(healthBlocker?.citation?.lawName).not.toMatch(/\(Demo\)/);
     expect(healthBlocker?.forbidden_terms).toContain('easy to digest');
   });
 });

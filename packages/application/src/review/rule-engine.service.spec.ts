@@ -15,6 +15,9 @@ const demoRulesAssetPath = join(
 const INCIDENTAL_APPLIANCE_COMPLIANCE = new Set([
   'demo-sg-cpsr-registration-prerequisite',
   'demo-my-eeca-coe-prerequisite',
+  // Publish-checklist INFO (does not elevate final decision)
+  'demo-cn-internet-ad-identifiable-tag',
+  'demo-kr-kol-disclosure-format',
 ]);
 
 function contentFindings(result: { findings: Array<{ refId: string }> }) {
@@ -404,6 +407,66 @@ describe('RuleEngineService', () => {
     expect(
       result.findings.some((finding) => finding.refId === 'demo-sg-sponsored-disclosure'),
     ).toBe(false);
+  });
+
+  it('fires CN internet-ad-identifiable as INFO publish checklist (not WARN on missing 广告)', () => {
+    const service = new RuleEngineService();
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'CN',
+        categoryId: 'sa.other',
+      },
+      normalizedContent: {
+        text: '一台机器解决常见厨房难题',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'BRAND_PRODUCT' },
+    });
+    const finding = result.findings.find((f) => f.refId === 'demo-cn-internet-ad-identifiable-tag');
+    expect(finding).toBeDefined();
+    expect(finding?.decision).toBe('INFO');
+    expect(finding?.severity).toBe('MEDIUM');
+    expect(finding?.remediationType).toBe('NOT_APPLICABLE_DISCLOSURE');
+    expect(result.hasBlocker).toBe(false);
+  });
+
+  it('fires KR kol-disclosure-format as INFO for INFLUENCER_UGC, not for brand-owned copy', () => {
+    const service = new RuleEngineService();
+
+    const influencer = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'KR',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Air fryer tips for everyday cooking.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'INFLUENCER_UGC' },
+    });
+    const infoFinding = influencer.findings.find((f) => f.refId === 'demo-kr-kol-disclosure-format');
+    expect(infoFinding).toBeDefined();
+    expect(infoFinding?.decision).toBe('INFO');
+    expect(infoFinding?.remediationType).toBe('NOT_APPLICABLE_DISCLOSURE');
+
+    const brand = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'KR',
+        categoryId: 'sa.air_fryer',
+      },
+      normalizedContent: {
+        text: 'Air fryer tips for everyday cooking.',
+        imageUrls: [],
+      },
+      advertisementContext: { adType: 'BRAND_PRODUCT' },
+    });
+    expect(brand.findings.some((f) => f.refId === 'demo-kr-kol-disclosure-format')).toBe(false);
   });
 
   it('localizes rule summary to Chinese for Chinese-primary ad copy', () => {
