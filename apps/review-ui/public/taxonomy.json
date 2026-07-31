@@ -5,7 +5,11 @@
   "countries": [
     { "id": "SG", "label": "新加坡" },
     { "id": "MY", "label": "马来西亚" },
-    { "id": "TH", "label": "泰国" }
+    { "id": "TH", "label": "泰国" },
+    { "id": "AU", "label": "澳大利亚" },
+    { "id": "CN", "label": "中国大陆" },
+    { "id": "JP", "label": "日本" },
+    { "id": "KR", "label": "韩国" }
   ],
   "categories": [
     { "id": "sa.vacuum_floor", "label": "吸尘器 / 洗地" },

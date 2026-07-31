@@ -32,13 +32,16 @@ suggested_rewrite: Replace absolute efficacy wording with qualified statements s
 expected_severity: HIGH
 ## before-after-imagery
 
-trigger_keywords: before and after, transformation, 前后对比
+scope_countries: SG, MY, TH, AU, CN, JP, KR
+scope_categories: sa.vacuum_floor, sa.steam_mop, sa.air_fryer, sa.blender_processor, sa.rice_cooker, sa.soy_milk, sa.coffee_espresso, sa.kettle_cooker, sa.other, electronics
+trigger_keywords: before and after, before/after, transformation, 前后对比, 使用前, 使用后, 对比图, 效果对比
+linked_rules: demo-apac-sa-before-after-imagery
 severity_hint: LOW
-decision: CONDITIONAL
+decision: WARN
 guidance: Before/after or transformation claim detected. Require disclaimers and avoid implying guaranteed outcomes.
 guidance_en: Before/after or transformation claim detected. Require disclaimers and avoid implying guaranteed outcomes.
 guidance_zh: 检测到前后对比或效果转变类宣称。须加免责声明，避免暗示效果必然达成。
-typical_decision: CONDITIONAL_PASS
+typical_decision: WARN
 skill_module: Content Quality Review
 purpose: Detect before/after or transformation imagery requiring disclaimers.
 suggested_rewrite: Add disclaimers and avoid implying guaranteed outcomes.

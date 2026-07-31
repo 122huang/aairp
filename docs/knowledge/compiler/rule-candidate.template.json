@@ -1,0 +1,20 @@
+{
+  "_comment": "Rule Candidate — status CANDIDATE must NEVER be loaded by runtime RuleEngine. Human merge into demo/rules.demo.json (or future PUBLISHED pack) is required.",
+  "status": "CANDIDATE",
+  "candidate_id": "candidate-example-yyyy-mm-dd",
+  "hook_id": "hook-…",
+  "proposed_rule": {
+    "rule_id": "demo-…",
+    "rule_version_id": "demo-…-v1",
+    "severity": "BLOCKER|HIGH|MEDIUM|LOW",
+    "decision": "FAIL|REVIEW|WARN|INFO",
+    "summary": "",
+    "trigger_terms": [],
+    "scopes": { "countries": [], "categories": [] },
+    "citation": { "law_name": "", "article": "" }
+  },
+  "handbook_ref": "",
+  "acceptance_tests": [],
+  "reviewer": "",
+  "reviewed_at": null
+}

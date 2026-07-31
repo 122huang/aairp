@@ -1,0 +1,2602 @@
+{
+  "generated_at": "2026-07-31T02:35:41.647Z",
+  "handbook_edition": "全球广告合规法务审核规则手册_v0.9（外部 OneDrive；Ch.5 宣称类型按 taxonomy 近似映射）",
+  "rules_pack_version": "demo-rule-1.8.13",
+  "product_ui_markets": [
+    "SG",
+    "MY",
+    "TH",
+    "AU",
+    "CN",
+    "JP",
+    "KR"
+  ],
+  "deferred_markets": [
+    "ID",
+    "IN"
+  ],
+  "unreviewed_markets": [
+    "VN",
+    "PH"
+  ],
+  "rows": [
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-sg-health-forbidden-claim",
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker"
+      ],
+      "playbook_ids": [
+        "sa-health-implication",
+        "sa-medical-claim"
+      ],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker"
+      ],
+      "playbook_ids": [
+        "sa-health-implication",
+        "sa-medical-claim"
+      ],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker"
+      ],
+      "playbook_ids": [
+        "sa-health-implication",
+        "sa-medical-claim"
+      ],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker",
+        "demo-jp-yakukiho-efficacy-overclaim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-food-safety-blocker"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-in-efficacy-return-absolute-claim-blocker"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "medical-health-claim",
+      "handbook_ref": "Ch.5 / market卡·健康/医疗宣称",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "medical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [
+        "sa-health-implication"
+      ],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [
+        "sa-health-implication"
+      ],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [
+        "sa-health-implication"
+      ],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-health-implication"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "health-implication",
+      "handbook_ref": "Ch.5 / 健康隐含",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "health-implication"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "playbook_ids": [
+        "sa-absolute-performance"
+      ],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "playbook_ids": [
+        "sa-absolute-performance"
+      ],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "playbook_ids": [
+        "sa-absolute-performance"
+      ],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft",
+        "demo-cn-absolute-terms-blocker"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-absolute-claim",
+        "demo-apac-sa-absolute-claim-soft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-in-efficacy-return-absolute-claim-blocker"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "absolute-superlative",
+      "handbook_ref": "Ch.5 / 绝对化用语",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "absolute-claim-blocker"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim"
+      ],
+      "playbook_ids": [
+        "sa-absolute-performance",
+        "sa-performance-claim",
+        "sa-capacity-claim"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim"
+      ],
+      "playbook_ids": [
+        "sa-absolute-performance",
+        "sa-performance-claim",
+        "sa-capacity-claim"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim"
+      ],
+      "playbook_ids": [
+        "sa-absolute-performance",
+        "sa-performance-claim",
+        "sa-capacity-claim"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim",
+        "demo-cn-performance-data-mismatch-risk"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-performance-claim",
+        "demo-apac-sa-capacity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "performance-capacity",
+      "handbook_ref": "Ch.5 / 性能与容量",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "playbook_ids": [
+        "sa-comparative-claim",
+        "sa-comparative-superiority"
+      ],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "playbook_ids": [
+        "sa-comparative-claim",
+        "sa-comparative-superiority"
+      ],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "playbook_ids": [
+        "sa-comparative-claim",
+        "sa-comparative-superiority"
+      ],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-comparative-claim",
+        "demo-kr-comparative-denigration"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [
+        "id-epi-comparative-honesty"
+      ],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "comparative-claim",
+      "handbook_ref": "Ch.5 / 比较宣称",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "comparative-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-sg-cpsr-registration-prerequisite",
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable"
+      ],
+      "playbook_ids": [
+        "sa-certification-evidence",
+        "sg-asas-substantiation-guidance"
+      ],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-my-eeca-coe-prerequisite",
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable"
+      ],
+      "playbook_ids": [
+        "sa-certification-evidence"
+      ],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable",
+        "demo-th-tisi-mandatory-voluntary-check"
+      ],
+      "playbook_ids": [
+        "sa-certification-evidence"
+      ],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable",
+        "demo-au-rcm-gems-certification-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-certification-evidence",
+        "demo-apac-sa-evidence-unreadable",
+        "demo-kr-kc-certification-labeling"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-id-halal-certification-unverified"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "certification-evidence",
+      "handbook_ref": "Ch.5 / 认证与证据",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "certification-evidence"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "playbook_ids": [
+        "sa-false-authority-endorsement"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "playbook_ids": [
+        "sa-false-authority-endorsement"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "playbook_ids": [
+        "sa-false-authority-endorsement"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement",
+        "demo-cn-false-official-endorsement"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-false-authority-endorsement"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "false-authority",
+      "handbook_ref": "Ch.5 / 虚假权威/官方背书",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim"
+      ],
+      "playbook_ids": [
+        "sa-sustainability-claim"
+      ],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim"
+      ],
+      "playbook_ids": [
+        "sa-sustainability-claim"
+      ],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim"
+      ],
+      "playbook_ids": [
+        "sa-sustainability-claim"
+      ],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim",
+        "demo-au-greenwashing-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim",
+        "demo-cn-environmental-recycling-review"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-sustainability-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sustainability-environment",
+      "handbook_ref": "Ch.5 / 环保/可持续",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "environmental-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "scarcity-urgency",
+      "handbook_ref": "Ch.5 / 稀缺紧迫",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-urgency-scarcity-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "scarcity-urgency-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-sg-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-my-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-th-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-au-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-cn-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-jp-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-kr-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-id-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sponsored-disclosure",
+      "handbook_ref": "Ch.5 / 赞助披露",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-ph-sponsored-disclosure"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sponsored-disclosure"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization",
+        "demo-apac-sa-localization-cjk"
+      ],
+      "playbook_ids": [
+        "sa-localization"
+      ],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization",
+        "demo-apac-sa-localization-cjk"
+      ],
+      "playbook_ids": [
+        "sa-localization"
+      ],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization",
+        "demo-apac-sa-localization-cjk"
+      ],
+      "playbook_ids": [
+        "sa-localization"
+      ],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization",
+        "demo-apac-sa-localization-cjk",
+        "demo-apac-sa-localization-draft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization-draft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization-draft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-localization-draft"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "localisation",
+      "handbook_ref": "Ch.5 / 本地化",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "localisation-error"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-before-after-imagery"
+      ],
+      "playbook_ids": [
+        "before-after-imagery"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "Playbook/Rule 均未覆盖 before-after-imagery"
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "Playbook/Rule 均未覆盖 before-after-imagery"
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "Playbook/Rule 均未覆盖 before-after-imagery"
+    },
+    {
+      "claim_family": "before-after-imagery",
+      "handbook_ref": "Ch.5 / 前后对比图",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "Playbook/Rule 均未覆盖 before-after-imagery"
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [
+        "sa-analogy-claim"
+      ],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [
+        "sa-analogy-claim"
+      ],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [
+        "sa-analogy-claim"
+      ],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-apac-sa-analogy-claim"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "analogy-claim",
+      "handbook_ref": "Ch.5 / 类比宣称",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "analogical-claim"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation"
+      ],
+      "playbook_ids": [
+        "sa-pricing-misrepresentation"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation"
+      ],
+      "playbook_ids": [
+        "sa-pricing-misrepresentation"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation"
+      ],
+      "playbook_ids": [
+        "sa-pricing-misrepresentation"
+      ],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "HARD",
+      "rule_ids": [
+        "demo-apac-sa-pricing-misrepresentation",
+        "demo-kr-fake-discount-pricing"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "pricing-misrepresentation",
+      "handbook_ref": "Ch.5 / 价格误导",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "GAP",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [],
+      "gap_note": "手册侧有宣称类型，但该市场无 rule/playbook 命中（Open Risk 也可能全局有分类）"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "SG",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "MY",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "TH",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "AU",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "CN",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "RULE",
+      "rule_ids": [
+        "demo-cn-sensitive-content-manual-review"
+      ],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": ""
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "JP",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "KR",
+      "legal_reviewed": true,
+      "market_tier": "product_ui",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "ID",
+      "legal_reviewed": true,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "IN",
+      "legal_reviewed": false,
+      "market_tier": "deferred",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "VN",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    },
+    {
+      "claim_family": "sensitive-content",
+      "handbook_ref": "Ch.5 / 敏感内容（CN等）",
+      "market": "PH",
+      "legal_reviewed": false,
+      "market_tier": "unreviewed_demo",
+      "status": "SOFT_ONLY",
+      "rule_ids": [],
+      "playbook_ids": [],
+      "open_risk_types": [
+        "sensitive-content-flag"
+      ],
+      "gap_note": "仅有 Playbook 和/或 Open Risk，无确定性 Rule"
+    }
+  ]
+}

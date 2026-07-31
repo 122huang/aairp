@@ -13,6 +13,7 @@
   "summary": "Before/after and transformation images must reflect typical results and must not be misleading through staging or editing.",
   "review_guidance": "TRIGGER: Before/after photos, split-screen transformations, or retouched results. ACTION: WARN — require typicality disclaimer or substantiation. CHECK: Lighting, makeup, time interval, and digital editing. ESCALATE IF: Dramatic atypical result shown without qualification.",
   "related_rule_ids": [
+    "demo-apac-sa-before-after-imagery",
     "demo-apac-sa-ai-image-disclaimer"
   ],
   "related_evidence_ids": [],

@@ -214,6 +214,55 @@ describe('RuleEngineService', () => {
     ).toBe(false);
   });
 
+  it.each([
+    ['AU', 'demo-au-sponsored-disclosure'],
+    ['CN', 'demo-cn-sponsored-disclosure'],
+    ['JP', 'demo-jp-sponsored-disclosure'],
+    ['KR', 'demo-kr-sponsored-disclosure'],
+  ] as const)(
+    'fires %s sponsored-disclosure INFO reminder for INFLUENCER_UGC',
+    (countryId, ruleId) => {
+      const service = new RuleEngineService();
+      const result = service.evaluate({
+        ...baseContext,
+        dimensions: {
+          ...baseContext.dimensions,
+          countryId,
+          categoryId: 'sa.air_fryer',
+        },
+        normalizedContent: {
+          text: 'Air fryer tips for everyday cooking.',
+          imageUrls: [],
+        },
+        advertisementContext: { adType: 'INFLUENCER_UGC' },
+      });
+      const finding = result.findings.find((f) => f.refId === ruleId);
+      expect(finding).toBeDefined();
+      expect(finding?.decision).toBe('INFO');
+    },
+  );
+
+  it('WARNs on draft localisation placeholders for CN/JP/KR/AU', () => {
+    const service = new RuleEngineService();
+    for (const countryId of ['CN', 'JP', 'KR', 'AU'] as const) {
+      const result = service.evaluate({
+        ...baseContext,
+        dimensions: {
+          ...baseContext.dimensions,
+          countryId,
+          categoryId: 'sa.rice_cooker',
+        },
+        normalizedContent: {
+          text: 'Cook perfect rice [tbd] every night.',
+          imageUrls: [],
+        },
+      });
+      expect(
+        result.findings.some((f) => f.refId === 'demo-apac-sa-localization-draft'),
+      ).toBe(true);
+    }
+  });
+
   it('fires TH sponsored-disclosure INFO reminder for activation language (gray-copy case 7)', () => {
     const service = new RuleEngineService();
     const result = service.evaluate({
@@ -539,6 +588,30 @@ describe('RuleEngineService', () => {
         categoryId: 'sa.rice_cooker',
       },
       normalizedContent: { text, imageUrls: [] },
+    });
+
+    it.each(['AU', 'CN', 'JP', 'KR'] as const)(
+      'applies APAC-SA absolute-claim hard layer on newly opened UI market %s',
+      (countryId) => {
+        const service = new RuleEngineService();
+        const result = service.evaluate(
+          saContext(countryId, 'Delivers plump, soft and evenly cooked rice every time'),
+        );
+        expect(result.hasBlocker).toBe(true);
+        expect(result.findings.some((f) => f.refId === 'demo-apac-sa-absolute-claim')).toBe(true);
+      },
+    );
+
+    it('WARNs on before/after imagery across product UI markets', () => {
+      const service = new RuleEngineService();
+      for (const countryId of ['SG', 'AU', 'CN'] as const) {
+        const result = service.evaluate(
+          saContext(countryId, 'See the before and after transformation after one week of use.'),
+        );
+        expect(result.findings.some((f) => f.refId === 'demo-apac-sa-before-after-imagery')).toBe(
+          true,
+        );
+      }
     });
 
     it('matches SA performance/capacity claims from vision_text only', () => {

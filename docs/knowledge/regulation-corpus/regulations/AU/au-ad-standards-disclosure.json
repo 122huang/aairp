@@ -12,7 +12,9 @@
   "risk_level": "LOW",
   "summary": "Influencer and native advertising must be clearly identifiable as marketing communication.",
   "review_guidance": "TRIGGER: Influencer, gifted, or affiliate promotional content. ACTION: REWRITE — add clear ad identification (#ad, Ad, Paid). CHECK: Caption, overlay, and platform-native ad disclosure. ESCALATE IF: Undisclosed paid promotion.",
-  "related_rule_ids": [],
+  "related_rule_ids": [
+    "demo-au-sponsored-disclosure"
+  ],
   "related_evidence_ids": [],
   "tags": [
     "confidence:high",

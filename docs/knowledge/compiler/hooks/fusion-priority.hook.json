@@ -1,0 +1,21 @@
+{
+  "hook_id": "hook-fusion-priority",
+  "status": "accepted",
+  "title": "Fusion priority PASS < WARN < REVIEW < REJECT",
+  "claim_family": "fusion-guardrail",
+  "markets": ["SG", "MY", "TH", "AU", "CN", "JP", "KR", "ID", "IN", "VN", "PH"],
+  "handbook_ref": "Decision Runtime 融合不变量（法务交接 §11.3）",
+  "invariant": "Final decision MUST respect PASS < WARN < REVIEW < REJECT. hasBlocker MUST force REJECT regardless of LLM WARN/PASS signals.",
+  "runtime_binding": {
+    "kind": "fusion_invariant",
+    "test_refs": [
+      "packages/application/src/review/decision-invariants.spec.ts :: fusion priority"
+    ]
+  },
+  "evidence": {
+    "tests": [
+      "packages/application/src/review/decision-invariants.spec.ts",
+      "packages/application/src/review/decision-engine.service.spec.ts"
+    ]
+  }
+}
