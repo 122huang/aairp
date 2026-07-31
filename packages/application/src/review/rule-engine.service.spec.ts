@@ -484,7 +484,7 @@ describe('RuleEngineService', () => {
     };
 
     expect(asset.pack_version).toBe(DEMO_KNOWLEDGE_VERSIONS.rulePackVersion);
-    expect(asset.rules).toHaveLength(76);
+    expect(asset.rules).toHaveLength(82);
 
     const service = new RuleEngineService();
     const scopeContext: ReviewContext = {
