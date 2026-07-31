@@ -4,6 +4,8 @@ English-facing internal pilot for Legal / Compliance stakeholders.
 
 **中文法务内测版：** [内测说明.md](./内测说明.md) · [内测范围.md](./内测范围.md) · [内测清单.md](./内测清单.md) · 启动：`.\scripts\start-legal-pilot.ps1`
 
+**CN 大陆试点：** [CN-HARD-BLOCK-LIST-v1.md](./CN-HARD-BLOCK-LIST-v1.md) · [v1.1](./CN-HARD-BLOCK-LIST-v1.1.md) · [认簇](./CN-CLUSTER-APPROVAL-P1.md) · [观察池](./CN-OPEN-RISK-OBSERVATION-POOL.md) · 金标 `pnpm eval:cn-p0-golden` / `eval:cn-p1-golden`
+
 | Document | Purpose |
 |----------|---------|
 | [PILOT-SCOPE.md](./PILOT-SCOPE.md) | **One-page** in/out of scope for reviewers |
