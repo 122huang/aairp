@@ -1,8 +1,8 @@
 # 市场规则覆盖矩阵（初版）
 
-- 生成时间：2026-07-31T02:35:41.647Z
+- 生成时间：2026-07-31T06:17:19.778Z
 - 手册对照：全球广告合规法务审核规则手册_v0.9（外部 OneDrive；Ch.5 宣称类型按 taxonomy 近似映射）
-- Rules pack：`demo-rule-1.8.13`
+- Rules pack：`demo-rule-1.8.16`
 - 产品 UI 市场：SG, MY, TH, AU, CN, JP, KR
 - 暂缓：ID, IN；未法务背书：VN, PH（降权，不得与已审市场同置信）
 - 再生：`node scripts/_gen_coverage_matrix.mjs`

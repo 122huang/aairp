@@ -205,6 +205,34 @@ describe('DecisionEngineService', () => {
     expect(result.rationale).not.toContain('Manual review required');
   });
 
+  it('returns PASS when only CN internet-ad-identifiable publish checklist INFO fires', () => {
+    const service = createService();
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_test',
+      hasBlocker: false,
+      ruleFindings: [
+        {
+          module: 'RULE',
+          findingId: 'rf_cn_ad_tag',
+          severity: 'MEDIUM',
+          decision: 'INFO',
+          refType: 'RULE',
+          refId: 'demo-cn-internet-ad-identifiable-tag',
+          refVersionId: 'demo-cn-internet-ad-identifiable-tag-v2',
+          summary: 'CN internet advertising — before publish, confirm 广告 label',
+          confidence: 1,
+          remediationType: 'NOT_APPLICABLE_DISCLOSURE',
+        },
+      ],
+      playbookFindings: [],
+      llmFindings: [],
+    });
+
+    expect(result.finalDecision).toBe('PASS');
+    expect(result.rationale).toContain('informational notices');
+    expect(result.rationale).toContain('demo-cn-internet-ad-identifiable-tag');
+  });
+
   it('returns WARN for playbook CONDITIONAL findings (not REVIEW)', () => {
     const service = createService();
     const conditionalFinding: PlaybookFinding = {

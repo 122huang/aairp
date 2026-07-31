@@ -4,6 +4,7 @@
   "description": "Gray-copy semantic probe for Open Risk. Texts avoid known Rule/Playbook trigger keywords. Capability PASS = LLM hits acceptable_risk_types OR a Rule/Playbook finding maps to the same risk class (rule_covered_same_risk). Unrelated incidental rules alone (CPSR/COE/wrong-risk disclosure) that lift final_decision while LLM misses = masked_by_unrelated (FAIL). Do not treat all coincidence as FAIL.",
   "incidental_rule_refs_default": [
     "demo-cn-internet-ad-identifiable-tag",
+    "demo-kr-kol-disclosure-format",
     "demo-sg-sponsored-disclosure",
     "demo-sg-cpsr-registration-prerequisite",
     "demo-my-eeca-coe-prerequisite",

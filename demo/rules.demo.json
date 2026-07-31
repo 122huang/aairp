@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.13",
+  "pack_version": "demo-rule-1.8.16",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -22,8 +22,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG Health Products Act (Demo)",
-        "article": "Section 7 — Prohibited claims"
+        "law_name": "Health Products Act (Singapore)",
+        "article": "Section 7 — Prohibited claims (cure / miracle / absolute efficacy for health products; scope: health.supplement) — regulation:sg-hpa-s7-prohibited-claims"
       },
       "summary_en": "Prohibited absolute health cure claims are not allowed",
       "summary_zh": "禁止使用绝对化的\"治愈/根治\"类健康宣称",
@@ -105,8 +105,8 @@
         ]
       },
       "citation": {
-        "law_name": "ASAS / Singapore advertising disclosure practice (Demo)",
-        "article": "Sponsored content identification — cross-category"
+        "law_name": "Advertising Standards Authority of Singapore (ASAS) / Singapore Code of Advertising Practice",
+        "article": "SCAP Rule 2.4 — Influencer / sponsored content must be clearly identified as advertising"
       },
       "summary_en": "This content is marked as influencer/partnership — confirm advertising disclosure labels (#ad / sponsored) are added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
       "summary_zh": "该内容标注为网红/合作，发布前需确认已添加广告披露标签。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
@@ -237,8 +237,8 @@
         ]
       },
       "citation": {
-        "law_name": "MCMC Content Code / ASA Malaysia influencer disclosure practice (Demo)",
-        "article": "Sponsored content identification — #ad / #sponsored / Paid Partnership; brand vicarious liability (Content Code Revamp 2021 onward)"
+        "law_name": "Communications and Multimedia Content Code (MCMC) + Malaysian Code of Advertising Practice (ASA Malaysia)",
+        "article": "Advertising identification / influencer disclosure (#ad, #sponsored, Paid Partnership); brand may bear vicarious liability for undisclosed paid content — regulation:my-masa-sponsorship-disclosure"
       },
       "summary_en": "This content is marked as influencer/partnership — confirm MCMC/ASA Malaysia advertising disclosure (#ad / #sponsored / Paid Partnership) is added before publish. Brands may bear vicarious liability for undisclosed paid content. Non-blocking reminder (copy review does not verify disclosure tags).",
       "summary_zh": "该内容标注为网红/合作，发布前需确认已添加 MCMC/ASA Malaysia 要求的广告披露标签（#ad / #sponsored / Paid Partnership）。品牌方可能对未标注的付费内容承担连带责任。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
@@ -301,8 +301,8 @@
         ]
       },
       "citation": {
-        "law_name": "OCPB Guidelines on Identification of Advertisements (Demo)",
-        "article": "Sponsored online and social media content must be clearly labeled as advertising — Article 3"
+        "law_name": "OCPB Guidelines on Identification of Advertisements",
+        "article": "Article 3 — Sponsored online / social content must be clearly labeled as advertising — regulation:th-ocpb-ad-identification"
       },
       "summary_en": "This content is marked as influencer/partnership — confirm OCPB advertising identification (clear ad labels in Thai/English, platform ad tags) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
       "summary_zh": "该内容标注为网红/合作，发布前需确认已添加 OCPB 要求的广告标识（泰文/英文清晰标注、平台广告标签）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
@@ -424,8 +424,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
+        "law_name": "SG: SCAP (ASAS) health/medical claim standards + CPFTA s.4; MY: Trade Descriptions Act 2011 s.18 + advertising code health-claim hygiene; TH: CPA B.E.2522 s.47-48; AU: ACL Sch 2 s 18 + AANA/therapeutic boundary hygiene; CN: 广告法第九条/第二十八条; JP: 景品表示法 s.5 + 薬機法 efficacy boundary hygiene; KR: Fair Labeling Art. 3/7",
+        "article": "Disease / organ-function / clinical-metric / medical-endorsement claims on small appliances — prohibited or require specialty regime; not cured by general substantiation alone"
       },
       "summary_en": "Medical claim: disease, organ function, clinical metric, or medical endorsement — small appliances cannot make these claims; substantiation cannot cure overreach (REJECT)",
       "summary_zh": "医疗宣称：涉及疾病、器官功能、临床指标或医疗背书——小家电不得作出此类宣称，补充证据无法弥补越权问题（REJECT）",
@@ -505,7 +505,7 @@
       },
       "citation": {
         "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
+        "article": "Absolute / omnibus superiority claims without verifiable basis — SG CPFTA s.4 Second Schedule; MY TDA s.18; TH CPA s.47-48; AU ACL s.18; CN 广告法第九条; JP 景品表示法 s.5; KR Fair Labeling Art. 3/7"
       },
       "summary_en": "Absolute claim: unconditional guarantees (best, first, never, zero-fault) without verifiable basis — may pass with audited substantiation (WARN/BLOCKER by term)",
       "summary_zh": "绝对化宣称：无条件保证类用语（最佳、第一、绝不、零失误）且无可验证依据——视具体用词，经审计证据支持后可能通过（WARN/BLOCKER）",
@@ -588,7 +588,7 @@
       },
       "citation": {
         "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
+        "article": "Quantified performance claims require objective substantiation (test conditions / method / scope) — misleading if unsubstantiated"
       },
       "summary_en": "Unsubstantiated quantitative claim: numbers or percentages without comparison baseline, reference product, test standard, or data source (WARN)",
       "summary_zh": "未经证实的量化宣称：给出数字或百分比但缺少对比基准、参照产品、测试标准或数据来源（WARN）",
@@ -659,8 +659,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
+        "law_name": "SG: SCAP claims substantiation + CPFTA s.4; MY: TDA 2011 s.18; TH: CPA B.E.2522; AU: ACL Sch 2 s 18; CN: 广告法第十一条（证明文件 / 真实性）; JP: 景品表示法 s.5; KR: Fair Labeling Art. 3/7",
+        "article": "Certification / lab / HEPA-class evidence references require authentic, in-scope documentary support — tool cannot verify certificate authenticity"
       },
       "summary_en": "HEPA-class filtration / lab / certification evidence referenced — document authenticity and scope cannot be verified by the engine; escalate for product-compliance confirmation (REVIEW)",
       "summary_zh": "引用HEPA级过滤/实验室/认证类证据——引擎无法核实文件真实性与适用范围；需升级至产品合规团队确认（REVIEW）",
@@ -699,8 +699,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Content consistency — conflicting claims"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "Material inconsistency across ad text / images / claims that renders the representation misleading"
       },
       "summary_en": "Material or product description inconsistency across ad assets must be resolved before publishing",
       "summary_zh": "广告素材之间的产品描述或物料信息不一致，须在发布前解决",
@@ -809,8 +809,8 @@
         }
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
+        "law_name": "SG: SCAP substantiation / health-implication hygiene + CPFTA s.4; MY: TDA 2011 s.18; TH: CPA B.E.2522 s.47-48; AU: ACL Sch 2 s 18; CN: 广告法第二十八条; JP: 景品表示法 s.5; KR: Fair Labeling Art. 3/7",
+        "article": "Implied health / nutrition benefit without conditions or evidence — MANUAL_REVIEW / qualify wording (not a soft WARN-only path)"
       },
       "summary_en": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — require human check that context/data are on file (REVIEW)",
       "summary_zh": "健康暗示：感受/体验类描述（更轻盈、更清新、营养保留）但未涉及疾病/器官宣称——需人工核实是否已有对应语境/数据支撑（REVIEW）",
@@ -907,8 +907,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
+        "law_name": "SG: SCAP comparative advertising + CPFTA s.4; MY: TDA 2011 s.18 + MASA comparative hygiene; TH: CPA B.E.2522 / OCPB comparative ads guidance; AU: ACL Sch 2 s 18 + ACCC comparative advertising; CN: 广告法; JP: 景品表示法 s.5 comparative representations; KR: Monopoly Regulation and Fair Trade Act Art. 23 / Fair Labeling",
+        "article": "Comparative superiority claims must be objective, substantiated, and non-denigrating"
       },
       "summary_en": "Unsupported comparative claim: stronger/faster/quieter without identifiable, verifiable baseline (WARN)",
       "summary_zh": "未经支撑的比较宣称：更强/更快/更安静，但缺乏可识别、可验证的对比基准（WARN）",
@@ -1347,8 +1347,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Food safety — overnight raw-meat depiction"
+        "law_name": "SG: Sale of Food Act / Food Regulations (unsafe food depiction / handling representations); MY: Food Act 1983; TH: Food Act B.E.2522; AU: Food Standards Australia New Zealand / ACL misleading where unsafe practices contradicted; CN: 食品安全法 + 广告法; JP: 食品衛生法 hygiene representation hygiene; KR: Food Sanitation Act advertising hygiene",
+        "article": "Depicting prolonged unrefrigerated raw meat/seafood/eggs before cooking as normal practice — food-safety hazard representation"
       },
       "summary_en": "Food safety hazard: depicting raw meat/seafood/eggs left unrefrigerated for extended periods before cooking — real bacterial risk in APAC ambient conditions; rewrite cannot eliminate liability (REJECT)",
       "summary_zh": "食品安全隐患：画面展示生肉/海鲜/蛋类在烹饪前长时间未冷藏放置——在东南亚常温环境下存在真实的细菌滋生风险；改写无法消除该责任风险（REJECT）",
@@ -1437,8 +1437,8 @@
         ]
       },
       "citation": {
-        "law_name": "Singapore Code of Advertising Practice (Demo)",
-        "article": "Local ranking and endorsement claims"
+        "law_name": "Singapore Code of Advertising Practice (SCAP / ASAS)",
+        "article": "Truthful presentation / substantiation of local ranking & endorsement claims — must not imply official medical endorsement"
       },
       "summary_en": "Singapore-local ranking or professional-endorsement claims require substantiation and must not imply official medical endorsement",
       "summary_zh": "新加坡本地排名或专业背书类宣称须有依据支撑，且不得暗示获得官方医疗背书",
@@ -1477,8 +1477,8 @@
         ]
       },
       "citation": {
-        "law_name": "Malaysia Advertising Code (Demo)",
-        "article": "Local ranking and authority endorsement claims"
+        "law_name": "Malaysian Code of Advertising Practice (ASA Malaysia)",
+        "article": "Misleading claims / substantiation of ranking & authority endorsement claims — must not imply official medical or government endorsement"
       },
       "summary_en": "Malaysia-local ranking or authority-endorsement claims require substantiation and must not imply official medical or government endorsement",
       "summary_zh": "马来西亚本地排名或权威背书类宣称须有依据支撑，且不得暗示获得官方医疗或政府背书",
@@ -1515,8 +1515,8 @@
         ]
       },
       "citation": {
-        "law_name": "Thailand Consumer Protection Act (Demo)",
-        "article": "Local ranking and authority endorsement claims"
+        "law_name": "Consumer Protection Act B.E.2522 (Thailand) + OCPB advertising guidance",
+        "article": "Misleading advertisement provisions — local ranking / government-health-authority endorsement claims require substantiation"
       },
       "summary_en": "Thailand-local ranking or government-health-authority endorsement claims require substantiation and must not imply official medical endorsement",
       "summary_zh": "泰国本地排名或政府卫生机构背书类宣称须有依据支撑，且不得暗示获得官方医疗背书",
@@ -1568,8 +1568,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
+        "law_name": "SG: CPFTA s.4 + SCAP endorsement hygiene; MY: TDA 2011 s.18; TH: CPA B.E.2522; AU: ACL Sch 2 s 18; CN: 广告法第九条/第二十八条（虚假官方背书）; JP: 景品表示法 s.5; KR: Fair Labeling Art. 3/7",
+        "article": "False or unverified government / ministry / official certification endorsement"
       },
       "summary_en": "False certification or government endorsement: unverified official certification, ministry recommendation, or implied state approval (REJECT)",
       "summary_zh": "虚假认证或政府背书：未经核实的官方认证、部委推荐或暗示获得国家批准（REJECT）",
@@ -1621,8 +1621,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Comparative advertising — competitor IP"
+        "law_name": "SG: Trade Marks Act 1998 (+ passing off / CPFTA misleading where branding confuses); MY: Trade Marks Act 2019; TH: Trademark Act B.E.2534 (as amended); AU: Trade Marks Act 1995; CN: 商标法 + 反不正当竞争法; JP: 商標法 + 不正競争防止法; KR: Trademark Act + Unfair Competition Prevention Act",
+        "article": "Unauthorised use of competitor brand, logo, product appearance, or registered mark in advertising"
       },
       "summary_en": "Unauthorised third-party trademark: identifiable competitor brand, logo, product appearance, or registered mark without rights-holder consent (REJECT)",
       "summary_zh": "未经授权使用第三方商标：可识别的竞品品牌、logo、产品外观或注册商标，且未取得权利人同意（REJECT）",
@@ -1735,7 +1735,7 @@
       },
       "citation": {
         "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
-        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
+        "article": "False reference price / perpetual flash sale / bait pricing / checkout total mismatch — misleading price representation"
       },
       "summary_en": "Misleading pricing: false reference price, perpetual flash sale, checkout above headline price, sham closing-down sale — factual falsity, not wording (REJECT)",
       "summary_zh": "误导性定价：虚假参考价、常态化限时促销、结算价高于宣传价、虚假的\"即将下架\"促销——属事实性虚假，非措辞问题（REJECT）",
@@ -2670,16 +2670,47 @@
     },
     {
       "rule_id": "demo-kr-kol-disclosure-format",
-      "rule_version_id": "demo-kr-kol-disclosure-format-v1",
+      "rule_version_id": "demo-kr-kol-disclosure-format-v2",
       "severity": "MEDIUM",
-      "decision": "WARN",
-      "summary": "KOL/influencer promotional disclosure must appear at the start of the title or body text, in wording easily understood by consumers — vague or conditional disclosure is non-compliant. This rule can only detect whether disclosure wording is present; placement and font require manual review",
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — before publish, confirm KOL disclosure appears at the start of the title or body in clear consumer wording (#광고 / 협찬받음 / 유료광고 / 제공받음). Placement and font still need offline check. Non-blocking reminder (copy review does not verify publish-stage labels).",
+      "required_any_mode": "influencer_or_activation",
       "required_any_terms": [
         "협찬받음",
         "광고",
         "유료광고",
         "제공받음"
       ],
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "협찬",
+        "광고",
+        "#광고",
+        "유료광고",
+        "제공받음",
+        "협찬받음"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
       "forbidden_terms": [
         "소정의 수수료를 지급받을 수 있음",
         "일부 협찬"
@@ -2708,8 +2739,8 @@
         "law_name": "추천・보증 등에 관한 표시・광고 심사지침",
         "article": "2024年修正，2024-12-01施行"
       },
-      "summary_en": "KOL/influencer promotional disclosure must appear at the start of the title or body text, in wording easily understood by consumers — vague or conditional disclosure is non-compliant. This rule can only detect whether disclosure wording is present; placement and font require manual review",
-      "summary_zh": "KOL/网红推广披露须放在标题或正文开头，用消费者易懂措辞，模糊/附条件表述视为不合格——本规则仅能检测披露词是否存在，位置与字体需人工复核",
+      "summary_en": "This content is marked as influencer/partnership — before publish, confirm KOL disclosure appears at the start of the title or body in clear consumer wording (#광고 / 협찬받음 / 유료광고 / 제공받음). Placement and font still need offline check. Non-blocking reminder (copy review does not verify publish-stage labels).",
+      "summary_zh": "该内容标注为网红/合作——发布前请确认KOL披露置于标题或正文开头，并用消费者易懂措辞（#광고 / 협찬받음 / 유료광고 / 제공받음）；位置与字体仍须线下核对。非阻塞提醒（文案审核不核验发布环节标识）。",
       "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
@@ -3182,15 +3213,12 @@
     },
     {
       "rule_id": "demo-cn-internet-ad-identifiable-tag",
-      "rule_version_id": "demo-cn-internet-ad-identifiable-tag-v1",
+      "rule_version_id": "demo-cn-internet-ad-identifiable-tag-v2",
       "severity": "MEDIUM",
-      "decision": "WARN",
-      "summary": "Internet advertising must be prominently labelled as \"advertisement\"; livestream/short-video ads must comply with presenter qualification and product-information disclosure requirements",
-      "required_any_terms": [
-        "广告",
-        "推广",
-        "赞助"
-      ],
+      "decision": "INFO",
+      "summary": "CN internet advertising — before publish, confirm the final creative prominently labels \"广告\" (or equivalent), and that livestream/short-video placements meet presenter qualification and product-information disclosure rules. Non-blocking reminder (copy review does not verify publish-stage labels).",
+      "when": {},
+      "trigger_terms": [],
       "scopes": {
         "countries": [
           "CN"
@@ -3215,9 +3243,9 @@
         "law_name": "《互联网广告管理办法》（市场监管总局第72号令）",
         "article": "互联网广告可识别性要求"
       },
-      "summary_en": "Internet advertising must be prominently labelled as \"advertisement\"; livestream/short-video ads must comply with presenter qualification and product-information disclosure requirements",
-      "summary_zh": "互联网广告须显著标明'广告'字样，直播/短视频广告需符合主播资质及商品信息披露要求",
-      "remediation_type": "REWRITE_ONLY"
+      "summary_en": "CN internet advertising — before publish, confirm the final creative prominently labels \"广告\" (or equivalent), and that livestream/short-video placements meet presenter qualification and product-information disclosure rules. Non-blocking reminder (copy review does not verify publish-stage labels).",
+      "summary_zh": "中国互联网广告——发布前请确认成稿已显著标明「广告」字样（或等效标识），直播/短视频投放须符合主播资质及商品信息披露要求。非阻塞提醒（文案审核不核验发布环节标识）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {
       "rule_id": "demo-cn-performance-data-mismatch-risk",
