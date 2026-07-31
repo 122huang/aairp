@@ -2,6 +2,10 @@ const DEMO_REVIEW_COUNTRY_DEFS = [
   { id: 'SG', label: '新加坡' },
   { id: 'MY', label: '马来西亚' },
   { id: 'TH', label: '泰国' },
+  { id: 'AU', label: '澳大利亚' },
+  { id: 'CN', label: '中国大陆' },
+  { id: 'JP', label: '日本' },
+  { id: 'KR', label: '韩国' },
   { id: 'ID', label: '印度尼西亚' },
   { id: 'VN', label: '越南' },
   { id: 'PH', label: '菲律宾' },
@@ -35,7 +39,7 @@ export function isLegalReviewedMarket(countryId: string): boolean {
   return LEGAL_REVIEWED_MARKET_COUNTRY_IDS.has(countryId.toUpperCase());
 }
 
-/** Demo review UI / API — supported country markets (6B-2 SEA expansion). */
+/** Demo / registry country markets. Product submit UI is gated by REVIEW_APP_VISIBLE_COUNTRY_IDS. */
 export const DEMO_REVIEW_COUNTRIES = DEMO_REVIEW_COUNTRY_DEFS.map((country) => ({
   ...country,
   legal_reviewed: isLegalReviewedMarket(country.id),

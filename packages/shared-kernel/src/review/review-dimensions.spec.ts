@@ -11,6 +11,10 @@ describe('legal_reviewed market flag', () => {
     expect(byId.SG).toBe(true);
     expect(byId.MY).toBe(true);
     expect(byId.TH).toBe(true);
+    expect(byId.AU).toBe(true);
+    expect(byId.CN).toBe(true);
+    expect(byId.JP).toBe(true);
+    expect(byId.KR).toBe(true);
     expect(byId.ID).toBe(true);
     expect(byId.VN).toBe(false);
     expect(byId.PH).toBe(false);

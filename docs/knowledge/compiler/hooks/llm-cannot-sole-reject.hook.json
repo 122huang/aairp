@@ -1,0 +1,20 @@
+{
+  "hook_id": "hook-llm-cannot-sole-reject",
+  "status": "accepted",
+  "title": "LLM cannot be the sole basis for REJECT",
+  "claim_family": "fusion-guardrail",
+  "markets": ["SG", "MY", "TH", "AU", "CN", "JP", "KR", "ID", "IN", "VN", "PH"],
+  "handbook_ref": "法务铁律：REJECT 须由 Rule/Vision BLOCKER（或等价硬路径）触发，不得仅凭 LLM",
+  "invariant": "When hasBlocker is false and only LLM findings exist (even with suggestedAction REJECT or decision FAIL), finalDecision MUST NOT be REJECT.",
+  "runtime_binding": {
+    "kind": "fusion_invariant",
+    "test_refs": [
+      "packages/application/src/review/decision-invariants.spec.ts :: LLM cannot sole REJECT"
+    ]
+  },
+  "evidence": {
+    "tests": [
+      "packages/application/src/review/decision-invariants.spec.ts"
+    ]
+  }
+}

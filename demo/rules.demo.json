@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.9",
+  "pack_version": "demo-rule-1.8.13",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -404,7 +404,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -420,8 +424,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Prohibited health & medical claims — small appliances | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
       },
       "summary_en": "Medical claim: disease, organ function, clinical metric, or medical endorsement — small appliances cannot make these claims; substantiation cannot cure overreach (REJECT)",
       "summary_zh": "医疗宣称：涉及疾病、器官功能、临床指标或医疗背书——小家电不得作出此类宣称，补充证据无法弥补越权问题（REJECT）",
@@ -464,7 +468,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -496,8 +504,8 @@
         }
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Substantiation — absolute claims | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
       },
       "summary_en": "Absolute claim: unconditional guarantees (best, first, never, zero-fault) without verifiable basis — may pass with audited substantiation (WARN/BLOCKER by term)",
       "summary_zh": "绝对化宣称：无条件保证类用语（最佳、第一、绝不、零失误）且无可验证依据——视具体用词，经审计证据支持后可能通过（WARN/BLOCKER）",
@@ -559,7 +567,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -575,8 +587,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Performance claims — substantiation required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
       },
       "summary_en": "Unsubstantiated quantitative claim: numbers or percentages without comparison baseline, reference product, test standard, or data source (WARN)",
       "summary_zh": "未经证实的量化宣称：给出数字或百分比但缺少对比基准、参照产品、测试标准或数据来源（WARN）",
@@ -627,7 +639,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -643,8 +659,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Evidence & certification — verification required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "HEPA-class filtration / lab / certification evidence referenced — document authenticity and scope cannot be verified by the engine; escalate for product-compliance confirmation (REVIEW)",
       "summary_zh": "引用HEPA级过滤/实验室/认证类证据——引擎无法核实文件真实性与适用范围；需升级至产品合规团队确认（REVIEW）",
@@ -663,7 +679,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -764,7 +784,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -785,8 +809,8 @@
         }
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Health & nutrition implications | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Health implication: feel/experience cues (lighter, fresher, nutrient retention) without disease/organ claims — require human check that context/data are on file (REVIEW)",
       "summary_zh": "健康暗示：感受/体验类描述（更轻盈、更清新、营养保留）但未涉及疾病/器官宣称——需人工核实是否已有对应语境/数据支撑（REVIEW）",
@@ -863,7 +887,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -879,8 +907,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Comparative advertising — baseline required | Multi-market substantiation / misleading claims — see handbook 8.4/8.5/8.6 and 法规来源台账.md (replaces APAC Advertising Standards Demo placeholder)"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；高频宣称类共用多市场引用（待后续按国拆 rule）"
       },
       "summary_en": "Unsupported comparative claim: stronger/faster/quieter without identifiable, verifiable baseline (WARN)",
       "summary_zh": "未经支撑的比较宣称：更强/更快/更安静，但缺乏可识别、可验证的对比基准（WARN）",
@@ -902,7 +930,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -918,8 +950,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Capacity claims — substantiation required"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "trigger_patterns": [
         "\\bfeed(?:s)?\\s+up to\\s+\\d+(?:-\\d+)?\\s*(?:people|servings|persons|person)\\b",
@@ -958,7 +990,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -974,8 +1010,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Substantiation — absolute claims"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Absolute or omnibus claims (e.g. zero waste, zero-fault, never look back, every serving, 每一次) require qualification and substantiation",
       "summary_zh": "绝对化或全称类宣称（如零浪费、零失误、每一次都、每一次）须加以限定并提供依据支撑",
@@ -1000,7 +1036,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1016,8 +1056,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Substantiation — social proof claims"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Unsupported quantified or nationwide social-proof claims (household/user counts, loved-by-millions wording) require substantiation or non-quantified rephrase",
       "summary_zh": "未经支撑的量化或全国性从众宣称（家庭数量/用户总数、\"深受数百万人喜爱\"类用语）须提供依据支撑，或改写为非量化表述",
@@ -1036,7 +1076,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1073,7 +1117,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1115,13 +1163,16 @@
         "[insert claim here]",
         "model number suffix is -ms",
         "voltage listed as 240v",
-        "incorrect for thailand market"
+        "incorrect for thailand market",
+        "incorrect for australia market",
+        "wrong voltage for au"
       ],
       "scopes": {
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1137,8 +1188,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Localization — market-appropriate assets"
+        "law_name": "SG: CPFTA 2003 s.4; MY: TDA 2011 s.18; TH: CPA B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18",
+        "article": "Localization — market-appropriate assets / language / cert marks"
       },
       "summary_en": "Localisation error: wrong-language panel, model suffix, invalid certification for market, internal placeholders, voltage mismatch — fix before publish; invalid cert citation may upgrade to REJECT (WARN)",
       "summary_zh": "本地化错误：面板语言错误、型号后缀错误、认证不适用于该市场、内部占位符残留、电压不匹配——发布前须修正；认证引用无效的情况可能升级为REJECT（WARN）",
@@ -1174,7 +1225,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1212,7 +1267,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1268,7 +1327,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1315,7 +1378,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1481,7 +1548,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1497,8 +1568,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "False government or authority endorsement"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "False certification or government endorsement: unverified official certification, ministry recommendation, or implied state approval (REJECT)",
       "summary_zh": "虚假认证或政府背书：未经核实的官方认证、部委推荐或暗示获得国家批准（REJECT）",
@@ -1530,7 +1601,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1604,8 +1679,8 @@
         ]
       },
       "citation": {
-        "law_name": "ASAS SCAP / ICC Code (Demo) — urgency & scarcity presentations",
-        "article": "Pressure / FOMO claims require verifiable time or quantity limits"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Urgency or scarcity pressure without a verifiable offer end date, remaining stock quantity, or production-end fact — soft FOMO framing (WARN; qualify or remove)",
       "summary_zh": "紧迫感/稀缺性施压话术，但缺乏可验证的优惠截止日期、剩余库存数量或停产事实——软性FOMO话术（WARN；须限定或删除）",
@@ -1639,7 +1714,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1655,8 +1734,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Pricing transparency — misleading promotions"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Misleading pricing: false reference price, perpetual flash sale, checkout above headline price, sham closing-down sale — factual falsity, not wording (REJECT)",
       "summary_zh": "误导性定价：虚假参考价、常态化限时促销、结算价高于宣传价、虚假的\"即将下架\"促销——属事实性虚假，非措辞问题（REJECT）",
@@ -1686,7 +1765,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1702,8 +1785,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Analogy claims — substantiation required"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Analogical claim: 媲美/如同/宛如-style subjective comparison to reference standard (clay-pot, restaurant, cold-pressed) — sensory test data if reference is quantifiable (WARN)",
       "summary_zh": "类比宣称：媲美/如同/宛如式的主观类比参照标准（砂锅、餐厅、冷萃）——若参照标准可量化，须有感官测试数据支撑（WARN）",
@@ -1735,7 +1818,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1751,8 +1838,8 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Environmental claims — substantiation required"
+        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
+        "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
       "summary_en": "Environmental claim: eco/sustainable/low-carbon/zero-pollution — specific, verifiable basis required; generic green labels insufficient (WARN)",
       "summary_zh": "环保类宣称：环保/可持续/低碳/零污染——须有具体、可验证的依据支撑；笼统的绿色标签不足以支撑（WARN）",
@@ -1763,7 +1850,7 @@
       "rule_version_id": "demo-apac-sa-localization-cjk-v1",
       "severity": "MEDIUM",
       "decision": "WARN",
-      "summary": "Image OCR contains Chinese/CJK text — verify market-appropriate localized assets for SG/MY/TH listings",
+      "summary": "Image OCR contains Chinese/CJK text — verify market-appropriate localized assets for SG/MY/TH/AU listings",
       "when": {
         "has_images": true,
         "ocr_contains_cjk": true
@@ -1772,7 +1859,8 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1788,11 +1876,11 @@
         ]
       },
       "citation": {
-        "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48",
-        "article": "Localization — CJK in image OCR"
+        "law_name": "SG: CPFTA 2003 s.4; MY: TDA 2011 s.18; TH: CPA B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18",
+        "article": "Localization — CJK in image OCR (not applied to CN/JP/KR native scripts)"
       },
-      "summary_en": "Image OCR contains Chinese/CJK text — verify market-appropriate localized assets for SG/MY/TH listings",
-      "summary_zh": "图片OCR识别出中文/CJK文字——请核实SG/MY/TH市场listing使用的是否为适配当地市场的本地化素材",
+      "summary_en": "Image OCR contains Chinese/CJK text — verify market-appropriate localized assets for SG/MY/TH/AU listings",
+      "summary_zh": "图片OCR识别出中文/CJK文字——请核实SG/MY/TH/AU市场listing使用的是否为适配当地市场的本地化素材",
       "remediation_type": "REWRITE_ONLY"
     },
     {
@@ -1820,7 +1908,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1857,7 +1949,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -1894,7 +1990,11 @@
         "countries": [
           "SG",
           "MY",
-          "TH"
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
         ],
         "categories": [
           "sa.vacuum_floor",
@@ -3491,6 +3591,356 @@
       },
       "summary_en": "Absolute efficacy or return-guarantee claims (e.g. '100% guaranteed', 'guaranteed cure', 'risk-free returns') are prohibited under CCPA 2022 Guidelines on Prevention of Misleading Advertisements — not curable by adding disclaimers or evidence.",
       "summary_zh": "绝对化疗效或收益保证宣称（如「100%有效」「保证治愈」「无风险收益」）属CCPA 2022年指引明确规制的高风险宣称，无法通过补充声明或证据通过。",
+      "remediation_type": "REWRITE_ONLY"
+    },
+    {
+      "rule_id": "demo-apac-sa-before-after-imagery",
+      "rule_version_id": "demo-apac-sa-before-after-imagery-v1",
+      "severity": "LOW",
+      "decision": "WARN",
+      "summary": "Before/after or transformation claim detected — require typicality disclaimer; must not imply guaranteed outcomes (WARN)",
+      "trigger_terms": [
+        "before and after",
+        "before/after",
+        "before & after",
+        "before after",
+        "transformation",
+        "前后对比",
+        "使用前",
+        "使用后",
+        "对比图",
+        "效果对比"
+      ],
+      "scopes": {
+        "countries": [
+          "SG",
+          "MY",
+          "TH",
+          "AU",
+          "CN",
+          "JP",
+          "KR"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "SG: Singapore Code of Advertising Practice Rule 4.2 (Before/after imagery); MY: Trade Descriptions Act 2011 s.18; TH: CPA B.E.2522 s.47-48; AU: ACL Sch 2 s 18; CN: 广告法第二十八条; JP: 景品表示法 s.5; KR: Fair Labeling and Advertising Act Art. 3",
+        "article": "Before/after imagery — typicality disclaimer; see regulation:sg-asas-before-after-imagery"
+      },
+      "summary_en": "Before/after or transformation claim detected — require typicality disclaimer; must not imply guaranteed outcomes (WARN)",
+      "summary_zh": "检测到前后对比或效果转变类宣称——须加典型效果免责声明，避免暗示效果必然达成（WARN）",
+      "remediation_type": "REWRITE_ONLY"
+    },
+    {
+      "rule_id": "demo-au-sponsored-disclosure",
+      "rule_version_id": "demo-au-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm AANA/Ad Standards advertising identification (#ad / Ad / Paid Partnership) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "collab",
+        "affiliate link",
+        "gifted"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "AU"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "AANA Code of Ethics — Section 2.7 (Identifying advertising)",
+        "article": "regulation:au-ad-standards-disclosure — influencer/native ad identification"
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm AANA/Ad Standards advertising identification (#ad / Ad / Paid Partnership) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加AANA/Ad Standards广告识别标识。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
+    },
+    {
+      "rule_id": "demo-cn-sponsored-disclosure",
+      "rule_version_id": "demo-cn-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "INFO",
+      "summary": "该内容标注为网红/合作——发布前需确认已添加明显广告标识（如“广告”/对应平台广告标签）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "种草",
+        "好物推荐",
+        "商业合作",
+        "广告合作",
+        "软广"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "广告法第二十八条；互联网广告管理办法 — 广告标识义务",
+        "article": "网红/付费推广须显著标明“广告”；创意审核阶段仅提醒发布前贴标"
+      },
+      "summary_en": "该内容标注为网红/合作——发布前需确认已添加明显广告标识（如“广告”/对应平台广告标签）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "summary_zh": "该内容标注为网红/合作——发布前需确认已添加明显广告标识（如“广告”/对应平台广告标签）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
+    },
+    {
+      "rule_id": "demo-jp-sponsored-disclosure",
+      "rule_version_id": "demo-jp-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm stealth-marketing disclosure (#PR / 広告 / platform ad label) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "提供",
+        "案件",
+        "タイアップ",
+        "PR案件",
+        "#PR",
+        "広告"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "JP"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Stealth Marketing Guidelines (CAA) — Section 3",
+        "article": "regulation:jp-caa-sponsored-disclosure — paid endorsement identification"
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm stealth-marketing disclosure (#PR / 広告 / platform ad label) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加日本隐性营销披露标识（#PR / 広告等）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
+    },
+    {
+      "rule_id": "demo-kr-sponsored-disclosure",
+      "rule_version_id": "demo-kr-sponsored-disclosure-v1",
+      "severity": "LOW",
+      "decision": "INFO",
+      "summary": "This content is marked as influencer/partnership — confirm KFTC advertising disclosure (#광고 / 협찬 / platform ad label) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "required_any_mode": "influencer_or_activation",
+      "activation_terms": [
+        "品牌送的",
+        "品牌送",
+        "谢谢品牌",
+        "赠送",
+        "合作提供",
+        "合作赠送",
+        "安利给",
+        "开箱",
+        "#gifted",
+        "gifted by",
+        "thank you for sending",
+        "thanks for sending",
+        "sent me",
+        "sponsored by",
+        "in partnership with",
+        "paid partnership",
+        "협찬",
+        "광고",
+        "#광고",
+        "유료광고",
+        "제공받음"
+      ],
+      "when": {
+        "ad_type_in": [
+          "INFLUENCER_UGC"
+        ],
+        "or_missing_ad_type": true
+      },
+      "scopes": {
+        "countries": [
+          "KR"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "Guidelines on Labeling and Advertising — Article 5 (KFTC)",
+        "article": "regulation:kr-kftc-ad-disclosure — commercial message identification"
+      },
+      "summary_en": "This content is marked as influencer/partnership — confirm KFTC advertising disclosure (#광고 / 협찬 / platform ad label) is added before publish. Non-blocking reminder (copy review does not verify disclosure tags).",
+      "summary_zh": "该内容标注为网红/合作，发布前需确认已添加KFTC广告披露标识（#광고 / 협찬等）。非阻塞提醒（文案审核不核验披露标识是否已贴）。",
+      "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
+    },
+    {
+      "rule_id": "demo-apac-sa-localization-draft",
+      "rule_version_id": "demo-apac-sa-localization-draft-v1",
+      "severity": "MEDIUM",
+      "decision": "WARN",
+      "summary": "Draft/placeholder localisation residue in ad copy (TBD markers, insert-claim stubs, unresolved confirmation notes) — fix before publish (WARN)",
+      "trigger_terms": [
+        "[tbd]",
+        "[insert claim here]",
+        "[insert]",
+        "待确认",
+        "待补充",
+        "占位",
+        "placeholder text",
+        "lorem ipsum",
+        "xxx产品名",
+        "【待翻译】"
+      ],
+      "scopes": {
+        "countries": [
+          "AU",
+          "CN",
+          "JP",
+          "KR"
+        ],
+        "categories": [
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other",
+          "electronics"
+        ]
+      },
+      "citation": {
+        "law_name": "AU: ACL Sch 2 s 18; CN: 广告法第九条/第二十八条; JP: 景品表示法 s.5; KR: Fair Labeling and Advertising Act Art. 3",
+        "article": "Localization — draft/placeholder residue (CJK OCR checks intentionally excluded for CN/JP/KR)"
+      },
+      "summary_en": "Draft/placeholder localisation residue in ad copy (TBD markers, insert-claim stubs, unresolved confirmation notes) — fix before publish (WARN)",
+      "summary_zh": "广告文案残留草稿/占位符（TBD、待插入宣称、待确认等）——发布前须修正（WARN）",
       "remediation_type": "REWRITE_ONLY"
     }
   ]

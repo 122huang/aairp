@@ -66,6 +66,13 @@ export const SEVERITY_VS_DECISION_HELP = {
   ].join('\n'),
 } as const;
 
+/**
+ * 对外 demo / pilot 法条引用免责声明（拍板 2026-07-31：无逐条法务 sign-off 时必须展示）。
+ * 对内 pilot 可继续使用；对外正式承诺须法务确认后方可撤下或改写本声明。
+ */
+export const CITATION_DEMO_DISCLAIMER =
+  '法条引用说明：本工具展示的法规/条款引用为合规辅助参考，部分条目仍待法务逐条 sign-off；不得单独作为对外法律意见或最终放行依据。正式对外演示或客户交付前，请确认相关 citation 已获法务确认，或明确告知对方本免责范围。';
+
 export function resolveLegalSummaryZh(finding: LegalSummarySource): string {
   for (const refId of finding.refIds) {
     const mapped = LEGAL_SUMMARY_ZH[refId];

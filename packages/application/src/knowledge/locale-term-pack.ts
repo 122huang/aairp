@@ -105,7 +105,9 @@ export function expandApacSaRuleCountries(rules: RuntimeRuleDefinition[]): Runti
   return rules.map((rule) => {
     if (
       !rule.rule_id.startsWith('demo-apac-sa-') ||
-      rule.rule_id === 'demo-apac-sa-localization-cjk'
+      rule.rule_id === 'demo-apac-sa-localization-cjk' ||
+      // Draft/placeholder rule is intentionally AU/CN/JP/KR only (no SEA auto-expand).
+      rule.rule_id === 'demo-apac-sa-localization-draft'
     ) {
       return rule;
     }
