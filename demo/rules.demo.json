@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.19",
+  "pack_version": "demo-rule-1.8.20",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -1019,10 +1019,10 @@
     },
     {
       "rule_id": "demo-apac-sa-social-proof-claim",
-      "rule_version_id": "demo-apac-sa-social-proof-claim-v1",
+      "rule_version_id": "demo-apac-sa-social-proof-claim-v2",
       "severity": "MEDIUM",
       "decision": "WARN",
-      "summary": "Unsupported quantified or nationwide social-proof claims (household/user counts, loved-by-millions wording) require substantiation or non-quantified rephrase",
+      "summary": "Unsupported social-proof, popularity, or soft testimonial claims require substantiation or non-quantified rephrase — not a hard reject",
       "trigger_terms": [
         "thousands of households",
         "millions of users",
@@ -1030,7 +1030,19 @@
         "trusted by thousands",
         "หลายพันครัวเรือน",
         "数千家庭",
-        "千万家庭信赖"
+        "千万家庭信赖",
+        "users report",
+        "noticeable changes",
+        "results speak for themselves",
+        "results speak for",
+        "more people are embracing",
+        "user feedback",
+        "exceeded expectations",
+        "the popularity",
+        "popularity says",
+        "recommend it to family",
+        "to family and friends",
+        "experience the benefits"
       ],
       "scopes": {
         "countries": [
@@ -1059,8 +1071,8 @@
         "law_name": "SG: Consumer Protection (Fair Trading) Act 2003 s.4 & Second Schedule; MY: Trade Descriptions Act 2011 s.18; TH: Consumer Protection Act B.E.2522 s.47-48; AU: Australian Consumer Law Sch 2 s 18; CN: 广告法（2021年第二次修正）第九条/第二十八条; JP: 景品表示法（不当景品類及び不当表示防止法）第5条; KR: 표시·광고의 공정화에 관한 법률 Art. 3/7",
         "article": "各国具体条款与处罚详见手册 8.x 及法规来源台账.md；多市场共用引用（对外 demo 须法务 sign-off 或 disclaimer）"
       },
-      "summary_en": "Unsupported quantified or nationwide social-proof claims (household/user counts, loved-by-millions wording) require substantiation or non-quantified rephrase",
-      "summary_zh": "未经支撑的量化或全国性从众宣称（家庭数量/用户总数、\"深受数百万人喜爱\"类用语）须提供依据支撑，或改写为非量化表述",
+      "summary_en": "Unsupported social-proof, popularity, or soft testimonial claims (user reports, results speak for themselves, popularity, family recommendations, experience the benefits) require substantiation or qualification — WARN/EVIDENCE_SUPPLEMENT, not REJECT",
+      "summary_zh": "未经支撑的社证/受欢迎/软性用户反馈宣称（users report、results speak、popularity、向亲友推荐、experience the benefits 等）须提供依据或限定表述——WARN/补证，非硬拦 REJECT",
       "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {

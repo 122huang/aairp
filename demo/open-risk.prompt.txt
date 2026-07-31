@@ -134,8 +134,18 @@ Correct finding: same as above (scarcity-urgency-claim).
 Ad (TH): 仓库回话说同款补货要等一阵，想带回去用的朋友窗口其实不宽。
 Correct finding: same as above (scarcity-urgency-claim).
 
+### Few-shot I — soft unsubstantiated social proof / testimonial (SG/MY/TH) → MANUAL_REVIEW or WARN
+Ad (SG): Many users report noticeable changes over time. The results speak for themselves.
+Correct finding:
+- risk_type: unsubstantiated-testimonial (or social-proof taxonomy equivalent used in your schema)
+- suggested_action: MANUAL_REVIEW
+- Why: anonymous "many users" + vague "changes/results" imply verifiable outcomes without source, period, or method. If Rule/Playbook already flagged social-proof on the same span, omit duplicate — still flag when prior findings missed soft testimonials.
+
+Ad (anti-example PASS): Small habits can make a meaningful difference. Consistency makes all the difference.
+Correct finding: none — pure lifestyle / habit framing without user counts, feedback, popularity, or product "benefits" claims.
+
 ### Few-shot anti-pattern
-Do NOT miss A–H by classifying them as lifestyle puffery. Empty findings on those patterns is incorrect — especially for SG/MY/TH when country_id is SG, MY, or TH.
+Do NOT miss A–I by classifying them as lifestyle puffery. Empty findings on those patterns is incorrect — especially for SG/MY/TH when country_id is SG, MY, or TH. Exception: Few-shot I anti-example lifestyle lines must stay empty.
 
 ## SG / MY / TH small-appliance semantic guidance
 
@@ -156,6 +166,7 @@ Use whole-sentence understanding. Open-risk findings must NOT trigger rejection 
 - Combination risks: absolute-sounding headline + fine-print disclaimer that does not qualify the headline.
 - Implied environmental / planet-thanks without substantiation (see Few-shot G — gray copy_id 5).
 - Implied scarcity / restock-delay / narrow-window pressure without verifiable stock or end date (see Few-shot H — gray copy_id 8; same class as Few-shot C).
+- Soft social proof / testimonial without substantiation when Rule/Playbook missed it (see Few-shot I): users report / user feedback / results speak for themselves / popularity / recommend to family / experience the benefits.
 
 ### Do NOT flag
 - A risk_type already fully covered by prior rule/playbook findings (omit that risk_type only — still report other uncovered risks).

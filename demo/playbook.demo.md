@@ -1,6 +1,6 @@
 # Health Supplement Review Playbook (Demo)
 
-pack_version: demo-playbook-1.7.3
+pack_version: demo-playbook-1.7.4
 playbook_id: demo-health-supplement-playbook
 ## urgency-cta
 
@@ -70,13 +70,13 @@ linked_rules: demo-apac-sa-social-proof-claim
 trigger_keywords:
 severity_hint: MEDIUM
 decision: WARN
-guidance: Unsupported social proof or popularity claim detected (household counts, user totals, broad trust wording). Provide verifiable substantiation or qualify the claim before publishing.
-guidance_en: Unsupported social proof or popularity claim detected (household counts, user totals, broad trust wording). Provide verifiable substantiation or qualify the claim before publishing.
-guidance_zh: 检测到从众心理/受欢迎程度类宣称（家庭数量、用户总数、泛化的信任类用语）。发布前须提供可验证依据支撑，或加以限定。
+guidance: Unsupported social proof or soft testimonial detected (user reports/feedback, results speak for themselves, popularity, family recommendations, experience the benefits, or quantified household/user counts). Prefer EVIDENCE_SUPPLEMENT — survey/NPS/sales-period attribution — or qualify/remove. Not a hard REJECT. Same-screen combo: if lifestyle/scene copy appears with results/benefits/noticeable changes in the same unit, escalate reviewer attention (typical REVIEW). Pure lifestyle lines without social-proof anchors (e.g. small habits / consistency / ordinary evenings) should stay PASS.
+guidance_en: Unsupported social proof or soft testimonial detected (user reports/feedback, results speak for themselves, popularity, family recommendations, experience the benefits, or quantified household/user counts). Prefer EVIDENCE_SUPPLEMENT — survey/NPS/sales-period attribution — or qualify/remove. Not a hard REJECT. Same-screen combo: if lifestyle/scene copy appears with results/benefits/noticeable changes in the same unit, escalate reviewer attention (typical REVIEW). Pure lifestyle lines without social-proof anchors (e.g. small habits / consistency / ordinary evenings) should stay PASS.
+guidance_zh: 检测到未支撑的社证/软性用户反馈（users report、feedback、results speak、popularity、向亲友推荐、experience the benefits，或量化家庭/用户数）。优先补证（调研/NPS/销量口径与期间）或限定/删除；非硬拦 REJECT。同屏组合：生活方式句与 results/benefits/noticeable changes 同单元时，审核员按 REVIEW 关注。无社证锚点的纯生活方式句（small habits / consistency / ordinary evenings）应保持 PASS。
 typical_decision: REVIEW
 skill_module: Claim Review
 purpose: Detect unsubstantiated social-proof or popularity claims without verifiable user or household data.
-suggested_rewrite: Replace broad popularity counts with qualified, substantiated wording or cite the data source.
+suggested_rewrite: Replace broad popularity or soft testimonials with qualified, substantiated wording or cite the data source; keep pure lifestyle lines unqualified.
 expected_severity: MEDIUM
 ## sa-health-implication
 

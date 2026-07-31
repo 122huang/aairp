@@ -15,7 +15,7 @@
     ]
   },
   "evidence": {
-    "pack_version": "demo-rule-1.8.19",
+    "pack_version": "demo-rule-1.8.20",
     "tests": [
       "packages/application/src/review/decision-invariants.spec.ts"
     ],
