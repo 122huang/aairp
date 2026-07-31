@@ -10,4 +10,10 @@
 
 产品 UI 市场保持：`SG / MY / TH / AU / CN / JP / KR`（见 `apps/review-app/src/lib/review-countries.ts`）。
 
-**本周收口（项目负责人建议已执行）**：OpenSpec change 已归档至 `openspec/changes/archive/2026-07-31-knowledge-compiler-mvp/`；主规格同步 `openspec/specs/knowledge-compiler/spec.md`；CI 跑 `pnpm test:compiler-gates`。
+**本周收口（项目负责人建议已执行）**：OpenSpec change 已归档至 `openspec/changes/archive/2026-07-31-knowledge-compiler-mvp/`；主规格同步 `openspec/specs/knowledge-compiler/spec.md`；CI 跑 `pnpm test:compiler-gates`；PR #29 已合并。
+
+**法务 citation 签核表（批次 A+B）**：`docs/knowledge/compiler/citation-signoff-batch-ab.md`（再生：`node scripts/_gen_citation_signoff_ab.mjs`）。
+
+**Citation pass 1（同日）**：按复核口径推进——去掉 A 批 Demo、硬化 B 批 article/领域错配；**不**强制七国 `rule_id` 拆分。处置说明见 `citation-signoff-disposition.md`；pack → `demo-rule-1.8.14`。Disclaimer 仍保留至法务签核。
+
+**发布 checklist 分层（同日）**：`demo-cn-internet-ad-identifiable-tag` 从 WARN 降为 INFO（pack → `demo-rule-1.8.15`），与「审核心创意、不管发布环节」及 sponsored-disclosure 一致——可识别性「广告」标识属发布清单，不抬最终决策。同口径续改 `demo-kr-kol-disclosure-format` → INFO + `influencer_or_activation`（pack → `demo-rule-1.8.16`）；AU 订阅/warranty、AI 图免责等仍保持 WARN（绑文案/素材内容）。
