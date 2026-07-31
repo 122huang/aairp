@@ -16,7 +16,7 @@ describe('Playbook Skill metadata (E2)', () => {
   const moduleByPattern = patternIdToModule(taxonomy);
 
   it('parses skill_module on every pattern after backfill', () => {
-    expect(parsed.packVersion).toBe('demo-playbook-1.7.1');
+    expect(parsed.packVersion).toBe('demo-playbook-1.7.3');
     for (const item of parsed.items) {
       expect(item.skillModule, `${item.patternId} missing skill_module`).toBeTruthy();
       expect(item.purpose, `${item.patternId} missing purpose`).toBeTruthy();

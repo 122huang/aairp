@@ -59,6 +59,8 @@ function summarizeTopFindings(sources: DecisionFusionSources, limit = 3): string
   const caseFindings = sources.caseFindings ?? [];
   const visionFindings = sources.visionFindings ?? [];
   const consistencyFindings = sources.consistencyFindings ?? [];
+  // INFO/PASS publish-checklist notices must not appear in REVIEW/WARN rationales
+  // (e.g. CN internet-ad-identifiable tag is non-elevating).
   const ranked = [
     ...sources.ruleFindings.filter((finding) => finding.severity === 'BLOCKER'),
     ...visionFindings.filter((finding) => finding.severity === 'BLOCKER'),
@@ -71,7 +73,6 @@ function summarizeTopFindings(sources: DecisionFusionSources, limit = 3): string
     ...sources.llmFindings,
     ...visionFindings.filter((finding) => finding.severity !== 'BLOCKER'),
     ...caseFindings.filter((finding) => finding.decision === 'PASS'),
-    ...sources.ruleFindings.filter((finding) => isInformationalRuleDecision(finding.decision)),
   ];
 
   return ranked.slice(0, limit).map(formatFindingLabel);

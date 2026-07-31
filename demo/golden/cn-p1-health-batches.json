@@ -1,0 +1,56 @@
+{
+  "gold_id": "cn-p1-health-batches-v2",
+  "decision_ref": "CN-DECISION-DR04-DR09-DR11 + dry-run Batch A; hard-block v1.1 for clinical/art9 increments in P0",
+  "country_id": "CN",
+  "batches": {
+    "health_implication": {
+      "expect_decision": "REVIEW",
+      "expect_rule_any": ["demo-apac-sa-health-implication"],
+      "cases": [
+        { "id": "HI01", "category_id": "sa.air_fryer", "text": "最近感觉身体轻盈了不少。" },
+        { "id": "HI02", "category_id": "sa.other", "text": "家里老人用了以后精神状态好多了。" },
+        { "id": "HI03", "category_id": "sa.other", "text": "不少用户反馈睡眠质量明显提升。" },
+        { "id": "HI04", "category_id": "sa.blender_processor", "text": "坚持喝，气色好多了。" },
+        { "id": "HI05", "category_id": "sa.other", "text": "用了一段时间，精力更充沛，不容易累。" },
+        { "id": "HI06", "category_id": "sa.other", "text": "很多人说睡得更香了。" },
+        { "id": "HI07", "category_id": "sa.air_fryer", "text": "少油烹饪，吃得更健康。" },
+        { "id": "HI08", "category_id": "sa.blender_processor", "text": "温润好入口，肠胃更舒服。" },
+        { "id": "HI09", "category_id": "sa.other", "text": "暖胃早餐，开启轻松一天。" },
+        { "id": "HI10", "category_id": "sa.blender_processor", "text": "坚持打豆浆，整个人都轻盈起来了。" },
+        { "id": "HI11", "category_id": "sa.blender_processor", "text": "喝完气色红润，同事都说我状态好。" },
+        { "id": "HI12", "category_id": "sa.other", "text": "用了一周，晚上不那么容易醒了。" },
+        { "id": "HI13", "category_id": "sa.other", "text": "深度睡眠时间更长了，第二天不困。" },
+        { "id": "HI14", "category_id": "sa.air_fryer", "text": "少油少负担，全家吃得更踏实。" }
+      ]
+    },
+    "health_blocker": {
+      "expect_decision": "REJECT",
+      "expect_rule_any": ["demo-apac-sa-health-claim-blocker"],
+      "cases": [
+        { "id": "HB01", "category_id": "sa.blender_processor", "text": "喝了一段时间，体检指标明显比以前好看了。" },
+        { "id": "HB02", "category_id": "sa.blender_processor", "text": "很多人反馈坚持使用后瘦了一圈。" },
+        { "id": "HB03", "category_id": "sa.other", "text": "长期使用可延长寿命。" },
+        { "id": "HB04", "category_id": "sa.blender_processor", "text": "三个月血脂指标下来了。" },
+        { "id": "HB05", "category_id": "sa.blender_processor", "text": "用了两个月，腰围小了两寸。" },
+        { "id": "HB06", "category_id": "sa.blender_processor", "text": "提升免疫力，全家少生病。" }
+      ]
+    },
+    "negatives": {
+      "expect_decision": "PASS",
+      "expect_no_rules": [
+        "demo-apac-sa-health-claim-blocker",
+        "demo-apac-sa-health-implication",
+        "demo-cn-absolute-terms-blocker"
+      ],
+      "cases": [
+        { "id": "HN01", "category_id": "sa.other", "text": "轻盈的机身设计，单手即可挪动。" },
+        { "id": "HN02", "category_id": "sa.other", "text": "支持睡眠定时，到点自动断电。" },
+        { "id": "HN03", "category_id": "sa.blender_processor", "text": "使用后请及时清洗刀头，避免残渣残留。" },
+        { "id": "HN04", "category_id": "sa.air_fryer", "text": "空气炸锅容量1.5L，适合1–2人使用。" },
+        { "id": "HN05", "category_id": "sa.air_fryer", "text": "机身轻盈便携，旅行也能带。" },
+        { "id": "HN06", "category_id": "sa.other", "text": "支持深度睡眠模式，到点自动关闭。" },
+        { "id": "HN07", "category_id": "sa.other", "text": "红润配色面板，外观更耐看。" }
+      ]
+    }
+  }
+}

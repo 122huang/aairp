@@ -1,0 +1,127 @@
+{
+  "locale_pack_version": "1.2.0",
+  "country_id": "CN",
+  "note": "P0 hard-block clusters: CN-HARD-BLOCK-LIST-v1 + v1.1 delta (DR07/08/09). P1 feel clusters via 认簇 / CN-DECISION-DR04-DR09-DR11. Do NOT paste into demo-apac-sa-* base lists.",
+  "terms": [
+    {
+      "risk_type": "absolute-claim-blocker",
+      "concept_cluster": "cn-art9-absolute",
+      "lang": "zh",
+      "terms": [
+        "销量冠军",
+        "销售冠军",
+        "零投诉",
+        "零差评",
+        "零退货",
+        "好评率100%",
+        "满意率100%",
+        "推荐率100%",
+        "口碑王"
+      ],
+      "source_regulation_id": "cn-advertising-law-art9",
+      "note": "SIGNED hard-block v1 + v1.1 (口碑王). Pattern also in demo-cn-absolute-terms-blocker. Changes require hard-block list revision."
+    },
+    {
+      "risk_type": "unsourced-metrics",
+      "concept_cluster": "cn-unsourced-sales-social-proof",
+      "lang": "zh",
+      "terms": [
+        "累计销量",
+        "销量突破",
+        "销售额突破",
+        "五星好评",
+        "再次购买",
+        "首月销量",
+        "消费者认可",
+        "家庭用户",
+        "卖爆"
+      ],
+      "source_regulation_id": "cn-advertising-law-art11-28",
+      "note": "WARN unsourced metrics — not hard-block. DR10 卖爆."
+    },
+    {
+      "risk_type": "medical-claim",
+      "concept_cluster": "cn-health-clinical-result",
+      "lang": "zh",
+      "terms": [
+        "体检指标",
+        "指标好看",
+        "体检结果",
+        "化验单",
+        "瘦了一圈",
+        "减重成功",
+        "掉秤",
+        "体重下降",
+        "延长寿命",
+        "延年益寿",
+        "延寿",
+        "延长生命",
+        "血脂指标",
+        "血脂下来了",
+        "腰围小了",
+        "腰围小了两寸"
+      ],
+      "source_regulation_id": "cn-advertising-law-art28-efficacy-overreach",
+      "note": "SIGNED hard-block v1 + v1.1 (血脂/腰围). Do not add 少生病 here — Open Risk observation pool."
+    },
+    {
+      "risk_type": "health-implication",
+      "concept_cluster": "cn-health-feel-body",
+      "lang": "zh",
+      "terms": [
+        "身体轻盈",
+        "感觉身体轻盈",
+        "轻盈了不少",
+        "轻盈起来",
+        "气色好多了",
+        "气色好了",
+        "气色红润",
+        "脸色好看了",
+        "精力更充沛",
+        "不容易累",
+        "身体更轻松"
+      ],
+      "source_regulation_id": "cn-advertising-law-art28",
+      "note": "P1 REVIEW — body feel. Negatives: 机身轻盈 / 轻盈便携."
+    },
+    {
+      "risk_type": "health-implication",
+      "concept_cluster": "cn-health-feel-sleep-spirit",
+      "lang": "zh",
+      "terms": [
+        "精神状态",
+        "精神好多了",
+        "精神更好了",
+        "睡眠质量",
+        "睡眠质量明显提升",
+        "睡眠质量提升",
+        "睡得更好",
+        "睡得更香",
+        "入睡更快",
+        "不那么容易醒",
+        "深度睡眠时间",
+        "第二天不困"
+      ],
+      "source_regulation_id": "cn-advertising-law-art28",
+      "note": "P1 REVIEW — sleep/spirit. DR04: no wearable/lab → REVIEW; with metrics → clinical REJECT. Prefer「深度睡眠时间」not bare「深度睡眠」(avoids 深度睡眠模式 FP)."
+    },
+    {
+      "risk_type": "health-implication",
+      "concept_cluster": "cn-health-diet-wellness",
+      "lang": "zh",
+      "terms": [
+        "吃得更健康",
+        "喝得更健康",
+        "饮食更轻松",
+        "肠胃更舒服",
+        "负担更小",
+        "负担更轻",
+        "养胃",
+        "暖胃",
+        "吃得更踏实"
+      ],
+      "source_regulation_id": "cn-advertising-law-art28",
+      "note": "P1 REVIEW — diet/wellness. Do not add 提升免疫力/治病/少生病 (blocker or Open Risk)."
+    }
+  ]
+}

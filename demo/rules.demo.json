@@ -1,5 +1,5 @@
 {
-  "pack_version": "demo-rule-1.8.16",
+  "pack_version": "demo-rule-1.8.19",
   "rules": [
     {
       "rule_id": "demo-sg-health-forbidden-claim",
@@ -3119,7 +3119,7 @@
     },
     {
       "rule_id": "demo-cn-absolute-terms-blocker",
-      "rule_version_id": "demo-cn-absolute-terms-blocker-v1",
+      "rule_version_id": "demo-cn-absolute-terms-blocker-v4",
       "severity": "BLOCKER",
       "decision": "FAIL",
       "summary": "Article 9 of the Advertising Law expressly prohibits absolute terms such as \"national-grade/top-grade/best\" in advertising for general goods — this is not a matter that can be cured by providing supporting evidence",
@@ -3136,7 +3136,55 @@
         "全网第一",
         "销量遥遥领先",
         "唯一",
-        "首创"
+        "首创",
+        "全球领先",
+        "行业第一",
+        "全网最好",
+        "最好用",
+        "没有之一",
+        "顶级配置",
+        "全面超越",
+        "超越同类",
+        "史上最强",
+        "最强",
+        "领导品牌",
+        "全国销量第一",
+        "销量第一",
+        "口碑第一",
+        "终极",
+        "行业标杆",
+        "最先进",
+        "远超",
+        "登顶",
+        "稳居第一",
+        "无人能及",
+        "最高标准",
+        "全能王者",
+        "用户口碑第一",
+        "销量冠军",
+        "销售冠军",
+        "零投诉",
+        "零差评",
+        "零退货",
+        "好评率100%",
+        "满意率100%",
+        "推荐率100%",
+        "退货率为0",
+        "退货率0",
+        "口碑王"
+      ],
+      "trigger_patterns": [
+        "(销量|口碑|满意度|占有率).{0,6}第一",
+        "(全球|全网|全国|行业|业内).{0,8}(领先|第一|最好|最强|最先进)",
+        "史上最[强弱优]",
+        "没有之一",
+        "(销量|销售).{0,4}冠军",
+        "蝉联.{0,8}(销量|销售)?冠军",
+        "(好评|满意|推荐|好评率|满意率|推荐率|售后满意度).{0,12}(100%|百分百|百分之百)",
+        "(好评|满意|推荐|好评率|满意率|推荐率).{0,12}99\\.99%",
+        "零(投诉|差评|退货)",
+        "退货率.?为.?0",
+        "(全网|全国|行业).{0,6}口碑王"
       ],
       "scopes": {
         "countries": [
@@ -3165,6 +3213,65 @@
       "summary_en": "Article 9 of the Advertising Law expressly prohibits absolute terms such as \"national-grade/top-grade/best\" in advertising for general goods — this is not a matter that can be cured by providing supporting evidence",
       "summary_zh": "广告法第九条明文禁止使用'国家级''最高级''最佳'等绝对化用语于一般商品广告，不是需要补证据就能过关的事项",
       "remediation_type": "REWRITE_ONLY"
+    },
+    {
+      "rule_id": "demo-cn-unsourced-metrics",
+      "rule_version_id": "demo-cn-unsourced-metrics-v1",
+      "severity": "HIGH",
+      "decision": "WARN",
+      "summary": "Unsourced quantified sales, conversion-rate, user-base, review-count, or market-penetration claims require statistical scope, period, and source — otherwise enforcement risk under Advertising Law Arts. 11/28",
+      "trigger_terms": [
+        "累计销量",
+        "销量突破",
+        "销售额突破",
+        "五星好评",
+        "再次购买",
+        "复购率",
+        "消费者选择我们",
+        "家庭用户",
+        "消费者认可",
+        "首月销量",
+        "销量超"
+      ],
+      "trigger_patterns": [
+        "每(分钟|秒).{0,8}(售出|成交)",
+        "平均每秒成交",
+        "(已服务|服务超过).{0,12}家庭",
+        "全国已有.{0,16}(消费者|用户)",
+        "每\\d+个家庭",
+        "突破(亿|千万|百万)",
+        "超过\\d+(\\.\\d+)?%的?(消费者|用户|家庭)",
+        "\\d+(\\.\\d+)?%的用户",
+        "超过\\d+万(个)?(五星)?好评",
+        "超过\\d+万(家庭|消费者|用户)"
+      ],
+      "scopes": {
+        "countries": [
+          "CN"
+        ],
+        "categories": [
+          "health.supplement",
+          "cosmetic",
+          "food",
+          "electronics",
+          "sa.vacuum_floor",
+          "sa.steam_mop",
+          "sa.air_fryer",
+          "sa.blender_processor",
+          "sa.rice_cooker",
+          "sa.soy_milk",
+          "sa.coffee_espresso",
+          "sa.kettle_cooker",
+          "sa.other"
+        ]
+      },
+      "citation": {
+        "law_name": "中华人民共和国广告法（2021年4月29日第二次修正）",
+        "article": "第十一条（数据引证）/第二十八条（虚假广告）— 无来源量化经营与评价数据"
+      },
+      "summary_en": "Unsourced quantified sales, conversion-rate, user-base, review-count, or market-penetration claims require statistical scope, period, and source — otherwise enforcement risk under Advertising Law Arts. 11/28",
+      "summary_zh": "无来源的销量、成交速率、用户规模、好评计数或市场渗透率等量化经营/评价数据，须注明统计口径、期间与来源，否则按广告法第十一条/第二十八条风险提示",
+      "remediation_type": "EVIDENCE_SUPPLEMENT"
     },
     {
       "rule_id": "demo-cn-data-citation-unsourced",
@@ -3623,7 +3730,7 @@
     },
     {
       "rule_id": "demo-apac-sa-before-after-imagery",
-      "rule_version_id": "demo-apac-sa-before-after-imagery-v1",
+      "rule_version_id": "demo-apac-sa-before-after-imagery-v2",
       "severity": "LOW",
       "decision": "WARN",
       "summary": "Before/after or transformation claim detected — require typicality disclaimer; must not imply guaranteed outcomes (WARN)",
@@ -3634,10 +3741,15 @@
         "before after",
         "transformation",
         "前后对比",
-        "使用前",
-        "使用后",
+        "使用前后",
+        "使用前与使用后",
+        "使用前/使用后",
         "对比图",
         "效果对比"
+      ],
+      "trigger_patterns": [
+        "使用前.{0,40}使用后",
+        "使用后.{0,40}使用前"
       ],
       "scopes": {
         "countries": [
