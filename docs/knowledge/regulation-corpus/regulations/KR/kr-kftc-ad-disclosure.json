@@ -13,6 +13,7 @@
   "summary": "Advertisements including influencer and native content must be clearly distinguishable as commercial messages.",
   "review_guidance": "TRIGGER: Paid influencer, review, or native ad content. ACTION: REWRITE — add clear ad/sponsorship disclosure. CHECK: Korean disclosure text, #광고, and platform ad labels. ESCALATE IF: Undisclosed paid promotion.",
   "related_rule_ids": [
+    "demo-kr-sponsored-disclosure",
     "demo-apac-sa-ai-image-disclaimer"
   ],
   "related_evidence_ids": [],

@@ -1,0 +1,26 @@
+{
+  "hook_id": "hook-apac-sa-before-after-imagery",
+  "status": "accepted",
+  "title": "Before/after imagery requires typicality disclaimer",
+  "claim_family": "before-after-imagery",
+  "markets": ["SG", "MY", "TH", "AU", "CN", "JP", "KR"],
+  "handbook_ref": "手册 Ch.5 / ASAS Rule 4.2 before-after imagery",
+  "invariant": "If copy or OCR contains before/after or transformation framing, Rule engine MUST emit a finding (WARN) requiring typicality disclaimer; must not imply guaranteed outcomes.",
+  "runtime_binding": {
+    "kind": "rule",
+    "rule_id": "demo-apac-sa-before-after-imagery",
+    "playbook_pattern": "before-after-imagery",
+    "regulation_refs": ["regulation:sg-asas-before-after-imagery"],
+    "test_refs": [
+      "packages/application/src/review/rule-engine.service.spec.ts :: WARNs on before/after imagery across product UI markets"
+    ]
+  },
+  "evidence": {
+    "pack_version": "demo-rule-1.8.11",
+    "tests": [
+      "packages/application/src/review/rule-engine.service.spec.ts :: WARNs on before/after imagery across product UI markets"
+    ],
+    "matrix": "docs/knowledge/compiler/coverage-matrix.md"
+  },
+  "notes": "样板闭环：矩阵 GAP → Hook Spec → 人工写入 demo pack → 单测门禁。"
+}

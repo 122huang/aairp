@@ -5,6 +5,7 @@
   "scripts": {
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",
+    "test:compiler-gates": "node scripts/validate-hook-specs.mjs && pnpm --filter @aairp/application exec vitest run src/review/decision-invariants.spec.ts",
     "migrate": "pnpm --filter @aairp/infrastructure migrate",
     "kos:import-demo": "pnpm --filter @aairp/infrastructure kos:import-demo",
     "kos:import-cases": "pnpm --filter @aairp/infrastructure kos:import-cases",

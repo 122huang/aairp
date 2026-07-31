@@ -1,0 +1,22 @@
+{
+  "hook_id": "hook-blocker-skips-open-risk",
+  "status": "accepted",
+  "title": "BLOCKER findings skip Open Risk / LLM discovery",
+  "claim_family": "fusion-guardrail",
+  "markets": ["SG", "MY", "TH", "AU", "CN", "JP", "KR", "ID", "IN", "VN", "PH"],
+  "handbook_ref": "法务铁律：硬拦截成立时不再跑语义层降级路径",
+  "invariant": "When prior.hasBlocker is true, Open Risk MUST skip with skipReason HAS_BLOCKER and MUST NOT emit LLM findings that can soften the decision.",
+  "runtime_binding": {
+    "kind": "open_risk_guardrail",
+    "test_refs": [
+      "packages/application/src/review/decision-invariants.spec.ts :: BLOCKER skips Open Risk",
+      "packages/application/src/review/open-risk-discovery.service.spec.ts"
+    ]
+  },
+  "evidence": {
+    "tests": [
+      "packages/application/src/review/decision-invariants.spec.ts"
+    ],
+    "matrix": "docs/knowledge/compiler/coverage-matrix.md"
+  }
+}

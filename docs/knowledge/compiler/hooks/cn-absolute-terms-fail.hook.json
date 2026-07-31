@@ -1,0 +1,24 @@
+{
+  "hook_id": "hook-cn-absolute-terms-fail",
+  "status": "accepted",
+  "title": "CN absolute advertising terms are BLOCKER/FAIL",
+  "claim_family": "absolute-superlative",
+  "markets": ["CN"],
+  "handbook_ref": "手册 CN 市场卡 / 广告法第九条绝对化用语",
+  "invariant": "For country CN, absolute/superlative forbidden terms matched by demo-cn-absolute-terms-blocker MUST yield BLOCKER+FAIL (REJECT path), not soft WARN-only.",
+  "runtime_binding": {
+    "kind": "rule",
+    "rule_id": "demo-cn-absolute-terms-blocker",
+    "regulation_refs": [],
+    "test_refs": [
+      "packages/application/src/review/decision-invariants.spec.ts :: CN absolute terms FAIL"
+    ]
+  },
+  "evidence": {
+    "pack_version": "demo-rule-1.8.12",
+    "tests": [
+      "packages/application/src/review/decision-invariants.spec.ts"
+    ],
+    "matrix": "docs/knowledge/compiler/coverage-matrix.md"
+  }
+}

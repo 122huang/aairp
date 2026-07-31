@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aairp.local/schemas/hook-spec.schema.json",
+  "title": "Knowledge Compiler Hook Spec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "hook_id",
+    "status",
+    "title",
+    "claim_family",
+    "markets",
+    "invariant",
+    "runtime_binding",
+    "handbook_ref"
+  ],
+  "properties": {
+    "hook_id": {
+      "type": "string",
+      "pattern": "^hook-[a-z0-9-]+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "accepted", "deprecated"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "claim_family": { "type": "string", "minLength": 1 },
+    "markets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["SG", "MY", "TH", "AU", "CN", "JP", "KR", "ID", "IN", "VN", "PH"]
+      },
+      "uniqueItems": true
+    },
+    "invariant": { "type": "string", "minLength": 1 },
+    "handbook_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Handbook chapter / section or iron-law label"
+    },
+    "runtime_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["rule", "fusion_invariant", "open_risk_guardrail"]
+        },
+        "rule_id": { "type": "string" },
+        "playbook_pattern": { "type": "string" },
+        "regulation_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "test_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pack_version": { "type": "string" },
+        "tests": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "matrix": { "type": "string" }
+      }
+    },
+    "notes": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "runtime_binding": {
+            "properties": { "kind": { "const": "rule" } }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "runtime_binding": { "required": ["kind", "rule_id"] }
+        }
+      }
+    }
+  ]
+}

@@ -13,6 +13,7 @@
   "summary": "Stealth marketing and undisclosed paid endorsements are prohibited; sponsored content must be clearly identified.",
   "review_guidance": "TRIGGER: Influencer posts, paid reviews, or undisclosed brand partnerships. ACTION: REWRITE — add clear paid promotion disclosure. CHECK: Japanese disclosure labels, #PR, and platform ad settings. ESCALATE IF: Covert paid promotion presented as organic content.",
   "related_rule_ids": [
+    "demo-jp-sponsored-disclosure",
     "demo-apac-sa-ai-image-disclaimer"
   ],
   "related_evidence_ids": [],
