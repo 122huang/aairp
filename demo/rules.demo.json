@@ -149,9 +149,10 @@
       "rule_version_id": "demo-apac-brand-ad-disclosure-v1",
       "severity": "MEDIUM",
       "decision": "WARN",
-      "summary": "Paid brand ad copy should include a clear advertising disclosure (#ad / sponsored / 广告)",
+      "summary": "Paid brand ad copy should include a clear advertising disclosure (#ad / #PR / sponsored / 广告)",
       "required_any_terms": [
         "#ad",
+        "#PR",
         "sponsored",
         "advertisement",
         "paid partnership",
@@ -185,8 +186,8 @@
         "law_name": "SG: SCAP 2.4; MY: MCMC/ASA; TH: OCPB ad identification; AU: AANA; JP: ステマ規制; KR: KFTC",
         "article": "Identifiable advertising disclosure on paid brand content (influencer INFO reminders remain separate) — Legal Director P0-2 2026-07-31"
       },
-      "summary_en": "Paid brand ad copy should include a clear advertising disclosure (#ad / sponsored)",
-      "summary_zh": "品牌付费广告文案应包含清晰的广告披露标识（#ad / sponsored / 广告）；网红场景仍走各国 INFO 提醒规则",
+      "summary_en": "Paid brand ad copy should include a clear advertising disclosure (#ad / #PR / sponsored)",
+      "summary_zh": "品牌付费广告文案应包含清晰的广告披露标识（#ad / #PR / sponsored / 广告）；网红场景仍走各国 INFO 提醒规则",
       "remediation_type": "NOT_APPLICABLE_DISCLOSURE"
     },
     {

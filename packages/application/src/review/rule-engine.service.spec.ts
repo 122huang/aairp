@@ -731,6 +731,27 @@ describe('RuleEngineService', () => {
     ).toBe(false);
   });
 
+  it('accepts JP #PR as brand advertising disclosure', () => {
+    const service = new RuleEngineService();
+
+    const result = service.evaluate({
+      ...baseContext,
+      dimensions: {
+        ...baseContext.dimensions,
+        countryId: 'JP',
+        categoryId: 'health.supplement',
+      },
+      normalizedContent: {
+        text: 'Daily supplement to support general wellness and vitality. Food supplement — not a pharmaceutical product. #PR',
+        imageUrls: [],
+      },
+    });
+
+    expect(
+      result.findings.some((finding) => finding.refId === 'demo-apac-brand-ad-disclosure'),
+    ).toBe(false);
+  });
+
   it('returns no findings for clean compliant ad copy', () => {
     const service = new RuleEngineService();
 
