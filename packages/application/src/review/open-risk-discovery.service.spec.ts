@@ -7,9 +7,11 @@ import { DEMO_KNOWLEDGE_VERSIONS } from './context-builder.service.js';
 import {
   OpenRiskDiscoveryService,
   applyOpenRiskGuardrails,
+  classifyOpenRiskFailure,
   parseOpenRiskStubResponse,
   renderOpenRiskPrompt,
 } from './open-risk-discovery.service.js';
+import { LlmGatewayTimeoutError } from './llm-gateway.utils.js';
 import type { ILlmGateway } from './stub-llm.gateway.types.js';
 
 const demoPromptPath = join(
@@ -211,8 +213,85 @@ describe('OpenRiskDiscoveryService', () => {
 
     expect(result.skipped).toBe(true);
     expect(result.skipReason).toBe('HAS_BLOCKER');
+    expect(result.incomplete).toBeUndefined();
     expect(result.findings).toEqual([]);
     expect(gateway.complete).not.toHaveBeenCalled();
+  });
+
+  it('fail-soft: empty LLM content returns incomplete, does not throw', async () => {
+    const gateway: ILlmGateway = {
+      complete: vi.fn().mockRejectedValue(new Error('OpenAI-compatible response missing message content')),
+    };
+    const service = new OpenRiskDiscoveryService({
+      promptPath: demoPromptPath,
+      llmGateway: gateway,
+      now: () => fixedDate,
+    });
+
+    const result = await service.discover(baseContext, priorWithoutBlocker);
+
+    expect(result.skipped).toBe(false);
+    expect(result.incomplete).toBe(true);
+    expect(result.incompleteReason).toBe('LLM_EMPTY_RESPONSE');
+    expect(result.findings).toEqual([]);
+    expect(result.skipReason).toBeUndefined();
+  });
+
+  it('fail-soft: gateway timeout returns incomplete LLM_TIMEOUT', async () => {
+    const gateway: ILlmGateway = {
+      complete: vi.fn().mockRejectedValue(new LlmGatewayTimeoutError(1000)),
+    };
+    const service = new OpenRiskDiscoveryService({
+      promptPath: demoPromptPath,
+      llmGateway: gateway,
+      now: () => fixedDate,
+    });
+
+    const result = await service.discover(baseContext, priorWithoutBlocker);
+
+    expect(result.incomplete).toBe(true);
+    expect(result.incompleteReason).toBe('LLM_TIMEOUT');
+    expect(result.skipped).toBe(false);
+    expect(result.findings).toEqual([]);
+  });
+
+  it('fail-soft: unparseable LLM payload returns incomplete LLM_PARSE_FAILED', async () => {
+    const previous = process.env.OPEN_RISK_PARSE_RETRIES;
+    process.env.OPEN_RISK_PARSE_RETRIES = '0';
+    try {
+      const gateway: ILlmGateway = {
+        complete: vi.fn().mockResolvedValue({ content: 'not-json-at-all', model: 'stub' }),
+      };
+      const service = new OpenRiskDiscoveryService({
+        promptPath: demoPromptPath,
+        llmGateway: gateway,
+        now: () => fixedDate,
+      });
+
+      const result = await service.discover(baseContext, priorWithoutBlocker);
+
+      expect(result.incomplete).toBe(true);
+      expect(result.incompleteReason).toBe('LLM_PARSE_FAILED');
+      expect(result.skipped).toBe(false);
+      expect(result.findings).toEqual([]);
+    } finally {
+      if (previous === undefined) {
+        delete process.env.OPEN_RISK_PARSE_RETRIES;
+      } else {
+        process.env.OPEN_RISK_PARSE_RETRIES = previous;
+      }
+    }
+  });
+
+  it('classifyOpenRiskFailure maps known error shapes', () => {
+    expect(classifyOpenRiskFailure(new LlmGatewayTimeoutError(10)).reason).toBe('LLM_TIMEOUT');
+    expect(
+      classifyOpenRiskFailure(new Error('OpenAI-compatible response missing message content')).reason,
+    ).toBe('LLM_EMPTY_RESPONSE');
+    expect(
+      classifyOpenRiskFailure(new Error('invalid open risk LLM response: expected object')).reason,
+    ).toBe('LLM_PARSE_FAILED');
+    expect(classifyOpenRiskFailure(new Error('ECONNREFUSED')).reason).toBe('LLM_UNAVAILABLE');
   });
 
   it('calls stub LLM gateway and parses findings from stub JSON', async () => {

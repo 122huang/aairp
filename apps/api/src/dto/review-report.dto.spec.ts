@@ -30,6 +30,7 @@ describe('review-report.dto', () => {
         ],
         openRiskSkipped: true,
         openRiskSkipReason: 'HAS_BLOCKER',
+        openRiskIncomplete: false,
       },
       generatedAt: '2026-06-26T10:10:00.000Z',
     });
@@ -62,6 +63,7 @@ describe('review-report.dto', () => {
         ],
         open_risk_skipped: true,
         open_risk_skip_reason: 'HAS_BLOCKER',
+        open_risk_incomplete: false,
       },
       generated_at: '2026-06-26T10:10:00.000Z',
     });
@@ -85,11 +87,13 @@ describe('review-report.dto', () => {
         },
         findings: [],
         openRiskSkipped: false,
+        openRiskIncomplete: false,
       },
       generatedAt: '2026-06-26T10:10:00.000Z',
     });
 
     expect(dto.summary.advertisement.legal_reviewed_market).toBe(false);
+    expect(dto.summary.open_risk_incomplete).toBe(false);
   });
 
   it('maps branch_verdicts and vision_mode when present', () => {
@@ -116,6 +120,7 @@ describe('review-report.dto', () => {
         },
         findings: [],
         openRiskSkipped: false,
+        openRiskIncomplete: false,
       },
       generatedAt: '2026-06-26T10:10:00.000Z',
     });

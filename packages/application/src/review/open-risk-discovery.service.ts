@@ -6,6 +6,7 @@ import type {
   LlmFinding,
   LlmSuggestedAction,
   OpenRiskDiscoveryResult,
+  OpenRiskIncompleteReason,
   PriorFindingsSummary,
   ReviewContext,
 } from '@aairp/shared-kernel';
@@ -64,6 +65,48 @@ function summarizePlaybookFindings(
     return 'none';
   }
   return findings.map((finding) => `${finding.refId}:${finding.decision}:${finding.summary}`).join('; ');
+}
+
+/** Map gateway/parse failures to stable incomplete reason codes (fail-soft). */
+export function classifyOpenRiskFailure(error: unknown): {
+  reason: OpenRiskIncompleteReason;
+  detail: string;
+} {
+  const detail =
+    error instanceof Error ? error.message.slice(0, 300) : 'unknown open risk failure';
+
+  if (error instanceof LlmGatewayTimeoutError) {
+    return { reason: 'LLM_TIMEOUT', detail };
+  }
+  if (/timed?\s*out|timeout/i.test(detail)) {
+    return { reason: 'LLM_TIMEOUT', detail };
+  }
+  if (/missing message content|empty (response|content)/i.test(detail)) {
+    return { reason: 'LLM_EMPTY_RESPONSE', detail };
+  }
+  if (isOpenRiskParseError(error) || /invalid open risk LLM response/i.test(detail)) {
+    return { reason: 'LLM_PARSE_FAILED', detail };
+  }
+  return { reason: 'LLM_UNAVAILABLE', detail };
+}
+
+function buildIncompleteOpenRiskResult(
+  context: ReviewContext,
+  config: OpenRiskDiscoveryConfig,
+  evaluatedAt: string,
+  error: unknown,
+): OpenRiskDiscoveryResult {
+  const { reason, detail } = classifyOpenRiskFailure(error);
+  return {
+    reviewId: context.reviewId,
+    promptPackVersion: config.promptPackVersion ?? 'demo-open-risk-1.2.0',
+    findings: [],
+    skipped: false,
+    incomplete: true,
+    incompleteReason: reason,
+    incompleteDetail: detail,
+    evaluatedAt,
+  };
 }
 
 export function renderOpenRiskPrompt(
@@ -304,33 +347,42 @@ export class OpenRiskDiscoveryService {
         stubResponsePath,
         readTextFile,
       });
+
     let completion;
     try {
       completion = await gateway.complete(prompt);
     } catch (error) {
-      if (error instanceof LlmGatewayTimeoutError) {
-        throw new Error(`open risk discovery failed: ${error.message}`);
-      }
-      throw error;
+      return buildIncompleteOpenRiskResult(context, this.config, evaluatedAt, error);
     }
 
     const parseAttempts = resolveOpenRiskParseAttempts();
     let stubPayload: ReturnType<typeof parseOpenRiskResponseContent> | undefined;
+    let lastParseError: unknown;
     for (let attempt = 1; attempt <= parseAttempts; attempt += 1) {
       if (attempt > 1) {
-        completion = await gateway.complete(buildOpenRiskParseRetryPrompt(prompt));
+        try {
+          completion = await gateway.complete(buildOpenRiskParseRetryPrompt(prompt));
+        } catch (error) {
+          return buildIncompleteOpenRiskResult(context, this.config, evaluatedAt, error);
+        }
       }
       try {
         stubPayload = parseOpenRiskResponseContent(completion.content);
         break;
       } catch (error) {
+        lastParseError = error;
         if (!isOpenRiskParseError(error) || attempt >= parseAttempts) {
-          throw error;
+          return buildIncompleteOpenRiskResult(context, this.config, evaluatedAt, error);
         }
       }
     }
     if (!stubPayload) {
-      throw new Error('invalid open risk LLM response: parse failed after retries');
+      return buildIncompleteOpenRiskResult(
+        context,
+        this.config,
+        evaluatedAt,
+        lastParseError ?? new Error('invalid open risk LLM response: parse failed after retries'),
+      );
     }
     const promptPackVersion =
       stubPayload.prompt_pack_version ?? this.config.promptPackVersion ?? 'demo-open-risk-1.5.4';

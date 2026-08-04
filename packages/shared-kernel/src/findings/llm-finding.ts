@@ -21,14 +21,37 @@ export type LlmFinding = ModuleFinding & {
   evaluationDetail?: LlmEvaluationDetail;
 };
 
+/** Intentional Open Risk skip — deterministic path already decisive; LLM was not needed. */
+export type OpenRiskSkipReason = 'HAS_BLOCKER' | 'EXACT_HASH_PRECEDENT';
+
+/**
+ * Fail-soft incomplete reasons — Open Risk was attempted but could not finish.
+ * Distinct from {@link OpenRiskSkipReason}: humans must not treat these as a normal skip.
+ */
+export type OpenRiskIncompleteReason =
+  | 'LLM_UNAVAILABLE'
+  | 'LLM_EMPTY_RESPONSE'
+  | 'LLM_TIMEOUT'
+  | 'LLM_PARSE_FAILED';
+
 export type OpenRiskDiscoveryResult = {
   reviewId: string;
   promptPackVersion: string;
   /** Concrete model id returned by the LLM gateway for this call. */
   model?: string;
   findings: LlmFinding[];
+  /** True when Open Risk was intentionally not run (blocker / exact-hash policy). */
   skipped: boolean;
-  skipReason?: 'HAS_BLOCKER' | 'EXACT_HASH_PRECEDENT';
+  skipReason?: OpenRiskSkipReason;
+  /**
+   * True when Open Risk was attempted but failed after retries (fail-soft).
+   * Not a content finding — residual risk is unknown; decision fusion treats this as a
+   * REVIEW-signal without inventing an LLM REVIEW finding.
+   */
+  incomplete?: boolean;
+  incompleteReason?: OpenRiskIncompleteReason;
+  /** Short diagnostic detail for logs/report (not shown as a finding summary). */
+  incompleteDetail?: string;
   evaluatedAt: string;
 };
 

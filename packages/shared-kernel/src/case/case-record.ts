@@ -83,6 +83,9 @@ export type CaseLlmAnalysis = {
   llm_model?: string;
   skipped: boolean;
   skip_reason?: string;
+  /** Fail-soft: Open Risk attempted but did not finish (distinct from intentional skip). */
+  incomplete?: boolean;
+  incomplete_reason?: string;
   findings: CaseMatchedFinding[];
   evaluated_at: string;
 };
@@ -153,6 +156,9 @@ export type CaseMetadata = {
   source: string;
   pipeline_version: string;
   open_risk_skipped: boolean;
+  /** Fail-soft: AI gap-fill did not finish (distinct from intentional open_risk_skipped). */
+  open_risk_incomplete?: boolean;
+  open_risk_incomplete_reason?: string;
   storage_phase: 'json' | 'postgres';
   review_id: string;
   embedding_id: null;
