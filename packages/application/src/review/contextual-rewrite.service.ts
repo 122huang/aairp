@@ -277,18 +277,29 @@ export class ContextualRewriteService {
       });
     }
 
-    return this.suggestFromLive({
-      reviewId,
-      finding,
-      adText,
-      context: input.context,
-      riskType,
-      rewriteTemplateId,
-      route,
-      originalSpan,
-      locale,
-      createSuggestionId,
-    });
+    try {
+      return await this.suggestFromLive({
+        reviewId,
+        finding,
+        adText,
+        context: input.context,
+        riskType,
+        rewriteTemplateId,
+        route,
+        originalSpan,
+        locale,
+        createSuggestionId,
+      });
+    } catch {
+      // DeepSeek/provider 503, timeout, empty content, or parse failure — keep review usable.
+      return {
+        reviewId,
+        findingId: finding.findingId,
+        riskType,
+        skipped: true,
+        skipReason: 'LLM_UNAVAILABLE',
+      };
+    }
   }
 
   private suggestFromStub(input: {

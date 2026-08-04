@@ -26,7 +26,13 @@ export type ContextualRewriteResult = {
   riskType: string;
   suggestion?: RewriteSuggestion;
   skipped: boolean;
-  skipReason?: 'BLOCKER_FINDING' | 'NO_WARN_ROUTE' | 'NO_ORIGINAL_SPAN' | 'REWRITE_MODE_OFF';
+  skipReason?:
+    | 'BLOCKER_FINDING'
+    | 'NO_WARN_ROUTE'
+    | 'NO_ORIGINAL_SPAN'
+    | 'REWRITE_MODE_OFF'
+    /** Live rewrite LLM failed (503/timeout/empty); review continues without drafts. */
+    | 'LLM_UNAVAILABLE';
 };
 
 export type ContextualRewriteBatchResult = {
