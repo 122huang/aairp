@@ -12,7 +12,7 @@
         "definition": "产品文案指向具体疾病、身体器官功能、临床指标或医疗专业背书；保健品场景下含 cure/miracle 等禁止性疗效表述。家电与保健品均不具备作出此类声明的资格，补充证据也无法解决越权问题。",
         "default_severity": "BLOCKER",
         "default_decision": "FAIL",
-        "rule_ids": ["demo-apac-sa-health-claim-blocker", "demo-sg-health-forbidden-claim"],
+        "rule_ids": ["demo-apac-sa-health-claim-blocker", "demo-sg-health-forbidden-claim", "demo-apac-health-forbidden-claim"],
         "pattern_ids": ["sa-medical-claim"]
       },
       {
@@ -273,7 +273,8 @@
           "demo-my-sponsored-disclosure",
           "demo-th-sponsored-disclosure",
           "demo-id-sponsored-disclosure",
-          "demo-ph-sponsored-disclosure"
+          "demo-ph-sponsored-disclosure",
+          "demo-apac-brand-ad-disclosure"
         ],
         "pattern_ids": ["urgency-cta"]
       }
@@ -296,6 +297,7 @@
       },
       "applicable_rules": [
         "demo-sg-health-forbidden-claim",
+        "demo-apac-health-forbidden-claim",
         "demo-sg-health-superlative",
         "demo-apac-sa-health-claim-blocker",
         "demo-apac-sa-absolute-claim",
@@ -714,6 +716,7 @@
         "demo-th-sponsored-disclosure",
         "demo-id-sponsored-disclosure",
         "demo-ph-sponsored-disclosure",
+        "demo-apac-brand-ad-disclosure",
         "demo-apac-sa-ai-image-disclaimer",
         "demo-apac-sa-ai-image-disclaimer"
       ],
@@ -748,6 +751,7 @@
     ],
     "unsubstantiated-testimonial": [
       "demo-sg-health-forbidden-claim",
+      "demo-apac-health-forbidden-claim",
       "demo-apac-sa-health-claim-blocker"
     ],
     "sa-absolute-performance": [

@@ -3345,7 +3345,7 @@
       "case_id": "sg-health-warn-disclosure",
       "expected_skill": "Claim Review",
       "expected_pattern": null,
-      "expected_rule": "demo-sg-sponsored-disclosure",
+      "expected_rule": "demo-apac-brand-ad-disclosure",
       "expected_decision": "WARN",
       "expected_severity": "MEDIUM",
       "expected_action": "REWRITE",
