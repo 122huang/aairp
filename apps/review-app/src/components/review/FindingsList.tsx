@@ -127,7 +127,6 @@ function FindingSubItem({ item }: { item: MergedFindingItem }) {
 function ClaimAnchorCard({ finding }: { finding: MergedFinding }) {
   const isGrouped = finding.items.length > 1;
   const primary = finding.items[0]!;
-
   if (!isGrouped) {
     return (
       <div className="rounded-lg border border-gray-200 bg-white p-4">
@@ -149,7 +148,7 @@ function ClaimAnchorCard({ finding }: { finding: MergedFinding }) {
       </div>
       <div className="space-y-3">
         {finding.items.map((item) => (
-          <FindingSubItem key={item.riskType} item={item} />
+          <FindingSubItem key={`${item.riskType}:${item.findingIds.join('|')}`} item={item} />
         ))}
       </div>
     </div>
@@ -168,7 +167,10 @@ export function FindingsList({ findings }: FindingsListProps) {
   return (
     <div className="space-y-3">
       {findings.map((finding) => (
-        <ClaimAnchorCard key={finding.groupKey} finding={finding} />
+        <ClaimAnchorCard
+          key={finding.findingIds.join('|') || finding.groupKey}
+          finding={finding}
+        />
       ))}
     </div>
   );

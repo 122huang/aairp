@@ -164,9 +164,17 @@ export async function extractImageReviewText(
   }
 }
 
-export async function submitReview(payload: ReviewUploadPayload): Promise<DemoReviewResponse> {
+export async function submitReview(
+  payload: ReviewUploadPayload,
+  options?: { signal?: AbortSignal },
+): Promise<DemoReviewResponse> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 180_000);
+  const onExternalAbort = () => controller.abort();
+  options?.signal?.addEventListener('abort', onExternalAbort, { once: true });
+  if (options?.signal?.aborted) {
+    controller.abort();
+  }
 
   try {
     const response = await fetch('/demo/review', {
@@ -192,6 +200,12 @@ export async function submitReview(payload: ReviewUploadPayload): Promise<DemoRe
     return body as DemoReviewResponse;
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
+      if (options?.signal?.aborted) {
+        throw {
+          message: '审核已取消',
+          status: 499,
+        } satisfies ReviewApiError;
+      }
       throw {
         message: '审核请求超时（180秒），请稍后重试或缩小图片后提交',
         status: 408,
@@ -200,5 +214,6 @@ export async function submitReview(payload: ReviewUploadPayload): Promise<DemoRe
     throw error;
   } finally {
     clearTimeout(timeoutId);
+    options?.signal?.removeEventListener('abort', onExternalAbort);
   }
 }

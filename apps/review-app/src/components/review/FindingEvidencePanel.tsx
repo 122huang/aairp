@@ -697,7 +697,7 @@ export function FindingEvidencePanel({
       <div className="space-y-3">
         {evidenceGroups.map((group) => (
           <FindingEvidenceItem
-            key={group.groupKey}
+            key={`${reviewId}:${group.findings.map((f) => f.finding_id).join('|') || group.groupKey}`}
             reviewId={reviewId}
             findings={group.findings}
             claimAnchor={group.claimAnchor}
