@@ -55,6 +55,8 @@ export function SingleReviewPanel({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<DemoReviewResponse | null>(null);
+  /** Ad text that produced `result` — keep SourceMaterial/highlights from drifting with the form. */
+  const [resultSourceText, setResultSourceText] = useState('');
   /** Next submit joins this parent case's thread (set via resubmit button or URL). */
   const [pendingParentCaseId, setPendingParentCaseId] = useState<string | null>(
     initialParentCaseId ?? null,
@@ -62,6 +64,10 @@ export function SingleReviewPanel({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const restoredParentRef = useRef<string | null>(null);
+
+  const resultStale = Boolean(
+    result && resultSourceText.trim().length > 0 && text.trim() !== resultSourceText.trim(),
+  );
 
   const mergedFindings = useMemo(() => {
     if (!result) return [];
@@ -79,8 +85,8 @@ export function SingleReviewPanel({
   const highlightSpans = useMemo(() => {
     if (!result) return [];
     const spans = result.summary.findings.flatMap(extractEvidenceSpans);
-    return collectHighlightSpans(text, spans);
-  }, [result, text]);
+    return collectHighlightSpans(resultSourceText, spans);
+  }, [result, resultSourceText]);
 
   function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files ?? []);
@@ -103,6 +109,7 @@ export function SingleReviewPanel({
     restoredParentRef.current = initialParentCaseId;
     setPendingParentCaseId(initialParentCaseId);
     setResult(null);
+    setResultSourceText('');
     setError(null);
     void fetchCase(initialParentCaseId)
       .then((record) => {
@@ -147,6 +154,8 @@ export function SingleReviewPanel({
 
     setLoading(true);
     setError(null);
+    setResult(null);
+    setResultSourceText('');
 
     try {
       const { imageDataUrls } = await filesToBase64(imageFiles);
@@ -165,10 +174,12 @@ export function SingleReviewPanel({
       });
       setPendingParentCaseId(null);
       setResult(response);
+      setResultSourceText(trimmed);
     } catch (caught) {
       const apiError = caught as ReviewApiError;
       setError(apiError.message ?? '提交失败，请稍后重试');
       setResult(null);
+      setResultSourceText('');
     } finally {
       setLoading(false);
     }
@@ -319,6 +330,16 @@ export function SingleReviewPanel({
 
         {result && !loading && (
           <>
+            {resultStale && (
+              <div
+                className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-950"
+                role="status"
+              >
+                左侧文案已修改，下方仍是<strong>上一稿</strong>的审查结果（含 findings / 改写）。
+                请重新点击「提交审查」以刷新结果，避免串台。
+              </div>
+            )}
+
             <DecisionBanner
               decision={result.final_decision}
               rationale={result.rationale}
@@ -367,13 +388,17 @@ export function SingleReviewPanel({
             <FindingEvidencePanel
               reviewId={result.review_id}
               findings={result.summary.findings}
-              adText={text}
+              adText={resultSourceText}
               countryId={result.summary.advertisement.country_id}
               categoryId={result.summary.advertisement.category_id}
               productSku={productSku.trim() || undefined}
             />
 
-            <SourceMaterial text={text} highlightSpans={highlightSpans} imagePreviews={imagePreviews} />
+            <SourceMaterial
+              text={resultSourceText}
+              highlightSpans={highlightSpans}
+              imagePreviews={imagePreviews}
+            />
           </>
         )}
       </div>
