@@ -243,23 +243,38 @@ export class ReviewPipelineService {
     }
 
     const warnFindings = this.collectWarnFindingsForRewrite(stage);
-    const results = await mapWithConcurrency(
-      warnFindings,
-      REWRITE_SUGGEST_CONCURRENCY,
-      (finding) =>
-        service.suggest({
-          reviewId: context.reviewId,
-          finding,
-          adText: context.normalizedContent.text,
-          context,
-        }),
-    );
+    try {
+      const results = await mapWithConcurrency(
+        warnFindings,
+        REWRITE_SUGGEST_CONCURRENCY,
+        (finding) =>
+          service.suggest({
+            reviewId: context.reviewId,
+            finding,
+            adText: context.normalizedContent.text,
+            context,
+          }),
+      );
 
-    return {
-      mode,
-      results,
-      rewriteMs: Math.round(performance.now() - started),
-    };
+      return {
+        mode,
+        results,
+        rewriteMs: Math.round(performance.now() - started),
+      };
+    } catch {
+      // Batch-level safety net if suggest() somehow still throws.
+      return {
+        mode,
+        results: warnFindings.map((finding) => ({
+          reviewId: context.reviewId,
+          findingId: finding.findingId,
+          riskType: '',
+          skipped: true as const,
+          skipReason: 'LLM_UNAVAILABLE' as const,
+        })),
+        rewriteMs: Math.round(performance.now() - started),
+      };
+    }
   }
 
   async runThroughOpenRisk(context: ReviewContext): Promise<EvaluationStageResult> {

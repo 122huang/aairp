@@ -67,6 +67,56 @@ describe('ContextualRewriteService', () => {
     expect(result.skipReason).toBe('BLOCKER_FINDING');
   });
 
+  it('fail-soft: live LLM failure returns LLM_UNAVAILABLE instead of throwing', async () => {
+    const liveService = new ContextualRewriteService({
+      mode: 'live',
+      llmGateway: {
+        complete: async () => {
+          throw new Error('Rewrite DeepSeek API 503: Service is too busy');
+        },
+      },
+      createSuggestionId: () => '00000000-0000-0000-0000-000000000099',
+    });
+    const adText = 'Quieter by design than ordinary blenders.';
+    const result = await liveService.suggest({
+      reviewId: 'rev_test',
+      adText,
+      locale: 'en',
+      context: {
+        reviewId: 'rev_test',
+        advertisementId: 'ad_test',
+        contentHash: 'hash',
+        contentVersion: 1,
+        normalizedContent: { text: adText, imageUrls: [] },
+        resolvedKnowledgeVersions: {
+          rulePackVersion: 'demo-rule-1.0.0',
+          policyPackVersion: 'demo-policy-1.0.0',
+          playbookPackVersion: 'demo-playbook-1.0.0',
+        },
+        advertisementContext: {},
+        tags: [],
+        builtAt: new Date().toISOString(),
+        dimensions: {
+          tenantId: 'demo',
+          countryId: 'SG',
+          platformId: 'META',
+          categoryId: 'sa.other',
+        },
+      },
+      finding: createRuleFinding({
+        refId: 'demo-apac-sa-comparative-claim',
+        summary: 'Comparative claim',
+        evaluationDetail: {
+          matchedSpans: [{ field: 'text', start: 0, end: 6, text: 'Quieter' }],
+        },
+      }),
+    });
+
+    expect(result.skipped).toBe(true);
+    expect(result.skipReason).toBe('LLM_UNAVAILABLE');
+    expect(result.suggestion).toBeUndefined();
+  });
+
   it('returns zh rewrite suggestion for health-implication RULE finding in stub mode', async () => {
     const adText = '少油烹饪，让您吃得更轻盈无负担。';
     const result = await service.suggest({
