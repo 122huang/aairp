@@ -533,4 +533,67 @@ describe('DecisionEngineService', () => {
     expect(result.branchVerdicts?.consistency).toBe('WARN');
     expect(result.branchVerdicts?.text).toBe('PASS');
   });
+
+  it('openRiskIncomplete elevates empty findings from PASS to REVIEW without inventing LLM findings', () => {
+    const service = createService();
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_incomplete',
+      hasBlocker: false,
+      ruleFindings: [],
+      playbookFindings: [],
+      llmFindings: [],
+      openRiskIncomplete: true,
+      openRiskIncompleteReason: 'LLM_EMPTY_RESPONSE',
+    });
+
+    expect(result.finalDecision).toBe('REVIEW');
+    expect(result.findingCounts.llm).toBe(0);
+    expect(result.branchVerdicts?.text).toBe('REVIEW');
+    expect(result.rationale).toContain('Open Risk incomplete');
+    expect(result.rationale).toContain('LLM_EMPTY_RESPONSE');
+    expect(result.rationale).toContain('pipeline-completeness marker');
+    expect(result.rationale).not.toContain('Manual review required based on');
+  });
+
+  it('openRiskIncomplete elevates WARN to REVIEW and appends completeness marker', () => {
+    const service = createService();
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_incomplete_warn',
+      hasBlocker: false,
+      ruleFindings: [ruleWarnFinding],
+      playbookFindings: [],
+      llmFindings: [],
+      openRiskIncomplete: true,
+      openRiskIncompleteReason: 'LLM_TIMEOUT',
+    });
+
+    expect(result.finalDecision).toBe('REVIEW');
+    expect(result.rationale).toContain('prior signals');
+    expect(result.rationale).toContain('Open Risk incomplete (LLM_TIMEOUT)');
+  });
+
+  it('openRiskIncomplete does not override REJECT from blocker', () => {
+    const service = createService();
+    const result = service.fuseFromFindings({
+      reviewId: 'rev_incomplete_blocker',
+      hasBlocker: true,
+      ruleFindings: [
+        {
+          ...ruleWarnFinding,
+          findingId: 'rf_blocker',
+          severity: 'BLOCKER',
+          decision: 'FAIL',
+          refId: 'demo-sg-health-forbidden-claim',
+          summary: 'Forbidden claim',
+        },
+      ],
+      playbookFindings: [],
+      llmFindings: [],
+      openRiskIncomplete: true,
+      openRiskIncompleteReason: 'LLM_UNAVAILABLE',
+    });
+
+    expect(result.finalDecision).toBe('REJECT');
+    expect(result.rationale).toContain('Rejected due to blocking finding');
+  });
 });

@@ -46,4 +46,9 @@ export type DecisionFusionInput = {
   hasVisionManualReviewSignal: boolean;
   consistencyFindingCount?: number;
   hasConsistencyWarn?: boolean;
+  /**
+   * Open Risk fail-soft incomplete — unknown residual risk.
+   * Elevates like a REVIEW signal but is not itself an LLM content finding.
+   */
+  hasOpenRiskIncomplete?: boolean;
 };

@@ -28,7 +28,10 @@ export type ReviewReportSources = {
   decision: ReviewDecisionResult;
   ruleFindings: RuleFinding[];
   playbookFindings: PlaybookFinding[];
-  openRiskResult: Pick<OpenRiskDiscoveryResult, 'findings' | 'skipped' | 'skipReason'>;
+  openRiskResult: Pick<
+    OpenRiskDiscoveryResult,
+    'findings' | 'skipped' | 'skipReason' | 'incomplete' | 'incompleteReason' | 'incompleteDetail'
+  >;
   visionFindings?: VisionFinding[];
   consistencyFindings?: ConsistencyFinding[];
   visionMode?: 'off' | 'stub' | 'live';
@@ -352,9 +355,15 @@ function renderReportHtml(
     sliceThumbnails,
     casePrecedents = [],
   } = sources;
-  const openRiskNote = openRiskResult.skipped
-    ? `<p class="note"><strong>Open Risk:</strong> skipped (${escapeHtml(openRiskResult.skipReason ?? 'UNKNOWN')}) — deterministic blocker or policy path already decisive.</p>`
-    : '';
+  const openRiskNote = openRiskResult.incomplete
+    ? `<p class="note"><strong>Open Risk:</strong> <em>incomplete</em> (${escapeHtml(openRiskResult.incompleteReason ?? 'LLM_UNAVAILABLE')}) — AI gap-fill did not finish; residual risk is unknown and requires human review. This is <strong>not</strong> a content-level REVIEW finding and is distinct from an intentional skip (e.g. HAS_BLOCKER).${
+        openRiskResult.incompleteDetail
+          ? ` Detail: ${escapeHtml(openRiskResult.incompleteDetail)}`
+          : ''
+      }</p>`
+    : openRiskResult.skipped
+      ? `<p class="note"><strong>Open Risk:</strong> skipped (${escapeHtml(openRiskResult.skipReason ?? 'UNKNOWN')}) — deterministic blocker or policy path already decisive; LLM gap-fill was not required.</p>`
+      : '';
   const visionModeLine = visionMode
     ? `<p class="meta"><strong>Vision mode:</strong> ${escapeHtml(visionMode)}</p>`
     : '';
@@ -499,6 +508,10 @@ export class ReviewReportService {
         findings,
         openRiskSkipped: openRiskResult.skipped,
         openRiskSkipReason: openRiskResult.skipReason,
+        openRiskIncomplete: openRiskResult.incomplete === true,
+        ...(openRiskResult.incompleteReason
+          ? { openRiskIncompleteReason: openRiskResult.incompleteReason }
+          : {}),
         ...(casePrecedents.length > 0 ? { casePrecedents } : {}),
       },
       generatedAt,

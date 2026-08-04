@@ -32,6 +32,7 @@ describe('demo-review.dto', () => {
           findings: [],
           openRiskSkipped: true,
           openRiskSkipReason: 'HAS_BLOCKER',
+          openRiskIncomplete: false,
         },
         generatedAt: '2026-06-26T10:10:00.000Z',
       },
@@ -60,6 +61,7 @@ describe('demo-review.dto', () => {
         findings: [],
         open_risk_skipped: true,
         open_risk_skip_reason: 'HAS_BLOCKER',
+        open_risk_incomplete: false,
       },
       generated_at: '2026-06-26T10:10:00.000Z',
     });
@@ -95,6 +97,7 @@ describe('demo-review.dto', () => {
             },
             findings: [],
             openRiskSkipped: true,
+            openRiskIncomplete: false,
           },
           generatedAt: '2026-06-26T10:10:00.000Z',
         },

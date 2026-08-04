@@ -300,6 +300,10 @@ export class CaseBuilderService {
         ...(openRiskResult.model ? { llm_model: openRiskResult.model } : {}),
         skipped: openRiskResult.skipped,
         ...(openRiskResult.skipReason ? { skip_reason: openRiskResult.skipReason } : {}),
+        ...(openRiskResult.incomplete ? { incomplete: true } : {}),
+        ...(openRiskResult.incompleteReason
+          ? { incomplete_reason: openRiskResult.incompleteReason }
+          : {}),
         findings: openRiskResult.findings.map(mapFinding),
         evaluated_at: openRiskResult.evaluatedAt,
       },
@@ -331,6 +335,14 @@ export class CaseBuilderService {
         source: 'demo/review',
         pipeline_version: this.config.pipelineVersion ?? '0.1.0-sprint1.5',
         open_risk_skipped: report.summary.openRiskSkipped,
+        ...(report.summary.openRiskIncomplete
+          ? {
+              open_risk_incomplete: true,
+              ...(report.summary.openRiskIncompleteReason
+                ? { open_risk_incomplete_reason: report.summary.openRiskIncompleteReason }
+                : {}),
+            }
+          : {}),
         storage_phase: 'json',
         review_id: input.reviewId,
         embedding_id: null,

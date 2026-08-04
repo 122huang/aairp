@@ -72,6 +72,7 @@ const reportPipelineResult = {
       },
       findings: [],
       openRiskSkipped: false,
+      openRiskIncomplete: false,
     },
     generatedAt: '2026-06-26T10:10:00.000Z',
   },

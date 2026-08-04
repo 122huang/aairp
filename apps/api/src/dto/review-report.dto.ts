@@ -71,6 +71,9 @@ export type ReviewReportResponseDto = {
     }>;
     open_risk_skipped: boolean;
     open_risk_skip_reason?: string;
+    /** True when AI gap-fill was attempted but did not finish (fail-soft). */
+    open_risk_incomplete: boolean;
+    open_risk_incomplete_reason?: string;
   };
   generated_at: string;
 };
@@ -151,6 +154,10 @@ export function toReviewReportResponseDto(result: ReviewReportResult): ReviewRep
       })),
       open_risk_skipped: result.summary.openRiskSkipped,
       open_risk_skip_reason: result.summary.openRiskSkipReason,
+      open_risk_incomplete: result.summary.openRiskIncomplete === true,
+      ...(result.summary.openRiskIncompleteReason
+        ? { open_risk_incomplete_reason: result.summary.openRiskIncompleteReason }
+        : {}),
     },
     generated_at: result.generatedAt,
   };

@@ -25,6 +25,12 @@ export type DecisionFusionSources = {
   visionFindings?: VisionFinding[];
   consistencyFindings?: ConsistencyFinding[];
   caseFindings?: CaseFinding[];
+  /**
+   * Open Risk fail-soft incomplete. Elevates decision conservatively (REVIEW-signal)
+   * without injecting a synthetic LLM REVIEW finding into the findings list.
+   */
+  openRiskIncomplete?: boolean;
+  openRiskIncompleteReason?: string;
 };
 
 const DECISION_ORDER: Record<FinalDecision, number> = {
@@ -85,7 +91,8 @@ function computeTextBranchVerdict(input: DecisionFusionInput): FinalDecision {
   if (
     input.hasRuleReview ||
     input.hasPlaybookReviewSignal ||
-    input.hasLlmManualReviewSignal
+    input.hasLlmManualReviewSignal ||
+    input.hasOpenRiskIncomplete
   ) {
     return 'REVIEW';
   }
@@ -100,6 +107,14 @@ function computeTextBranchVerdict(input: DecisionFusionInput): FinalDecision {
     return 'WARN';
   }
   return 'PASS';
+}
+
+function formatOpenRiskIncompleteMarker(reason?: string): string {
+  const code = reason?.trim() || 'LLM_UNAVAILABLE';
+  return (
+    `Open Risk incomplete (${code}): AI gap-fill did not finish, so residual risk is unknown — ` +
+    `human review required. This is a pipeline-completeness marker, not a content-level REVIEW finding.`
+  );
 }
 
 function computeImageBranchVerdict(
@@ -180,7 +195,24 @@ export function buildDecisionRationale(
   if (hasReviewSignal) {
     const summary =
       topFindings.length > 0 ? topFindings.join('; ') : 'manual-review signals detected';
-    return `Manual review required based on: ${summary}. Route to product compliance / legal before publishing.`;
+    const base =
+      `Manual review required based on: ${summary}. Route to product compliance / legal before publishing.`;
+    if (input.hasOpenRiskIncomplete) {
+      return `${base} ${formatOpenRiskIncompleteMarker(sources.openRiskIncompleteReason)}`;
+    }
+    return base;
+  }
+
+  if (input.hasOpenRiskIncomplete) {
+    if (hasElevatingWarnSignal(input) || topFindings.length > 0) {
+      const summary =
+        topFindings.length > 0 ? topFindings.join('; ') : 'non-blocking findings detected';
+      return (
+        `Manual review required: prior signals (${summary}). ` +
+        formatOpenRiskIncompleteMarker(sources.openRiskIncompleteReason)
+      );
+    }
+    return formatOpenRiskIncompleteMarker(sources.openRiskIncompleteReason);
   }
 
   if (hasElevatingWarnSignal(input)) {
@@ -238,6 +270,7 @@ export function buildDecisionFusionInput(sources: DecisionFusionSources): Decisi
         finding.evaluationDetail?.suggestedAction === 'MANUAL_REVIEW',
     ),
     hasConsistencyWarn: consistencyFindings.some((finding) => finding.decision === 'WARN'),
+    hasOpenRiskIncomplete: sources.openRiskIncomplete === true,
   };
 }
 
@@ -311,9 +344,16 @@ export class DecisionEngineService {
       input.hasPlaybookReviewSignal ||
       input.hasLlmManualReviewSignal ||
       input.hasVisionManualReviewSignal;
+    const openRiskIncomplete = input.hasOpenRiskIncomplete === true;
 
-    if (hasReviewSignal) {
-      const confidence = applyCountryConfidenceModifier(0.78, rationaleSources.countryId ?? '');
+    // Incomplete Open Risk is a REVIEW-signal (unknown residual risk) but must not invent
+    // an LLM content finding. Still elevates above PASS/WARN; REJECT already returned above.
+    if (hasReviewSignal || openRiskIncomplete) {
+      const baseConfidence = openRiskIncomplete && !hasReviewSignal ? 0.7 : 0.78;
+      const confidence = applyCountryConfidenceModifier(
+        baseConfidence,
+        rationaleSources.countryId ?? '',
+      );
       return {
         reviewId: input.reviewId,
         finalDecision: 'REVIEW',

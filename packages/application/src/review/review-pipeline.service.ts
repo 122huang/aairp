@@ -171,6 +171,10 @@ export class ReviewPipelineService {
       visionFindings,
       consistencyFindings,
       caseFindings: decisionCaseFindings,
+      openRiskIncomplete: openRiskStage.openRiskResult.incomplete === true,
+      ...(openRiskStage.openRiskResult.incompleteReason
+        ? { openRiskIncompleteReason: openRiskStage.openRiskResult.incompleteReason }
+        : {}),
     });
   }
 

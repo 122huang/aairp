@@ -47,6 +47,9 @@ export type ReviewReportSummary = {
   findings: ReviewReportFindingSummary[];
   openRiskSkipped: boolean;
   openRiskSkipReason?: string;
+  /** True when AI gap-fill was attempted but did not finish (fail-soft). */
+  openRiskIncomplete: boolean;
+  openRiskIncompleteReason?: string;
   casePrecedents?: CasePrecedent[];
 };
 
