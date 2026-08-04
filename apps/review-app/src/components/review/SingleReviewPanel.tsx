@@ -53,6 +53,7 @@ export function SingleReviewPanel({
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingElapsedSec, setLoadingElapsedSec] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<DemoReviewResponse | null>(null);
   /** Ad text that produced `result` — keep SourceMaterial/highlights from drifting with the form. */
@@ -66,6 +67,19 @@ export function SingleReviewPanel({
   const restoredParentRef = useRef<string | null>(null);
   const submitAbortRef = useRef<AbortController | null>(null);
   const submitGenerationRef = useRef(0);
+
+  useEffect(() => {
+    if (!loading) {
+      setLoadingElapsedSec(0);
+      return;
+    }
+    setLoadingElapsedSec(0);
+    const startedAt = Date.now();
+    const timerId = window.setInterval(() => {
+      setLoadingElapsedSec(Math.floor((Date.now() - startedAt) / 1000));
+    }, 1000);
+    return () => window.clearInterval(timerId);
+  }, [loading]);
 
   const resultStale = Boolean(
     result && resultSourceText.trim().length > 0 && text.trim() !== resultSourceText.trim(),
@@ -344,9 +358,18 @@ export function SingleReviewPanel({
         )}
 
         {loading && (
-          <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-6 py-10 text-sm text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            正在运行合规审查管线…
+          <div
+            className="flex items-start gap-2 rounded-lg border border-gray-200 bg-white px-6 py-10 text-sm text-muted-foreground"
+            role="status"
+            aria-live="polite"
+          >
+            <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin" />
+            <div className="space-y-1">
+              <p>正在运行合规审查管线…</p>
+              <p>
+                已等待 {loadingElapsedSec}s，通常 1–2 分钟
+              </p>
+            </div>
           </div>
         )}
 
