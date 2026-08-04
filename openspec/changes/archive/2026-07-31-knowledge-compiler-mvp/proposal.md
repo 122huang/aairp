@@ -1,3 +1,7 @@
+> **状态（2026-08-04 拍板）：pilot 后再评估 — 勿 apply 全文。**  
+> 性价比中低；后续主线改为 Runtime 规则精准度（见 `openspec/changes/runtime-precision-slice/`、`docs/knowledge/compiler/DECISIONS-2026-08-04.md`）。  
+> 「Knowledge Compiler」名称易误解为自动编译法条；若将来捡起须改名或处处写清边界。
+
 ## Why
 
 Ad Compliance Hub 已具备 Knowledge Platform（五语料 + Pack）与 Decision Runtime（Rule → Playbook → Open Risk → Fusion），但 **人读规则（法务手册）与可执行规则（`demo/rules.demo.json`）之间仍靠人工转写**，KOS / Knowledge Pack 默认不驱动审核决策。换模型、扩市场、加场景时，最大风险不是缺 RAG/Memory，而是「知识变更无法被编译、评测、再安全发布进 Runtime」。

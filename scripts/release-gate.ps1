@@ -10,6 +10,19 @@ Set-Location $Root
 Write-Host "AAIRP release gate"
 Write-Host ""
 
+# Decision / fusion iron rules (hasBlocker→REJECT, HAS_BLOCKER skips LLM, etc.)
+# Same suite as CI "Compiler gates" step — not an auto-compiler; name is historical.
+Write-Host "Running decision invariants + hook-spec validation (pnpm test:compiler-gates)..."
+pnpm test:compiler-gates
+if ($LASTEXITCODE -ne 0) {
+  Write-Host ""
+  Write-Host "Compiler gates FAILED (decision-invariants / hook-spec validate)."
+  Write-Host "Fix before release. See docs/release-checklist.md."
+  exit 1
+}
+Write-Host "Compiler gates PASSED."
+Write-Host ""
+
 & "$Root\scripts\smoke-test.ps1"
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
