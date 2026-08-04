@@ -64,6 +64,8 @@ export function SingleReviewPanel({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const restoredParentRef = useRef<string | null>(null);
+  const submitAbortRef = useRef<AbortController | null>(null);
+  const submitGenerationRef = useRef(0);
 
   const resultStale = Boolean(
     result && resultSourceText.trim().length > 0 && text.trim() !== resultSourceText.trim(),
@@ -152,6 +154,11 @@ export function SingleReviewPanel({
       return;
     }
 
+    submitAbortRef.current?.abort();
+    const abortController = new AbortController();
+    submitAbortRef.current = abortController;
+    const generation = ++submitGenerationRef.current;
+
     setLoading(true);
     setError(null);
     setResult(null);
@@ -160,28 +167,43 @@ export function SingleReviewPanel({
     try {
       const { imageDataUrls } = await filesToBase64(imageFiles);
       const uploadContext = buildReviewUploadContext(adType, productSku);
-      const response = await submitReview({
-        country_id: countryId,
-        platform_id: DEMO_REVIEW_PLATFORM_ID,
-        category_id: categoryId,
-        content: {
-          text: trimmed,
-          ...(imageDataUrls.length > 0 ? { images: imageDataUrls } : {}),
+      const response = await submitReview(
+        {
+          country_id: countryId,
+          platform_id: DEMO_REVIEW_PLATFORM_ID,
+          category_id: categoryId,
+          content: {
+            text: trimmed,
+            ...(imageDataUrls.length > 0 ? { images: imageDataUrls } : {}),
+          },
+          ...(uploadContext ? { context: uploadContext } : {}),
+          tags: ['review-app:6u-1', `market:${countryId}`],
+          ...(pendingParentCaseId ? { parent_case_id: pendingParentCaseId } : {}),
         },
-        ...(uploadContext ? { context: uploadContext } : {}),
-        tags: ['review-app:6u-1', `market:${countryId}`],
-        ...(pendingParentCaseId ? { parent_case_id: pendingParentCaseId } : {}),
-      });
+        { signal: abortController.signal },
+      );
+      // Ignore stale responses if a newer submit started (or this one was aborted).
+      if (generation !== submitGenerationRef.current || abortController.signal.aborted) {
+        return;
+      }
       setPendingParentCaseId(null);
       setResult(response);
       setResultSourceText(trimmed);
     } catch (caught) {
+      if (generation !== submitGenerationRef.current) {
+        return;
+      }
       const apiError = caught as ReviewApiError;
+      if (apiError.status === 499) {
+        return;
+      }
       setError(apiError.message ?? '提交失败，请稍后重试');
       setResult(null);
       setResultSourceText('');
     } finally {
-      setLoading(false);
+      if (generation === submitGenerationRef.current) {
+        setLoading(false);
+      }
     }
   }
 
@@ -340,65 +362,67 @@ export function SingleReviewPanel({
               </div>
             )}
 
-            <DecisionBanner
-              decision={result.final_decision}
-              rationale={result.rationale}
-              refIds={refIds}
-              findingsCount={findingsCount}
-            />
+            <div key={result.review_id} className="flex flex-col space-y-5">
+              <DecisionBanner
+                decision={result.final_decision}
+                rationale={result.rationale}
+                refIds={refIds}
+                findingsCount={findingsCount}
+              />
 
-            {result.case_id && (
-              <div className="space-y-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
-                <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full sm:w-auto"
-                    onClick={() => openCaseReport(result.case_id!, 'business_handoff')}
-                  >
-                    导出业务提醒摘要
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full sm:w-auto"
-                    onClick={() => openCaseReport(result.case_id!, 'legal_audit')}
-                  >
-                    导出完整审核报告
-                  </Button>
-                  <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleResubmitFromCase}>
-                    基于此案例修改后重新提交
-                  </Button>
+              {result.case_id && (
+                <div className="space-y-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full sm:w-auto"
+                      onClick={() => openCaseReport(result.case_id!, 'business_handoff')}
+                    >
+                      导出业务提醒摘要
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full sm:w-auto"
+                      onClick={() => openCaseReport(result.case_id!, 'legal_audit')}
+                    >
+                      导出完整审核报告
+                    </Button>
+                    <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleResubmitFromCase}>
+                      基于此案例修改后重新提交
+                    </Button>
+                  </div>
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    业务提醒摘要仅在 PASS/WARN，或 REVIEW 且全部 REVIEW
+                    finding 已完成证据确认时可导出；完整审核报告始终可导出。重新提交将关联到同一审查线程。
+                  </p>
                 </div>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  业务提醒摘要仅在 PASS/WARN，或 REVIEW 且全部 REVIEW
-                  finding 已完成证据确认时可导出；完整审核报告始终可导出。重新提交将关联到同一审查线程。
-                </p>
-              </div>
-            )}
+              )}
 
-            <section>
-              <h2 className="mb-3 text-sm font-semibold text-ink">
-                第一步：审查发现 ({findingsCount})
-                <span className="ml-1.5 text-xs font-normal text-muted-foreground">Findings</span>
-              </h2>
-              <FindingsList findings={mergedFindings} />
-            </section>
+              <section>
+                <h2 className="mb-3 text-sm font-semibold text-ink">
+                  第一步：审查发现 ({findingsCount})
+                  <span className="ml-1.5 text-xs font-normal text-muted-foreground">Findings</span>
+                </h2>
+                <FindingsList findings={mergedFindings} />
+              </section>
 
-            <FindingEvidencePanel
-              reviewId={result.review_id}
-              findings={result.summary.findings}
-              adText={resultSourceText}
-              countryId={result.summary.advertisement.country_id}
-              categoryId={result.summary.advertisement.category_id}
-              productSku={productSku.trim() || undefined}
-            />
+              <FindingEvidencePanel
+                reviewId={result.review_id}
+                findings={result.summary.findings}
+                adText={resultSourceText}
+                countryId={result.summary.advertisement.country_id}
+                categoryId={result.summary.advertisement.category_id}
+                productSku={productSku.trim() || undefined}
+              />
 
-            <SourceMaterial
-              text={resultSourceText}
-              highlightSpans={highlightSpans}
-              imagePreviews={imagePreviews}
-            />
+              <SourceMaterial
+                text={resultSourceText}
+                highlightSpans={highlightSpans}
+                imagePreviews={imagePreviews}
+              />
+            </div>
           </>
         )}
       </div>
