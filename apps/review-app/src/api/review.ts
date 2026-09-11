@@ -4,6 +4,7 @@ import type {
   DemoSaCategoryId,
   EvidenceSourceType,
 } from '@aairp/shared-kernel';
+export type { ClaimOpinion };
 import { DEMO_REVIEW_PLATFORM_ID } from '@aairp/shared-kernel';
 
 export type ReviewEntryMode = 'single' | 'batch' | 'image';
