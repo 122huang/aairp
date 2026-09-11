@@ -1,10 +1,17 @@
-import type { CaseRecord, ReviewHappyPathResult } from '@aairp/shared-kernel';
+import type { CaseRecord, ClaimOpinion, ReviewHappyPathResult } from '@aairp/shared-kernel';
+import { composeOverallDecision, getReviewRuntimeModes } from '@aairp/application';
 import { toReviewReportResponseDto } from './review-report.dto.js';
 
 export type DemoReviewResponseDto = {
   review_id: string;
   advertisement_id: string;
   final_decision: string;
+  /** Copy-layer fusion snapshot. Same as final_decision; never rewritten by materials. */
+  copy_decision: string;
+  /** User-facing conclusion after overlaying material judgment (authenticity assumed). */
+  overall_decision: string;
+  /** True when overall PASS is because materials covered every open substantiation finding. */
+  evidence_cleared: boolean;
   confidence: number;
   rationale: string;
   finding_counts: {
@@ -28,18 +35,31 @@ export type DemoReviewResponseDto = {
   thread_id?: string;
   parent_case_id?: string;
   reviewer_id?: string;
+  /** Per-claim tool opinion (written Chinese). Always present after a successful review. */
+  claim_opinions?: ClaimOpinion[];
+  runtime_modes?: ReturnType<typeof getReviewRuntimeModes>;
 };
 
 export function toDemoReviewResponseDto(
   result: ReviewHappyPathResult,
   caseRecord?: CaseRecord | null,
+  claimOpinions?: ClaimOpinion[],
 ): DemoReviewResponseDto {
   const reportDto = toReviewReportResponseDto(result.report);
+  const opinions = claimOpinions ?? [];
+  const overall = composeOverallDecision({
+    copyDecision: result.decision.finalDecision,
+    findings: result.report.summary.findings,
+    opinions,
+  });
 
   return {
     review_id: result.reviewId,
     advertisement_id: result.advertisementId,
     final_decision: result.decision.finalDecision,
+    copy_decision: overall.copy_decision,
+    overall_decision: overall.overall_decision,
+    evidence_cleared: overall.evidence_cleared,
     confidence: result.decision.confidence,
     rationale: result.decision.rationale,
     finding_counts: {
@@ -71,6 +91,8 @@ export function toDemoReviewResponseDto(
           ...(caseRecord.reviewer_id ? { reviewer_id: caseRecord.reviewer_id } : {}),
         }
       : {}),
+    claim_opinions: opinions,
+    runtime_modes: getReviewRuntimeModes(),
   };
 }
 

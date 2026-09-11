@@ -20,6 +20,11 @@ if (-not (Test-Path ".env")) {
 # pnpm/tsx do not auto-load .env — inject into this session first.
 . "$PSScriptRoot\load-env.ps1"
 
+$openRiskMode = if ($env:AAIRP_OPEN_RISK_MODE) { $env:AAIRP_OPEN_RISK_MODE } else { 'stub (default)' }
+Write-Host "AAIRP_OPEN_RISK_MODE=$openRiskMode"
+if ($openRiskMode -eq 'live') {
+  Write-Host "WARN: experimental Open Risk live — not production-equivalent Legal GT stack." -ForegroundColor Yellow
+}
 Write-Host "AAIRP_IMAGE_REVIEW_ENTRY=$(if ($env:AAIRP_IMAGE_REVIEW_ENTRY) { $env:AAIRP_IMAGE_REVIEW_ENTRY } else { 'off (default)' })"
 if (-not (Test-Path "apps\review-app\dist\index.html")) {
   Write-Host "WARN: apps/review-app/dist missing — /review/ will serve legacy review-ui (no Image tab)." -ForegroundColor Yellow

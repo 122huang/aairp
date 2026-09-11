@@ -5,6 +5,10 @@ import {
   ReviewHappyPathService,
   CaseRecorderService,
   entryModeTag,
+  extractEvidenceFiles,
+  EvidencePoolValidationError,
+  runClaimOpinionPreReview,
+  type EvidenceService,
 } from '@aairp/application';
 import { extractEntryMode, extractParentCaseId, toDemoReviewResponseDto } from '../dto/demo-review.dto.js';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
@@ -13,6 +17,7 @@ import { logReviewPipelineTimings } from '../middleware/review-logging.js';
 export type DemoReviewControllerDeps = {
   reviewHappyPathService: ReviewHappyPathService;
   caseRecorderService?: CaseRecorderService;
+  evidenceService?: EvidenceService;
 };
 
 function withEntryModeTag(body: unknown, entryMode: 'single' | 'batch' | 'image' | undefined): unknown {
@@ -46,6 +51,7 @@ export async function registerDemoReviewController(
       try {
         const parentCaseId = extractParentCaseId(request.body);
         const entryMode = extractEntryMode(request.body);
+        const evidencePool = extractEvidenceFiles(request.body);
         if (entryMode === 'image') {
           const images = (
             request.body as { content?: { images?: unknown } } | null
@@ -106,9 +112,26 @@ export async function registerDemoReviewController(
           'happy path review completed',
         );
 
-        sendJson(reply, 200, toDemoReviewResponseDto(result, caseRecord));
+        const claimOpinions = await runClaimOpinionPreReview(deps.evidenceService, {
+          reviewId: result.reviewId,
+          caseId: caseRecord?.case_id,
+          countryId: result.report.summary.advertisement.countryId,
+          categoryId: result.report.summary.advertisement.categoryId,
+          productSku: result.caseSnapshot?.context.advertisementContext.productSku,
+          adText:
+            result.caseSnapshot?.context.normalizedContent.text ??
+            result.report.summary.advertisement.textPreview ??
+            '',
+          findings: result.report.summary.findings,
+          pool: evidencePool,
+        });
+
+        sendJson(reply, 200, toDemoReviewResponseDto(result, caseRecord, claimOpinions));
       } catch (error) {
-        if (error instanceof AdvertisementUploadValidationError) {
+        if (
+          error instanceof AdvertisementUploadValidationError ||
+          error instanceof EvidencePoolValidationError
+        ) {
           request.log.warn(
             {
               trace_id: request.traceId,

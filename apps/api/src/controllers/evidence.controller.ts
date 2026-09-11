@@ -3,6 +3,7 @@ import { AppError, type EvidenceSourceType } from '@aairp/shared-kernel';
 import {
   getEvidenceJudgmentRuntimeInfo,
   getImageReviewRuntimeInfo,
+  getReviewRuntimeModes,
   type EvidenceService,
 } from '@aairp/application';
 import { createProbePreHandler, sendJson } from '../middleware/http.js';
@@ -60,6 +61,7 @@ export async function registerEvidenceController(
     sendJson(reply, 200, {
       ...getEvidenceJudgmentRuntimeInfo(),
       ...getImageReviewRuntimeInfo(),
+      ...getReviewRuntimeModes(),
       checked_at: new Date().toISOString(),
     });
   });

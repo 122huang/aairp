@@ -145,7 +145,13 @@ export type RuntimeModesDto = {
   image_review_entry?: 'off' | 'on';
   image_review_entry_source?: string;
   evidence_judgment_mode?: string;
-  open_risk_mode?: string;
+  open_risk_mode?: 'live' | 'stub';
+  review_stack?: 'production' | 'experimental';
+  rule_version?: string;
+  playbook_version?: string;
+  open_risk_provider?: string | null;
+  open_risk_model?: string;
+  fusion_mode?: string;
   checked_at?: string;
 };
 

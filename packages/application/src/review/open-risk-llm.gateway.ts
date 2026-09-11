@@ -43,7 +43,7 @@ export function resolveOpenRiskTextProvider(): OpenRiskLlmProvider | null {
   return null;
 }
 
-/** `live` only when AAIRP_OPEN_RISK_MODE=live (explicit opt-in). Otherwise stub. */
+/** `live` only when AAIRP_OPEN_RISK_MODE=live (explicit opt-in). API keys do not enable this. */
 export function resolveOpenRiskLlmMode(): 'live' | 'stub' {
   return process.env.AAIRP_OPEN_RISK_MODE?.trim().toLowerCase() === 'live' ? 'live' : 'stub';
 }

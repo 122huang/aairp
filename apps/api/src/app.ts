@@ -15,6 +15,7 @@ import {
   EvidenceService,
   EvidenceJudgmentService,
   getEvidenceJudgmentRuntimeInfo,
+  getReviewRuntimeModes,
   resolveEvidenceLibraryRoot,
   KosSearchService,
   KosPublishService,
@@ -272,32 +273,41 @@ export async function buildApp(config: ApiConfig) {
     contextBuilderService,
     reviewPipelineService,
   });
-  await registerDemoReviewController(app, {
-    reviewHappyPathService,
-    caseRecorderService,
-  });
-  await registerImageReviewExtractController(app, {
-    visionComplianceService,
-  });
 
   const evidenceStore = new JsonEvidenceStore({ rootPath: resolveEvidenceLibraryRoot() });
   const evidenceJudgmentService = new EvidenceJudgmentService({ evidenceStore });
   const evidenceService = new EvidenceService(evidenceStore, evidenceJudgmentService);
   const evidenceRuntime = getEvidenceJudgmentRuntimeInfo();
+  const reviewRuntimeModes = getReviewRuntimeModes();
   app.log.info(
     {
       evidence_judgment_mode: evidenceRuntime.evidence_judgment_mode,
       evidence_judgment_mode_source: evidenceRuntime.evidence_judgment_mode_source,
-      open_risk_mode: evidenceRuntime.open_risk_mode,
+      open_risk_mode: reviewRuntimeModes.open_risk_mode,
+      review_stack: reviewRuntimeModes.review_stack,
       live_ready: evidenceRuntime.live_ready,
     },
     'evidence judgment runtime modes',
   );
+  if (reviewRuntimeModes.open_risk_mode === 'live') {
+    app.log.warn(
+      'Experimental Open Risk is ENABLED (AAIRP_OPEN_RISK_MODE=live). Results are not the production-equivalent Legal GT stack. Set AAIRP_OPEN_RISK_MODE=stub for calibrated review.',
+    );
+  }
   if (evidenceRuntime.evidence_judgment_mode === 'stub') {
     app.log.warn(
       'AAIRP evidence judgment is in STUB mode — real documents will NOT be read by an LLM. Set AAIRP_EVIDENCE_JUDGMENT_MODE=live (and provider API key) for production.',
     );
   }
+
+  await registerDemoReviewController(app, {
+    reviewHappyPathService,
+    caseRecorderService,
+    evidenceService,
+  });
+  await registerImageReviewExtractController(app, {
+    visionComplianceService,
+  });
   await registerEvidenceController(app, { evidenceService });
 
   const caseReportAssemblyService = new CaseReportAssemblyService({

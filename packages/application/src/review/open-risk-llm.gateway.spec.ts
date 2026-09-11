@@ -39,6 +39,14 @@ describe('open-risk-llm.gateway', () => {
     expect(resolveOpenRiskTextProvider()).toBeNull();
   });
 
+  it('stays stub when a provider API key exists but AAIRP_OPEN_RISK_MODE is not live', () => {
+    delete process.env.AAIRP_OPEN_RISK_MODE;
+    process.env.DEEPSEEK_API_KEY = 'sk-present';
+    process.env.OPEN_RISK_LLM_PROVIDER = 'deepseek';
+    expect(resolveOpenRiskLlmMode()).toBe('stub');
+    expect(resolveOpenRiskTextProvider()).toBe('deepseek');
+  });
+
   it('uses live mode when explicitly enabled', () => {
     process.env.AAIRP_OPEN_RISK_MODE = 'live';
     process.env.OPEN_RISK_LLM_PROVIDER = 'deepseek';

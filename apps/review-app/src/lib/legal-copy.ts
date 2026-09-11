@@ -1,5 +1,7 @@
 import type { MergedFindingItem } from '@/lib/finding-merge';
 
+export { CLAIM_OPINION_PRE_REVIEW_DISCLAIMER } from '@aairp/shared-kernel';
+
 type LegalSummarySource = Pick<MergedFindingItem, 'refIds' | 'riskType' | 'summary'>;
 
 /** rule_id / pattern_id → 法务简短中文摘要（标题式） */
@@ -29,7 +31,14 @@ const LEGAL_SUMMARY_ZH_BY_RISK_TYPE: Record<string, string> = {
   'localisation-error': '本地化合规——须检查目标市场语言与标识',
 };
 
-export function legalDecisionBannerText(decision: string, findingsCount: number): string {
+export function legalDecisionBannerText(
+  decision: string,
+  findingsCount: number,
+  options?: { evidenceCleared?: boolean },
+): string {
+  if (options?.evidenceCleared && decision === 'PASS') {
+    return '所附材料可支持须实证项。审核以提交材料真实为前提。';
+  }
   switch (decision) {
     case 'PASS':
       return '未发现需关注的风险项。';
@@ -48,7 +57,7 @@ export function legalDecisionBannerText(decision: string, findingsCount: number)
 export const DECISION_TIER_HELP = {
   title: '决策档位说明',
   body: [
-    'PASS：未发现需处理风险，可按流程继续。',
+    'PASS：未发现需处理风险，或须实证项已由所附材料覆盖（以材料真实为前提）。',
     'WARN：有需修改或补证的风险，发布前人工处理；不自动拦截。',
     'REVIEW：须人工复核（内容解读/合规确认），发布前不得视为已放行。',
     'REJECT：存在阻断级问题，不建议发布。',

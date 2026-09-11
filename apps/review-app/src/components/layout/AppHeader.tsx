@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react';
 import { hrefForRoute, resolveAppRoute, type AppRoute } from '@/lib/hash-route';
+import { fetchRuntimeModes } from '@/api/evidence';
+import { experimentalOpenRiskLabel } from '@/lib/review-runtime';
 import { cn } from '@/lib/utils';
 
 function NavLink({ route, label }: { route: AppRoute; label: string }) {
@@ -22,6 +25,24 @@ function NavLink({ route, label }: { route: AppRoute; label: string }) {
 }
 
 export function AppHeader() {
+  const [openRiskLive, setOpenRiskLive] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    void fetchRuntimeModes()
+      .then((modes) => {
+        if (!cancelled) setOpenRiskLive(modes.open_risk_mode === 'live');
+      })
+      .catch(() => {
+        if (!cancelled) setOpenRiskLive(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const experimentalLabel = experimentalOpenRiskLabel(openRiskLive ? 'live' : 'stub');
+
   return (
     <header className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
@@ -43,6 +64,15 @@ export function AppHeader() {
           <NavLink route={{ name: 'history' }} label="审核记录" />
         </nav>
       </div>
+      {experimentalLabel ? (
+        <div
+          className="border-t border-amber-200 bg-amber-50 px-6 py-2 text-center text-xs font-medium text-amber-950"
+          role="status"
+        >
+          {experimentalLabel}
+          ：当前结果含未经 production Legal GT 校准的 live LLM overlay。
+        </div>
+      ) : null}
     </header>
   );
 }

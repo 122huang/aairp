@@ -58,6 +58,41 @@ export class EvidenceService {
     return { ...link, evidence };
   }
 
+  /**
+   * Create one evidence record and attach+judge it against each finding
+   * (submit-time pool: one file, many claims).
+   */
+  async attachPoolFile(
+    reviewId: string,
+    evidenceInput: CreateEvidenceInput,
+    targets: Array<{ findingId: string; judgmentContext: EvidenceJudgmentContext }>,
+    caseId?: string,
+  ): Promise<EvidenceLinkWithRecord[]> {
+    const evidence = await this.store.createEvidence(evidenceInput);
+    const results: EvidenceLinkWithRecord[] = [];
+    for (const target of targets) {
+      let link = await this.store.attachToFinding({
+        review_id: reviewId,
+        finding_id: target.findingId,
+        evidence_id: evidence.evidence_id,
+        case_id: caseId,
+      });
+      if (this.judgmentService) {
+        const judgment = await this.judgmentService.judgeAttachedEvidence(
+          evidence,
+          target.judgmentContext,
+        );
+        link = await this.store.updateLink({
+          link_id: link.link_id,
+          status: 'AI_JUDGED_PENDING_CONFIRMATION',
+          ai_judgment: judgment,
+        });
+      }
+      results.push({ ...link, evidence });
+    }
+    return results;
+  }
+
   confirmLink(input: ConfirmEvidenceLinkInput): Promise<FindingEvidenceLink> {
     return this.store.confirmLink(input);
   }

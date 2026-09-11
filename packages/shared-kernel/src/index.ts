@@ -38,6 +38,7 @@ export * from './knowledge/audit-log.js';
 export * from './knowledge/knowledge-gateway.js';
 export * from './knowledge/remediation-type.js';
 export * from './evidence/evidence-types.js';
+export * from './evidence/claim-opinion.js';
 export * from './evidence/evidence-store.port.js';
 export { migrateLinkStatus } from './evidence/evidence-types.js';
 export * from './case/case-retrieval.js';

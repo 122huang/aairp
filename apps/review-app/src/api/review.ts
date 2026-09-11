@@ -1,4 +1,9 @@
-import type { DemoReviewCountryId, DemoSaCategoryId } from '@aairp/shared-kernel';
+import type {
+  ClaimOpinion,
+  DemoReviewCountryId,
+  DemoSaCategoryId,
+  EvidenceSourceType,
+} from '@aairp/shared-kernel';
 import { DEMO_REVIEW_PLATFORM_ID } from '@aairp/shared-kernel';
 
 export type ReviewEntryMode = 'single' | 'batch' | 'image';
@@ -20,6 +25,13 @@ export type ReviewUploadPayload = {
   entry_mode?: ReviewEntryMode;
   /** When set, new case joins the parent's submission thread. */
   parent_case_id?: string;
+  /** Submit-time substantiation files (PDF/TXT/MD). Separate from content.images. */
+  evidence_files?: Array<{
+    filename: string;
+    mime_type: string;
+    content_base64: string;
+    evidence_source_type?: EvidenceSourceType;
+  }>;
 };
 
 export type ImageExtractTextPayload = {
@@ -75,6 +87,9 @@ export type DemoReviewResponse = {
   review_id: string;
   advertisement_id: string;
   final_decision: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
+  copy_decision?: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
+  overall_decision?: 'PASS' | 'WARN' | 'REJECT' | 'REVIEW';
+  evidence_cleared?: boolean;
   confidence: number;
   rationale: string;
   finding_counts: {
@@ -104,6 +119,20 @@ export type DemoReviewResponse = {
   thread_id?: string;
   parent_case_id?: string;
   reviewer_id?: string;
+  /** Per-claim tool opinion. Always present after a successful review. */
+  claim_opinions?: ClaimOpinion[];
+  runtime_modes?: {
+    review_stack: 'production' | 'experimental';
+    rule_version: string;
+    playbook_version: string;
+    open_risk_mode: 'live' | 'stub';
+    open_risk_mode_source?: string;
+    open_risk_prompt_version?: string;
+    open_risk_provider?: string | null;
+    open_risk_model?: string;
+    evidence_judgment_mode: 'live' | 'stub';
+    fusion_mode?: string;
+  };
 };
 
 export type ReviewApiError = {
@@ -166,7 +195,7 @@ export async function extractImageReviewText(
 
 export async function submitReview(
   payload: ReviewUploadPayload,
-  options?: { signal?: AbortSignal },
+  options?: { signal?: AbortSignal; requestId?: string },
 ): Promise<DemoReviewResponse> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 180_000);
@@ -182,6 +211,7 @@ export async function submitReview(
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        ...(options?.requestId ? { 'X-Request-Id': options.requestId } : {}),
       },
       body: JSON.stringify(payload),
       signal: controller.signal,

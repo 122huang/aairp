@@ -105,8 +105,39 @@ describe('DemoReviewController', () => {
       review_id: 'rev_test',
       final_decision: 'PASS',
       report_html: '<html>report</html>',
+      claim_opinions: [],
     });
     expect(deps.reviewHappyPathService.run).toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('POST /demo/review rejects image files in evidence_files without running review', async () => {
+    const app = await buildTestApp(deps);
+
+    const response = await app.inject({
+      method: 'POST',
+      url: '/demo/review',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      payload: {
+        country_id: 'SG',
+        platform_id: 'META',
+        category_id: 'health.supplement',
+        content: { text: 'Daily vitamins for general wellness.' },
+        evidence_files: [
+          {
+            filename: 'hero.jpg',
+            mime_type: 'image/jpeg',
+            content_base64: 'aaaa',
+          },
+        ],
+      },
+    });
+
+    expect(response.statusCode).toBe(400);
+    expect(deps.reviewHappyPathService.run).not.toHaveBeenCalled();
     await app.close();
   });
 

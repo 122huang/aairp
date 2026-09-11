@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { getReviewRuntimeModes } from '@aairp/application';
 import { extractParentCaseId, extractEntryMode, toDemoReviewResponseDto } from './demo-review.dto.js';
 
 describe('demo-review.dto', () => {
@@ -42,6 +43,9 @@ describe('demo-review.dto', () => {
       review_id: 'rev_test',
       advertisement_id: 'ad_test',
       final_decision: 'REJECT',
+      copy_decision: 'REJECT',
+      overall_decision: 'REJECT',
+      evidence_cleared: false,
       confidence: 1,
       rationale: 'Rule BLOCKER finding requires rejection.',
       finding_counts: { rule: 1, playbook: 1, llm: 0 },
@@ -64,6 +68,8 @@ describe('demo-review.dto', () => {
         open_risk_incomplete: false,
       },
       generated_at: '2026-06-26T10:10:00.000Z',
+      claim_opinions: [],
+      runtime_modes: getReviewRuntimeModes(),
     });
   });
 
