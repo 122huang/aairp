@@ -87,7 +87,7 @@ export class SemanticNumericAuthorityService {
 
     const timeoutMs = resolveSemanticNumericTimeoutMs();
     const timed = await Promise.race([
-      this.execute(context, prior, copy, base, started, timeoutMs, traceId),
+      this.execute(context, prior, copy, base, started, timeoutMs),
       new Promise<NumericAuthorityApplyResult>((resolve) => {
         setTimeout(() => {
           const event = {
@@ -115,7 +115,6 @@ export class SemanticNumericAuthorityService {
     base: Record<string, unknown>,
     started: number,
     timeoutMs: number,
-    traceId: string,
   ): Promise<NumericAuthorityApplyResult> {
     const mode = resolveSemanticNumericAuthorityMode();
     const finish = (event: Record<string, unknown>, findings: RuleFinding[] = []) => ({
