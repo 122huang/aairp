@@ -50,6 +50,8 @@ describe('review runtime modes', () => {
     const modes = getReviewRuntimeModes();
     expect(modes.open_risk_mode).toBe(APPROVED_PRODUCTION_OPEN_RISK_MODE);
     expect(modes.review_stack).toBe('production');
+    expect(modes.semantic_numeric_authority).toBe('off');
+    expect(modes.semantic_shadow_mode).toBe('off');
     expect(() => assertProductionEquivalentRuntime(modes)).not.toThrow();
   });
 

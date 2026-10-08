@@ -9,7 +9,8 @@ preDeployCommand = "pnpm migrate"
 # Explicit live for evidence judgment — do NOT inherit AAIRP_OPEN_RISK_MODE.
 # Open Risk stays stub unless AAIRP_OPEN_RISK_MODE=live is set in Railway Variables (experimental).
 # Prefer also setting AAIRP_EVIDENCE_JUDGMENT_MODE=live in the Railway Variables UI.
-startCommand = "AAIRP_EVIDENCE_JUDGMENT_MODE=live node apps/api/dist/main.js"
+# Stage 1 P0.5H: numeric authority remains off; Open Risk remains stub. Do not rely on unset defaults.
+startCommand = "AAIRP_EVIDENCE_JUDGMENT_MODE=live AAIRP_OPEN_RISK_MODE=stub AAIRP_SEMANTIC_NUMERIC_AUTHORITY=off node apps/api/dist/main.js"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

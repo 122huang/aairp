@@ -34,6 +34,12 @@ data/finding-evidence/links/**
 data/finding-evidence/*-manifest.json
 !data/finding-evidence/.gitkeep
 
+# Non-authoritative semantic shadow / numeric-authority logs (may contain advertising copy excerpts)
+data/semantic-shadow-logs/**
+!data/semantic-shadow-logs/.gitkeep
+data/semantic-numeric-authority-logs/**
+!data/semantic-numeric-authority-logs/.gitkeep
+
 # Keep structure and examples
 !case-library/cases/.gitkeep
 !case-library/index/.gitkeep

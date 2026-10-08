@@ -5,6 +5,8 @@ import {
   resolveOpenRiskTextProvider,
 } from './open-risk-llm.gateway.js';
 import { getEvidenceJudgmentRuntimeInfo } from '../evidence/evidence-judgment-llm.gateway.js';
+import { resolveSemanticNumericAuthorityMode } from './semantic-numeric-authority-mode.js';
+import { resolveSemanticShadowMode } from './semantic-shadow-mode.js';
 
 /** Approved production-equivalent Open Risk mode (Legal GT calibrated stack). */
 export const APPROVED_PRODUCTION_OPEN_RISK_MODE = 'stub' as const;
@@ -27,6 +29,8 @@ export type ReviewRuntimeModes = {
   open_risk_model?: string;
   evidence_judgment_mode: 'live' | 'stub';
   fusion_mode: typeof FUSION_MODE;
+  semantic_shadow_mode: 'off' | 'sampled' | 'on';
+  semantic_numeric_authority: 'off' | 'shadow' | 'on';
 };
 
 export function getReviewRuntimeModes(): ReviewRuntimeModes {
@@ -47,6 +51,8 @@ export function getReviewRuntimeModes(): ReviewRuntimeModes {
       : {}),
     evidence_judgment_mode: evidence.evidence_judgment_mode,
     fusion_mode: FUSION_MODE,
+    semantic_shadow_mode: resolveSemanticShadowMode(),
+    semantic_numeric_authority: resolveSemanticNumericAuthorityMode(),
   };
 }
 

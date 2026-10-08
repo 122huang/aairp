@@ -104,6 +104,36 @@ describe('ReviewPipelineService contextual rewrites (6B-1f)', () => {
   });
 });
 
+describe('ReviewPipelineService semantic shadow isolation', () => {
+  it('does not wait on shadow and does not attach shadow to the pipeline result', async () => {
+    let scheduled = 0;
+    const semanticShadowService = {
+      schedule() {
+        scheduled += 1;
+      },
+    };
+    const pipeline = new ReviewPipelineService({
+      ruleEngineService: new RuleEngineService(),
+      playbookEngineService: new PlaybookEngineService(),
+      openRiskDiscoveryService: new OpenRiskDiscoveryService(),
+      decisionEngineService: new DecisionEngineService(),
+      reviewReportService: new ReviewReportService(),
+      semanticShadowService: semanticShadowService as never,
+    });
+    const result = await pipeline.runThroughReport({
+      ...warnContext,
+      normalizedContent: {
+        text: '360°热风循环，无需预热，即放即炸。',
+        imageUrls: [],
+      },
+    });
+    expect(result.decision.finalDecision).toBe('PASS');
+    expect(scheduled).toBe(1);
+    expect(result).not.toHaveProperty('shadow');
+    expect(JSON.stringify(result.report.summary)).not.toMatch(/shadow_finding/i);
+  });
+});
+
 describe('ReviewPipelineService vision text → rules re-eval', () => {
   const previousVisionMode = process.env.AAIRP_VISION_MODE;
 

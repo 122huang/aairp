@@ -36,6 +36,9 @@ import { ReviewReportService } from './review-report.service.js';
 import { RuleEngineService } from './rule-engine.service.js';
 import { VisionComplianceService } from './vision-compliance.service.js';
 import { resolveVisionLlmMode } from './vision-llm.gateway.js';
+import { SemanticShadowService } from './semantic-shadow.service.js';
+import { SemanticNumericAuthorityService } from './semantic-numeric-authority.service.js';
+import { resolveSemanticNumericAuthorityMode } from './semantic-numeric-authority-mode.js';
 
 /** Merge post-vision rule hits without duplicating the same rule ref. */
 export function mergeRuleEvaluationResults(
@@ -88,6 +91,8 @@ export type ReviewPipelineServiceDeps = {
   caseRetrievalService?: CaseRetrievalService;
   caseContextAssembler?: CaseContextAssembler;
   caseFindingGeneratorService?: CaseFindingGeneratorService;
+  semanticShadowService?: SemanticShadowService;
+  semanticNumericAuthorityService?: SemanticNumericAuthorityService;
 };
 
 type CaseStageResult = {
@@ -118,6 +123,42 @@ function measureStage<T>(operation: () => T | Promise<T>): Promise<{ result: T; 
 
 export class ReviewPipelineService {
   constructor(private readonly deps: ReviewPipelineServiceDeps) {}
+
+  private scheduleSemanticShadow(
+    context: ReviewContext,
+    ruleFindings: RuleFinding[],
+    playbookFindings: Array<{ refId?: string }>,
+  ): void {
+    const service = this.deps.semanticShadowService ?? new SemanticShadowService();
+    service.schedule(context, { ruleFindings, playbookFindings });
+  }
+
+  private async applyNumericAuthority(
+    context: ReviewContext,
+    ruleResult: ReviewPipelineEvaluationResult['ruleResult'],
+    playbookResult: ReviewPipelineEvaluationResult['playbookResult'],
+  ): Promise<ReviewPipelineEvaluationResult['ruleResult']> {
+    if (resolveSemanticNumericAuthorityMode() === 'off') {
+      return ruleResult;
+    }
+    const service =
+      this.deps.semanticNumericAuthorityService ?? new SemanticNumericAuthorityService();
+    try {
+      const applied = await service.apply(context, {
+        ruleFindings: ruleResult.findings,
+        playbookFindings: playbookResult.findings,
+      });
+      if (applied.findings.length === 0) {
+        return ruleResult;
+      }
+      return {
+        ...ruleResult,
+        findings: [...ruleResult.findings, ...applied.findings],
+      };
+    } catch {
+      return ruleResult;
+    }
+  }
 
   private async resolveCaseStage(
     context: ReviewContext,
@@ -323,6 +364,8 @@ export class ReviewPipelineService {
       ruleMsTotal += visionRuleMs;
     }
 
+    mergedRuleResult = await this.applyNumericAuthority(context, mergedRuleResult, playbookResult);
+
     return {
       ruleResult: mergedRuleResult,
       playbookResult,
@@ -387,6 +430,12 @@ export class ReviewPipelineService {
         casePrecedents,
         contextualRewrites,
       }),
+    );
+
+    this.scheduleSemanticShadow(
+      context,
+      openRiskStage.ruleResult.findings,
+      openRiskStage.playbookResult.findings,
     );
 
     return {
