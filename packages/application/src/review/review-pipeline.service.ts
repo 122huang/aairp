@@ -138,16 +138,26 @@ export class ReviewPipelineService {
     ruleResult: ReviewPipelineEvaluationResult['ruleResult'],
     playbookResult: ReviewPipelineEvaluationResult['playbookResult'],
   ): Promise<ReviewPipelineEvaluationResult['ruleResult']> {
-    if (resolveSemanticNumericAuthorityMode() === 'off') {
+    const mode = resolveSemanticNumericAuthorityMode();
+    if (mode === 'off') {
       return ruleResult;
     }
     const service =
       this.deps.semanticNumericAuthorityService ?? new SemanticNumericAuthorityService();
+    const prior = {
+      ruleFindings: ruleResult.findings,
+      playbookFindings: playbookResult.findings,
+    };
+    if (mode === 'shadow') {
+      try {
+        service.scheduleShadow(context, prior);
+      } catch {
+        return ruleResult;
+      }
+      return ruleResult;
+    }
     try {
-      const applied = await service.apply(context, {
-        ruleFindings: ruleResult.findings,
-        playbookFindings: playbookResult.findings,
-      });
+      const applied = await service.applyAuthoritative(context, prior);
       if (applied.findings.length === 0) {
         return ruleResult;
       }

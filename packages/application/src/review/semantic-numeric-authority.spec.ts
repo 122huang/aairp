@@ -8,19 +8,31 @@ import { ReviewPipelineService } from './review-pipeline.service.js';
 import { ReviewReportService } from './review-report.service.js';
 import { RuleEngineService } from './rule-engine.service.js';
 import {
+  resetNumericShadowCapCounter,
   resolveSemanticNumericAuthorityMode,
   resolveSemanticNumericTimeoutMs,
 } from './semantic-numeric-authority-mode.js';
-import { SemanticNumericAuthorityService } from './semantic-numeric-authority.service.js';
+import {
+  NUMERIC_SHADOW_EVENT_TYPE,
+  SemanticNumericAuthorityService,
+} from './semantic-numeric-authority.service.js';
 import { extractAnchors, normalize } from './semantic-shadow-engine.js';
-import { applyNumericAuthorityGate } from './semantic-numeric-authority.js';
+import {
+  applyNumericAuthorityGate,
+  evaluateNumericEligibility,
+} from './semantic-numeric-authority.js';
 import { getReviewRuntimeModes } from './review-runtime-modes.js';
 
 const previousEnv = { ...process.env };
 
 afterEach(() => {
   process.env = { ...previousEnv };
+  resetNumericShadowCapCounter();
 });
+
+function wait(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 const sgContext = (text: string): ReviewContext => ({
   reviewId: 'rev_p05h',
@@ -129,8 +141,8 @@ describe('semantic numeric authority service A–K', () => {
       playbookFindings: [],
     });
     expect(applied.findings).toHaveLength(0);
-    expect(events[0]?.status).toBe('deduplicated');
-    expect(events[0]?.source_provenance).toBe('RULE+SEMANTIC_NUMERIC');
+    expect(applied.event.final_shadow_status).toBe('deduplicated');
+    expect(applied.event.source_provenance).toBe('RULE+SEMANTIC_NUMERIC');
   });
 
   it('B. Rule miss + valid semantic numeric claim yields supplemental Finding', async () => {
@@ -154,7 +166,7 @@ describe('semantic numeric authority service A–K', () => {
     expect(applied.findings[0]?.refId).toBe('demo-apac-sa-performance-claim');
     expect(applied.findings[0]?.decision).toBe('WARN');
     expect(applied.findings[0]?.findingId.startsWith('rf_semnum_')).toBe(true);
-    expect(applied.event.status).toBe('authoritative_supplemental');
+    expect(applied.event.final_shadow_status).toBe('authoritative_supplemental');
   });
 
   it('C. discount percentage is not a material Finding', async () => {
@@ -177,7 +189,7 @@ describe('semantic numeric authority service A–K', () => {
     });
     const applied = await service.apply(context, { ruleFindings: [], playbookFindings: [] });
     expect(applied.findings).toHaveLength(0);
-    expect(applied.event.reject_reason).toBe('NON_MATERIAL_NUMBER');
+    expect(applied.event.authority_gate_fail_reasons).toEqual(['NON_MATERIAL_NUMBER']);
   });
 
   it('D. date/year is not a Finding', async () => {
@@ -224,7 +236,7 @@ describe('semantic numeric authority service A–K', () => {
     });
     const applied = await service.apply(context, { ruleFindings: [], playbookFindings: [] });
     expect(applied.findings).toHaveLength(0);
-    expect(applied.event.reject_reason).toBe('CONSISTENCY_CONFLICT');
+    expect(applied.event.authority_gate_fail_reasons).toEqual(['CONSISTENCY_CONFLICT']);
   });
 
   it('G. DeepSeek unavailable leaves Rule result unchanged', async () => {
@@ -242,7 +254,7 @@ describe('semantic numeric authority service A–K', () => {
       playbookFindings: [],
     });
     expect(applied.findings).toHaveLength(0);
-    expect(applied.event.authority_gate).toBe('ABSTAIN');
+    expect(applied.event.authority_gate_pass).toBe(false);
   });
 
   it('H. invalid model output leaves Rule result unchanged', async () => {
@@ -277,7 +289,7 @@ describe('semantic numeric authority service A–K', () => {
     const finding = applied.findings[0];
     expect(finding?.remediationType).toBe('EVIDENCE_SUPPLEMENT');
     expect(supportsEvidenceAttachment(finding?.remediationType, finding?.decision)).toBe(true);
-    expect(applied.event.evidence_handoff).toBe(true);
+    expect(applied.event.would_enter_evidence_flow).toBe(true);
   });
 
   it('J. general non-numeric Semantic proposal remains shadow only', async () => {
@@ -301,7 +313,7 @@ describe('semantic numeric authority service A–K', () => {
       playbookFindings: [],
     });
     expect(applied.findings).toHaveLength(0);
-    expect(applied.event.status).toBe('shadow_only');
+    expect(applied.event.final_shadow_status).toBe('ineligible');
   });
 
   it('K. Open Risk remains stub while numeric authority is on', () => {
@@ -316,18 +328,23 @@ describe('semantic numeric authority service A–K', () => {
     process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
     process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
     process.env.DEEPSEEK_API_KEY = 'sk-test';
+    const events: Record<string, unknown>[] = [];
     const service = new SemanticNumericAuthorityService({
-      sink: () => undefined,
+      sink: (event) => {
+        events.push(event);
+      },
       gateway: async () => ({
         propositions: [nutrientProposal('keeps at most 61 percent of vitamins', 61)],
       }),
     });
-    const applied = await service.apply(sgContext(FRESH_VITAMIN), {
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), {
       ruleFindings: [],
       playbookFindings: [],
     });
-    expect(applied.findings).toHaveLength(0);
-    expect(applied.event.status).toBe('shadow_eligible');
+    await wait(50);
+    expect(events[0]?.would_be_supplemental).toBe(true);
+    expect(events[0]?.would_authorize_numeric_finding).toBe(true);
+    expect(events[0]?.final_shadow_status).toBe('would_authorize');
   });
 
   it('fresh semantically equivalent wording recovers without a phrase-specific rule', async () => {
@@ -377,7 +394,10 @@ describe('pipeline numeric authority integration', () => {
       decisionEngineService: new DecisionEngineService(),
       reviewReportService: new ReviewReportService(),
       semanticNumericAuthorityService: {
-        apply: async () => {
+        scheduleShadow() {
+          throw new Error('must not schedule when off');
+        },
+        applyAuthoritative: async () => {
           throw new Error('must not invoke when off');
         },
       } as never,
@@ -436,5 +456,239 @@ describe('pipeline numeric authority integration', () => {
     });
     const result = await pipeline.runThroughDecision(sgContext(FRESH_VITAMIN));
     expect(result.ruleResult.findings.some((f) => f.findingId.startsWith('rf_semnum_'))).toBe(false);
+  });
+});
+
+describe('P0.5G.1 numeric shadow runtime safety', () => {
+  it('eligibility: digit/percent copy is eligible; written-only comparative is a recall limitation', () => {
+    const eligible = evaluateNumericEligibility(extractAnchors(FRESH_VITAMIN));
+    expect(eligible.eligible).toBe(true);
+    const writtenOnly = evaluateNumericEligibility(extractAnchors('Cooks twice as fast with one third less oil.'));
+    expect(writtenOnly.eligible).toBe(false);
+    expect(writtenOnly.reason).toBe('NO_NUMERIC_STRUCTURE_SIGNAL');
+  });
+
+  it('A. off → provider not called', async () => {
+    delete process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY;
+    let called = 0;
+    const service = new SemanticNumericAuthorityService({
+      sink: () => undefined,
+      gateway: async () => {
+        called += 1;
+        return { propositions: [] };
+      },
+    });
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] });
+    const applied = await service.applyAuthoritative(sgContext(FRESH_VITAMIN), {
+      ruleFindings: [],
+      playbookFindings: [],
+    });
+    await wait(20);
+    expect(called).toBe(0);
+    expect(applied.findings).toHaveLength(0);
+  });
+
+  it('B/D. shadow eligible schedules provider without awaiting', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    let finished = 0;
+    const events: Record<string, unknown>[] = [];
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => {
+        await wait(400);
+        finished += 1;
+        return { propositions: [nutrientProposal('keeps at most 61 percent of vitamins', 61)] };
+      },
+    });
+    const started = Date.now();
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] });
+    expect(Date.now() - started).toBeLessThan(80);
+    expect(finished).toBe(0);
+    await wait(500);
+    expect(finished).toBe(1);
+    expect(events.some((event) => event.event_type === NUMERIC_SHADOW_EVENT_TYPE)).toBe(true);
+  });
+
+  it('C. shadow ineligible does not call provider', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    let called = 0;
+    const events: Record<string, unknown>[] = [];
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => {
+        called += 1;
+        return { propositions: [] };
+      },
+    });
+    service.scheduleShadow(sgContext('Stainless steel reversible rack for family kitchens.'), {
+      ruleFindings: [],
+      playbookFindings: [],
+    });
+    await wait(40);
+    expect(called).toBe(0);
+    expect(events[0]?.final_shadow_status).toBe('ineligible');
+  });
+
+  it('E. shadow provider throw does not reject the caller', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    const service = new SemanticNumericAuthorityService({
+      sink: () => undefined,
+      gateway: async () => {
+        throw new Error('provider boom');
+      },
+    });
+    expect(() =>
+      service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] }),
+    ).not.toThrow();
+    await wait(40);
+  });
+
+  it('F. shadow timeout does not attach findings', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    process.env.AAIRP_SEMANTIC_NUMERIC_TIMEOUT_MS = '20';
+    const events: Record<string, unknown>[] = [];
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => {
+        await wait(200);
+        return { propositions: [nutrientProposal('keeps at most 61 percent of vitamins', 61)] };
+      },
+    });
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] });
+    await wait(80);
+    expect(events.some((event) => event.final_shadow_status === 'shadow_timeout')).toBe(true);
+  });
+
+  it('G. cap reached skips provider', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    process.env.AAIRP_SEMANTIC_NUMERIC_SHADOW_MAX_PER_PROCESS = '1';
+    let called = 0;
+    const events: Record<string, unknown>[] = [];
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => {
+        called += 1;
+        return { propositions: [nutrientProposal('keeps at most 61 percent of vitamins', 61)] };
+      },
+    });
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] });
+    await wait(40);
+    service.scheduleShadow(sgContext(FRESH_HOLD), { ruleFindings: [], playbookFindings: [] });
+    await wait(40);
+    expect(called).toBe(1);
+    expect(events.some((event) => event.final_shadow_status === 'shadow_cap_reached')).toBe(true);
+  });
+
+  it('H/I. shadow gate pass logs WOULD_AUTHORIZE and evidence handoff without Finding', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    const events: Record<string, unknown>[] = [];
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => ({
+        propositions: [nutrientProposal('keeps at most 61 percent of vitamins', 61)],
+      }),
+    });
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] });
+    await wait(40);
+    expect(events[0]?.would_authorize_numeric_finding).toBe(true);
+    expect(events[0]?.would_enter_evidence_flow).toBe(true);
+    expect(events[0]?.would_be_supplemental).toBe(true);
+    expect(events[0]?.final_shadow_status).toBe('would_authorize');
+  });
+
+  it('J. shadow Rule duplicate logs RULE+SEMANTIC_NUMERIC and is not supplemental', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    const events: Record<string, unknown>[] = [];
+    const context = sgContext(HISTORICAL);
+    const rules = new RuleEngineService().evaluate(context);
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => ({
+        propositions: [nutrientProposal('retains up to 90% of nutrients', 90)],
+      }),
+    });
+    service.scheduleShadow(context, { ruleFindings: rules.findings, playbookFindings: [] });
+    await wait(40);
+    expect(events[0]?.source_provenance).toBe('RULE+SEMANTIC_NUMERIC');
+    expect(events[0]?.would_authorize_numeric_finding).toBe(true);
+    expect(events[0]?.would_be_supplemental).toBe(false);
+    expect(events[0]?.would_enter_evidence_flow).toBe(false);
+  });
+
+  it('K/L/N. pipeline shadow 5s provider does not delay Decision; no Finding', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    const pipeline = new ReviewPipelineService({
+      ruleEngineService: new RuleEngineService(),
+      playbookEngineService: new PlaybookEngineService(),
+      openRiskDiscoveryService: new OpenRiskDiscoveryService(),
+      decisionEngineService: new DecisionEngineService(),
+      reviewReportService: new ReviewReportService(),
+      semanticNumericAuthorityService: new SemanticNumericAuthorityService({
+        sink: () => undefined,
+        gateway: async () => {
+          await wait(5000);
+          return { propositions: [nutrientProposal('keeps at most 61 percent of vitamins', 61)] };
+        },
+      }),
+    });
+    const started = Date.now();
+    const result = await pipeline.runThroughDecision(sgContext(FRESH_VITAMIN));
+    expect(Date.now() - started).toBeLessThan(500);
+    expect(result.decision.finalDecision).not.toBe('WARN');
+    expect(result.ruleResult.findings.some((f) => f.findingId.startsWith('rf_semnum_'))).toBe(false);
+    expect(result.openRiskResult.findings).toHaveLength(0);
+  });
+
+  it('M. Open Risk remains stub while numeric shadow is on', () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    delete process.env.AAIRP_OPEN_RISK_MODE;
+    expect(getReviewRuntimeModes().open_risk_mode).toBe('stub');
+    expect(getReviewRuntimeModes().semantic_numeric_authority).toBe('shadow');
+    expect(getReviewRuntimeModes().semantic_shadow_mode).toBe('off');
+  });
+
+  it('O. structured shadow log includes event_type', async () => {
+    process.env.AAIRP_SEMANTIC_NUMERIC_AUTHORITY = 'shadow';
+    process.env.AAIRP_SEMANTIC_SHADOW_DATA_APPROVED = 'true';
+    process.env.DEEPSEEK_API_KEY = 'sk-test';
+    const events: Record<string, unknown>[] = [];
+    const service = new SemanticNumericAuthorityService({
+      sink: (event) => {
+        events.push(event);
+      },
+      gateway: async () => ({ propositions: [], error: 'provider' }),
+    });
+    service.scheduleShadow(sgContext(FRESH_VITAMIN), { ruleFindings: [], playbookFindings: [] });
+    await wait(40);
+    expect(events[0]?.event_type).toBe('semantic_numeric_shadow');
+    expect(JSON.stringify(events)).not.toMatch(/sk-test/);
   });
 });

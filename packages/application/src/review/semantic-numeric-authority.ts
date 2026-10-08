@@ -126,6 +126,28 @@ function hasNumericAnchor(anchors: Array<{ kind?: string }>): boolean {
   );
 }
 
+const QUANTITY_KINDS = new Set([
+  'value',
+  'written_number',
+  'range',
+  'explicit_percentage',
+]);
+
+/** Cheap structure filter. Not a Legal Finding decision. Reuses P0.5E.2 anchors only. */
+export function evaluateNumericEligibility(
+  anchors: Array<{ kind?: string }>,
+): { eligible: boolean; reason: string; anchor_kinds: string[] } {
+  const kinds = [...new Set(anchors.map((anchor) => anchor.kind ?? '').filter(Boolean))];
+  const hasQuantity = anchors.some((anchor) => QUANTITY_KINDS.has(anchor.kind ?? ''));
+  const hasUnit = anchors.some((anchor) => anchor.kind === 'unit');
+  const hasMultiplier = anchors.some((anchor) => anchor.kind === 'explicit_multiplier');
+  const hasComparator = anchors.some((anchor) => anchor.kind === 'explicit_comparator');
+  if (hasQuantity || hasUnit || hasMultiplier || (hasComparator && hasQuantity)) {
+    return { eligible: true, reason: 'NUMERIC_STRUCTURE_SIGNAL', anchor_kinds: kinds };
+  }
+  return { eligible: false, reason: 'NO_NUMERIC_STRUCTURE_SIGNAL', anchor_kinds: kinds };
+}
+
 export function existingNumericEquivalent(
   ruleFindings: Array<{ refId?: string }>,
   playbookFindings: Array<{ refId?: string }>,
